@@ -20,7 +20,8 @@ $border-radius: $main-unit;
 
 $accent: #5D5FEF;
 $accent-2: #8384EA;
-$accent-light: #E0E8FF;
+$accent-100: #E0E8FF;
+$accent-300: #A6B4FC;
 
 $red: #FD6B6B;
 $green: #1AC057;
@@ -41,6 +42,7 @@ $metal-800: #1F2937;
 //base
 $base-50: rgba(26, 26, 26, 0.05);
 $base-500: rgba(26, 26, 26, 0.5);
+$base-400: rgba(26, 26, 26, 0.4);
 $base-900: #1A1A1A;
 
 //dark
@@ -51,3 +53,4 @@ $shadow-xl: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0
 
 //background
 $main-background: #E5E5E5;
+$block-background: #FCFCFC;

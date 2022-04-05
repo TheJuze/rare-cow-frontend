@@ -1,51 +1,40 @@
+@import 'src/styles/variables';
+
 $bicon-utton-border-width: 1px;
 
 $iconButtonColorsDefault: (
   ////outlined
   //background
-  "icon-button-outlined-default-background": none,
-  "icon-button-outlined-hover-background": none,
-  "icon-button-outlined-active-background": none,
+  "icon-button-outlined-default-background": transparent,
+  "icon-button-outlined-hover-background": transparent,
+  "icon-button-outlined-active-background": transparent,
   //border
-  "icon-button-outlined-default-border": none,
-  "icon-button-outlined-hover-border": none,
-  "icon-button-outlined-active-border": none,
+  "icon-button-outlined-default-border": transparent,
+  "icon-button-outlined-hover-border": transparent,
+  "icon-button-outlined-active-border": transparent,
   //icon
-  "icon-button-outlined-default-icon-color": #C9C9C9,
-  "icon-button-outlined-hover-icon-color": #958BF6,
-  "icon-button-outlined-active-icon-color": #958BF6,
-  "icon-button-outlined-disabled-icon-color": #64656A,
-  ////outlined-secondary
-  //background
-  "icon-button-outlined-secondary-default-background": none,
-  "icon-button-outlined-secondary-hover-background": #1E2023,
-  "icon-button-outlined-secondary-active-background": #1E2023,
-  "icon-button-outlined-secondary-disabled-background": none,
-  //border
-  "icon-button-outlined-secondary-default-border": none,
-  "icon-button-outlined-secondary-hover-border": none,
-  "icon-button-outlined-secondary-active-border": none,
-  //icon
-  "icon-button-outlined-secondary-default-icon-color": #C9C9C9,
-  "icon-button-outlined-secondary-hover-icon-color": #958BF6,
-  "icon-button-outlined-secondary-active-icon-color": #958BF6,
-  "icon-button-outlined-secondary-disabled-icon-color": #64656A,
+  "icon-button-outlined-default-icon-color": $base-400,
+  "icon-button-outlined-hover-icon-color": $accent-2,
+  "icon-button-outlined-active-icon-color": $accent,
+  "icon-button-outlined-focus-icon-color": $accent-100,
+  "icon-button-outlined-disabled-icon-color": $base-400,
   ////filled
   //background
-  "icon-button-filled-default-background": #17181C,
-  "icon-button-filled-hover-background": #17181C,
-  "icon-button-filled-active-background": #17181C,
-  "icon-button-filled-disabled-background": #17181C,
+  "icon-button-filled-default-background": transparent,
+  "icon-button-filled-hover-background": transparent,
+  "icon-button-filled-active-background": transparent,
+  "icon-button-filled-disabled-background": transparent,
   //border
-  "icon-button-filled-default-border": #25272E,
-  "icon-button-filled-hover-border": #958BF6,
-  "icon-button-filled-active-border": #958BF6,
-  "icon-button-filled-disabled-border": #17181C,
+  "icon-button-filled-default-border": transparent,
+  "icon-button-filled-hover-border": transparent,
+  "icon-button-filled-active-border": transparent,
+  "icon-button-filled-disabled-border": transparent,
   //icon
-  "icon-button-filled-default-icon-color": #958BF6,
-  "icon-button-filled-hover-icon-color": #958BF6,
-  "icon-button-filled-active-icon-color": #958BF6,
-  "icon-button-filled-disabled-icon-color": #64656A,
+  "icon-button-filled-default-icon-color": $base-900,
+  "icon-button-filled-hover-icon-color": $base-500,
+  "icon-button-filled-active-icon-color": $accent,
+  "icon-button-filled-focus-icon-color": $base-400,
+  "icon-button-filled-disabled-icon-color": $base-900,
 );
 
 $iconButtonColorsLight: (

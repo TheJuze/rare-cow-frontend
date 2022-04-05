@@ -1,80 +1,409 @@
-@import '../../assets/styles/variables';
-@import '../../assets/styles/mixins';
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins';
+@import 'src/styles/helpers';
 
 .button {
   width: fit-content;
   cursor: pointer;
   border-radius: 8px;
   @include flexbox();
-  transition: ease-in-out 200ms;
+  @include transition;
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    pointer-events: none;
+  }
+
+  & .endAdornment {
+    display: inherit;
+    svg {
+      width: 1em;
+      height: 1rem;
+      * {
+        fill: currentColor;
+        @include transition(0ms);
+      }
+    }
+  }
+  & .startAdornment {
+    display: inherit;
+    svg {
+      width: 1em;
+      height: 1rem;
+      * {
+        fill: currentColor;
+        @include transition(0ms);
+      }
+    }
+  }
 
   &.outlined {
-    background: var(--button-outlined-default-background);
-    border: $button-border-width solid var(--button-outlined-default-border);
-    color: var(--button-outlined-default-color);
+    //common
+    &-common {
+      background: var(--button-outlined-default-background);
+      color: var(--button-outlined-default-color);
+      @include border-like-shadow(
+        var(--button-outlined-default-border-width),
+        var(--button-outlined-default-border)
+      );
 
-    .startAdorment > svg > path,
-    .endAdorment > svg > path {
-      fill: var(--button-outlined-default-icon-color);
-    }
+      .startAdornment > svg > path,
+      .endAdornment > svg > path {
+        fill: var(--button-outlined-default-icon-color);
+      }
 
-    &:hover {
-      background: var(--button-outlined-hover-background);
-      border: $button-border-width solid var(--button-outlined-hover-border);
-      color: var(--button-outlined-hover-color);
       background-origin: border-box;
 
-      .startAdorment > svg > path,
-      .endAdorment > svg > path {
-        fill: var(--button-outlined-hover-icon-color);
+      &:focus {
+        background: var(--button-outlined-focus-background);
+        color: var(--button-outlined-focus-color);
+        @include border-like-shadow(
+          var(--button-outlined-focus-border-width),
+          var(--button-outlined-focus-border)
+        );
+
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-outlined-focus-icon-color);
+        }
+      }
+
+      &:hover {
+        background: var(--button-outlined-hover-background);
+        color: var(--button-outlined-hover-color);
+        @include border-like-shadow(
+          var(--button-outlined-hover-border-width),
+          var(--button-outlined-hover-border)
+        );
+
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-outlined-hover-icon-color);
+        }
+      }
+
+      &.active,
+      &:active {
+        background: var(--button-outlined-active-background);
+        color: var(--button-outlined-active-color);
+        @include border-like-shadow(
+          var(--button-outlined-active-border-width),
+          var(--button-outlined-active-border)
+        );
+
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-outlined-active-icon-color);
+        }
+      }
+      &:disabled {
+        background: var(--button-outlined-disabled-background);
+        color: var(--button-outlined-disabled-color);
+        opacity: 0.45;
+        @include border-like-shadow(
+          var(--button-outlined-disabled-border-width),
+          var(--button-outlined-disabled-border)
+        );
+
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-outlined-disabled-icon-color);
+        }
       }
     }
 
-    &:active {
-      background: var(--button-outlined-active-background);
-      border: $button-border-width solid var(--button-outlined-active-border);
-      color: var(--button-outlined-active-color);
+    //primary
+    &-primary {
+      background: var(--button-outlined-primary-background);
+      color: var(--button-outlined-primary-color);
+      @include border-like-shadow(
+        var(--button-outlined-primary-border-width),
+        var(--button-outlined-primary-border)
+      );
+
+      .startAdornment > svg > path,
+      .endAdornment > svg > path {
+        fill: var(--button-outlined-primary-icon-color);
+      }
+
       background-origin: border-box;
 
-      .startAdorment > svg > path,
-      .endAdorment > svg > path {
-        fill: var(--button-outlined-active-icon-color);
+      &:focus {
+        background: var(--button-outlined-primary-focus-background);
+        color: var(--button-outlined-primary-focus-color);
+        @include border-like-shadow(
+          var(--button-outlined-primary-focus-border-width),
+          var(--button-outlined-primary-focus-border)
+        );
+
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-outlined-primary-focus-icon-color);
+        }
+      }
+
+      &:hover {
+        background: var(--button-outlined-primary-hover-background);
+        color: var(--button-outlined-primary-hover-color);
+        @include border-like-shadow(
+          var(--button-outlined-primary-hover-border-width),
+          var(--button-outlined-primary-hover-border)
+        );
+
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-outlined-primary-hover-icon-color);
+        }
+      }
+
+      &.active,
+      &:active {
+        background: var(--button-outlined-primary-active-background);
+        color: var(--button-outlined-primary-active-color);
+        @include border-like-shadow(
+          var(--button-outlined-primary-active-border-width),
+          var(--button-outlined-primary-active-border)
+        );
+
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-outlined-primary-active-icon-color);
+        }
+      }
+      &:disabled {
+        background: var(--button-outlined-primary-disabled-background);
+        color: var(--button-outlined-primary-disabled-color);
+        opacity: 0.45;
+        @include border-like-shadow(
+          var(--button-outlined-primary-disabled-border-width),
+          var(--button-outlined-primary-disabled-border)
+        );
+
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-outlined-primary-disabled-icon-color);
+        }
       }
     }
   }
 
   &.filled {
-    background: var(--button-filled-default-background);
-    border: $button-border-width solid var(--button-filled-default-border);
-    color: var(--button-filled-default-color);
     background-origin: border-box;
 
-    .startAdorment > svg > path,
-    .endAdorment > svg > path {
-      fill: var(--button-filled-default-icon-color);
-    }
+    //common
+    &-common {
+      background: var(--button-filled-default-background);
+      color: var(--button-filled-default-color);
+      @include border-like-shadow(
+        var(--button-filled-default-border-width),
+        var(--button-filled-default-border)
+      );
 
-    &:hover {
-      background: var(--button-filled-hover-background);
-      border: $button-border-width solid var(--button-filled-hover-border);
-      color: var(--button-filled-hover-color);
-      background-origin: border-box;
+      .startAdornment > svg > path,
+      .endAdornment > svg > path {
+        fill: var(--button-filled-default-icon-color);
+      }
 
-      .startAdorment > svg > path,
-      .endAdorment > svg > path {
-        fill: var(--button-filled-hover-icon-color);
+      &:focus {
+        background: var(--button-filled-focus-background);
+        color: var(--button-filled-focus-color);
+        @include border-like-shadow(
+          var(--button-filled-focus-border-width),
+          var(--button-filled-focus-border)
+        );
+
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-filled-focus-icon-color);
+        }
+      }
+
+      &:hover {
+        background: var(--button-filled-hover-background);
+        color: var(--button-filled-hover-color);
+        @include border-like-shadow(
+          var(--button-filled-hover-border-width),
+          var(--button-filled-hover-border)
+        );
+
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-filled-hover-icon-color);
+        }
+      }
+
+      &.active,
+      &:active {
+        background: var(--button-filled-active-background);
+        color: var(--button-filled-active-color);
+        @include border-like-shadow(
+          var(--button-filled-active-border-width),
+          var(--button-filled-active-border)
+        );
+
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-filled-active-icon-color);
+        }
+      }
+
+      &:disabled {
+        background: var(--button-filled-disabled-background);
+        color: var(--button-filled-disabled-color);
+        @include border-like-shadow(
+          var(--button-filled-disabled-border-width),
+          var(--button-filled-disabled-border)
+        );
+        opacity: 0.45;
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-filled-disabled-icon-color);
+        }
       }
     }
 
-    &:active {
-      background: var(--button-filled-active-background);
-      border: $button-border-width solid var(--button-filled-active-border);
-      color: var(--button-filled-active-color);
-      background-origin: border-box;
+    //primary
+    &-primary {
+      background: var(--button-filled-primary-background);
+      color: var(--button-filled-primary-color);
+      @include border-like-shadow(
+        var(--button-filled-primary-border-width),
+        var(--button-filled-primary-border)
+      );
 
-      .startAdorment > svg > path,
-      .endAdorment > svg > path {
-        fill: var(--button-filled-active-icon-color);
+      .startAdornment > svg > path,
+      .endAdornment > svg > path {
+        fill: var(--button-filled-primary-icon-color);
+      }
+
+      &:focus {
+        background: var(--button-filled-primary-focus-background);
+        color: var(--button-filled-primary-focus-color);
+        @include border-like-shadow(
+          var(--button-filled-primary-focus-border-width),
+          var(--button-filled-primary-focus-border)
+        );
+
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-filled-primary-focus-icon-color);
+        }
+      }
+
+      &:hover {
+        background: var(--button-filled-primary-hover-background);
+        color: var(--button-filled-primary-hover-color);
+        @include border-like-shadow(
+          var(--button-filled-primary-hover-border-width),
+          var(--button-filled-primary-hover-border)
+        );
+
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-filled-primary-hover-icon-color);
+        }
+      }
+
+      &.active,
+      &:active {
+        background: var(--button-filled-primary-active-background);
+        color: var(--button-filled-primary-active-color);
+        @include border-like-shadow(
+          var(--button-filled-primary-active-border-width),
+          var(--button-filled-primary-active-border)
+        );
+
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-filled-primary-active-icon-color);
+        }
+      }
+
+      &:disabled {
+        background: var(--button-filled-primary-disabled-background);
+        color: var(--button-filled-primary-disabled-color);
+        @include border-like-shadow(
+          var(--button-filled-primary-disabled-border-width),
+          var(--button-filled-primary-disabled-border)
+        );
+        opacity: 0.45;
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-filled-primary-disabled-icon-color);
+        }
+      }
+    }
+
+    //secondary
+    &-secondary {
+      background: var(--button-filled-secondary-background);
+      color: var(--button-filled-secondary-color);
+      @include border-like-shadow(
+        var(--button-filled-secondary-border-width),
+        var(--button-filled-secondary-border)
+      );
+
+      .startAdornment > svg > path,
+      .endAdornment > svg > path {
+        fill: var(--button-filled-secondary-icon-color);
+      }
+
+      &:focus {
+        background: var(--button-filled-secondary-focus-background);
+        color: var(--button-filled-secondary-focus-color);
+        @include border-like-shadow(
+          var(--button-filled-secondary-focus-border-width),
+          var(--button-filled-secondary-focus-border)
+        );
+
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-filled-secondary-focus-icon-color);
+        }
+      }
+
+      &:hover {
+        background: var(--button-filled-secondary-hover-background);
+        color: var(--button-filled-secondary-hover-color);
+        @include border-like-shadow(
+          var(--button-filled-secondary-hover-border-width),
+          var(--button-filled-secondary-hover-border)
+        );
+
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-filled-secondary-hover-icon-color);
+        }
+      }
+
+      &.active,
+      &:active {
+        background: var(--button-filled-secondary-active-background);
+        color: var(--button-filled-secondary-active-color);
+        @include border-like-shadow(
+          var(--button-filled-secondary-active-border-width),
+          var(--button-filled-secondary-active-border)
+        );
+
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-filled-secondary-active-icon-color);
+        }
+      }
+
+      &:disabled {
+        background: var(--button-filled-secondary-disabled-background);
+        color: var(--button-filled-secondary-disabled-color);
+        @include border-like-shadow(
+          var(--button-filled-secondary-disabled-border-width),
+          var(--button-filled-secondary-disabled-border)
+        );
+        opacity: 0.45;
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-filled-secondary-disabled-icon-color);
+        }
       }
     }
   }
@@ -94,11 +423,10 @@
   &.disabled {
     background: var(--button-disabled-background);
     color: var(--button-disabled-color);
-    border: none;
     cursor: not-allowed;
 
-    .startAdorment > svg > path,
-    .endAdorment > svg > path {
+    .startAdornment > svg > path,
+    .endAdornment > svg > path {
       fill: var(--button-outlined-disabled-icon-color);
     }
 
@@ -107,8 +435,8 @@
       color: var(--button-disabled-color);
       border: none;
 
-      .startAdorment > svg > path,
-      .endAdorment > svg > path {
+      .startAdornment > svg > path,
+      .endAdornment > svg > path {
         fill: var(--button-outlined-disabled-icon-color);
       }
     }
@@ -118,71 +446,71 @@
       color: var(--button-disabled-color);
       border: none;
 
-      .startAdorment > svg > path,
-      .endAdorment > svg > path {
+      .startAdornment > svg > path,
+      .endAdornment > svg > path {
         fill: var(--button-outlined-disabled-icon-color);
       }
     }
   }
 
-  .startAdorment {
+  .startAdornment {
     display: flex;
-    margin-right: spacing(4);
+    margin-right: spacing(1.25);
   }
 
-  .endAdorment {
+  .endAdornment {
     display: flex;
-    margin-left: spacing(4);
+    margin-left: spacing(1.25);
   }
 
   &.lg {
     padding: spacing(2, 4);
-    font-weight: 500;
+    font-weight: 600;
     font-size: 18px;
     line-height: 24px;
 
-    &.endAdormentPadding {
+    &.endAdornmentPadding {
       padding: spacing(2, 2, 2, 3);
     }
-    &.startAdormentPadding {
+    &.startAdornmentPadding {
       padding: spacing(2, 3, 2, 2);
     }
-    &.bothAdormentsPadding {
+    &.bothAdornmentsPadding {
       padding: spacing(2);
     }
   }
 
   &.md {
-    padding: spacing(1, 4);
+    padding: spacing(1.25, 2.75);
     font-weight: 600;
     font-size: 14px;
     line-height: 24px;
 
-    &.endAdormentPadding {
-      padding: spacing(2, 2, 2, 3);
+    &.endAdornmentPadding {
+      padding: spacing(1.25, 2.75);
     }
-    &.startAdormentPadding {
-      padding: spacing(2, 3, 2, 2);
+    &.startAdornmentPadding {
+      padding: spacing(1.25, 2.75);
     }
-    &.bothAdormentsPadding {
-      padding: spacing(2);
+    &.bothAdornmentsPadding {
+      padding: spacing(1.25, 2.75);
     }
   }
 
   &.sm {
-    padding: spacing(1, 2);
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 24px;
+    padding: spacing(0.875, 2);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
 
-    &.endAdormentPadding {
-      padding: spacing(1, 1, 1, 1.5);
+    &.endAdornmentPadding {
+      padding: spacing(0.875, 2);
     }
-    &.startAdormentPadding {
-      padding: spacing(1, 1.5, 1, 1);
+    &.startAdornmentPadding {
+      padding: spacing(0.875, 2);
     }
-    &.bothAdormentsPadding {
-      padding: spacing(1);
+    &.bothAdornmentsPadding {
+      padding: spacing(0.875, 2);
     }
   }
 }
@@ -199,169 +527,83 @@
   align-items: center;
 
   &.outlined {
-    background: var(--icon-button-outlined-default-background);
-    border: $button-border-width solid var(--icon-button-outlined-default-border);
-
-    & > svg > path {
-      fill: var(--icon-button-outlined-default-icon-color);
-    }
-
-    &:hover {
-      background: var(--icon-button-outlined-hover-background);
-      border: $button-border-width solid var(--icon-button-outlined-hover-border);
-
-      & > svg > path {
-        fill: var(--icon-button-outlined-hover-icon-color);
-      }
-    }
-
-    &:active {
-      background: var(--icon-button-outlined-active-background);
-      border: $button-border-width solid var(--icon-button-outlined-active-border);
-
-      & > svg > path {
-        fill: var(--icon-button-outlined-active-icon-color);
-      }
-    }
-
-    &.disabled {
+    &-common {
       background: var(--icon-button-outlined-default-background);
       border: $button-border-width solid var(--icon-button-outlined-default-border);
 
       & > svg > path {
-        fill: var(--icon-button-outlined-secondary-disabled-icon-color);
+        fill: var(--icon-button-outlined-default-icon-color);
+        @include transition;
       }
-      
+
       &:hover {
         background: var(--icon-button-outlined-hover-background);
         border: $button-border-width solid var(--icon-button-outlined-hover-border);
 
         & > svg > path {
-          fill: var(--icon-button-outlined-secondary-disabled-icon-color);
+          fill: var(--icon-button-outlined-hover-icon-color);
         }
       }
-  
+
       &:active {
         background: var(--icon-button-outlined-active-background);
         border: $button-border-width solid var(--icon-button-outlined-active-border);
 
         & > svg > path {
-          fill: var(--icon-button-outlined-disabled-icon-color);
+          fill: var(--icon-button-outlined-active-icon-color);
+        }
+      }
+
+      &:disabled {
+        background: var(--icon-button-outlined-default-background);
+        border: $button-border-width solid var(--icon-button-outlined-default-border);
+        opacity: 0.45;
+        pointer-events: none;
+
+        & > svg > path {
+          fill: var(--icon-button-outlined-secondary-disabled-icon-color);
         }
       }
     }
   }
 
   &.filled {
-    background: var(--icon-button-filled-default-background);
-    border: $button-border-width solid var(--icon-button-filled-default-border);
-
-    & > svg > path {
-      fill: var(--icon-button-filled-default-icon-color);
-    }
-
-    &:hover {
-      background: var(--icon-button-filled-hover-background);
-      border: $button-border-width solid var(--icon-button-filled-hover-border);
-
+    &-common{
+      background: var(--icon-button-filled-default-background);
+      border: $button-border-width solid var(--icon-button-filled-default-border);
+  
       & > svg > path {
-        fill: var(--icon-button-filled-hover-icon-color);
+        fill: var(--icon-button-filled-default-icon-color);
+        @include transition;
       }
-    }
-
-    &:active {
-      background: var(--icon-button-filled-active-background);
-      border: $button-border-width solid var(--icon-button-filled-active-border);
-
-      & > svg > path {
-        fill: var(--icon-button-filled-active-icon-color);
-      }
-    }
-
-    &.disabled {
-      background: var(--icon-button-filled-disabled-background);
-      border: none;
-
-      & > svg > path {
-        fill: var(--icon-button-filled-disabled-icon-color);
-      }
-      
+  
       &:hover {
-        background: var(--icon-button-filled-disabled-background);
-        border: none;
-
+        background: var(--icon-button-filled-hover-background);
+        border: $button-border-width solid var(--icon-button-filled-hover-border);
+  
         & > svg > path {
-          fill: var(--icon-button-filled-disabled-icon-color);
+          fill: var(--icon-button-filled-hover-icon-color);
         }
       }
   
       &:active {
+        background: var(--icon-button-filled-active-background);
+        border: $button-border-width solid var(--icon-button-filled-active-border);
+  
+        & > svg > path {
+          fill: var(--icon-button-filled-active-icon-color);
+        }
+      }
+  
+      &:disabled {
         background: var(--icon-button-filled-disabled-background);
-        border: $button-border-width solid var(--icon-button-filled-disabled-border);
-
+        opacity: 0.45;
+        pointer-events: none;
+  
         & > svg > path {
           fill: var(--icon-button-filled-disabled-icon-color);
         }
       }
     }
-  }
-
-  &.outlined-secondary {
-    background: var(--icon-button-outlined-secondary-default-background);
-    border: $button-border-width solid var(--icon-button-outlined-secondary-default-border);
-
-    & > svg > path {
-      fill: var(--icon-button-outlined-secondary-default-icon-color);
-    }
-
-    &:hover {
-      background: var(--icon-button-outlined-secondary-hover-background);
-      border: $button-border-width solid var(--icon-button-outlined-secondary-hover-border);
-
-      & > svg > path {
-        fill: var(--icon-button-outlined-secondary-hover-icon-color);
-      }
-    }
-
-    &:active {
-      background: var(--button-outlined-secondary-active-background);
-      border: $button-border-width solid var(--button-outlined-secondary-active-border);
-
-      & > svg > path {
-        fill: var(--icon-button-outlined-secondary-active-icon-color);
-      }
-    }
-
-    &.disabled {
-      background: var(--icon-button-outlined-secondary-disabled-background);
-      border: $button-border-width solid var(--icon-button-outlined-secondary-disabled-border);
-
-      & > svg > path {
-        fill: var(--icon-button-outlined-secondary-disabled-icon-color);
-      }
-      
-      &:hover {
-        background: none;
-        border: none;
-
-        & > svg > path {
-          fill: var(--icon-button-outlined-secondary-disabled-icon-color);
-        }
-      }
-  
-      &:active {
-        background: var(--icon-button-outlined-secondary-disabled-background);
-        border: $button-border-width solid var(--icon-button-outlined-secondary-disabled-border);
-
-        & > svg > path {
-          fill: var(--icon-button-outlined-secondary-disabled-icon-color);
-        }
-      }
-    }
-  }
-
-  &.disabled {
-    border: none;
-    cursor: not-allowed;
   }
 }

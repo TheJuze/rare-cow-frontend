@@ -6,8 +6,6 @@ import { BaseSVGIcon } from './BaseSVGIcon';
 
 export const StarIcon: React.FC<IconProps> = (props) => (
   <BaseSVGIcon
-    width="24"
-    height="24"
     fill="black"
     viewBox="0 0 24 24"
     {...props}

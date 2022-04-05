@@ -1,7 +1,9 @@
+@import 'src/styles/variables';
+
 $mainColorsDefault: (
-  "default-background": #28292C,
+  "default-background": #F3F3F5,
 );
 
 $mainColorsLight: (
-  "default-background": #F4F7FE,
+  "default-background": $main-background,
 );

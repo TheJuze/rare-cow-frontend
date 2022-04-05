@@ -28,7 +28,7 @@ const Template: ComponentStory<typeof Input> = () => {
           disabled={disabled}
           isCorrect={isCorrect}
           onChange={onChange}
-          endAdorment={<StarIcon />}
+          endAdornment={<StarIcon />}
         />
         <Input
           id="id2"
@@ -49,7 +49,7 @@ const Template: ComponentStory<typeof Input> = () => {
           disabled={disabled}
           isCorrect={isCorrect}
           onChange={onChange}
-          endAdorment={<StarIcon />}
+          endAdornment={<StarIcon />}
         />
         <Input
           id="id2"

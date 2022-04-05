@@ -12,7 +12,7 @@
   }
 }
 
-@mixin flex($direction: row, $alignment: normal, $justification: normal, $wrap: wrap) {
+@mixin flex($direction: row, $alignment: normal, $justification: normal, $wrap: nowrap) {
   display: flex;
   flex-direction: $direction;
   justify-content: $justification;
@@ -20,7 +20,7 @@
   flex-wrap: $wrap;
 }
 
-@mixin grid($columns: repeat(2, 1fr), $rows: 1fr, $gap: 10px) {
+@mixin grid($columns: repeat(2, 1fr), $rows: 1fr, $gap: 0px) {
   display: grid;
   grid-template-columns: $columns;
   grid-auto-rows: $rows;
