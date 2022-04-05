@@ -11,5 +11,39 @@ $mediaWidthDesktop: 1024px;
 $mediaWidthTablet: 768px;
 $mediaWidthMobile: 550px;
 
-$font-size-default: 15px;
+$font-size-default: 12px;
 $line-height-default: 18px;
+
+$border-radius: 8px;
+
+$accent: #5D5FEF;
+$accent-2: #8384EA;
+$accent-light: #E0E8FF;
+
+$red: #FD6B6B;
+$green: #1AC057;
+
+//light
+$light-4: #FFFFFF;
+
+//metal
+$metal-50: #F9FAFB;
+$metal-200: #E5E7EB;
+$metal-300: #D1D5DB;
+$metal-400: #9CA3B0;
+$metal-500: #6B7280;
+$metal-700: #384252;
+$metal-800: #1F2937;
+
+//base
+$base-50: rgba(26, 26, 26, 0.05);
+$base-500: rgba(26, 26, 26, 0.5);
+
+//dark
+$dark: #1C1C28;
+
+//shadows
+$shadow-xl: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+//background
+$main-background: #E5E5E5;
