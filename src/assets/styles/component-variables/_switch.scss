@@ -1,0 +1,35 @@
+$switchColorsDefault: (
+  "switch-default-background":#737478,
+  "switch-default-thumb": #28292C,
+  "switch-default-border": transparent,
+
+  "switch-default-background-checked": linear-gradient(90deg, #291AED 0%, #C59AFC 100%),
+  "switch-default-thumb-checked": #28292C,
+  "switch-default-border-checked": transparent,
+
+  "switch-secondary-background": #28292C,
+  "switch-secondary-thumb": #F2F2F2,
+  "switch-secondary-border": #F2F2F2,
+
+  "switch-secondary-background-checked": #64656A,
+  "switch-secondary-thumb-checked": #28292C,
+  "switch-secondary-border-checked": #64656A,
+);
+
+$switchColorsLight: (
+  "switch-default-background": #FFFFFF,
+  "switch-default-thumb": #6C778F,
+  "switch-default-border": #6C778F,
+
+  "switch-default-background-checked": linear-gradient(90deg, #291AED 0%, #C59AFC 100%),
+  "switch-default-thumb-checked": #FFFFFF,
+  "switch-default-border-checked": transparent,
+
+  "switch-secondary-background": #FFFFFF,
+  "switch-secondary-thumb": #6C778F,
+  "switch-secondary-border": #6C778F,
+
+  "switch-secondary-background-checked": #FFFFFF,
+  "switch-secondary-thumb-checked": #6C778F,
+  "switch-secondary-border-checked": #6C778F,
+);

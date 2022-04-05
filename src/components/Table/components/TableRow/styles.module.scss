@@ -1,0 +1,22 @@
+@import '../../../../assets/styles/mixins';
+@import '../../../../assets/styles/variables';
+
+.row {
+  &:last-child {
+    .cell {
+      // maybe make it different
+    }
+  }
+
+  
+}
+
+.cell {
+  position: relative;
+  padding: spacing(1.5, 2.5);
+  background: var(--table-row-default-background);
+
+  &.secondary {
+    background: var(--table-row-secondary-background);
+  }
+}

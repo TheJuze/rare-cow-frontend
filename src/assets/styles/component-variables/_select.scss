@@ -1,0 +1,57 @@
+$selectColorsDefault: (
+  "select-default-background":#353638,
+  "select-default-label": #C4C4C4,
+  "select-default-border": 1px solid #55565B,
+  "select-default-icon": #64656A,
+  "select-default-value-color": #C4C4C4,
+  "select-default-value-background": #353638,
+
+  "select-hover-background":#353638,
+  "select-hover-label": #C4C4C4,
+  "select-hover-border": 1px solid #64656A,
+  "select-hover-value-background": #2F3033,
+
+  "select-active-background":#353638,
+  "select-active-label": #64656A,
+  "select-active-border": 1px solid #8A7FF6,
+  "select-active-icon": #8A7FF6,
+
+  "select-focus-background":#353638,
+  "select-focus-label": #64656A,
+  "select-focus-border": 1px solid #8A7FF6,
+  "select-focus-icon": #8A7FF6,
+
+  "select-disabled-background":#353638,
+  "select-disabled-label": #040405,
+  "select-disabled-border": 1px solid #191A1D,
+
+  "select-error-background":#1E2023,
+  "select-error-label": #FF4040,
+  "select-error-border": 1px solid #FF4040,
+);
+
+$selectColorsLight: (
+  "select-default-background":#FFFFFF,
+  "select-default-label": #2E3A59,
+  "select-default-border": 1px solid #DFE3EC,
+
+  "select-hover-background":#FFFFFF,
+  "select-hover-label": #6C778F,
+  "select-hover-border": 1px solid #6C778F,
+
+  "select-active-background":#FFFFFF,
+  "select-active-label": #6C778F,
+  "select-active-border": 1px solid #8A7FF6,
+
+  "select-focus-background":#1E2023,
+  "select-focus-label": #8A7FF6,
+  "select-focus-border": 1px solid #8A7FF6,
+
+  "select-disabled-background":#FFFFFF,
+  "select-disabled-label": #DFE3EC,
+  "select-disabled-border": 1px solid #C5CEE0,
+
+  "select-error-background":#FFFFFF,
+  "select-error-label": #FF4040,
+  "select-error-border": 1px solid #FF4040,
+);

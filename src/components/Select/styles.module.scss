@@ -1,0 +1,163 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+
+@mixin disabled {
+  pointer-events: none;
+}
+
+.label {
+  display: inline-block;
+  margin-left: spacing(3);
+  flex: 0 0 auto;
+
+  &.disabled {
+    @include disabled;
+  }
+}
+
+.errorText {
+  margin-top: 5px;
+}
+
+.selectWithErrorWrap {
+  width: 100%;
+  flex: 1 0 auto;
+}
+
+:root {
+  .control {
+    height: 50px;
+    border-radius: 4px;
+    background: var(--select-default-background);
+    border: var(--select-default-border);
+    box-shadow: none;
+
+    &:hover {
+      background: var(--select-hover-background);
+      border: var(--select-hover-border);
+    }
+
+    &.focused {
+      background: var(--select-active-background);
+      border: var(--select-active-border);
+    }
+
+    &.open {
+      background: var(--select-active-background);
+      border: var(--select-active-border);
+
+      .indicatorsContainer > svg > g > path {
+        fill: var(--select-active-icon);
+      }
+    }
+  }
+
+  .valueContainer {
+    outline: none;
+    padding: 0;
+    margin-right: 10px;
+
+    height: 100%;
+
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .singleValue {
+    font-size: 16px;
+    font-weight: 600;
+    padding-left: spacing(3);
+    padding-top: spacing(1.5);
+    color: var(--select-default-value-color);
+  }
+}
+
+.control {
+  border-radius: 10px;
+}
+
+:root .placeholder {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:root .menu {
+  margin-top: spacing(1);
+  border-top: 0;
+  background: transparent;
+  border: var(--select-default-border);
+  z-index: 5;
+}
+
+:root .menuList {
+  padding-top: 0;
+  padding-bottom: 0;
+  border-radius: 4px;
+}
+
+:root .option {
+  padding: spacing(1.25, 3);
+  background: var(--select-default-value-background) !important;
+  transition: 0ms;
+
+  & > span {
+    color: var(--select-default-value-color) !important;
+  }
+
+  &:hover {
+    background: var(--select-hover-value-background) !important;
+    color: white;
+
+    &.dark {
+      background-color: white;
+    }
+  }
+
+  &.focused {
+    background-color: black;
+  }
+
+  &.dark {
+    background-color: black;
+    border-bottom: none;
+  }
+}
+
+:root .optionText,
+:root .noOptionsMessage {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.indicatorsContainer {
+  & > svg > g > path {
+    fill: var(--select-default-icon);
+  }
+}
+
+.dropdownIndicator {
+  font-size: 8px;
+
+  transform: rotate(0deg);
+  transition: all 200ms ease-in;
+
+  &.open {
+    transform: rotate(180deg);
+    transition: all 200ms ease-in;
+  }
+}
+
+.noOptionsMessage {
+  padding: 10px 5px;
+}
+
+.iconOption {
+  width: 34px;
+  height: 34px;
+
+  object-fit: contain;
+  object-position: center;
+
+  margin-right: 12px;
+}

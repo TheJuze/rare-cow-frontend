@@ -2,7 +2,12 @@ const path = require('path');
 module.exports = {
   framework: '@storybook/react',
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
-  addons: ['@storybook/addon-a11y', '@storybook/addon-links', '@storybook/addon-essentials'],
+  addons: [
+    '@storybook/addon-a11y',
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/preset-scss',
+  ],
   core: {
     builder: 'storybook-builder-vite',
   },
@@ -10,14 +15,6 @@ module.exports = {
     storyStoreV7: false,
   },
   async viteFinal(config, { configType }) {
-    // return {
-    //   ...config,
-    //   resolve: {
-    //     modules: {
-    //       rules: [path.resolve(__dirname, '../src')],
-    //     },
-    //   },
-    // };
     return {
       ...config,
       resolve: {
@@ -36,7 +33,7 @@ module.exports = {
           },
           {
             find: 'config',
-            replacement: path.resolve(__dirname, '../src/config'),
+            replacement: path.resolve(__dirname, '../src/congig'),
           },
           {
             find: 'containers',

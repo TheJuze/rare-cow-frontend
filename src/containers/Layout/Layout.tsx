@@ -1,6 +1,6 @@
 import { UrlObject } from 'url';
 
-import { FC, useCallback, useMemo } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
 import { Footer, Header } from 'containers';
 import { MobileNavigation } from 'containers/MobileNavigation';
@@ -15,7 +15,9 @@ import actionTypesUser from 'store/user/actionTypes';
 import { useSmoothTopScroll } from 'hooks/useSmoothTopScroll';
 import { useDispatch } from 'react-redux';
 import { updateUserState } from 'store/user/reducer';
-import s from './styles.module.scss';
+import clsx from 'clsx';
+import { Switch } from 'components/Switch';
+import styles from './styles.module.scss';
 
 export interface LayoutProps {
   route?: UrlObject | string;
@@ -55,14 +57,21 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
   const isHomePage = useMemo(() => pathname === '/', [pathname]);
 
   const isNeedToShowHeaderFooter = useMemo(
-    // eslint-disable-next-line max-len
-    () => isHomePage, // || other conditions
+    () => isHomePage,
     [isHomePage],
   );
 
+  const [islight, setIsLight] = useState(false);
+
+  const handleSwitchTheme = useCallback(() => {
+    setIsLight(!islight);
+  }, [islight]);
+
   return (
-    <div className={s.root}>
-      <div className={s.content}>
+    <div className={clsx(styles.app, { [styles.light]: islight })}>
+      <Switch checked={islight} onChange={handleSwitchTheme} />
+      <i className="icon-checkmark" />
+      <div className={styles.content}>
         <NotificationModal />
         {+width < 800 && <MobileNavigation />}
         {isNeedToShowHeaderFooter && (

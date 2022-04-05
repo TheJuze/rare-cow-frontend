@@ -1,0 +1,123 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+
+.thumbBase {
+  position: absolute;
+  content: "";
+  border-radius: 16px;
+  transition: 200ms;
+  -webkit-transition: 200ms;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+
+  &.lg {
+      width: 56px;
+      height: 32px;
+    }
+  
+  &.sm {
+    width: 32px;
+    height: 20px;
+  }
+
+  & > input:checked + .slider:before {
+    -webkit-transform: translateX(calc(100% - .2em));
+    -ms-transform: translateX(calc(100% - .2em));
+    transform: translateX(calc(100% - .2em));
+  }
+
+  & > input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .slider {
+      &.default {
+        background: var(--switch-default-background-checked);
+        border: 1px solid var(--switch-default-border-checked);
+        &:before {
+          background: var(--switch-default-thumb-checked);
+        }
+      }
+  
+      &.secondary {
+        background: var(--switch-secondary-background-checked);
+        border: 1px solid var(--switch-secondary-border-checked);
+        &:before {
+          background: var(--switch-secondary-thumb-checked);
+        }
+      }
+    }
+
+    &:checked + .slider:active::before {
+      left: -.55em;
+    }
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -webkit-transition: 200ms;
+    transition: 200ms;
+    border-radius: 64px;
+    background-origin: border-box !important;
+
+    &.default {
+      background: var(--switch-default-background);
+      border: 1px solid var(--switch-default-border);
+      &:before {
+        background: var(--switch-default-thumb);
+      }
+    }
+
+    &.secondary {
+      background: var(--switch-secondary-background);
+      border: 1px solid var(--switch-secondary-border);
+      &:before {
+        background: var(--switch-secondary-thumb);
+      }
+    }
+
+    &.lg {
+      &:before {
+        @extend .thumbBase;
+        width: 26px;
+        height: 26px;
+        left: 3px;
+        bottom: 2px;
+      }
+    }
+
+    &.sm {
+      &:before {
+        @extend .thumbBase;
+        width: 15px;
+        height: 15px;
+        left: 2px;
+        bottom: 1.5px;
+      }
+    }
+
+    &:active {
+      &.lg {
+
+        &:before {
+          width: 32px;
+        }
+      }
+
+      &.sm {
+        &:before {
+          width: 20px;
+        }
+      }
+    }
+  }
+}
