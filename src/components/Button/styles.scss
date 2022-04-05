@@ -346,7 +346,8 @@
 
       .startAdornment > svg > path,
       .endAdornment > svg > path {
-        fill: var(--button-filled-secondary-icon-color);
+        stroke: var(--button-filled-secondary-icon-color);
+        fill: transparent;
       }
 
       &:focus {
@@ -359,7 +360,8 @@
 
         .startAdornment > svg > path,
         .endAdornment > svg > path {
-          fill: var(--button-filled-secondary-focus-icon-color);
+          stroke: var(--button-filled-secondary-icon-color);
+          fill: transparent;
         }
       }
 
@@ -373,6 +375,7 @@
 
         .startAdornment > svg > path,
         .endAdornment > svg > path {
+          stroke: transparent;
           fill: var(--button-filled-secondary-hover-icon-color);
         }
       }
@@ -388,7 +391,8 @@
 
         .startAdornment > svg > path,
         .endAdornment > svg > path {
-          fill: var(--button-filled-secondary-active-icon-color);
+          stroke: var(--button-filled-secondary-active-icon-color);
+          fill: transparent;
         }
       }
 

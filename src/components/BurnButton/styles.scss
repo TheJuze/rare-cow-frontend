@@ -1,0 +1,20 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.burnButton {
+  &.button {
+    font-size: 16px;
+    line-height: 22px;
+
+    &.md.startAdornmentPadding {
+      padding: spacing(1.125, 3);
+    }
+    .startAdornment {
+      margin-right: spacing(0.8);
+      svg {
+        transform: scale(1.2);
+      }
+    }
+  }
+}

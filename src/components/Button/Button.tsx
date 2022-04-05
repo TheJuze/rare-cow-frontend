@@ -11,7 +11,7 @@ import {
 
 import cn from 'clsx';
 
-import styles from './styles.module.scss';
+import './styles.scss';
 
 export interface ButtonProps {
   variant?: 'filled' | 'outlined' | 'text';
@@ -88,28 +88,26 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
     };
   }, [to, href, type, disabled, btnRef, onClick, onMouseLeave, onMouseOver]);
 
-  return (
-    createElement(
-      creationData.tag,
-      {
-        ...creationData.props,
-        className: cn(
-          icon ? styles.icon : styles.button,
-          styles[`${variant}-${color}`],
-          styles[size],
-          { [styles.disabled]: disabled },
-          { [styles.startAdornmentPadding]: startAdornment },
-          { [styles.endAdornmentPadding]: endAdornment },
-          { [styles.bothAdornmentsPadding]: endAdornment && startAdornment },
-          { [styles.active]: active },
-          className,
-        ),
-      },
-      icon || [
-        startAdornment && <span className={styles.startAdornment}>{startAdornment}</span>,
-        children,
-        endAdornment && <span className={styles.endAdornment}>{endAdornment}</span>,
-      ],
-    )
+  return createElement(
+    creationData.tag,
+    {
+      ...creationData.props,
+      className: cn(
+        icon ? 'icon' : 'button',
+        `${variant}-${color}`,
+        `${size}`,
+        { disabled },
+        { startAdornmentPadding: startAdornment },
+        { endAdornmentPadding: endAdornment },
+        { bothAdornmentsPadding: endAdornment && startAdornment },
+        { active },
+        className,
+      ),
+    },
+    icon || [
+      startAdornment && <span className="startAdornment">{startAdornment}</span>,
+      children,
+      endAdornment && <span className="endAdornment">{endAdornment}</span>,
+    ],
   );
 };
