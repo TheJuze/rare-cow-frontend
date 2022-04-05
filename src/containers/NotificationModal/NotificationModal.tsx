@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import { setActiveModal } from 'store/modals/reducer';
 import { useShallowSelector } from 'hooks';
 import { Button } from 'components';
-import s from './styles.module.scss';
+import styles from './styles.module.scss';
 
 import { modalData } from './NotificationModal.helper';
 
@@ -43,18 +43,18 @@ export const NotificationModal: VFC<NotificationModalProps> = ({ className, ...p
   );
 
   return (
-    <Modal open={modalState.open} size="lg" onClose={closeModal} className={clsx(s.root, className)} {...props}>
+    <Modal open={modalState.open} size="lg" onClose={closeModal} className={clsx(styles.root, className)} {...props}>
       <div>
-        <div className={clsx(s.title, 'modalTitle')}>
+        <div className={clsx(styles.title, 'modalTitle')}>
           {data?.title1} <span>{data?.title2}</span>
         </div>
-        <div>{data?.icon && <data.icon className={s.error} />}</div>
+        <div>{data?.icon && <data.icon className={styles.error} />}</div>
         {modalState.activeModal === Modals.SendRejected ? (
-          <div className={clsx(s.text, 's')}>{data?.title5}</div>
+          <div className={clsx(styles.text, 's')}>{data?.title5}</div>
         ) : (
           <>
-            <div className={s.subtitle}>{data?.title3}</div>
-            <div className={clsx(s.text, 'caption')}>{data?.title4}</div>
+            <div className={styles.subtitle}>{data?.title3}</div>
+            <div className={clsx(styles.text, 'caption')}>{data?.title4}</div>
           </>
         )}
         {modalState.activeModal === Modals.ApproveRejected && (

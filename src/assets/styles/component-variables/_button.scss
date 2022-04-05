@@ -1,0 +1,85 @@
+$button-border-width: 1px;
+
+$buttonColorsDefault: (
+  ////outlined
+  //background
+  "button-outlined-default-background": transparent,
+  "button-outlined-hover-background": linear-gradient(90deg, #291AED 0%, #C59AFC 100%),
+  "button-outlined-active-background": #8A7FF6,
+  //border
+  "button-outlined-default-border": #8A7FF6,
+  "button-outlined-hover-border": #8A7FF6,
+  "button-outlined-active-border": transparent,
+  //color
+  "button-outlined-default-color": #FFFFFF,
+  "button-outlined-hover-color": #FFFFFF,
+  "button-outlined-active-color": #FFFFFF,
+  //icon
+  "button-outlined-default-icon-color": #8A7FF6,
+  "button-outlined-hover-icon-color": #E9D9FE,
+  "button-outlined-active-icon-color": #E9D9FE,
+  "button-outlined-disabled-icon-color": #64656A,
+  ////filled
+  //background
+  "button-filled-default-background": linear-gradient(90deg, #291AED 0%, #C59AFC 100%),
+  "button-filled-hover-background": linear-gradient(90deg, #BF8FFB 0%, #877EF6 100%),
+  "button-filled-active-background": #8A7FF6,
+  //border
+  "button-filled-default-border": transparent,
+  "button-filled-hover-border": transparent,
+  "button-filled-active-border": #8A7FF6,
+  //color
+  "button-filled-default-color": #FFFFFF,
+  "button-filled-hover-color": #FFFFFF,
+  "button-filled-active-color": #FFFFFF,
+  //icon
+  "button-filled-default-icon-color": #8A7FF6,
+  "button-filled-hover-icon-color": #E9D9FE,
+  "button-filled-active-icon-color": #E9D9FE,
+  "button-filled-disabled-icon-color": #64656A,
+  //misc
+  "button-disabled-background": #191A1D,
+  "button-disabled-color": #64656A,
+);
+
+$buttonColorsLight: (
+  ////outlined
+  //background
+  "button-outlined-default-background": #FFFFFF,
+  "button-outlined-hover-background": linear-gradient(90deg, #291AED 0%, #C59AFC 100%),
+  "button-outlined-active-background": #8A7FF6,
+  //border
+  "button-outlined-default-border": #DFE3EC,
+  "button-outlined-hover-border": transparent,
+  "button-outlined-active-border": #8A7FF6,
+  //color
+  "button-outlined-default-color": #2E3A59,
+  "button-outlined-hover-color": #FFFFFF,
+  "button-outlined-active-color": #FFFFFF,
+  //icon
+  "button-outlined-default-icon-color": #6C778F,
+  "button-outlined-hover-icon-color": #E9D9FE,
+  "button-outlined-active-icon-color": #E9D9FE,
+  "button-outlined-disabled-icon-color": #C5CEE0,
+  ////filled
+  //background
+  "button-filled-default-background": linear-gradient(90deg, #291AED 0%, #C59AFC 100%),
+  "button-filled-hover-background": linear-gradient(90deg, #BF8FFB 0%, #877EF6 100%),
+  "button-filled-active-background": #8A7FF6,
+  //border
+  "button-filled-default-border": transparent,
+  "button-filled-hover-border": transparent,
+  "button-filled-active-border": #8A7FF6,
+  //color
+  "button-filled-default-color": #FFFFFF,
+  "button-filled-hover-color": #FFFFFF,
+  "button-filled-active-color": #FFFFFF,
+  //icon
+  "button-filled-default-icon-color": #6C778F,
+  "button-filled-hover-icon-color": #E9D9FE,
+  "button-filled-active-icon-color": #E9D9FE,
+  "button-filled-disabled-icon-color": #C5CEE0,
+  //misc
+  "button-disabled-background": #FFFFFF,
+  "button-disabled-color": #64656A,
+);

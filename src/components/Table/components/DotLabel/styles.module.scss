@@ -1,0 +1,15 @@
+@import '../../../../assets/styles/mixins';
+@import '../../../../assets/styles/variables';
+
+.dot {
+  @include paginationItem;
+}
+
+.dotWrap {
+  pointer-events: none;
+}
+
+.dot {
+  @include flexbox;
+  height: 100%;
+}

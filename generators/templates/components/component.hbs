@@ -2,7 +2,7 @@ import { VFC } from 'react';
 
 import cn from 'clsx';
 
-import s from './styles.module.scss';
+import styles from './styles.module.scss';
 
 export interface {{ properCase name }}Props {
   className?: string;
@@ -10,7 +10,7 @@ export interface {{ properCase name }}Props {
 
 export const {{ properCase name }}: VFC<{{ properCase name }}Props> = ({ className }) => {
   return (
-    <div className={cn(s.{{ camelCase name }}, className)}>
+    <div className={cn(styles.{{ camelCase name }}, className)}>
       Hello World!
     </div>
   );

@@ -1,0 +1,79 @@
+@import '../../assets/styles/mixins';
+@import '../../assets/styles/variables';
+
+.h1 {
+  font-size: 64px;
+  line-height: 64px;
+}
+
+.h2 {
+  font-size: 32px;
+  line-height: 40px;
+}
+
+.h3 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.text {
+  &.xs {
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  &.s {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  &.m {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  &.l {
+    font-size: 18px;
+    line-height: 30px;
+  }
+}
+
+.default {
+  color: var(--typography-default-color);
+}
+
+.secondary {
+  color: var(--typography-secondary-color);;
+}
+
+.error {
+  color: var(--typography-error-color);;;
+}
+
+.normalWeight {
+  font-weight: 400;
+}
+
+.mediumWeight {
+  font-weight: 500;
+}
+
+.semiBoldWeight {
+  font-weight: 600;
+}
+
+.boldWeight {
+  font-weight: 700;
+}

@@ -1,0 +1,58 @@
+$inputColorsDefault: (
+  "input-default-background":#1E2023,
+  "input-default-label": #C4C4C4,
+  "input-default-border": 1px solid #25272E,
+  "input-default-icon": #8F9BB3,
+
+  "input-hover-background":#1E2023,
+  "input-hover-label": #C4C4C4,
+  "input-hover-border": 1px solid #64656A,
+  "input-hover-icon": #8F9BB3,
+
+  "input-active-background":#1E2023,
+  "input-active-label": #64656A,
+  "input-active-border": 1px solid #8A7FF6,
+  "input-active-caret": #8A7FF6,
+  "input-active-icon": #8A7FF6,
+
+  "input-focus-background":#1E2023,
+  "input-focus-label": #64656A,
+  "input-focus-border": 1px solid #8A7FF6,
+  "input-focus-icon": #8A7FF6,
+
+  "input-disabled-background":#191A1D,
+  "input-disabled-label": #64656A,
+  "input-disabled-border": 1px solid #191A1D,
+  "input-disabled-icon": #8F9BB3,
+
+  "input-error-background":#1E2023,
+  "input-error-label": #FF4040,
+  "input-error-border": 1px solid #FF4040,
+  "input-error-icon": #FF4040,
+);
+
+$inputColorsLight: (
+  "input-default-background":#FFFFFF,
+  "input-default-label": #2E3A59,
+  "input-default-border": 1px solid #DFE3EC,
+
+  "input-hover-background":#FFFFFF,
+  "input-hover-label": #6C778F,
+  "input-hover-border": 1px solid #6C778F,
+
+  "input-active-background":#FFFFFF,
+  "input-active-label": #6C778F,
+  "input-active-border": 1px solid #8A7FF6,
+
+  "input-focus-background":#1E2023,
+  "input-focus-label": #8A7FF6,
+  "input-focus-border": 1px solid #8A7FF6,
+
+  "input-disabled-background":#FFFFFF,
+  "input-disabled-label": #DFE3EC,
+  "input-disabled-border": 1px solid #C5CEE0,
+
+  "input-error-background":#FFFFFF,
+  "input-error-label": #FF4040,
+  "input-error-border": 1px solid #FF4040,
+);

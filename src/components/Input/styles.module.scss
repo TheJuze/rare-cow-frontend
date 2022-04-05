@@ -1,0 +1,222 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+
+.labelTextCommon {
+  position: absolute;
+  transform: translateY(-50%);
+  z-index: 1;
+  color: var(--input-default-label);
+  transition: 200ms ease-out;
+  background: var(--input-default-background);
+}
+
+.labelTextFocusedCommon {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--input-focus-label)
+}
+
+
+.label {
+  width: 100%;
+  display: flex;
+
+  &:focus-within .input + .labelText {
+    @extend .labelTextFocusedCommon;
+    top: 14px;
+  }
+
+  &:focus-within .textarea + .labelText {
+    @extend .labelTextFocusedCommon;
+    top: 20px;
+  }
+}
+
+.input + .labelText {
+  @extend .labelTextCommon;
+  left: spacing(2.5);
+  top: 50%;
+}
+
+.textarea + .labelText {
+  @extend .labelTextCommon;
+  left: spacing(3);
+  top: 25%;
+  padding-right: 4px;
+  border-radius: 2px;
+}
+
+.inputWrap {
+  position: relative;
+  width: 100%;
+
+  &.required {
+
+    &::after {
+      position: absolute;
+      content: '*';
+      top: 5px;
+      left: 5px;
+
+      color: red;
+    }
+  }
+}
+
+.input, .textarea {
+  position: relative;
+  width: 100%;
+  height: 56px;
+  padding: spacing(2, 2.5);
+  box-sizing: border-box;
+  border-radius: 4px;
+  transition: 200ms all;
+  font-size: 16px;
+
+  background: var(--input-default-background);
+  border: var(--input-default-border);
+  color: var(--typography-default-color);
+
+  &:hover {
+    background: var(--input-hover-background);
+    border: var(--input-hover-border);
+    color: var(--typography-default-color);
+    & + .labelText {
+      color: var(--input-hover-label);
+    }
+  }
+
+  &:not(:placeholder-shown) {
+    & + .labelText {
+      top: 14px;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 20px;
+      color: var(--input-active-label);
+    }
+
+    & ~ .endAdorment > svg > path {
+      fill: var(--input-focus-icon);
+    }
+    padding-top: spacing(3);
+  }
+
+  &:focus {
+    background: var(--input-active-background);
+    border: var(--input-active-border);
+    color: var(--typography-default-color);
+    outline: none;
+    box-shadow: none;
+    caret-color: var(--input-active-caret);
+    padding-top: spacing(3);
+    transition: 0s;
+    & ~ .endAdorment > svg > path {
+      fill: var(--input-focus-icon);
+    }
+  }
+
+  &:active {
+    background: var(--input-active-background);
+    border: var(--input-active-border);
+    color: var(--typography-default-color);
+  }
+
+  // &::placeholder {
+  //   color: white;
+  // }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &.error {
+    background-color: var(--input-error-background);;
+    border: var(--input-error-border);
+    & ~ .endAdorment > svg > path {
+      fill: var(--input-error-icon);
+    }
+
+    & + .labelText {
+      color: var(--input-error-label);
+    }
+
+    &:focus-within + .labelText {
+      color: var(--input-error-label);
+    }
+
+    &:not(:placeholder-shown) + .labelText {
+      color: var(--input-error-label);
+    }
+  }
+
+  &[type="number"] {
+    appearance: none;
+    -moz-appearance: textfield;
+
+    &:hover,
+    &:focus {
+      appearance: none;
+      -moz-appearance: textfield;
+    }
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}
+
+.textError {
+  position: absolute;
+  width: 100%;
+  display: inline-block;
+
+  margin-top: 3px;
+
+  text-align: right;
+  font-size: 10px;
+  color: red;
+}
+
+.icon {
+  position: absolute;
+  font-size: 14px;
+  transform: translateY(-50%);
+  top: 50%;
+  right: 25px;
+}
+
+.textarea {
+  padding: spacing(8, 3, 3, 3);
+  height: 160px;
+  resize: none;
+  position: relative;
+  transition: 200ms;
+
+  &:focus {
+    padding-top: spacing(4);
+    transition: 200ms;
+  }
+
+  &:not(:placeholder-shown) {
+    padding-top: spacing(4);
+    & + .labelText {
+      top: 20px;
+      color: var(--input-active-label)
+    }
+  }
+}
+
+.endAdorment {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: spacing(3);
+  transform: translateY(-50%);
+
+  & > svg > path {
+    fill: var(--input-default-icon);
+  }
+}

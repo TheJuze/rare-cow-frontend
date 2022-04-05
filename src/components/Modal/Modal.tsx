@@ -14,22 +14,14 @@ export interface ModalProps extends DialogProps {
 }
 
 export const Modal: FC<ModalProps> = (props) => {
-  const { customTitle = ' ', open, className, children, onClose, size = 'md' } = props;
+  const { customTitle = ' ', open, children, onClose } = props;
 
   const jsxTitle = useMemo(() => (typeof customTitle === 'string' ? <div className={clsx(s.title, 'l')}>{customTitle}</div> : customTitle), [customTitle]);
   return (
     <DialogWrap
-      transitionDuration={{
-        enter: 200,
-        exit: 0,
-      }}
       open={open}
       onClose={onClose}
       {...omit({ ...props }, 'customTitle')}
-      classes={{
-        root: className,
-        paper: clsx(s.root, s[size]),
-      }}
     >
       <div className={s.modalTitle}>{customTitle && jsxTitle}</div>
       {children}
