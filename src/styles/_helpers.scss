@@ -1,0 +1,23 @@
+@use "sass:list";
+
+@import 'mixins';
+@import 'variables';
+
+@function scale-size($unit){
+    @return $unit * $main-unit;
+}
+
+@function map($array, $func){
+    $result: '';
+    @for $i from 0 through length($array) - 1{
+        $result: $result + call(get-function($func), list.nth($array, $i + 1));
+        @if $i != length($array) - 1{
+            $result: $result + ' ';
+        }
+    }
+    @return $result;
+}
+
+@mixin space($property, $spaces...){
+    #{$property}: unquote(map($spaces, scale-size));
+}

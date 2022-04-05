@@ -11,10 +11,12 @@ $mediaWidthDesktop: 1024px;
 $mediaWidthTablet: 768px;
 $mediaWidthMobile: 550px;
 
-$font-size-default: 12px;
-$line-height-default: 18px;
+$main-unit: 8px;
 
-$border-radius: 8px;
+$font-size-default: $main-unit * 1.5;
+$line-height-default: $main-unit * 2.25;
+
+$border-radius: $main-unit;
 
 $accent: #5D5FEF;
 $accent-2: #8384EA;
