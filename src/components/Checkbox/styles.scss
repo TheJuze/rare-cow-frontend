@@ -3,5 +3,6 @@
 @import 'src/styles/helpers';
 
 .checkbox { 
+    margin: space(28, 24, 15, 120);
     @include border-radius("card");
 }
