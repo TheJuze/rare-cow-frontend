@@ -1,0 +1,7 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.checkbox { 
+    @include border-radius("card");
+}

@@ -22,8 +22,23 @@
   #{$property}: unquote(map($spaces, scale-size));
 }
 
-@mixin shadow-xl() {
-  box-shadow: $shadow-xl;
+@mixin shadow-0() {
+  box-shadow: $shadow-0;
+}
+
+@mixin border-radius($type: "large-card"){
+  @if $type == "large-card"{
+    border-radius: $main-unit * 2;
+  }
+  @if $type ==  "card"{
+    border-radius: $main-unit * 2.5;
+  }
+  @if type == "input"{
+    border-radius:  $main-unit;
+  }
+  @if type == "small-card"{
+    border-radius: $main-unit * 1.5;
+  }
 }
 
 @mixin border-like-shadow($width: 1px, $color: $color-dark, $extra: false) {

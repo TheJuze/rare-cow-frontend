@@ -20,14 +20,24 @@ $border-radius: $main-unit;
 
 $accent: #5D5FEF;
 $accent-2: #8384EA;
-$accent-100: #E0E8FF;
+$light: #E0E8FF;
 $accent-300: #A6B4FC;
 
 $red: #FD6B6B;
 $green: #1AC057;
 
 //light
+$light: #E4E4EB;
+$light-2: #EBEBF0;
+$light-3: #F2F2F5;
 $light-4: #FFFFFF;
+
+//dark
+$dark: #1C1C28;
+$dark-1: #28293D;
+$dark-2: #555770;
+$dark-3: #8F90A6;
+$dark-4: #C7C9D9;
 
 //metal
 $metal-50: #F9FAFB;
@@ -39,8 +49,12 @@ $metal-600: #4B5563;
 $metal-700: #384252;
 $metal-800: #1F2937;
 
+$black: $dark;
+$white: $light-4;
+
 //base
 $base-50: rgba(26, 26, 26, 0.05);
+$base-200: rgba(26, 26, 26, 0.2);
 $base-500: rgba(26, 26, 26, 0.5);
 $base-400: rgba(26, 26, 26, 0.4);
 $base-900: #1A1A1A;
@@ -49,8 +63,8 @@ $base-900: #1A1A1A;
 $dark: #1C1C28;
 
 //shadows
-$shadow-xl: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.1);
+$shadow-0: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.1);
 
 //background
-$main-background: #E5E5E5;
+$main-background: #F3F3F5;
 $block-background: #FCFCFC;

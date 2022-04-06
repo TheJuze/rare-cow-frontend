@@ -39,8 +39,8 @@ $buttonColorsDefault: (
   //background
   'button-outlined-primary-background': $metal-50,
   'button-outlined-primary-hover-background': $base-50,
-  'button-outlined-primary-active-background': $accent-100,
-  'button-outlined-primary-focus-background': $accent-100,
+  'button-outlined-primary-active-background': $light,
+  'button-outlined-primary-focus-background': $light,
   'button-outlined-primary-disabled-background': $metal-50,
   //border
   'button-outlined-primary-border': $metal-300,
@@ -102,7 +102,7 @@ $buttonColorsDefault: (
   //background
   'button-filled-primary-background': $metal-200,
   'button-filled-primary-hover-background': $metal-200,
-  'button-filled-primary-active-background': $accent-100,
+  'button-filled-primary-active-background': $light,
   'button-filled-primary-focus-background': $metal-200,
   'button-filled-primary-disabled-background': $metal-200,
   //border
@@ -164,8 +164,8 @@ $buttonColorsDefault: (
   //background
   'button-filled-tertiary-background': $metal-200,
   'button-filled-tertiary-hover-background': $metal-200,
-  'button-filled-tertiary-active-background': $accent-100,
-  'button-filled-tertiary-focus-background': $accent-100,
+  'button-filled-tertiary-active-background': $light,
+  'button-filled-tertiary-focus-background': $light,
   'button-filled-tertiary-disabled-background': $metal-200,
   //border
   'button-filled-tertiary-border': transparent,
