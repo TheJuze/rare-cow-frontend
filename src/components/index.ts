@@ -4,3 +4,4 @@ export * from './Toastify';
 export * from './Modal';
 export * from './Typography';
 export * from './Spinner';
+export * from './LikeButton';

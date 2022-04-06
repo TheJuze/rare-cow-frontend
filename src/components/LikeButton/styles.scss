@@ -1,0 +1,37 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.likeButton {
+  &.button {
+    font-size: 16px;
+    line-height: 24px;
+
+    &.md.startAdornmentPadding {
+      padding: spacing(1.125, 1.75);
+    }
+    .startAdornment {
+      margin-right: spacing(0.5);
+      svg {
+        path {
+          &#main {
+            fill: transparent;
+            @include transition;
+          }
+        }
+      }
+    }
+  }
+  &.liked.button {
+    .startAdornment {
+      margin-right: spacing(0.5);
+      svg {
+        path {
+          &#main {
+            fill: var(--button-filled-primary-active-icon-color);
+          }
+        }
+      }
+    }
+  }
+}
