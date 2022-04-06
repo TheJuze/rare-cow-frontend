@@ -66,7 +66,7 @@ $spacing: (4,8,16,24,32,40,48,56,64,80,100);
   }
 }
 
-@mixin border-like-shadow($width: 1px, $color: $color-dark, $extra: false) {
+@mixin border-like-shadow($width: 1px, $color: $metal-300, $extra: false) {
   border: 0px solid transparent;
   @if $extra {
     box-shadow: 0px 0px 0px $width $color, $extra;
