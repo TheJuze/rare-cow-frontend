@@ -22,7 +22,7 @@ export interface InputProps {
   classNameInputWrap?: string;
   classNameLabel?: string;
   error?: boolean | string;
-  endAdorment?: ReactElement | string;
+  endAdornment?: ReactElement | string;
   disabled?: boolean;
   isCorrect?: boolean | '';
   autoComplete?: 'off' | 'on';
@@ -45,7 +45,7 @@ export const Input:VFC<InputProps> = ({
   classNameLabel,
   placeholder,
   error,
-  endAdorment,
+  endAdornment,
   disabled = false,
   isCorrect = false,
   autoComplete = 'off',
@@ -102,7 +102,7 @@ export const Input:VFC<InputProps> = ({
             {label}
           </Text>
         )}
-        {(endAdorment && component !== 'textarea') && <span className={styles.endAdorment}>{endAdorment}</span>}
+        {(endAdornment && component !== 'textarea') && <span className={styles.endAdornment}>{endAdornment}</span>}
       </div>
     </label>
     {error && typeof error === 'string' && (

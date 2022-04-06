@@ -96,7 +96,7 @@
       color: var(--input-active-label);
     }
 
-    & ~ .endAdorment > svg > path {
+    & ~ .endAdornment > svg > path {
       fill: var(--input-focus-icon);
     }
     padding-top: spacing(3);
@@ -111,7 +111,7 @@
     caret-color: var(--input-active-caret);
     padding-top: spacing(3);
     transition: 0s;
-    & ~ .endAdorment > svg > path {
+    & ~ .endAdornment > svg > path {
       fill: var(--input-focus-icon);
     }
   }
@@ -133,7 +133,7 @@
   &.error {
     background-color: var(--input-error-background);;
     border: var(--input-error-border);
-    & ~ .endAdorment > svg > path {
+    & ~ .endAdornment > svg > path {
       fill: var(--input-error-icon);
     }
 
@@ -209,7 +209,7 @@
   }
 }
 
-.endAdorment {
+.endAdornment {
   position: absolute;
   z-index: 1;
   top: 50%;

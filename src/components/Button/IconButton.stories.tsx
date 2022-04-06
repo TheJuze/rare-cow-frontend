@@ -11,7 +11,7 @@ export default {
 } as ComponentMeta<typeof Button>;
 
 const Template: ComponentStory<typeof Button> = (args) => (
-  <div style={{ display: 'flex' }}>
+  <div style={{ display: 'flex', gap: '10px' }}>
     <div>
       <Text>Outlined icon button</Text>
       <Button {...args} icon={<StarIcon />}>Button</Button>
@@ -20,15 +20,6 @@ const Template: ComponentStory<typeof Button> = (args) => (
       <Button {...args} icon={<StarIcon />} to="/profile">Button</Button>
       Anchor
       <Button {...args} icon={<StarIcon />} href="https://google.com">Button</Button>
-    </div>
-    <div>
-      <Text>Outlined secondaty button</Text>
-      <Button {...args} variant="outlined-secondary" icon={<StarIcon />}>Button</Button>
-      <Button {...args} variant="outlined-secondary" icon={<StarIcon />} disabled>Button</Button>
-      Link
-      <Button {...args} variant="outlined-secondary" icon={<StarIcon />} to="/profile">Button</Button>
-      Anchor
-      <Button {...args} variant="outlined-secondary" icon={<StarIcon />} href="https://google.com">Button</Button>
     </div>
     <div>
       <Text>Filled icon button</Text>

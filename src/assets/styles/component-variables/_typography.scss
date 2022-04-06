@@ -1,11 +1,13 @@
+@import 'src/styles/variables';
+
 $typographyColorsDefault: (
-  "typography-default-color": #FFFFFF,
-  "typography-secondary-color": #EEEEEE,
-  "typography-error-color": #FF4040,
+  "typography-default-color": $metal-500,
+  "typography-secondary-color": $metal-500,
+  "typography-error-color": $red,
 );
 
 $typographyColorsLight: (
-  "typography-default-color": #192038,
-  "typography-secondary-color": #8A7FF6,
-  "typography-error-color": #FF4040,
+  "typography-default-color": $metal-500,
+  "typography-secondary-color": $metal-500,
+  "typography-error-color": $red,
 );

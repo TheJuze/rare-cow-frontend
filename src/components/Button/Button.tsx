@@ -14,17 +14,19 @@ import cn from 'clsx';
 import styles from './styles.module.scss';
 
 export interface ButtonProps {
-  variant?: 'filled' | 'outlined' | 'outlined-secondary' | 'text';
+  variant?: 'filled' | 'outlined' | 'text';
+  color?: 'common' | 'primary' | 'secondary';
   size?: 'lg' | 'md' | 'sm';
   type?: 'button' | 'submit';
   disabled?: boolean;
+  active?: boolean;
   style?: CSSProperties;
   href?: string;
   btnRef?: RefObject<HTMLButtonElement>;
   to?: string;
   className?: string;
-  startAdorment?: ReactElement | string;
-  endAdorment?: ReactElement | string;
+  startAdornment?: ReactElement | string;
+  endAdornment?: ReactElement | string;
   icon?: ReactElement;
   onClick?: (event: never) => void;
   onMouseLeave?: (event: never) => void;
@@ -33,15 +35,17 @@ export interface ButtonProps {
 
 export const Button: FC<PropsWithChildren<ButtonProps>> = ({
   variant = 'outlined',
-  size = 'lg',
+  size = 'md',
+  color = 'common',
   className,
   type = 'button',
   disabled,
+  active,
   href,
   btnRef,
   to,
-  startAdorment,
-  endAdorment,
+  startAdornment,
+  endAdornment,
   icon,
   onClick = () => {},
   onMouseLeave,
@@ -52,6 +56,7 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
     if (to) {
       return {
         tag: 'a',
+        tabIndex: disabled ? -1 : 0,
         props: {
           to,
         },
@@ -61,6 +66,7 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
     if (href) {
       return {
         tag: 'a',
+        tabIndex: disabled ? -1 : 0,
         props: {
           target: '_blank',
           rel: 'noopener noreferrer',
@@ -73,13 +79,14 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
       tag: 'button',
       props: {
         type,
+        disabled,
         ref: btnRef,
         onClick,
         onMouseLeave,
         onMouseOver,
       },
     };
-  }, [to, href, type, btnRef, onClick, onMouseLeave, onMouseOver]);
+  }, [to, href, type, disabled, btnRef, onClick, onMouseLeave, onMouseOver]);
 
   return (
     createElement(
@@ -88,19 +95,20 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
         ...creationData.props,
         className: cn(
           icon ? styles.icon : styles.button,
-          styles[variant],
+          styles[`${variant}-${color}`],
           styles[size],
           { [styles.disabled]: disabled },
-          { [styles.startAdormentPadding]: startAdorment },
-          { [styles.endAdormentPadding]: endAdorment },
-          { [styles.bothAdormentsPadding]: endAdorment && startAdorment },
+          { [styles.startAdornmentPadding]: startAdornment },
+          { [styles.endAdornmentPadding]: endAdornment },
+          { [styles.bothAdornmentsPadding]: endAdornment && startAdornment },
+          { [styles.active]: active },
           className,
         ),
       },
       icon || [
-        startAdorment && <span className={styles.startAdorment}>{startAdorment}</span>,
+        startAdornment && <span className={styles.startAdornment}>{startAdornment}</span>,
         children,
-        endAdorment && <span className={styles.endAdorment}>{endAdorment}</span>,
+        endAdornment && <span className={styles.endAdornment}>{endAdornment}</span>,
       ],
     )
   );

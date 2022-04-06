@@ -1,23 +1,50 @@
-@use "sass:list";
+@use 'sass:list';
 
 @import 'mixins';
 @import 'variables';
 
-@function scale-size($unit){
-    @return $unit * $main-unit;
+@function scale-size($unit) {
+  @return $unit * $main-unit;
 }
 
-@function map($array, $func){
-    $result: '';
-    @for $i from 0 through length($array) - 1{
-        $result: $result + call(get-function($func), list.nth($array, $i + 1));
-        @if $i != length($array) - 1{
-            $result: $result + ' ';
-        }
+@function map($array, $func) {
+  $result: '';
+  @for $i from 0 through length($array) - 1 {
+    $result: $result + call(get-function($func), list.nth($array, $i + 1));
+    @if $i != length($array) - 1 {
+      $result: $result + ' ';
     }
-    @return $result;
+  }
+  @return $result;
 }
 
-@mixin space($property, $spaces...){
-    #{$property}: unquote(map($spaces, scale-size));
+@mixin space($property, $spaces...) {
+  #{$property}: unquote(map($spaces, scale-size));
+}
+
+@mixin shadow-xl() {
+  box-shadow: $shadow-xl;
+}
+
+@mixin border-like-shadow($width: 1px, $color: $color-dark, $extra: false) {
+  border: 0px solid transparent;
+  @if $extra {
+    box-shadow: 0px 0px 0px $width $color, $extra;
+  } @else {
+    box-shadow: 0px 0px 0px $width $color;
+  }
+}
+
+@mixin transition(
+  $duration: 350ms,
+  $function: ease-in-out,
+  $delay: 0ms,
+  $property: all,
+  $next: false
+) {
+  @if ($next) {
+    transition: $property $duration $function $delay, $next;
+  } @else {
+    transition: $property $duration $function $delay;
+  }
 }
