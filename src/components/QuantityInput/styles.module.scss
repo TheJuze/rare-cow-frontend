@@ -1,0 +1,45 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+@import '../../assets/styles/mixins';
+
+.quantityInput { 
+  @include flex(center, center);
+  
+  .amount{
+    width: 44px;
+    height: 44px;
+    padding: 8px 12px;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0 8px;
+    border-radius: 8px;
+    background: var(--input-default-background);
+    border: var(--input-default-border);
+    color: var(--typography-default-color);
+    transition: all 0.3s;
+  }
+
+  &:hover{
+    .amount{
+      background: var(--input-active-background);
+      border: var(--input-active-border);
+      color: var(--typography-default-color);
+      transition: all 0.3s;
+    }
+  }
+}
+
+
+.add-remove-button{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  @include flex;
+
+  &-icon:hover{
+    path{
+      stroke: $accent;
+    }
+  }
+}

@@ -13,7 +13,7 @@ export interface InputProps {
   id?: string;
   component?: 'input' | 'textarea';
   type?: 'text' | 'number' | 'password';
-  label?: string;
+  label?: string | ReactElement;
   name: string;
   value?: string;
   placeholder?: string;
