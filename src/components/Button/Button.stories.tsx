@@ -58,7 +58,7 @@ FilledCommon.args = {
 };
 
 export const FilledCommonSmall = Template.bind({});
-FilledCommon.args = {
+FilledCommonSmall.args = {
   variant: 'filled',
   color: 'common',
   size: 'sm',
@@ -98,6 +98,23 @@ FilledSecondarySmall.args = {
   size: 'sm',
   active: false,
   designSrc: 'https://www.figma.com/file/BIdtqmR2JbDRcPBMMA1HA6/RareCow-NFT?node-id=204%3A61098',
+};
+
+export const FilledTertiary = Template.bind({});
+FilledTertiary.args = {
+  variant: 'filled',
+  color: 'tertiary',
+  active: false,
+  designSrc: 'https://www.figma.com/file/BIdtqmR2JbDRcPBMMA1HA6/RareCow-NFT?node-id=388%3A29225',
+};
+
+export const FilledTertiarySmall = Template.bind({});
+FilledTertiarySmall.args = {
+  variant: 'filled',
+  color: 'tertiary',
+  size: 'sm',
+  active: false,
+  designSrc: 'https://www.figma.com/file/BIdtqmR2JbDRcPBMMA1HA6/RareCow-NFT?node-id=388%3A29225',
 };
 
 export const OutlinedCommon = Template.bind({});

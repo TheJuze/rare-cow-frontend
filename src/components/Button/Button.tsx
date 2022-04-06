@@ -15,7 +15,7 @@ import './styles.scss';
 
 export interface ButtonProps {
   variant?: 'filled' | 'outlined' | 'text';
-  color?: 'common' | 'primary' | 'secondary';
+  color?: 'common' | 'primary' | 'secondary' | 'tertiary';
   size?: 'lg' | 'md' | 'sm';
   type?: 'button' | 'submit';
   disabled?: boolean;
