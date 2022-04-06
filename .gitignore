@@ -6,3 +6,4 @@ dist-ssr
 .idea
 .eslintcache
 yarn-error.log
+build-storybook.log
