@@ -410,6 +410,83 @@
         }
       }
     }
+
+    //tertiary
+    &-tertiary {
+      background: var(--button-filled-tertiary-background);
+      color: var(--button-filled-tertiary-color);
+      @include border-like-shadow(
+        var(--button-filled-tertiary-border-width),
+        var(--button-filled-tertiary-border)
+      );
+    
+      .startAdornment > svg > path,
+      .endAdornment > svg > path {
+        stroke: var(--button-filled-tertiary-icon-color);
+        fill: transparent;
+      }
+    
+      &:focus {
+        background: var(--button-filled-tertiary-focus-background);
+        color: var(--button-filled-tertiary-focus-color);
+        @include border-like-shadow(
+          var(--button-filled-tertiary-focus-border-width),
+          var(--button-filled-tertiary-focus-border)
+        );
+    
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          stroke: var(--button-filled-tertiary-icon-color);
+          fill: transparent;
+        }
+      }
+    
+      &:hover {
+        background: var(--button-filled-tertiary-hover-background);
+        color: var(--button-filled-tertiary-hover-color);
+        @include border-like-shadow(
+          var(--button-filled-tertiary-hover-border-width),
+          var(--button-filled-tertiary-hover-border)
+        );
+    
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          stroke: transparent;
+          fill: var(--button-filled-tertiary-hover-icon-color);
+        }
+      }
+    
+      &.active,
+      &:active {
+        background: var(--button-filled-tertiary-active-background);
+        color: var(--button-filled-tertiary-active-color);
+        @include border-like-shadow(
+          var(--button-filled-tertiary-active-border-width),
+          var(--button-filled-tertiary-active-border)
+        );
+    
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          stroke: var(--button-filled-tertiary-active-icon-color);
+          fill: transparent;
+        }
+      }
+    
+      &:disabled {
+        background: var(--button-filled-tertiary-disabled-background);
+        color: var(--button-filled-tertiary-disabled-color);
+        @include border-like-shadow(
+          var(--button-filled-tertiary-disabled-border-width),
+          var(--button-filled-tertiary-disabled-border)
+        );
+        opacity: 0.45;
+        .startAdornment > svg > path,
+        .endAdornment > svg > path {
+          fill: var(--button-filled-tertiary-disabled-icon-color);
+        }
+      }
+    }
+    
   }
 
   &.text {

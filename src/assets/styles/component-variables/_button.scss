@@ -159,6 +159,38 @@ $buttonColorsDefault: (
   'button-filled-secondary-active-icon-color': currentColor,
   'button-filled-secondary-focus-icon-color': currentColor,
   'button-filled-secondary-disabled-icon-color': currentColor,
+
+  ////tertiary
+  //background
+  'button-filled-tertiary-background': $metal-200,
+  'button-filled-tertiary-hover-background': $metal-200,
+  'button-filled-tertiary-active-background': $accent-100,
+  'button-filled-tertiary-focus-background': $accent-100,
+  'button-filled-tertiary-disabled-background': $metal-200,
+  //border
+  'button-filled-tertiary-border': transparent,
+  'button-filled-tertiary-border-width': 2px,
+  'button-filled-tertiary-hover-border': transparent,
+  'button-filled-tertiary-hover-border-width': 2px,
+  'button-filled-tertiary-active-border': transparent,
+  'button-filled-tertiary-active-border-width': 2px,
+  'button-filled-tertiary-focus-border': transparent,
+  'button-filled-tertiary-focus-border-width': 2px,
+  'button-filled-tertiary-disabled-border': transparent,
+  'button-filled-tertiary-disabled-border-width': 2px,
+  //color
+  'button-filled-tertiary-color': $metal-700,
+  'button-filled-tertiary-hover-color': $accent,
+  'button-filled-tertiary-active-color': $accent,
+  'button-filled-tertiary-focus-color': $accent,
+  'button-filled-tertiary-disabled-color': $metal-700,
+  //icon
+  'button-filled-tertiary-icon-color': currentColor,
+  'button-filled-tertiary-hover-icon-color': currentColor,
+  'button-filled-tertiary-active-icon-color': currentColor,
+  'button-filled-tertiary-focus-icon-color': currentColor,
+  'button-filled-tertiary-disabled-icon-color': currentColor,
+
   //misc
   'button-disabled-background': #191a1d,
   'button-disabled-color': #64656a
