@@ -1,0 +1,173 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.dropdown {
+  position: relative;
+  z-index: 3;
+
+  &.active {
+    z-index: 10;
+
+    .head {
+      .arrow {
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    .body {
+      visibility: visible;
+
+      opacity: 1;
+
+      transform: translateY(0);
+    }
+  }
+  &.invalid {
+    .head {
+      @include border-like-shadow(2px, $red);
+    }
+
+    & + .label {
+      color: $red;
+    }
+    .error{
+      margin-top: 10px;
+      color: $red;
+    }
+  }
+}
+
+.label {
+  margin-bottom: 8px;
+  line-height: 24px;
+  color: $metal-700;
+}
+
+.head {
+  position: relative;
+  min-height: 56px;
+  padding: 16px 46px 16px 14px;
+  border-radius: $border-radius;
+  background-color: $metal-50;
+  border: 1px solid $metal-300;
+
+  font-size: 16px;
+  line-height: 160%;
+
+  cursor: pointer;
+
+  // @include dark {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  @include border-like-shadow;
+  // @include transition;
+  // }
+
+  &:hover {
+    @include border-like-shadow(2px, $metal-400, 0 1px 6px rgba(119, 126, 144, 0.48));
+  }
+  &:focus{
+    @include border-like-shadow(2px, $accent, 0 1px 6px rgba(119, 126, 144, 0.48));
+  }
+  &.disabled{
+    filter: grayscale(1);
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.selection {
+  overflow: hidden;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  @include transition;
+  text-transform: uppercase;
+  &.placeholder{
+    opacity: 0.32;
+    // color: $color-dark-2;
+  }
+  &:hover{
+    &.placeholder{
+      opacity: 1;
+    }
+  }
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transform: translateY(-50%);
+}
+
+.body {
+  position: absolute;
+  top: calc(100% + 2px);
+  right: 0;
+  left: 0;
+
+  padding: 10px 0;
+
+  visibility: hidden;
+
+  background: $light-4;
+  opacity: 0;
+  border-radius: 16px;
+
+  transition: all 0.2s;
+  transform: translateY(3px);
+  // }
+}
+
+.option {
+  @include flexbox(center, flex-start);
+  padding: 8px 16px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  &:hover,
+  &.selectioned {
+    background-color: $main-background;
+  }
+
+  .selected {
+    color: $metal-600;
+  }
+}
+
+.text {
+  margin-left: 10px;
+}
+
+.image {
+  width: 24px;
+  height: 24px;
+}
+
+.input {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.71429;
+
+  // color: $color-neutral-0;
+  background-color: transparent;
+  // @include placeholder {
+    // color: $color-neutral-40;
+  // }
+}
