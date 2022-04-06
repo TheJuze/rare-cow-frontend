@@ -34,7 +34,7 @@ export interface ButtonProps {
 }
 
 export const Button: FC<PropsWithChildren<ButtonProps>> = ({
-  variant = 'outlined',
+  variant = 'filled',
   size = 'md',
   color = 'common',
   className,

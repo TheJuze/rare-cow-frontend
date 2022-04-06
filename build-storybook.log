@@ -1,0 +1,61 @@
+$ build-storybook --output-dir /var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN
+info @storybook/react v6.4.19
+info 
+info => Cleaning outputDir: /var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN
+info => Loading presets
+info => Loading custom manager config
+info => Compiling manager..
+vite v2.8.6 building for production...
+info => Loading custom manager config
+transforming...
+Use of eval is strongly discouraged, as it poses security risks and may cause issues with minification
+Use of eval is strongly discouraged, as it poses security risks and may cause issues with minification
+Use of eval is strongly discouraged, as it poses security risks and may cause issues with minification
+Use of eval is strongly discouraged, as it poses security risks and may cause issues with minification
+✓ 1519 modules transformed.
+info => Manager built (45 s)
+rendering chunks...
+Sourcemap is likely to be incorrect: a plugin (vite:react-docgen-typescript) was used to transform files, but didn't generate a sourcemap for the transformation. Consult the plugin documentation for help
+Sourcemap is likely to be incorrect: a plugin (vite:react-docgen-typescript) was used to transform files, but didn't generate a sourcemap for the transformation. Consult the plugin documentation for help
+Sourcemap is likely to be incorrect: a plugin (vite:react-docgen-typescript) was used to transform files, but didn't generate a sourcemap for the transformation. Consult the plugin documentation for help
+Sourcemap is likely to be incorrect: a plugin (vite:react-docgen-typescript) was used to transform files, but didn't generate a sourcemap for the transformation. Consult the plugin documentation for help
+Sourcemap is likely to be incorrect: a plugin (vite:react-docgen-typescript) was used to transform files, but didn't generate a sourcemap for the transformation. Consult the plugin documentation for help
+Sourcemap is likely to be incorrect: a plugin (vite:react-docgen-typescript) was used to transform files, but didn't generate a sourcemap for the transformation. Consult the plugin documentation for help
+Sourcemap is likely to be incorrect: a plugin (vite:react-docgen-typescript) was used to transform files, but didn't generate a sourcemap for the transformation. Consult the plugin documentation for help
+Sourcemap is likely to be incorrect: a plugin (vite:react-docgen-typescript) was used to transform files, but didn't generate a sourcemap for the transformation. Consult the plugin documentation for help
+Sourcemap is likely to be incorrect: a plugin (vite:react-docgen-typescript) was used to transform files, but didn't generate a sourcemap for the transformation. Consult the plugin documentation for help
+Sourcemap is likely to be incorrect: a plugin (vite:react-docgen-typescript) was used to transform files, but didn't generate a sourcemap for the transformation. Consult the plugin documentation for help
+Sourcemap is likely to be incorrect: a plugin (vite:react-docgen-typescript) was used to transform files, but didn't generate a sourcemap for the transformation. Consult the plugin documentation for help
+Sourcemap is likely to be incorrect: a plugin (vite:react-docgen-typescript) was used to transform files, but didn't generate a sourcemap for the transformation. Consult the plugin documentation for help
+Sourcemap is likely to be incorrect: a plugin (vite:react-docgen-typescript) was used to transform files, but didn't generate a sourcemap for the transformation. Consult the plugin documentation for help
+Sourcemap is likely to be incorrect: a plugin (vite:react-docgen-typescript) was used to transform files, but didn't generate a sourcemap for the transformation. Consult the plugin documentation for help
+Sourcemap is likely to be incorrect: a plugin (vite:react-docgen-typescript) was used to transform files, but didn't generate a sourcemap for the transformation. Consult the plugin documentation for help
+Sourcemap is likely to be incorrect: a plugin (vite:react-docgen-typescript) was used to transform files, but didn't generate a sourcemap for the transformation. Consult the plugin documentation for help
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/iframe.html                                 12.01 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/renderDocs.fbe31c9e.js               2.38 KiB / gzip: 1.13 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/renderDocs.fbe31c9e.js.map           8.21 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/Color.8c23f07b.js                    32.11 KiB / gzip: 11.79 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/Color.8c23f07b.js.map                111.04 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/GlobalScrollAreaStyles.884f683a.js   10.08 KiB / gzip: 2.25 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/GlobalScrollAreaStyles.884f683a.js.map 18.91 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/iframe.3f45ac96.js                   112.09 KiB / gzip: 21.13 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/iframe.3f45ac96.js.map               91.80 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/syntaxhighlighter.c27e9048.js        68.95 KiB / gzip: 26.11 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/syntaxhighlighter.c27e9048.js.map    249.94 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/iframe.27e1127c.css                  291.53 KiB / gzip: 10.94 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/OverlayScrollbars.c1537799.js        57.99 KiB / gzip: 24.82 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/OverlayScrollbars.c1537799.js.map    468.33 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/WithTooltip.3f9d88f7.js              38.57 KiB / gzip: 12.69 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/WithTooltip.3f9d88f7.js.map          175.10 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/axe.d859ba06.js                      433.39 KiB / gzip: 113.60 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/axe.d859ba06.js.map                  1419.06 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/index.78d7224c.js                    433.01 KiB / gzip: 120.04 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/index.78d7224c.js.map                1183.80 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/vendor.e61a3f50.js                   1215.36 KiB / gzip: 347.40 KiB
+../../../../var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN/assets/vendor.e61a3f50.js.map               3991.05 KiB
+
+(!) Some chunks are larger than 500 KiB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/guide/en/#outputmanualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+info => Output directory: /var/folders/5c/b_16pdxs3178n4d9mzdkzpqr0000gn/T/chromatic--95576-0NCV64X0XitN
