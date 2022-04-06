@@ -89,7 +89,7 @@ export const Dropdown: VFC<DropdownProps> = ({
   return (
     <OutsideClickHandler onOutsideClick={onOutsideClick}>
       {label && (
-        <Text size="s" weight="medium" className={cn(styles.label, className)}>
+        <Text size="m" weight="medium" className={cn(styles.label, className)}>
           {label}
         </Text>
       )}
@@ -183,7 +183,7 @@ export const Dropdown: VFC<DropdownProps> = ({
                 key={`dropdown_option_${option[returnBy]}`}
               >
                 <img alt="" className={styles.image} src={option.image} />
-                <Text className={styles.text} tag="span">
+                <Text className={styles.text} tag="span" align="left">
                   {option[drawBy]?.toUpperCase()}
                 </Text>
               </div>

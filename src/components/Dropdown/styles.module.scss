@@ -84,7 +84,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   @include transition;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   &.placeholder{
     opacity: 0.32;
     // color: $color-dark-2;
@@ -137,7 +137,7 @@
   font-weight: 500;
 
   cursor: pointer;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   transition: color 0.2s;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 

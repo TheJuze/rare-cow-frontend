@@ -10,16 +10,16 @@ export default {
 } as ComponentMeta<typeof Dropdown>;
 
 const options = [
-  { value: 'Text input', symbol: 'text' },
-  { value: 'Text input2', symbol: 'text2' },
-  { value: 'Text input3', symbol: 'text3' },
+  { value: 'Text1', symbol: 'Text input' },
+  { value: 'Text2', symbol: 'Text input2' },
+  { value: 'Text3', symbol: 'Text input3' },
 ];
 
 const Template: ComponentStory<typeof Dropdown> = () => {
   const [value, setValue] = useState(options[0]);
   return (
     <>
-      <Dropdown value={value} setValue={setValue} options={options} />
+      <Dropdown value={value} setValue={setValue} options={options} label="Default label" />
     </>
   );
 };
