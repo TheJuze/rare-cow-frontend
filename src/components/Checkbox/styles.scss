@@ -1,0 +1,8 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.checkbox { 
+    margin: space(28, 24, 15, 120);
+    @include border-radius("card");
+}
