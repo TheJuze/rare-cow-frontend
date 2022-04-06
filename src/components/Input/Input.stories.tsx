@@ -12,18 +12,18 @@ export default {
 } as ComponentMeta<typeof Input>;
 
 const Template: ComponentStory<typeof Input> = () => {
-  const placeholder = text('Placeholder', 'Enter your e-mail');
   const error = text('Error', '');
   const isCorrect = boolean('IsCorrect', false);
   const disabled = boolean('disabled', false);
   const onChange = action('onChange');
   return (
     <>
-      <div style={{ width: 400 }}>
+      <div style={{ width: 200, marginLeft: 12 }}>
         <Input
           id="id"
           name="storybook"
-          label={placeholder}
+          label="Default"
+          placeholder="Text text"
           error={error}
           disabled={disabled}
           isCorrect={isCorrect}
@@ -34,33 +34,34 @@ const Template: ComponentStory<typeof Input> = () => {
           id="id2"
           name="storybook"
           component="textarea"
-          label="Label"
-          placeholder="Placeholder"
+          label="Default"
+          placeholder="Text text"
           error={error}
           disabled={disabled}
           isCorrect={isCorrect}
           onChange={onChange}
         />
+        <div style={{ marginBottom: 16 }}>
+          <Input
+            id="id3"
+            name="storybook"
+            placeholder="Text text"
+            label="Default"
+            disabled={disabled}
+            error="Error caption"
+            onChange={onChange}
+            endAdornment={<StarIcon />}
+          />
+        </div>
         <Input
-          id="id"
+          id="id4"
           name="storybook"
-          label={placeholder}
-          error
+          placeholder="Text text"
+          label="Default"
           disabled={disabled}
-          isCorrect={isCorrect}
+          success="Success caption"
           onChange={onChange}
           endAdornment={<StarIcon />}
-        />
-        <Input
-          id="id2"
-          name="storybook"
-          component="textarea"
-          label="Label"
-          placeholder="Placeholder"
-          error
-          disabled={disabled}
-          isCorrect={isCorrect}
-          onChange={onChange}
         />
       </div>
     </>

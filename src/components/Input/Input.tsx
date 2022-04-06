@@ -1,10 +1,4 @@
-import React, {
-  VFC,
-  ChangeEvent,
-  FocusEvent,
-  createElement,
-  ReactElement,
-} from 'react';
+import React, { VFC, ChangeEvent, FocusEvent, createElement, ReactElement } from 'react';
 import cn from 'clsx';
 import { Text } from 'components';
 import styles from './styles.module.scss';
@@ -22,6 +16,7 @@ export interface InputProps {
   classNameInputWrap?: string;
   classNameLabel?: string;
   error?: boolean | string;
+  success?: boolean | string;
   endAdornment?: ReactElement | string;
   disabled?: boolean;
   isCorrect?: boolean | '';
@@ -32,7 +27,7 @@ export interface InputProps {
   required?: boolean;
 }
 
-export const Input:VFC<InputProps> = ({
+export const Input: VFC<InputProps> = ({
   id,
   type = 'text',
   component = 'input',
@@ -45,6 +40,7 @@ export const Input:VFC<InputProps> = ({
   classNameLabel,
   placeholder,
   error,
+  success,
   endAdornment,
   disabled = false,
   isCorrect = false,
@@ -55,13 +51,12 @@ export const Input:VFC<InputProps> = ({
   required,
 }) => (
   <>
-    <label
-      htmlFor={id || name}
-      className={cn(
-        styles.label,
-        className,
+    <label htmlFor={id || name} className={cn(styles.label, className)}>
+      {label && (
+        <Text size="m" weight="medium" className={cn(styles.labelText, classNameLabel)}>
+          {label}
+        </Text>
       )}
-    >
       <div
         className={cn(
           styles.inputWrap,
@@ -70,46 +65,31 @@ export const Input:VFC<InputProps> = ({
           classNameInputWrap,
         )}
       >
-        {createElement(
-          component,
-          {
-            id: id || name,
-            type,
-            name,
-            value,
-            placeholder: component === 'input' ? ' ' : placeholder,
-            autoComplete,
-            disabled,
-            className: cn(
-              styles[component],
-              { [styles.error]: error },
-              { [styles.bigRightPadding]: error || isCorrect },
-              classNameInput,
-            ),
-            onChange,
-            onFocus,
-            onBlur,
-          },
+        {createElement(component, {
+          id: id || name,
+          type,
+          name,
+          value,
+          placeholder: component === 'input' ? ' ' : placeholder,
+          autoComplete,
+          disabled,
+          className: cn(
+            styles[component],
+            { [styles.error]: error },
+            { [styles.success]: success },
+            { [styles.bigRightPadding]: error || isCorrect },
+            classNameInput,
+          ),
+          onChange,
+          onFocus,
+          onBlur,
+        })}
+        {endAdornment && component !== 'textarea' && (
+          <span className={styles.endAdornment}>{endAdornment}</span>
         )}
-        {label && (
-          <Text
-            size="m"
-            className={cn(
-              styles.labelText,
-              classNameLabel,
-            )}
-          >
-            {label}
-          </Text>
-        )}
-        {(endAdornment && component !== 'textarea') && <span className={styles.endAdornment}>{endAdornment}</span>}
       </div>
     </label>
-    {error && typeof error === 'string' && (
-      <span className={styles.textError}>
-        {error}
-      </span>
-    )}
+    {error && typeof error === 'string' && <span className={styles.textError}>{error}</span>}
+    {success && typeof success === 'string' && <span className={styles.textSuccess}>{success}</span>}
   </>
-
 );
