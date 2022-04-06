@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import styles from './styles.module.scss';
 
 const MainDecorator = (story) => {
-  const [islight, setIsLight] = useState(false);
+  const [islight, setIsLight] = useState(true);
 
   const handleSwitchTheme = useCallback(() => {
     setIsLight(!islight);
