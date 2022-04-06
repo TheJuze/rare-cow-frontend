@@ -1,0 +1,26 @@
+@import 'src/styles/variables';
+
+$checkboxColorsDefault: (
+  'checkbox-default-background': $base-50,
+  'checkbox-hover-background': $base-50,
+  'checkbox-active-background': $accent,
+  'checkbox-focus-background': $base-50,
+  'checkbox-disabled-background': $base-50,
+
+  'checkbox-default-border': $base-200,
+  'checkbox-default-border-width': 1px,
+  'checkbox-hover-border': $accent,
+  'checkbox-hover-border-width': 2px,
+  'checkbox-active-border': $accent,
+  'checkbox-active-border-width': 2px,
+  'checkbox-focus-border': $accent,
+  'checkbox-focus-border-width': 2px,
+  'checkbox-disabled-border': $base-200,
+  'checkbox-disabled-border-width': 2px,
+
+  'checkbox-default-color': $light-4,
+  'checkbox-hover-color': $light-4,
+  'checkbox-active-color': $light-4,
+  'checkbox-focus-color': $light-4,
+  'checkbox-disabled-color': $light-4,
+);

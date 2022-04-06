@@ -7,6 +7,7 @@
 @import './component-variables/table';
 @import './component-variables/tooltip';
 @import './component-variables/main';
+@import './component-variables/checkbox';
 
 :root {
 	$colors:(
@@ -19,6 +20,7 @@
 		$selectColorsDefault,
 		$tableColorsDefault,
 		$tooltipColorsDefault,
+		$checkboxColorsDefault,
 	);
 
 	@each $key_name in $colors {
