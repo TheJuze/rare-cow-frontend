@@ -1,0 +1,26 @@
+@import 'src/styles/variables';
+
+$optionColorsDefault: (
+  'option-default-background': $base-50,
+  'option-hover-background': $base-50,
+  'option-active-background': $accent,
+  'option-focus-background': $base-50,
+  'option-disabled-background': $base-50,
+
+  'option-default-border': $base-200,
+  'option-default-border-width': 1px,
+  'option-hover-border': $accent,
+  'option-hover-border-width': 2px,
+  'option-active-border': $accent,
+  'option-active-border-width': 2px,
+  'option-focus-border': $accent,
+  'option-focus-border-width': 2px,
+  'option-disabled-border': $base-200,
+  'option-disabled-border-width': 2px,
+
+  'option-default-color': $light-4,
+  'option-hover-color': $light-4,
+  'option-active-color': $light-4,
+  'option-focus-color': $light-4,
+  'option-disabled-color': $light-4,
+);

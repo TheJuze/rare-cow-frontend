@@ -1,6 +1,6 @@
 import { useCallback, useState } from '@storybook/addons';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { ChangeEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
 
 import { Checkbox } from './Checkbox';
 import { checkboxPropsMocked } from './Checkbox.mock';
@@ -12,9 +12,9 @@ export default {
 
 const Template: ComponentStory<typeof Checkbox> = (args) => {
   const [checked, setChecked] = useState(false);
-  const onCheckboxChange: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
-    setChecked(!e.target.checked);
-  }, []);
+  const onCheckboxChange: MouseEventHandler<HTMLInputElement> = useCallback(() => {
+    setChecked(!checked);
+  }, [checked]);
   return (
     <div
       style={{

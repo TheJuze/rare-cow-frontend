@@ -64,6 +64,7 @@ $spacing: (4,8,16,24,32,40,48,56,64,80,100);
   @if type == "small-card"{
     border-radius: $main-unit * 1.5;
   }
+  border-radius: $main-unit;
 }
 
 @mixin border-like-shadow($width: 1px, $color: $color-dark, $extra: false) {

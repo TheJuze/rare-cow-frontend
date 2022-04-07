@@ -1,0 +1,111 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins';
+@import 'src/styles/helpers';
+
+$radio-size: 24px;
+$radio-inner-size: $radio-size / 2;
+
+.option-selector {
+  &.horizontal {
+    @include flex(row, center, flex-start);
+    & > *:not(:last-child) {
+      margin-right: space(12);
+    }
+  }
+  &.vertical {
+    @include flex(column, flex-start, flex-start);
+    & > *:not(:last-child) {
+      margin-bottom: space(12);
+    }
+  }
+  .single-option {
+    @include flex(row, center, flex-start);
+    &.disabled{
+        opacity: 0.5;
+        pointer-events: none;
+    }
+    &-input {
+      width: 0;
+      height: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      &:focus {
+        & + .single-option {
+          &-radio {
+            @include border-like-shadow(
+              var(--option-focus-border-width),
+              var(--option-focus-border)
+            );
+          }
+        }
+      }
+      &:active {
+        & + .single-option {
+          &-radio {
+            background: var(--option-active-background);
+            @include border-like-shadow(
+              var(--option-focus-border-width),
+              var(--option-focus-border)
+            );
+            &::before {
+              opacity: 0.5;
+            }
+          }
+        }
+      }
+
+      &:checked {
+        & + .single-option {
+          &-radio {
+            background: var(--option-active-background);
+            @include border-like-shadow(
+              var(--option-focus-border-width),
+              var(--option-focus-border)
+            );
+            &::before {
+              opacity: 1;
+            }
+          }
+        }
+      }
+      &:disabled {
+        pointer-events: none;
+        & + .option-inner {
+          opacity: 0.5;
+        }
+      }
+    }
+    &-radio {
+      width: $radio-size;
+      height: $radio-size;
+      border-radius: 50%;
+      margin-right: space(13);
+      background: var(--option-default-background);
+      position: relative;
+      cursor: pointer;
+      @include border-like-shadow(var(--option-default-border-width), var(--option-default-border));
+      @include transition;
+      &:hover {
+        @include border-like-shadow(var(--option-hover-border-width), var(--option-hover-border));
+        &::before{
+            background: var(--option-hover-color);
+        }
+      }
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        opacity: 0;
+        width: $radio-inner-size;
+        height: $radio-inner-size;
+        background: var(--option-default-color);
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        @include transition;
+      }
+    }
+  }
+}
