@@ -9,6 +9,7 @@
 @import './component-variables/main';
 @import './component-variables/checkbox';
 @import './component-variables/option-selector';
+@import './component-variables/tab-bar';
 
 :root {
 	$colors:(
@@ -23,6 +24,7 @@
 		$tooltipColorsDefault,
 		$checkboxColorsDefault,
 		$optionColorsDefault,
+		$tabBarColorsDefault
 	);
 
 	@each $key_name in $colors {
