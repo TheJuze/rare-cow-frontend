@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FC } from 'react';
+import { FC, MouseEventHandler } from 'react';
 
 import cn from 'clsx';
 
@@ -7,7 +7,7 @@ import './styles.scss';
 export interface CheckboxProps {
   className?: string;
   value: boolean;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
+  onChange?: MouseEventHandler<HTMLInputElement>;
   id?: string;
   disabled?: boolean;
 }
@@ -26,9 +26,10 @@ export const Checkbox: FC<CheckboxProps> = ({
         id={`toggle-${id}`}
         className="checkbox-input"
         type="checkbox"
-        onChange={onChange}
+        onClick={onChange}
         checked={value}
         disabled={disabled}
+        tabIndex={0}
       />
       <span className="checkbox-inner">
         <span className="checkbox-tick" />
