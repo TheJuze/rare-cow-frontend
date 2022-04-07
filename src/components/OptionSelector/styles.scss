@@ -3,7 +3,7 @@
 @import 'src/styles/helpers';
 
 $radio-size: 24px;
-$radio-inner-size: $radio-size / 2;
+$radio-inner-size: calc($radio-size / 2);
 
 .option-selector {
   &.horizontal {

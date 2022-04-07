@@ -1,0 +1,60 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.tab-bar__wrapper {
+  width: 100%;
+  max-width: 100%;
+  padding: 0 20px;
+  overflow-x: auto;
+  &__body {
+    width: fit-content;
+    margin: 0 auto;
+    @include flex(row, center, center);
+    &-tab {
+      padding: 19px 0;
+      color: $metal-400;
+      font-weight: 500;
+      width: 110px;
+      font-size: 16px;
+      line-height: 20px;
+      position: relative;
+      overflow: hidden;
+      @include flex(row, center, flex-start);
+      @include transition;
+      &-icon{
+        margin-right: 8px;
+        &__wrapper{
+          width: 24px;
+          height: 24px;
+          @include flex(row, center, flex-start);
+        }
+      }
+      &:hover {
+        color: $accent;
+      }
+      &.active-tab {
+        color: $accent;
+        &:after {
+          transform: translateY(-100%);
+        }
+      }
+    }
+  }
+  .vertical{
+    flex-direction: row;
+    .tab-bar__wrapper__body-tab:after {
+      position: absolute;
+      content: '';
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: $accent;
+      @include transition;
+    }
+  }
+  .horizontal{
+    flex-direction: column;
+  }
+}
