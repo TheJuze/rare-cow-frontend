@@ -6,7 +6,7 @@ import cn from 'clsx';
 import { Text } from 'components';
 
 import iconArrowDown from 'assets/arrow-down.svg';
-import styles from './styles.module.scss';
+import './styles.scss';
 
 export interface DropdownProps {
   className?: string;
@@ -89,14 +89,14 @@ export const Dropdown: VFC<DropdownProps> = ({
   return (
     <OutsideClickHandler onOutsideClick={onOutsideClick}>
       {label && (
-        <Text size="m" weight="medium" className={cn(styles.label, className)}>
+        <Text size="m" weight="medium" className={cn('label', className)}>
           {label}
         </Text>
       )}
       <div
-        className={cn(styles.dropdown, {
-          [styles.active]: visible,
-          [styles.invalid]: error,
+        className={cn('dropdown', {
+          active: visible,
+          invalid: error,
         })}
         id={name}
       >
@@ -104,29 +104,29 @@ export const Dropdown: VFC<DropdownProps> = ({
           onKeyDown={() => {}}
           tabIndex={0}
           role="button"
-          className={cn(styles.head, headClassName, { [styles.disabled]: disabled })}
+          className={cn('head', headClassName, { disabled })}
           onClick={onHeadClick}
         >
           {isWritable ? (
             <input
               value={value ? value[drawBy] : ''}
               placeholder={placeholder}
-              className={styles.input}
+              className="input"
             />
           ) : (
-            <div className={cn(styles.selection, { [styles.placeholder]: placeholder && !value })}>
+            <div className={cn('selection', { placeholder: placeholder && !value })}>
               {value ? value[drawBy] : placeholder}
             </div>
           )}
-          <img alt="open dropdown" src={iconArrowDown} className={styles.arrow} />
+          <img alt="open dropdown" src={iconArrowDown} className="arrow" />
         </div>
         {error && (
-          <Text color="error" className={styles.error}>
+          <Text color="error" className="error">
             {error}
           </Text>
         )}
         {!isWithImage ? (
-          <div className={cn(styles.body, bodyClassName)}>
+          <div className={cn('body', bodyClassName)}>
             {typeof options[0] === 'string'
               ? options.map((option: string) => (
                 <div
@@ -134,9 +134,9 @@ export const Dropdown: VFC<DropdownProps> = ({
                   tabIndex={0}
                   role="button"
                   className={cn(
-                    styles.option,
+                    'option',
                     {
-                      [styles.selectioned]: option === value,
+                      selectioned: option === value,
                     },
                     option === value ? 'selected' : '',
                   )}
@@ -152,38 +152,38 @@ export const Dropdown: VFC<DropdownProps> = ({
                   onKeyDown={() => {}}
                   tabIndex={0}
                   role="button"
-                  className={cn(styles.option, {
-                    [styles.selectioned]: option[drawBy] === value ? value[drawBy] : '',
+                  className={cn('option', {
+                    selectioned: option[drawBy] === value ? value[drawBy] : '',
                   })}
                   onClick={() => handleClick(option)}
                   key={`dropdown_option_${option[drawBy]}`}
                 >
                   {option.icon}
-                  <Text className={styles.text} tag="span">
+                  <Text className="text" tag="span">
                     {option[drawBy]}
                   </Text>
                 </div>
               ))}
           </div>
         ) : (
-          <div className={cn(styles.body, bodyClassName)}>
+          <div className={cn('body', bodyClassName)}>
             {options.map((option) => (
               <div
                 onKeyDown={() => {}}
                 tabIndex={0}
                 role="button"
                 className={cn(
-                  styles.option,
+                  'option',
                   {
-                    [styles.selectioned]: option?.symbol === value,
+                    selectioned: option?.symbol === value,
                   },
                   option.symbol === value ? 'text-gradient' : '',
                 )}
                 onClick={() => handleClick(option)}
                 key={`dropdown_option_${option[returnBy]}`}
               >
-                <img alt="" className={styles.image} src={option.image} />
-                <Text className={styles.text} tag="span" align="left">
+                <img alt="" className="image" src={option.image} />
+                <Text className="text" tag="span" align="left">
                   {option[drawBy]?.toUpperCase()}
                 </Text>
               </div>

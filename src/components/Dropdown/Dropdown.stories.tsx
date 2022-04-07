@@ -18,9 +18,9 @@ const options = [
 const Template: ComponentStory<typeof Dropdown> = () => {
   const [value, setValue] = useState(options[0]);
   return (
-    <>
+    <div style={{ width: 400, marginLeft: 12 }}>
       <Dropdown value={value} setValue={setValue} options={options} label="Default label" />
-    </>
+    </div>
   );
 };
 export const Default = Template.bind({});

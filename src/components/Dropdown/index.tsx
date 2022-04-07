@@ -1,2 +1,2 @@
 export * from './Dropdown';
-export * from './styles.module.scss';
+export * from './styles.scss';

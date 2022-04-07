@@ -4,7 +4,7 @@ import cn from 'clsx';
 // import { Input } from 'components';
 
 import { AddIcon, RemoveIcon } from 'assets/icons/icons';
-import styles from './styles.module.scss';
+import './styles.scss';
 
 interface IQuantityOption {
   type: 'add' | 'remove';
@@ -14,11 +14,11 @@ interface IQuantityOption {
 
 const QuantityOption: VFC<IQuantityOption> = ({ type, onClick, className }) => {
   return (
-    <button className={cn(styles['add-remove-button'], className)} type="button" onClick={onClick}>
+    <button className={cn('add-remove-button', className)} type="button" onClick={onClick}>
       {type === 'add' ? (
-        <AddIcon className={styles['add-remove-button-icon']} />
+        <AddIcon className="add-remove-button-icon" />
       ) : (
-        <RemoveIcon className={styles['add-remove-button-icon']} />
+        <RemoveIcon className="add-remove-button-icon" />
       )}
     </button>
   );
@@ -117,10 +117,10 @@ export const QuantityInput: VFC<QuantityInputProps> = ({
   }, [value]);
 
   return (
-    <div className={styles.quantityInput}>
-      <QuantityOption type="remove" onClick={onRemoveHandler} className={styles.remove} />
-      <div className={styles.amount}>{formattedValue}</div>
-      <QuantityOption type="add" onClick={onAddHandler} className={styles.add} />
+    <div className="quantityInput">
+      <QuantityOption type="remove" onClick={onRemoveHandler} className="remove" />
+      <div className="amount">{formattedValue}</div>
+      <QuantityOption type="add" onClick={onAddHandler} className="add" />
     </div>
   );
 };
