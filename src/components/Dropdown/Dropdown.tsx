@@ -6,7 +6,7 @@ import cn from 'clsx';
 import { Text } from 'components';
 
 import iconArrowDown from 'assets/arrow-down.svg';
-import styles from './styles.module.scss';
+import styles from './styles.scss';
 
 export interface DropdownProps {
   className?: string;

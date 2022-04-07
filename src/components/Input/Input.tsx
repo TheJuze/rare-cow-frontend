@@ -1,7 +1,7 @@
 import React, { VFC, ChangeEvent, FocusEvent, createElement, ReactElement } from 'react';
 import cn from 'clsx';
 import { Text } from 'components';
-import styles from './styles.module.scss';
+import styles from './styles.scss';
 
 export interface InputProps {
   id?: string;
