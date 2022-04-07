@@ -1,95 +1,125 @@
-import React, { VFC, ChangeEvent, FocusEvent, createElement, ReactElement } from 'react';
+import React, {
+  VFC,
+  ChangeEvent,
+  useCallback,
+  FocusEvent,
+  createElement,
+  ReactElement,
+  useState,
+} from 'react';
 import cn from 'clsx';
 import { Text } from 'components';
 import './styles.scss';
+import { EInputStatus, TInputCaption } from 'types';
 
 export interface InputProps {
   id?: string;
   component?: 'input' | 'textarea';
   type?: 'text' | 'number' | 'password';
+  size?: 'sm' | 'md';
   label?: string | ReactElement;
   name: string;
   value?: string;
   placeholder?: string;
   className?: string;
-  classNameInput?: string;
-  classNameInputWrap?: string;
-  classNameLabel?: string;
-  error?: boolean | string;
-  success?: boolean | string;
+  caption?: TInputCaption;
+  startAdornment?: ReactElement | string;
   endAdornment?: ReactElement | string;
   disabled?: boolean;
   isCorrect?: boolean | '';
   autoComplete?: 'off' | 'on';
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
-  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onFocus?: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onBlur?: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   required?: boolean;
 }
 
+/**
+ * @param {string} [id] - unique id for the component, if it isn't passed, **name** prop will be used
+ * @param {('input' | 'textarea')} [component] - type of the component
+ * * input
+ * * textarea
+ */
 export const Input: VFC<InputProps> = ({
   id,
   type = 'text',
   component = 'input',
+  size = 'md',
   label,
   name,
   value,
   className,
-  classNameInput,
-  classNameInputWrap,
-  classNameLabel,
   placeholder,
-  error,
-  success,
+  startAdornment,
   endAdornment,
   disabled = false,
   isCorrect = false,
   autoComplete = 'off',
+  caption = { status: EInputStatus.COMMON, caption: '' },
   onChange = () => {},
   onFocus = () => {},
   onBlur = () => {},
   required,
-}) => (
-  <>
-    <label htmlFor={id || name} className={cn('label', className)}>
-      {label && (
-        <Text size="m" weight="medium" className={cn('labelText', classNameLabel)}>
-          {label}
-        </Text>
-      )}
-      <div
-        className={cn(
-          'inputWrap',
-          { textareaWrapper: component === 'textarea' },
-          { required },
-          classNameInputWrap,
+}) => {
+  const [inFocus, setInFocus] = useState(false);
+
+  const onFocusHandler = useCallback(
+    (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setInFocus(true);
+      onFocus?.(event);
+    },
+    [onFocus],
+  );
+
+  const onBlurHandler = useCallback(
+    (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setInFocus(false);
+      onBlur?.(event);
+    },
+    [onBlur],
+  );
+
+  return (
+    <div
+      className={cn('input-wrapper', `input-${size}`, {
+        'input-in-focus': inFocus,
+        'input-disabled': disabled,
+        'input-success': caption.status === EInputStatus.SUCCESS,
+        'input-error': caption.status === EInputStatus.ERROR,
+      })}
+    >
+      <label htmlFor={id || name} className={cn('input-label', className)}>
+        {label && (
+          <Text size="m" weight="medium" className={cn('input-label-text')}>
+            {label}
+          </Text>
         )}
-      >
-        {createElement(component, {
-          id: id || name,
-          type,
-          name,
-          value,
-          placeholder: component === 'input' ? ' ' : placeholder,
-          autoComplete,
-          disabled,
-          className: cn(
-            component,
-            { error },
-            { success },
-            { bigRightPadding: error || isCorrect },
-            classNameInput,
-          ),
-          onChange,
-          onFocus,
-          onBlur,
-        })}
-        {endAdornment && component !== 'textarea' && (
-          <span className="endAdornment">{endAdornment}</span>
-        )}
-      </div>
-    </label>
-    {error && typeof error === 'string' && <span className="textError">{error}</span>}
-    {success && typeof success === 'string' && <span className="textSuccess">{success}</span>}
-  </>
-);
+        <div
+          className={cn('input-body', { 'textarea-body': component === 'textarea' }, { required })}
+        >
+          {startAdornment && component !== 'textarea' && (
+            <span className="input-startAdornment">{startAdornment}</span>
+          )}
+          {createElement(component, {
+            id: id || name,
+            type,
+            name,
+            tabIndex: 0,
+            value,
+            placeholder,
+            autoComplete,
+            disabled,
+            className: cn(component, { bigRightPadding: isCorrect }),
+            onChange,
+            onFocus: onFocusHandler,
+            onBlur: onBlurHandler,
+          })}
+          {endAdornment && component !== 'textarea' && (
+            <span className="input-endAdornment">{endAdornment}</span>
+          )}
+        </div>
+        {caption.caption && <span className="input-caption">{caption.caption}</span>}
+      </label>
+    </div>
+  );
+};

@@ -7,3 +7,4 @@ export * from './Spinner';
 export * from './LikeButton';
 export * from './Input';
 export * from './QuantityInput';
+export * from './Loader';

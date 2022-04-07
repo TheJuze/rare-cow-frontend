@@ -1,5 +1,7 @@
+import { useCallback } from '@storybook/addons';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { useState } from 'react';
+import { TDropdownValue } from 'types/components/dropdown';
 
 import { Dropdown } from './Dropdown';
 import { dropdownPropsMocked } from './Dropdown.mock';
@@ -9,17 +11,18 @@ export default {
   component: Dropdown,
 } as ComponentMeta<typeof Dropdown>;
 
-const options = [
-  { value: 'Text1', symbol: 'Text input' },
-  { value: 'Text2', symbol: 'Text input2' },
-  { value: 'Text3', symbol: 'Text input3' },
-];
+const { options } = dropdownPropsMocked;
 
-const Template: ComponentStory<typeof Dropdown> = () => {
+const Template: ComponentStory<typeof Dropdown> = (args) => {
   const [value, setValue] = useState(options[0]);
+
+  const setDropdownValue = useCallback((val: TDropdownValue) => {
+    setValue(val);
+  }, []);
+
   return (
     <div style={{ width: 400, marginLeft: 12 }}>
-      <Dropdown value={value} setValue={setValue} options={options} label="Default label" />
+      <Dropdown {...args} value={value} setValue={setDropdownValue} options={options} label="Default label" />
     </div>
   );
 };

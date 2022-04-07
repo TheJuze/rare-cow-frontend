@@ -9,6 +9,8 @@
 @import './component-variables/main';
 @import './component-variables/checkbox';
 @import './component-variables/option-selector';
+@import './component-variables/dropdown';
+@import './component-variables/loader';
 
 :root {
 	$colors:(
@@ -23,6 +25,8 @@
 		$tooltipColorsDefault,
 		$checkboxColorsDefault,
 		$optionColorsDefault,
+		$dropdownColorsDefault,
+		$loaderColorsDefault,
 	);
 
 	@each $key_name in $colors {

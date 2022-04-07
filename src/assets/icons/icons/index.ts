@@ -5,3 +5,4 @@ export { Burn } from './components/Burn';
 export { ArrowDown } from './components/ArrowDown';
 export { AddIcon } from './components/AddIcon';
 export { RemoveIcon } from './components/RemoveIcon';
+export { SearchIcon } from './components/SearchIcon';

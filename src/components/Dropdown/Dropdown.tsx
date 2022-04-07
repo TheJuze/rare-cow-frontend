@@ -1,4 +1,4 @@
-import { FormEvent, useCallback, useState, VFC } from 'react';
+import { MouseEventHandler, MouseEvent, useCallback, useState, VFC, ChangeEvent } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 
 import cn from 'clsx';
@@ -7,61 +7,66 @@ import { Text } from 'components';
 
 import iconArrowDown from 'assets/arrow-down.svg';
 import './styles.scss';
+import { TDropdownValue } from 'types';
+import { Input } from 'components/Input';
+import { SearchIcon } from 'assets/icons/icons';
+import { Loader } from 'components/Loader';
 
 export interface DropdownProps {
+  value: TDropdownValue;
+  setValue: (str: TDropdownValue) => void;
+  options: TDropdownValue[];
+  name: string;
+  variant?: 'outlined' | 'transparent';
+  dropPosition?: 'relative' | 'absolute';
+  closeOnSelect?: boolean;
   className?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  value: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setValue: (str: any) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  options: Array<any>;
-  isWithImage?: boolean;
-  isWritable?: boolean;
-  name?: string;
-  suffix?: string;
-  headClassName?: string;
-  bodyClassName?: string;
-  returnBy?: string;
-  drawBy?: string;
   label?: string;
   error?: string;
   placeholder?: string;
   disabled?: boolean;
-  onBlur?: (e: FormEvent<HTMLDivElement>) => void;
+  onBlur?: (e: MouseEvent) => void;
+  withSearch?: boolean;
+  searchValue?: string;
+  setSearchValue?: (val: string) => void;
+  isSearching?: boolean;
 }
 
 export const Dropdown: VFC<DropdownProps> = ({
-  className,
   value,
   setValue,
   options,
-  isWithImage,
-  isWritable,
+  variant = 'transparent',
+  dropPosition = 'relative',
+  className,
+  closeOnSelect = false,
   name,
-  suffix = '',
-  headClassName,
-  bodyClassName,
-  returnBy = 'symbol',
-  drawBy = 'symbol',
   label,
   placeholder,
   error,
-  disabled,
+  disabled = false,
+  withSearch = false,
+  searchValue = '',
+  setSearchValue = (val: string) => {
+    console.log(val);
+  },
+  isSearching = false,
   onBlur,
 }) => {
   const [visible, setVisible] = useState(false);
 
   const handleClick = useCallback(
-    (str: string) => {
-      setValue(str);
-      setVisible(false);
+    (val: TDropdownValue) => {
+      setValue(val);
+      if (closeOnSelect) {
+        setVisible(false);
+      }
     },
-    [setValue],
+    [closeOnSelect, setValue],
   );
 
-  const onHeadClick = useCallback(
-    (e: FormEvent<HTMLDivElement>) => {
+  const onHeadClick: MouseEventHandler<HTMLDivElement> = useCallback(
+    (e) => {
       e.preventDefault();
       e.stopPropagation();
       if (!disabled) {
@@ -79,22 +84,28 @@ export const Dropdown: VFC<DropdownProps> = ({
     (e: MouseEvent) => {
       if (visible) {
         setVisible(false);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        onBlur?.(e as any);
+        onBlur?.(e);
       }
     },
     [onBlur, visible],
   );
 
+  const setSearchingValue = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setSearchValue(e.currentTarget.value);
+    },
+    [setSearchValue],
+  );
+
   return (
     <OutsideClickHandler onOutsideClick={onOutsideClick}>
       {label && (
-        <Text size="m" weight="medium" className={cn('label', className)}>
+        <Text size="m" weight="medium" className={cn('dropdown-label', className)}>
           {label}
         </Text>
       )}
       <div
-        className={cn('dropdown', {
+        className={cn('dropdown-content', {
           active: visible,
           invalid: error,
         })}
@@ -104,92 +115,45 @@ export const Dropdown: VFC<DropdownProps> = ({
           onKeyDown={() => {}}
           tabIndex={0}
           role="button"
-          className={cn('head', headClassName, { disabled })}
+          className={cn('dropdown-content-head', variant, { disabled })}
           onClick={onHeadClick}
         >
-          {isWritable ? (
-            <input
-              value={value ? value[drawBy] : ''}
-              placeholder={placeholder}
-              className="input"
-            />
-          ) : (
-            <div className={cn('selection', { placeholder: placeholder && !value })}>
-              {value ? value[drawBy] : placeholder}
-            </div>
-          )}
-          <img alt="open dropdown" src={iconArrowDown} className="arrow" />
+          <div className={cn('dropdown-head-selection', { placeholder: placeholder && !value })}>
+            {value ? value.content : placeholder}
+          </div>
+
+          <img alt="&darr;" src={iconArrowDown} className="dropdown-head-arrow" />
         </div>
         {error && (
           <Text color="error" className="error">
             {error}
           </Text>
         )}
-        {!isWithImage ? (
-          <div className={cn('body', bodyClassName)}>
-            {typeof options[0] === 'string'
-              ? options.map((option: string) => (
-                <div
-                  onKeyDown={() => {}}
-                  tabIndex={0}
-                  role="button"
-                  className={cn(
-                    'option',
-                    {
-                      selectioned: option === value,
-                    },
-                    option === value ? 'selected' : '',
-                  )}
-                  onClick={() => handleClick(option)}
-                  key={`dropdown_option_${option}`}
-                >
-                  {option}
-                  {suffix}
-                </div>
-              ))
-              : options.map((option) => (
-                <div
-                  onKeyDown={() => {}}
-                  tabIndex={0}
-                  role="button"
-                  className={cn('option', {
-                    selectioned: option[drawBy] === value ? value[drawBy] : '',
-                  })}
-                  onClick={() => handleClick(option)}
-                  key={`dropdown_option_${option[drawBy]}`}
-                >
-                  {option.icon}
-                  <Text className="text" tag="span">
-                    {option[drawBy]}
-                  </Text>
-                </div>
-              ))}
-          </div>
-        ) : (
-          <div className={cn('body', bodyClassName)}>
-            {options.map((option) => (
-              <div
-                onKeyDown={() => {}}
-                tabIndex={0}
-                role="button"
-                className={cn(
-                  'option',
-                  {
-                    selectioned: option?.symbol === value,
-                  },
-                  option.symbol === value ? 'text-gradient' : '',
-                )}
-                onClick={() => handleClick(option)}
-                key={`dropdown_option_${option[returnBy]}`}
-              >
-                <img alt="" className="image" src={option.image} />
-                <Text className="text" tag="span" align="left">
-                  {option[drawBy]?.toUpperCase()}
-                </Text>
-              </div>
-            ))}
-          </div>
-        )}
+        <div className={cn('dropdown-content-body', dropPosition)}>
+          {withSearch && (
+            <Input
+              value={searchValue}
+              name={`search_value_of_${name}`}
+              startAdornment={<SearchIcon />}
+              onChange={setSearchingValue}
+              endAdornment={isSearching && <Loader size="sm" variant="gray50" />}
+            />
+          )}
+          {options.map((option) => (
+            <div
+              onKeyDown={() => {}}
+              tabIndex={0}
+              role="button"
+              className={cn('dropdown-content-body-option', {
+                selected: option.id === value.id,
+              })}
+              onClick={() => handleClick(option)}
+              key={`dropdown_option_${option.id}`}
+            >
+              {option.content}
+            </div>
+          ))}
+        </div>
       </div>
     </OutsideClickHandler>
   );
