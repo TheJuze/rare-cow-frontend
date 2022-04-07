@@ -1,26 +1,25 @@
 @import '../../assets/styles/variables';
 @import '../../assets/styles/mixins';
+@import 'src/styles/helpers';
 
 .labelTextCommon {
   position: absolute;
   transform: translateY(-50%);
   z-index: 1;
-  color: var(--input-default-label);
   transition: 200ms ease-out;
-  background: var(--input-default-background);
 }
 
 .labelTextFocusedCommon {
   font-size: 12px;
   font-weight: 400;
   line-height: 20px;
-  color: var(--input-focus-label)
 }
 
 
 .label {
   width: 100%;
   display: flex;
+  flex-direction: column;
 
   &:focus-within .input + .labelText {
     @extend .labelTextFocusedCommon;
@@ -44,7 +43,6 @@
   left: spacing(3);
   top: 25%;
   padding-right: 4px;
-  border-radius: 2px;
 }
 
 .inputWrap {
@@ -59,7 +57,7 @@
       top: 5px;
       left: 5px;
 
-      color: red;
+      color: $red;
     }
   }
 }
@@ -70,37 +68,35 @@
   height: 56px;
   padding: spacing(2, 2.5);
   box-sizing: border-box;
-  border-radius: 4px;
+  border-radius: $border-radius;
   transition: 200ms all;
   font-size: 16px;
+  color: $base-700;
 
-  background: var(--input-default-background);
-  border: var(--input-default-border);
-  color: var(--typography-default-color);
+  background: $metal-50;
+  border: 1px solid $metal-300;
 
   &:hover {
-    background: var(--input-hover-background);
-    border: var(--input-hover-border);
-    color: var(--typography-default-color);
-    & + .labelText {
-      color: var(--input-hover-label);
-    }
+    @include border-like-shadow(2px, $metal-400, 0 1px 6px rgba(119, 126, 144, 0.48));
+    // & + .labelText {
+    //   color: var(--input-hover-label);
+    // }
   }
 
-  &:not(:placeholder-shown) {
-    & + .labelText {
-      top: 14px;
-      font-size: 12px;
-      font-weight: 400;
-      line-height: 20px;
-      color: var(--input-active-label);
-    }
+  // &:not(:placeholder-shown) {
+  //   & + .labelText {
+  //     top: 14px;
+  //     font-size: 12px;
+  //     font-weight: 400;
+  //     line-height: 20px;
+  //     color: var(--input-active-label);
+  //   }
 
-    & ~ .endAdornment > svg > path {
-      fill: var(--input-focus-icon);
-    }
-    padding-top: spacing(3);
-  }
+  //   & ~ .endAdornment > svg > path {
+  //     fill: var(--input-focus-icon);
+  //   }
+  //   padding-top: spacing(3);
+  // }
 
   &:focus {
     background: var(--input-active-background);
@@ -109,7 +105,7 @@
     outline: none;
     box-shadow: none;
     caret-color: var(--input-active-caret);
-    padding-top: spacing(3);
+    // padding-top: spacing(3);
     transition: 0s;
     & ~ .endAdornment > svg > path {
       fill: var(--input-focus-icon);
@@ -131,8 +127,26 @@
   }
 
   &.error {
-    background-color: var(--input-error-background);;
-    border: var(--input-error-border);
+    @include border-like-shadow(2px, $red, 0 1px 6px rgba(119, 126, 144, 0.48));
+    & ~ .endAdornment > svg > path {
+      fill: var(--input-error-icon);
+    }
+
+    & + .labelText {
+      color: var(--input-error-label);
+    }
+
+    &:focus-within + .labelText {
+      color: var(--input-error-label);
+    }
+
+    &:not(:placeholder-shown) + .labelText {
+      color: var(--input-error-label);
+    }
+  }
+
+  &.success {
+    @include border-like-shadow(2px, $green, 0 1px 6px rgba(119, 126, 144, 0.48));
     & ~ .endAdornment > svg > path {
       fill: var(--input-error-icon);
     }
@@ -168,16 +182,23 @@
   }
 }
 
-.textError {
+.textError, .textSuccess {
   position: absolute;
   width: 100%;
   display: inline-block;
 
-  margin-top: 3px;
+  margin-top: 4px;
 
-  text-align: right;
-  font-size: 10px;
-  color: red;
+  text-align: left;
+  font-size: 14px;
+}
+
+.textError{
+  color: $red;
+}
+
+.textSuccess{
+  color: $green;
 }
 
 .icon {
@@ -190,23 +211,32 @@
 
 .textarea {
   padding: spacing(8, 3, 3, 3);
-  height: 160px;
-  resize: none;
+  min-height: 160px;
+  width: 200px;
+  resize: vertical;
   position: relative;
   transition: 200ms;
 
   &:focus {
-    padding-top: spacing(4);
+    // padding-top: spacing(4);
     transition: 200ms;
   }
 
-  &:not(:placeholder-shown) {
-    padding-top: spacing(4);
-    & + .labelText {
-      top: 20px;
-      color: var(--input-active-label)
-    }
-  }
+  // &:not(:placeholder-shown) {
+  //   padding-top: spacing(4);
+  //   & + .labelText {
+  //     top: 20px;
+  //     color: var(--input-active-label)
+  //   }
+  // }
+}
+
+::-webkit-resizer {
+  border: none;
+  content: '';
+  background: url('../../assets/resizer.svg') no-repeat top left;
+  width: 8px;
+  height: 8px;
 }
 
 .endAdornment {
