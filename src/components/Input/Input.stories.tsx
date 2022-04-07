@@ -41,7 +41,7 @@ const Template: ComponentStory<typeof Input> = () => {
           isCorrect={isCorrect}
           onChange={onChange}
         />
-        <div style={{ marginBottom: 16 }}>
+        <div style={{ marginBottom: 32 }}>
           <Input
             id="id3"
             name="storybook"

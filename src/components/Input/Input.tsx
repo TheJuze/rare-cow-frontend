@@ -1,7 +1,7 @@
 import React, { VFC, ChangeEvent, FocusEvent, createElement, ReactElement } from 'react';
 import cn from 'clsx';
 import { Text } from 'components';
-import styles from './styles.scss';
+import './styles.scss';
 
 export interface InputProps {
   id?: string;
@@ -51,17 +51,17 @@ export const Input: VFC<InputProps> = ({
   required,
 }) => (
   <>
-    <label htmlFor={id || name} className={cn(styles.label, className)}>
+    <label htmlFor={id || name} className={cn('label', className)}>
       {label && (
-        <Text size="m" weight="medium" className={cn(styles.labelText, classNameLabel)}>
+        <Text size="m" weight="medium" className={cn('labelText', classNameLabel)}>
           {label}
         </Text>
       )}
       <div
         className={cn(
-          styles.inputWrap,
-          { [styles.textareaWrapper]: component === 'textarea' },
-          { [styles.required]: required },
+          'inputWrap',
+          { textareaWrapper: component === 'textarea' },
+          { required },
           classNameInputWrap,
         )}
       >
@@ -74,10 +74,10 @@ export const Input: VFC<InputProps> = ({
           autoComplete,
           disabled,
           className: cn(
-            styles[component],
-            { [styles.error]: error },
-            { [styles.success]: success },
-            { [styles.bigRightPadding]: error || isCorrect },
+            component,
+            { error },
+            { success },
+            { bigRightPadding: error || isCorrect },
             classNameInput,
           ),
           onChange,
@@ -85,11 +85,11 @@ export const Input: VFC<InputProps> = ({
           onBlur,
         })}
         {endAdornment && component !== 'textarea' && (
-          <span className={styles.endAdornment}>{endAdornment}</span>
+          <span className="endAdornment">{endAdornment}</span>
         )}
       </div>
     </label>
-    {error && typeof error === 'string' && <span className={styles.textError}>{error}</span>}
-    {success && typeof success === 'string' && <span className={styles.textSuccess}>{success}</span>}
+    {error && typeof error === 'string' && <span className="textError">{error}</span>}
+    {success && typeof success === 'string' && <span className="textSuccess">{success}</span>}
   </>
 );

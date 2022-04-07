@@ -1,2 +1,2 @@
 export * from './QuantityInput';
-export * from './styles.module.scss';
+export * from './styles.scss';
