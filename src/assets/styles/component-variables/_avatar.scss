@@ -1,0 +1,9 @@
+@import 'src/styles/variables';
+
+$avatarColorsDefault:(
+  'avatar-default-border-color': $light-8,
+  'avatar-border-width': 1px,
+  'avatar-border-radius': 50%,
+  'avatar-animation-transform': -4px
+
+)
