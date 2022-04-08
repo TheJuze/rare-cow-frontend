@@ -1,0 +1,41 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.avatar {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  @include transition;
+  &Img {
+    object-fit: cover;
+    border-radius: $avatar-border-radius;
+    border: $avatar-border-width solid var(--avatar-default-border-color);
+    @include transition;
+  }
+  &.withAnim {
+    &:hover {
+      transform: translateY($avatar-animation-transform);
+    }
+  }
+  &.withShadow {
+    padding: spacing(2);
+    margin: spacing(-2);
+    // .avatar {
+    //   &Img {
+    //     @include shadow-3;
+    //   }
+    // }
+  }
+}
+
+.wrapper{
+  @include flex(row, center, center);
+}
+
+.verified {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  transform: translate(10%, 0);
+}
