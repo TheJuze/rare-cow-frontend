@@ -4,3 +4,4 @@ export * from './Footer';
 export * from './NotificationModal';
 export * from './RouterManager';
 export * from './Layout/Layout';
+export * from './FallbackImage/FallbackImage';

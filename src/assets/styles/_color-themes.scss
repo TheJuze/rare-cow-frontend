@@ -12,6 +12,7 @@
 @import './component-variables/dropdown';
 @import './component-variables/loader';
 @import './component-variables/tab-bar';
+@import './component-variables/avatar';
 
 :root {
 	$colors:(
@@ -28,7 +29,8 @@
 		$optionColorsDefault,
 		$dropdownColorsDefault,
 		$loaderColorsDefault,
-		$tabBarColorsDefault
+		$tabBarColorsDefault,
+		$avatarColorsDefault
 	);
 
 	@each $key_name in $colors {
