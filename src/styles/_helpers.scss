@@ -5,7 +5,7 @@
 
 $spacing-step: 8;
 
-$spacing: (4,8,16,24,32,40,48,56,64,80,100);
+$spacing: (0,4,8,16,24,32,40,48,56,64,80,100);
 
 @function scale-size($unit) {
   @return $unit * $main-unit + ' ';
@@ -17,10 +17,6 @@ $spacing: (4,8,16,24,32,40,48,56,64,80,100);
     $result: $result + call(get-function($func), list.nth($array, $i + 1));
   }
   @return unquote($result);
-}
-
-@mixin space($property, $spaces...) {
-  #{$property}: map($spaces, scale-size);
 }
 
 @function get-normalize-spacing($size) {
@@ -43,8 +39,14 @@ $spacing: (4,8,16,24,32,40,48,56,64,80,100);
   }
 }
 
+// usable functions
+
 @function space($spaces...) {
   @return map($spaces, get-normalize-spacing);
+}
+
+@function spacing($spaces...) {
+  @return map($spaces, scale-size);
 }
 
 @mixin shadow-0() {

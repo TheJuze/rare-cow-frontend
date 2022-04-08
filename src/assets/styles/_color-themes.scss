@@ -9,6 +9,8 @@
 @import './component-variables/main';
 @import './component-variables/checkbox';
 @import './component-variables/option-selector';
+@import './component-variables/dropdown';
+@import './component-variables/loader';
 @import './component-variables/tab-bar';
 
 :root {
@@ -24,6 +26,8 @@
 		$tooltipColorsDefault,
 		$checkboxColorsDefault,
 		$optionColorsDefault,
+		$dropdownColorsDefault,
+		$loaderColorsDefault,
 		$tabBarColorsDefault
 	);
 

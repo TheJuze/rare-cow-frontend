@@ -39,8 +39,8 @@ $buttonColorsDefault: (
   //background
   'button-outlined-primary-background': $metal-50,
   'button-outlined-primary-hover-background': $base-50,
-  'button-outlined-primary-active-background': $light,
-  'button-outlined-primary-focus-background': $light,
+  'button-outlined-primary-active-background': $light-100,
+  'button-outlined-primary-focus-background': $light-100,
   'button-outlined-primary-disabled-background': $metal-50,
   //border
   'button-outlined-primary-border': $metal-300,
@@ -86,11 +86,11 @@ $buttonColorsDefault: (
   'button-filled-disabled-border': transparent,
   'button-filled-disabled-border-width': 1px,
   //color
-  'button-filled-default-color': $light-4,
-  'button-filled-hover-color': $light-4,
-  'button-filled-active-color': $light-4,
-  'button-filled-focus-color': $light-4,
-  'button-filled-disabled-color': $light-4,
+  'button-filled-default-color': $light-8,
+  'button-filled-hover-color': $light-8,
+  'button-filled-active-color': $light-8,
+  'button-filled-focus-color': $light-8,
+  'button-filled-disabled-color': $light-8,
   //icon
   'button-filled-default-icon-color': currentColor,
   'button-filled-hover-icon-color': currentColor,
@@ -102,7 +102,7 @@ $buttonColorsDefault: (
   //background
   'button-filled-primary-background': $metal-200,
   'button-filled-primary-hover-background': $metal-200,
-  'button-filled-primary-active-background': $light,
+  'button-filled-primary-active-background': $light-100,
   'button-filled-primary-focus-background': $metal-200,
   'button-filled-primary-disabled-background': $metal-200,
   //border
@@ -164,8 +164,8 @@ $buttonColorsDefault: (
   //background
   'button-filled-tertiary-background': $metal-200,
   'button-filled-tertiary-hover-background': $metal-200,
-  'button-filled-tertiary-active-background': $light,
-  'button-filled-tertiary-focus-background': $light,
+  'button-filled-tertiary-active-background': $light-100,
+  'button-filled-tertiary-focus-background': $light-100,
   'button-filled-tertiary-disabled-background': $metal-200,
   //border
   'button-filled-tertiary-border': transparent,
