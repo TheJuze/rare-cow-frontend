@@ -27,7 +27,7 @@ $spacing: (0,4,8,16,24,32,40,48,56,64,80,100);
     @return list.nth($spacing,-1) + 'px ';
   }
   $div: $size % $spacing-step;
-  @if($div == 0){
+  @if($div == 0 or $size % 4 == 0){
     @return $size + 'px ';
   }
   @if($div >= 4){

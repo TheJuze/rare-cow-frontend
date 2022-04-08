@@ -13,5 +13,5 @@ export { Sold as SoldIcon } from './components/Sold';
 export { AddIcon } from './components/AddIcon';
 export { RemoveIcon } from './components/RemoveIcon';
 export { SearchIcon } from './components/SearchIcon';
-export { ArrowHeadUpIcon } from './components/ArrowHeadUp';
+export { ArrowHeadDownIcon } from './components/ArrowHeadDown';
 export { TriangleDownIcon } from './components/TriangleDown';

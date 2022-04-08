@@ -3,6 +3,9 @@
 @import 'src/styles/helpers';
 
 .input-wrapper {
+  width: 100%;
+  // paste here max border size of the input state
+  padding: var(--input-focus-width);
   @include flex(column, flex-start, flex-start);
   &:hover:not(.input-disabled):not(.input-error):not(.input-success) {
     .input {
@@ -20,7 +23,12 @@
           .input-endAdornment {
             svg {
               path {
-                fill: var(--input-hover-icon);
+                &[fill] {
+                  fill: var(--input-hover-icon);
+                }
+                &[stroke] {
+                  stroke: var(--input-hover-icon);
+                }
               }
             }
           }
@@ -48,7 +56,12 @@
             .input-endAdornment {
               svg {
                 path {
-                  fill: var(--input-focus-icon);
+                  &[fill] {
+                    fill: var(--input-focus-icon);
+                  }
+                  &[stroke] {
+                    fill: var(--input-focus-icon);
+                  }
                 }
               }
             }
@@ -75,7 +88,12 @@
             .input-endAdornment {
               svg {
                 path {
-                  fill: var(--input-disabled-icon);
+                  &[fill] {
+                    fill: var(--input-disabled-icon);
+                  }
+                  &[stroke] {
+                    stroke: var(--input-disabled-icon);
+                  }
                 }
               }
             }
@@ -102,7 +120,12 @@
             .input-endAdornment {
               svg {
                 path {
-                  fill: var(--input-success-icon);
+                  &[fill] {
+                    fill: var(--input-success-icon);
+                  }
+                  &[stroke] {
+                    stroke: var(--input-success-icon);
+                  }
                 }
               }
             }
@@ -129,7 +152,12 @@
             .input-endAdornment {
               svg {
                 path {
-                  fill: var(--input-error-icon);
+                  &[stroke] {
+                    stroke: var(--input-error-icon);
+                  }
+                  &[fill] {
+                    fill: var(--input-error-icon);
+                  }
                 }
               }
             }
@@ -143,9 +171,20 @@
     &-sm {
       .input {
         &-body {
-          padding: space(10, 16);
+          padding: space(8, 4);
           font-size: 16px;
           line-height: 24px;
+          .input {
+            width: 80%;
+            font-size: 12px;
+            line-height: 16px;
+            &-startAdornment {
+              margin-right: space(4);
+            }
+            &-endAdornment {
+              margin-left: space(4);
+            }
+          }
           &.textarea-body {
             padding: space(10, 10, 10, 16);
           }
@@ -158,6 +197,9 @@
           padding: space(10, 16);
           font-size: 16px;
           line-height: 24px;
+          .input{
+            width: 85%;
+          }
           &.textarea-body {
             padding: space(10, 10, 10, 16);
           }
@@ -168,6 +210,7 @@
   .input {
     &-label {
       color: var(--input-default-label);
+      @include flex(column, flex-start, flex-start);
       &-text {
         color: inherit;
         font-size: 16px;
@@ -177,10 +220,11 @@
     }
     &-body {
       background: var(--input-default-background);
+      display: inline-flex;
+      align-items: center;
       @include border-like-shadow(var(--input-default-width), var(--input-default-border));
       @include border-radius('input');
       @include transition;
-      @include flex(row, center, flex-start);
       .textarea,
       .input {
         appearance: none;
@@ -196,12 +240,11 @@
       }
       .input-startAdornment,
       .input-endAdornment {
-        width: 1em;
+        flex: 0 0 1em;
         height: 1em;
         svg {
           width: 100%;
           height: 100%;
-          transform: scale(1.2);
           path {
             @include transition;
             &[stroke] {
@@ -220,6 +263,7 @@
         margin-left: space(15);
       }
       .textarea {
+        flex: 0 0 100%;
         max-width: 100%;
         resize: vertical;
         &::-webkit-resizer {
