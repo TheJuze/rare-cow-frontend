@@ -1,0 +1,39 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.breadcrumbs {
+  @include flex(row, center, flex-start);
+  &-container{
+    @include flex(row, center, flex-start);
+  }
+  .breadcrumb{
+    @include flex(row, center, flex-start);
+    &-breaker{
+      transform: rotate(-90deg),
+    }
+    &-label-text{
+      color: var(--breadcrumbs-text-color-default)
+    }
+    &-label{
+    @include flex(row, center, flex-start);
+    &-last{
+      .breadcrumb-label-text{
+        color: var(--breadcrumbs-text-color-hover)
+      }
+    }
+    &:hover{
+      .breadcrumb-home{
+          path{
+            fill: var(--breadcrumbs-text-color-hover);
+          }
+        }
+      }
+    }
+    &:hover{
+      .breadcrumb-label-text{
+        color: var(--breadcrumbs-text-color-hover)
+      }
+    }
+  }
+}
