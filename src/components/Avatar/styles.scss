@@ -9,13 +9,13 @@
   @include transition;
   &Img {
     object-fit: cover;
-    border-radius: $avatar-border-radius;
-    border: $avatar-border-width solid var(--avatar-default-border-color);
+    border-radius: var(--avatar-border-radius);
+    border: var(--avatar-border-width) solid var(--avatar-default-border-color);
     @include transition;
   }
   &.withAnim {
     &:hover {
-      transform: translateY($avatar-animation-transform);
+      transform: translateY(var(--avatar-animation-transform));
     }
   }
   &.withShadow {
