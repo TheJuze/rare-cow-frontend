@@ -70,10 +70,10 @@
     background-origin: border-box !important;
 
     &.default {
-      background: var(--switch-default-background);
+      background: var(--switch-default-thumb);
       border: 1px solid var(--switch-default-border);
       &:before {
-        background: var(--switch-default-thumb);
+        background: var(--switch-default-background);
       }
     }
 
