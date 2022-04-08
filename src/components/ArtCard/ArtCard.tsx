@@ -52,7 +52,6 @@ export const ArtCard: VFC<ArtCardProps> = ({
   const imgRef = useRef<HTMLImageElement>(null);
   const offset = 2.5;
   const timeLeft = useTimeLeft(endAuction * 1000);
-  const { hours, minutes, seconds } = timeLeft;
   const onMouseOver = useCallback(() => {
     if (wrapRef.current && imgRef.current) {
       const div = wrapRef.current;
@@ -81,7 +80,7 @@ export const ArtCard: VFC<ArtCardProps> = ({
       )}
       {standart === 'ERC1155' && (
         <div className="artCard-auction">
-          <Text color="gray">{inStock}</Text>
+          <Text color="gray">In stock: {inStock}</Text>
         </div>
       )}
       <Link
@@ -103,22 +102,23 @@ export const ArtCard: VFC<ArtCardProps> = ({
           <Text color="dark" weight="medium">
             {sliceString(name, 20, 0)}
           </Text>
-          <div className="artCard-info__line-price">
-            {isAuction && <BidedIcon />}
-            <img
-              src={currency}
-              alt="currency"
-              className="artCard-info__line-price-currency"
-            />
-            <Text color="accent">{price}</Text>
-          </div>
+          {price ? (
+            <div className="artCard-info__line-price">
+              {isAuction && <BidedIcon />}
+              <img src={currency} alt="currency" className="artCard-info__line-price-currency" />
+              <Text color="accent">{price}</Text>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
         <div className="artCard-info__line">
           <Text color="light3">Id: {id}</Text>
-          {endAuction ? (
+          {endAuction && timeLeft ? (
             <Text color="light3">
-              {hours < 10 ? `0${hours}` : hours}:{minutes < 10 ? `0${minutes}` : minutes}:
-              {seconds < 10 ? `0${seconds}` : seconds}
+              {timeLeft.hours < 10 ? `0${timeLeft.hours}` : timeLeft.hours}:
+              {timeLeft.minutes < 10 ? `0${timeLeft.minutes}` : timeLeft.minutes}:
+              {timeLeft.seconds < 10 ? `0${timeLeft.seconds}` : timeLeft.seconds}
             </Text>
           ) : (
             <></>

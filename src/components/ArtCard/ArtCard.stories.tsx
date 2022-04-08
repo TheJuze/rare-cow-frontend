@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { nftMock1, profileAvatar, usdt } from 'assets/img';
+import { nftMock1, nftMock2, nftMock3, profileAvatar, usdt } from 'assets/img';
 
 import { ArtCard } from './ArtCard';
 import { artCardPropsMocked } from './ArtCard.mock';
@@ -44,43 +44,46 @@ const nfts: INftMock[] = [
     standart: 'ERC721',
     inStock: 1,
   },
+  {
+    name: 'NFT name',
+    image: nftMock2,
+    currency: usdt,
+    isAuction: false,
+    price: '',
+    id: '03423493',
+    endAuction: 0,
+    likesCount: 212223428374283,
+    isLiked: true,
+    authorName: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
+    authorAvatar: profileAvatar,
+    authorId: 2,
+    standart: 'ERC721',
+    inStock: 1,
+  },
+  {
+    name: 'NFT name',
+    image: nftMock3,
+    currency: usdt,
+    isAuction: false,
+    price: '4',
+    id: '03423493',
+    endAuction: 0,
+    likesCount: 0,
+    isLiked: false,
+    authorName: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
+    authorAvatar: profileAvatar,
+    authorId: 2,
+    standart: 'ERC1155',
+    inStock: 24,
+  },
 ];
 
 const Template: ComponentStory<typeof ArtCard> = () => (
   <>
     {nfts.map((nft) => {
-      const {
-        name,
-        image,
-        currency,
-        isAuction,
-        price,
-        id,
-        endAuction,
-        likesCount,
-        isLiked,
-        authorName,
-        authorAvatar,
-        authorId,
-        standart,
-        inStock,
-      } = nft;
       return (
         <ArtCard
-          name={name}
-          image={image}
-          currency={currency}
-          isAuction={isAuction}
-          price={price}
-          id={id}
-          endAuction={endAuction}
-          likesCount={likesCount}
-          isLiked={isLiked}
-          authorName={authorName}
-          authorAvatar={authorAvatar}
-          authorId={authorId}
-          standart={standart}
-          inStock={inStock}
+          {...nft}
         />
       );
     })}
