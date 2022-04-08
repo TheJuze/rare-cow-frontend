@@ -4,8 +4,8 @@ enum ColorValues {
   error,
   gray,
   dark,
-  purple,
-  light
+  accent,
+  light3
 }
 
 enum SizeValues {

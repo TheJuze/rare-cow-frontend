@@ -4,7 +4,7 @@ import { ArtCardProps } from './ArtCard';
 export const artCardPropsMocked: ArtCardProps = {
   name: 'NFT name',
   image: nftMock1,
-  currency: { image: usdt },
+  currency: usdt,
   isAuction: true,
   price: '54.7',
   id: '03423493',

@@ -18,8 +18,7 @@ export interface ArtCardProps {
   image: string;
   name: string;
   isAuction?: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  currency: any;
+  currency: string;
   price: string | number;
   id: string | number;
   endAuction: number;
@@ -107,17 +106,17 @@ export const ArtCard: VFC<ArtCardProps> = ({
           <div className="artCard-info__line-price">
             {isAuction && <BidedIcon />}
             <img
-              src={currency.image}
+              src={currency}
               alt="currency"
               className="artCard-info__line-price-currency"
             />
-            <Text color="purple">{price}</Text>
+            <Text color="accent">{price}</Text>
           </div>
         </div>
         <div className="artCard-info__line">
-          <Text color="light">Id: {id}</Text>
+          <Text color="light3">Id: {id}</Text>
           {endAuction ? (
-            <Text color="light">
+            <Text color="light3">
               {hours < 10 ? `0${hours}` : hours}:{minutes < 10 ? `0${minutes}` : minutes}:
               {seconds < 10 ? `0${seconds}` : seconds}
             </Text>

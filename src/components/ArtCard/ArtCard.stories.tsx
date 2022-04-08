@@ -14,8 +14,7 @@ interface INftMock {
   image: string;
   name: string;
   isAuction?: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  currency: any;
+  currency: string;
   price: string | number;
   id: string | number;
   endAuction: number;
@@ -32,7 +31,7 @@ const nfts: INftMock[] = [
   {
     name: 'NFT name',
     image: nftMock1,
-    currency: { image: usdt },
+    currency: usdt,
     isAuction: true,
     price: '54.7',
     id: '03423493',
@@ -50,22 +49,38 @@ const nfts: INftMock[] = [
 const Template: ComponentStory<typeof ArtCard> = () => (
   <>
     {nfts.map((nft) => {
+      const {
+        name,
+        image,
+        currency,
+        isAuction,
+        price,
+        id,
+        endAuction,
+        likesCount,
+        isLiked,
+        authorName,
+        authorAvatar,
+        authorId,
+        standart,
+        inStock,
+      } = nft;
       return (
         <ArtCard
-          name={nft.name}
-          image={nft.image}
-          currency={nft.currency}
-          isAuction={nft.isAuction}
-          price={nft.price}
-          id={nft.id}
-          endAuction={nft.endAuction}
-          likesCount={nft.likesCount}
-          isLiked={nft.isLiked}
-          authorName={nft.authorName}
-          authorAvatar={nft.authorAvatar}
-          authorId={nft.authorId}
-          standart={nft.standart}
-          inStock={nft.inStock}
+          name={name}
+          image={image}
+          currency={currency}
+          isAuction={isAuction}
+          price={price}
+          id={id}
+          endAuction={endAuction}
+          likesCount={likesCount}
+          isLiked={isLiked}
+          authorName={authorName}
+          authorAvatar={authorAvatar}
+          authorId={authorId}
+          standart={standart}
+          inStock={inStock}
         />
       );
     })}
