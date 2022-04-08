@@ -1,15 +1,22 @@
-import { MouseEventHandler, MouseEvent, useCallback, useState, VFC, ChangeEvent } from 'react';
+import {
+  MouseEventHandler,
+  MouseEvent,
+  useCallback,
+  useState,
+  VFC,
+  ChangeEvent,
+  ReactElement,
+} from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 
 import cn from 'clsx';
 
 import { Text } from 'components';
 
-import iconArrowDown from 'assets/arrow-down.svg';
 import './styles.scss';
 import { TDropdownValue } from 'types';
 import { Input } from 'components/Input';
-import { SearchIcon } from 'assets/icons/icons';
+import { ArrowHeadUpIcon, SearchIcon, TriangleDownIcon } from 'assets/icons/icons';
 import { Loader } from 'components/Loader';
 
 export interface DropdownProps {
@@ -21,8 +28,8 @@ export interface DropdownProps {
   dropPosition?: 'relative' | 'absolute';
   closeOnSelect?: boolean;
   className?: string;
-  label?: string;
-  error?: string;
+  label?: string | ReactElement;
+  error?: string | ReactElement;
   placeholder?: string;
   disabled?: boolean;
   onBlur?: (e: MouseEvent) => void;
@@ -32,6 +39,34 @@ export interface DropdownProps {
   isSearching?: boolean;
 }
 
+const iconMap = {
+  transparent: <TriangleDownIcon />,
+  outlined: <ArrowHeadUpIcon />,
+};
+
+/**
+ * @param {TDropdownValue} value - the dropdown current value
+ * @param {(str: TDropdownValue) => void} setValue - function which set current state of the dropdown
+ * @param {TDropdownValue[]} options - list of options
+ * @param {string} name - id of the dropdown
+ * @param {('outlined' | 'transparent')} [variant = transparent] - color theme of the dropdown
+ * * outlined
+ * * transparent
+ * @param {('relative' | 'absolute')} [dropPosition = relative] - position of the dropdown
+ * * relative
+ * * absolute
+ * @param {boolean} [closeOnSelect = false] - flag which change selection action
+ * @param {string} [className] - the wrapper class name
+ * @param {(string | ReactElement)} [label] - label of the dropdown
+ * @param {(string | ReactElement)} [error] - error of the dropdown
+ * @param {string} [placeholder] - value, which will be set if the current value isn't chosen
+ * @param {boolean} [disabled] - disable the dropdown
+ * @param {(e: MouseEvent) => void} [onBlur] - onBlur event handler
+ * @param {boolean} [withSearch] - add search input to the dropdown
+ * @param {string} [searchValue] - search input value
+ * @param {(val: string) => void} [setSearchValue] - set the search input value
+ * @param {boolean} [isSearching] - disable the search input and add loader
+ */
 export const Dropdown: VFC<DropdownProps> = ({
   value,
   setValue,
@@ -121,22 +156,26 @@ export const Dropdown: VFC<DropdownProps> = ({
           <div className={cn('dropdown-head-selection', { placeholder: placeholder && !value })}>
             {value ? value.content : placeholder}
           </div>
-
-          <img alt="&darr;" src={iconArrowDown} className="dropdown-head-arrow" />
+          <span className={cn('dropdown-head-icon', { 'dropdown-head-icon-active': visible })}>
+            {iconMap[variant]}
+          </span>
         </div>
         {error && (
           <Text color="error" className="error">
             {error}
           </Text>
         )}
-        <div className={cn('dropdown-content-body', dropPosition)}>
+        <div className={cn('dropdown-content-body', variant, dropPosition)}>
           {withSearch && (
             <Input
               value={searchValue}
               name={`search_value_of_${name}`}
               startAdornment={<SearchIcon />}
+              placeholder="Search..."
               onChange={setSearchingValue}
-              endAdornment={isSearching && <Loader size="sm" variant="gray50" />}
+              endAdornment={isSearching ? <Loader size="extra-sm" variant="gray50" /> : <svg />}
+              disabled={isSearching}
+              className="dropdown-search-input"
             />
           )}
           {options.map((option) => (

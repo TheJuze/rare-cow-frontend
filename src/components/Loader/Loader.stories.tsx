@@ -12,7 +12,7 @@ export default {
       control: { type: 'radio' },
     },
     size: {
-      options: ['sm', 'md', 'lg'],
+      options: ['extra-sm', 'sm', 'md', 'lg'],
       control: { type: 'radio' },
     },
   },

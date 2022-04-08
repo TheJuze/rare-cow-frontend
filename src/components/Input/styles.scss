@@ -144,11 +144,8 @@
       .input {
         &-body {
           padding: space(10, 16);
-          .textarea,
-          .input {
-            font-size: 16px;
-            line-height: 24px;
-          }
+          font-size: 16px;
+          line-height: 24px;
           &.textarea-body {
             padding: space(10, 10, 10, 16);
           }
@@ -159,11 +156,8 @@
       .input {
         &-body {
           padding: space(10, 16);
-          .textarea,
-          .input {
-            font-size: 16px;
-            line-height: 24px;
-          }
+          font-size: 16px;
+          line-height: 24px;
           &.textarea-body {
             padding: space(10, 10, 10, 16);
           }
@@ -196,7 +190,7 @@
         height: 100%;
         color: var(--input-default-color);
         @include transition;
-        &::placeholder{
+        &::placeholder {
           color: inherit;
         }
       }
@@ -209,8 +203,13 @@
           height: 100%;
           transform: scale(1.2);
           path {
-            stroke: var(--input-default-icon);
             @include transition;
+            &[stroke] {
+              stroke: var(--input-default-icon);
+            }
+            &[fill] {
+              fill: var(--input-default-icon);
+            }
           }
         }
       }

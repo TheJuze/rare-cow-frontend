@@ -7,7 +7,7 @@ import './styles.scss';
 export interface LoaderProps {
   className?: string;
   variant?: 'primary' | 'gray50';
-  size?: 'lg' | 'md' | 'sm';
+  size?: 'lg' | 'md' | 'sm' | 'extra-sm';
 }
 
 export const Loader: VFC<LoaderProps> = ({

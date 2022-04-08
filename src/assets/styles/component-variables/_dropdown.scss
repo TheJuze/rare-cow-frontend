@@ -3,7 +3,6 @@
 $dropdownColorsDefault: (
     "dropdown-transparent-default-head-background": transparent,
     "dropdown-transparent-hover-head-background": transparent,
-    "dropdown-transparent-active-head-background": transparent,
     "dropdown-transparent-focus-head-background": transparent,
     "dropdown-transparent-disabled-head-background": transparent,
 
@@ -11,8 +10,6 @@ $dropdownColorsDefault: (
     "dropdown-transparent-default-head-border-width": 0px,
     "dropdown-transparent-hover-head-border": transparent,
     "dropdown-transparent-hover-head-border-width": 0px,
-    "dropdown-transparent-active-head-border": transparent,
-    "dropdown-transparent-active-head-border-width": 0px,
     "dropdown-transparent-focus-head-border": transparent,
     "dropdown-transparent-focus-head-border-width": 0px,
     "dropdown-transparent-disabled-head-border": transparent,
@@ -20,15 +17,22 @@ $dropdownColorsDefault: (
 
     "dropdown-transparent-default-head-color": transparent,
     "dropdown-transparent-hover-head-color": transparent,
-    "dropdown-transparent-active-head-color": transparent,
     "dropdown-transparent-focus-head-color": transparent,
     "dropdown-transparent-disabled-head-color": transparent,
+
+    "dropdown-transparent-default-body-main-background": transparent,
 
     "dropdown-transparent-default-body-background": transparent,
     "dropdown-transparent-hover-body-background": transparent,
     "dropdown-transparent-active-body-background": transparent,
     "dropdown-transparent-focus-body-background": transparent,
     "dropdown-transparent-disabled-body-background": transparent,
+
+    "dropdown-transparent-default-body-color": currentColor,
+    "dropdown-transparent-hover-body-color": currentColor,
+    "dropdown-transparent-active-body-color": currentColor,
+    "dropdown-transparent-focus-body-color": currentColor,
+    "dropdown-transparent-disabled-body-color": currentColor,
 
     "dropdown-transparent-default-body-border": transparent,
     "dropdown-transparent-default-body-border-width": 0px,
@@ -40,4 +44,40 @@ $dropdownColorsDefault: (
     "dropdown-transparent-focus-body-border-width": 0px,
     "dropdown-transparent-disabled-body-border": transparent,
     "dropdown-transparent-disabled-body-border-width": 0px,
+
+    //outlined
+    "dropdown-outlined-default-head-background": $light-8,
+    "dropdown-outlined-hover-head-background": $light-8,
+    "dropdown-outlined-focus-head-background": $light-8,
+    "dropdown-outlined-disabled-head-background": $light-8,
+
+    "dropdown-outlined-default-head-border": $light-5,
+    "dropdown-outlined-default-head-border-width": 1px,
+    "dropdown-outlined-hover-head-border": $light-2,
+    "dropdown-outlined-hover-head-border-width": 1px,
+    "dropdown-outlined-focus-head-border": $accent,
+    "dropdown-outlined-focus-head-border-width": 2px,
+    "dropdown-outlined-disabled-head-border": $light-5,
+    "dropdown-outlined-disabled-head-border-width": 1px,
+
+    "dropdown-outlined-default-head-color": $light-3,
+    "dropdown-outlined-hover-head-color": $light-2,
+    "dropdown-outlined-focus-head-color": $light-2,
+    "dropdown-outlined-disabled-head-color": $light-3,
+
+    "dropdown-outlined-default-body-main-background": transparent,
+
+    "dropdown-outlined-default-body-background": $light-white,
+    "dropdown-outlined-hover-body-background": $light-white,
+    "dropdown-outlined-focus-body-background": $light-white,
+    "dropdown-outlined-disabled-body-background": $light-white,
+
+    "dropdown-outlined-default-body-border": transparent,
+    "dropdown-outlined-default-body-border-width": 0px,
+    "dropdown-outlined-hover-body-border": transparent,
+    "dropdown-outlined-hover-body-border-width": 0px,
+    "dropdown-outlined-focus-body-border": transparent,
+    "dropdown-outlined-focus-body-border-width": 0px,
+    "dropdown-outlined-disabled-body-border": transparent,
+    "dropdown-outlined-disabled-body-border-width": 0px,
 )

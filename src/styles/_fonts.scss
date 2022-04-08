@@ -1,2 +1,7 @@
+@import './mixins/helpers.scss';
+
 // Example
 @include font-face('Inter', '../assets/fonts/Inter-Regular', 400, normal, 'ttf');
+@include font-face('Inter', '../assets/fonts/Inter-Medium', 500, normal, 'ttf');
+@include font-face('Inter', '../assets/fonts/Inter-Semibold', 600, normal, 'ttf');
+@include font-face('Inter', '../assets/fonts/Inter-Bold', 700, normal, 'ttf');

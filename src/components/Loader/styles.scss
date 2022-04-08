@@ -7,6 +7,10 @@ $md-loader-size: 50px;
 .loader {
   &-wrapper {
     &.loader {
+      &-extra-sm {
+        width: calc($md-loader-size / 3);
+        height: calc($md-loader-size / 3);
+      }
       &-sm {
         width: calc($md-loader-size / 2);
         height: calc($md-loader-size / 2);

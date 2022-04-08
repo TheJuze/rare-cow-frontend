@@ -15,6 +15,7 @@ const { options } = dropdownPropsMocked;
 
 const Template: ComponentStory<typeof Dropdown> = (args) => {
   const [value, setValue] = useState(options[0]);
+  const [searchValue, setSearchValue] = useState('');
 
   const setDropdownValue = useCallback((val: TDropdownValue) => {
     setValue(val);
@@ -22,7 +23,15 @@ const Template: ComponentStory<typeof Dropdown> = (args) => {
 
   return (
     <div style={{ width: 400, marginLeft: 12 }}>
-      <Dropdown {...args} value={value} setValue={setDropdownValue} options={options} label="Default label" />
+      <Dropdown
+        {...args}
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+        value={value}
+        setValue={setDropdownValue}
+        options={options}
+        label="Default label"
+      />
     </div>
   );
 };
