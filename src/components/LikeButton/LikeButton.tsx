@@ -5,6 +5,7 @@ import cn from 'clsx';
 import { Button } from 'components/Button';
 import { Like } from 'assets/icons/icons';
 import './styles.scss';
+import { formatDigits } from 'utils/numberFormatter';
 
 export interface LikeButtonProps {
   className?: string;
@@ -38,7 +39,7 @@ export const LikeButton: VFC<LikeButtonProps> = ({ className, likesCount, isLike
       active={liked}
       onClick={onLikeClickHandler}
     >
-      {count}
+      {formatDigits(count)}
     </Button>
   );
 };

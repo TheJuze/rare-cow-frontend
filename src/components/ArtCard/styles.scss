@@ -1,0 +1,59 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.artCard { 
+  position: relative;
+  width: 100%;
+  max-width: 283px;
+  min-width: 163px;
+  background-color: var(--artcard-default-background-color);
+  border: var(--artcard-border-width) solid var(--artcard-default-border-color);
+  border-radius: var(--artcard-border-radius);
+  padding: spacing(2, 2, 3, 2);
+  @include flex(column, center, center);
+
+  &-auction{
+    position: absolute;
+    top: var(--artcard-auction-position);
+    left: var(--artcard-auction-position);
+    background-color: var(--artcard-auction-background-color);
+    width: var(--artcard-auction-block-width);
+    border-radius: var(--artcard-auction-border-radius);
+    @include flex(row, center, center);
+  }
+  &-imageWrapper{
+    overflow: hidden;
+    flex: 0 1 80%;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px 20px 0 0;
+    min-height: 143px;
+    @include flex(row, flex-start, center);
+    @include transition;
+    margin: spacing(0, 0, 3, 0);
+  }
+  &-info{
+    &__wrapper{
+      width: 100%;
+    }
+    &__line{
+    @include flex(row, center, space-between);
+    & + & {
+      margin: spacing(0.5, 0, 0, 0);
+    }
+    &-author{
+      @include flex(row, center, flex-start);
+      &-name{
+        margin: spacing(0, 0, 0, 1);
+      }
+    }
+    &-price{
+      @include flex;
+        &-currency{
+          margin: spacing(0, 1, 0, 1);
+        }
+      }
+    }
+  }
+}

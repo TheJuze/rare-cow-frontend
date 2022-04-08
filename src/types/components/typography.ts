@@ -2,6 +2,10 @@ enum ColorValues {
   default,
   secondary,
   error,
+  gray,
+  dark,
+  accent,
+  light3
 }
 
 enum SizeValues {

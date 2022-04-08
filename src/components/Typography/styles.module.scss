@@ -55,11 +55,27 @@
 }
 
 .secondary {
-  color: var(--typography-secondary-color);;
+  color: var(--typography-secondary-color);
 }
 
 .error {
-  color: var(--typography-error-color);;;
+  color: var(--typography-error-color);
+}
+
+.gray {
+  color: var(--typography-gray-6-color);
+}
+
+.dark {
+  color: var(--typography-dark-color)
+}
+
+.accent {
+  color: var(--typography-accent-color)
+}
+
+.light3{
+  color: var(--typography-light-3-color)
 }
 
 .normalWeight {

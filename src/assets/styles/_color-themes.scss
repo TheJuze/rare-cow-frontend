@@ -13,6 +13,7 @@
 @import './component-variables/loader';
 @import './component-variables/tab-bar';
 @import './component-variables/avatar';
+@import './component-variables/art-card';
 
 :root {
 	$colors:(
@@ -30,7 +31,8 @@
 		$dropdownColorsDefault,
 		$loaderColorsDefault,
 		$tabBarColorsDefault,
-		$avatarColorsDefault
+		$avatarColorsDefault,
+		$artcardColorsDefault
 	);
 
 	@each $key_name in $colors {

@@ -61,9 +61,11 @@ $base-700: rgba(26, 26, 26, 0.7);
 $base-900: #1A1A1A;
 
 //dark
-$dark: #1C1C28;
+$dark: #151B4C;
+$dark-0: #1C1C28;
 
 //gray
+$gray-6: #F2F2F2;
 $gray-50: #FDFDFD;
 
 //shadows
@@ -72,3 +74,6 @@ $shadow-0: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0,
 //background
 $main-background: #F3F3F5;
 $block-background: #FCFCFC;
+
+//border
+$card-border: #E6E6E6;
