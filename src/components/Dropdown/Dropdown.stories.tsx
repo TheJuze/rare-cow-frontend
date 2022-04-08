@@ -22,17 +22,47 @@ const Template: ComponentStory<typeof Dropdown> = (args) => {
   }, []);
 
   return (
-    <div style={{ width: 400, marginLeft: 12 }}>
-      <Dropdown
-        {...args}
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-        value={value}
-        setValue={setDropdownValue}
-        options={options}
-        label="Default label"
-      />
-    </div>
+    <>
+      <div style={{ width: 300, margin: 12 }}>
+        <Dropdown
+          {...args}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          value={value}
+          setValue={setDropdownValue}
+          options={options}
+          variant="outlined"
+          dropPosition="absolute"
+          label="Default label"
+        />
+      </div>
+      <div style={{ width: 160, margin: 12 }}>
+        <Dropdown
+          {...args}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          value={value}
+          setValue={setDropdownValue}
+          options={options}
+          variant="outlined"
+          underlined={false}
+          dropPosition="absolute"
+          label="Explore"
+          withSearch={false}
+        />
+      </div>
+      <div style={{ width: 168, margin: 12 }}>
+        <Dropdown
+          {...args}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          value={value}
+          setValue={setDropdownValue}
+          options={options}
+          label="Default label"
+        />
+      </div>
+    </>
   );
 };
 export const Default = Template.bind({});

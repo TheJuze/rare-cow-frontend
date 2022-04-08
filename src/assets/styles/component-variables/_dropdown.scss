@@ -15,10 +15,10 @@ $dropdownColorsDefault: (
     "dropdown-transparent-disabled-head-border": transparent,
     "dropdown-transparent-disabled-head-border-width": 0px,
 
-    "dropdown-transparent-default-head-color": transparent,
-    "dropdown-transparent-hover-head-color": transparent,
-    "dropdown-transparent-focus-head-color": transparent,
-    "dropdown-transparent-disabled-head-color": transparent,
+    "dropdown-transparent-default-head-color": $light-1,
+    "dropdown-transparent-hover-head-color": $light-1,
+    "dropdown-transparent-focus-head-color": $light-1,
+    "dropdown-transparent-disabled-head-color": $light-1,
 
     "dropdown-transparent-default-body-main-background": transparent,
 
@@ -65,19 +65,19 @@ $dropdownColorsDefault: (
     "dropdown-outlined-focus-head-color": $light-2,
     "dropdown-outlined-disabled-head-color": $light-3,
 
-    "dropdown-outlined-default-body-main-background": transparent,
+    "dropdown-outlined-default-body-main-background": $light-white,
 
-    "dropdown-outlined-default-body-background": $light-white,
-    "dropdown-outlined-hover-body-background": $light-white,
-    "dropdown-outlined-focus-body-background": $light-white,
-    "dropdown-outlined-disabled-body-background": $light-white,
+    "dropdown-outlined-default-body-background": transparent,
+    "dropdown-outlined-hover-body-background": transparent,
+    "dropdown-outlined-focus-body-background": transparent,
+    "dropdown-outlined-disabled-body-background": transparent,
 
-    "dropdown-outlined-default-body-border": transparent,
-    "dropdown-outlined-default-body-border-width": 0px,
-    "dropdown-outlined-hover-body-border": transparent,
-    "dropdown-outlined-hover-body-border-width": 0px,
-    "dropdown-outlined-focus-body-border": transparent,
-    "dropdown-outlined-focus-body-border-width": 0px,
-    "dropdown-outlined-disabled-body-border": transparent,
-    "dropdown-outlined-disabled-body-border-width": 0px,
+    "dropdown-outlined-default-body-border": $light-middle,
+    "dropdown-outlined-default-body-border-width": 1px,
+    "dropdown-outlined-hover-body-border": $light-middle,
+    "dropdown-outlined-hover-body-border-width": 1px,
+    "dropdown-outlined-focus-body-border": $light-middle,
+    "dropdown-outlined-focus-body-border-width": 1px,
+    "dropdown-outlined-disabled-body-border": $light-middle,
+    "dropdown-outlined-disabled-body-border-width": 1px,
 )
