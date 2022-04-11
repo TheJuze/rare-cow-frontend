@@ -1,4 +1,4 @@
-import { FC, ReactNode, useMemo } from 'react';
+import React, { FC, ReactNode, useMemo } from 'react';
 
 import clsx from 'clsx';
 import { omit } from 'lodash';
@@ -16,13 +16,17 @@ export interface ModalProps extends DialogProps {
 export const Modal: FC<ModalProps> = (props) => {
   const { customTitle = ' ', open, children, onClose } = props;
 
-  const jsxTitle = useMemo(() => (typeof customTitle === 'string' ? <div className={clsx(s.title, 'l')}>{customTitle}</div> : customTitle), [customTitle]);
+  const jsxTitle = useMemo(
+    () =>
+      typeof customTitle === 'string' ? (
+        <div className={clsx(s.title, 'l')}>{customTitle}</div>
+      ) : (
+        customTitle
+      ),
+    [customTitle],
+  );
   return (
-    <DialogWrap
-      open={open}
-      onClose={onClose}
-      {...omit({ ...props }, 'customTitle')}
-    >
+    <DialogWrap open={open} onClose={onClose} {...omit({ ...props }, 'customTitle')}>
       <div className={s.modalTitle}>{customTitle && jsxTitle}</div>
       {children}
     </DialogWrap>
