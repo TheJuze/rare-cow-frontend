@@ -36,14 +36,11 @@
 		$loaderColorsDefault,
 		$tabBarColorsDefault,
 		$avatarColorsDefault,
-<<<<<<< HEAD
 		$highlightedTextColorsDefault,
 		$searchItemColorsDefault,
 		$searchInputColorsDefault,
-=======
 		$artcardColorsDefault,
 		$breadcrumbsColorsDefault
->>>>>>> d4cfb436f0818348955ffafca692eee0893c246c
 	);
 
 	@each $key_name in $colors {
