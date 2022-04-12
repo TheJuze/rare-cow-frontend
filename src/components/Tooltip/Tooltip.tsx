@@ -49,6 +49,7 @@ export const Tooltip: FC<TooltipProps> = ({
   return (
     <>
       {targetElement}
+      {/* @ts-ignore */}
       <ReactTooltip
         id={name}
         eventOff={eventOff}
