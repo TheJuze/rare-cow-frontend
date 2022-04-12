@@ -4,4 +4,4 @@ export * from './formatTokenAmount';
 export * from './validateStatus';
 export * from './getWeb3';
 export * from './numberFormatter';
-export * from './sliceString';
+export { default as sliceString } from './sliceString';

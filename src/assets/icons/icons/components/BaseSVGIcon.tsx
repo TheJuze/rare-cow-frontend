@@ -32,24 +32,20 @@ export const BaseSVGIcon: React.FC<BaseSVGIconProps> = ({
   stroke,
   className,
   ...passedProps
-}) => {
-  return (
-    <svg
-      {...passedProps}
-      className={clsx(
-        className,
-      )}
-      focusable="false"
-      viewBox={viewBox}
-      aria-hidden
-      role={undefined}
-      width={width}
-      height={height}
-      fill={fill}
-      color={htmlColor}
-      stroke={stroke}
-    >
-      {children}
-    </svg>
-  );
-};
+}) => (
+  <svg
+    {...passedProps}
+    className={clsx(className)}
+    focusable="false"
+    viewBox={viewBox}
+    aria-hidden
+    role={undefined}
+    width={width}
+    height={height}
+    fill={fill}
+    color={htmlColor}
+    stroke={stroke}
+  >
+    {children}
+  </svg>
+);

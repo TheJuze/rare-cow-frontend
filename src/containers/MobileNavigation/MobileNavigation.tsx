@@ -1,4 +1,4 @@
-import { VFC } from 'react';
+import React, { VFC } from 'react';
 
 import cn from 'clsx';
 
@@ -8,6 +8,6 @@ export interface MobileNavigationProps {
   className?: string;
 }
 
-export const MobileNavigation: VFC<MobileNavigationProps> = ({ className }) => {
-  return <div className={cn(s.MobileNavigation, className)} />;
-};
+export const MobileNavigation: VFC<MobileNavigationProps> = ({ className }) => (
+  <div className={cn(s.MobileNavigation, className)} />
+);

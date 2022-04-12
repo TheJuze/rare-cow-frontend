@@ -1,4 +1,6 @@
-import { FC, useCallback, useEffect, useState } from 'react';
+import React, {
+  FC, useCallback, useEffect, useState,
+} from 'react';
 
 import { nullAvatar } from 'assets/img';
 
@@ -15,6 +17,7 @@ interface IProps {
   height?: number | string;
 }
 
+// eslint-disable-next-line no-shadow
 enum ImageState {
   loading,
   error,

@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 export default [
   { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
   {

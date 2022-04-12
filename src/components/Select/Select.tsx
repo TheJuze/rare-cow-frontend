@@ -1,7 +1,10 @@
+/* eslint-disable max-len */
 /* eslint-disable react/jsx-props-no-spreading,
 @typescript-eslint/no-explicit-any,
 react/destructuring-assignment */
-import React, { FC, ReactElement, useCallback, useMemo } from 'react';
+import React, {
+  FC, ReactElement, useCallback, useMemo,
+} from 'react';
 import cn from 'clsx';
 import { ChevronDown } from 'assets/icons/icons';
 import RSelect, {

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react';
 import { Text } from 'components';
 import { TableProps } from './Table';
 import { TableRowProps } from './Table.types';

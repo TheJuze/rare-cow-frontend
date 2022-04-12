@@ -1,4 +1,4 @@
-import { VFC } from 'react';
+import React, { VFC } from 'react';
 
 import cn from 'clsx';
 
@@ -10,14 +10,8 @@ export interface LoaderProps {
   size?: 'lg' | 'md' | 'sm' | 'extra-sm';
 }
 
-export const Loader: VFC<LoaderProps> = ({
-  className,
-  variant = 'primary',
-  size = 'md',
-}) => {
-  return (
-    <div className={cn('loader-wrapper', className, `loader-${size}`)}>
-      <div className={cn('loader-body', 'loader-circle', `loader-${variant}`)} />
-    </div>
-  );
-};
+export const Loader: VFC<LoaderProps> = ({ className, variant = 'primary', size = 'md' }) => (
+  <div className={cn('loader-wrapper', className, `loader-${size}`)}>
+    <div className={cn('loader-body', 'loader-circle', `loader-${variant}`)} />
+  </div>
+);

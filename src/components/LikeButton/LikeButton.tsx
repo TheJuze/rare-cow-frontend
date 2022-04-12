@@ -1,4 +1,6 @@
-import { useEffect, useCallback, useState, VFC } from 'react';
+import React, {
+  useEffect, useCallback, useState, VFC,
+} from 'react';
 
 import cn from 'clsx';
 

@@ -14,12 +14,11 @@ export const useWindowState = (): WindowState => {
   const [windowStateCached] = useDebounce(windowState, 300);
 
   useEffect(() => {
-    const handleResize = () =>
-      setWindowState({
-        width: window.innerWidth,
-        height: window.innerHeight,
-        token: uuidv4(),
-      });
+    const handleResize = () => setWindowState({
+      width: window.innerWidth,
+      height: window.innerHeight,
+      token: uuidv4(),
+    });
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);

@@ -1,4 +1,7 @@
-import React, { FC, ReactNode, useCallback, useMemo } from 'react';
+/* eslint-disable max-len */
+import React, {
+  FC, ReactNode, useCallback, useMemo,
+} from 'react';
 import cx from 'classnames';
 import {
   useTable,
@@ -102,13 +105,9 @@ export const Table: FC<TableProps> = React.forwardRef<HTMLDivElement, TableProps
     else gotoPage(selected);
   }, [forcePage, gotoPage, onPageChange]);
 
-  const pageCount = useMemo<number>(() => {
-    return Math.ceil((count || data.length) / pageSize);
-  }, [data.length, pageSize, count]);
+  const pageCount = useMemo<number>(() => Math.ceil((count || data.length) / pageSize), [data.length, pageSize, count]);
 
-  const isPaginationVisible = useMemo<boolean>(() => {
-    return ![withPagination, !isLoading, pageSize < (count || data.length)].includes(false);
-  }, [withPagination, isLoading, pageSize, count, data.length]);
+  const isPaginationVisible = useMemo<boolean>(() => ![withPagination, !isLoading, pageSize < (count || data.length)].includes(false), [withPagination, isLoading, pageSize, count, data.length]);
 
   return (
     <>

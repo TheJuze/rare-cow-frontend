@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+import React from 'react';
 import { useState } from '@storybook/addons';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 // import { noop } from 'lodash';

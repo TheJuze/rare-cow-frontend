@@ -1,4 +1,4 @@
-import { VFC } from 'react';
+import React, { VFC } from 'react';
 
 import cn from 'clsx';
 
@@ -8,6 +8,6 @@ export interface FooterProps {
   className?: string;
 }
 
-export const Footer: VFC<FooterProps> = ({ className }) => {
-  return <footer className={cn(s.footer, className)}>Footer</footer>;
-};
+export const Footer: VFC<FooterProps> = ({ className }) => (
+  <footer className={cn(s.footer, className)}>Footer</footer>
+);

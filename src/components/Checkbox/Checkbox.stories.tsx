@@ -1,6 +1,6 @@
 import { useCallback, useState } from '@storybook/addons';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { MouseEventHandler } from 'react';
+import React, { MouseEventHandler } from 'react';
 
 import { Checkbox } from './Checkbox';
 import { checkboxPropsMocked } from './Checkbox.mock';

@@ -1,4 +1,6 @@
-import React, { FC, createElement, ReactElement, useMemo } from 'react';
+import React, {
+  FC, createElement, ReactElement, useMemo,
+} from 'react';
 import cn from 'clsx';
 import ReactTooltip from 'react-tooltip';
 import { noop } from 'lodash';
@@ -42,9 +44,7 @@ export const Tooltip: FC<TooltipProps> = ({
     'data-event': event,
   }, target);
 
-  const delayHide: number = useMemo(() => {
-    return clickable ? 150 : 0;
-  }, [clickable]);
+  const delayHide: number = useMemo(() => (clickable ? 150 : 0), [clickable]);
 
   return (
     <>

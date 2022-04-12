@@ -1,5 +1,8 @@
+import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { nftMock1, nftMock2, nftMock3, profileAvatar, usdt } from 'assets/img';
+import {
+  nftMock1, nftMock2, nftMock3, profileAvatar, usdt,
+} from 'assets/img';
 
 import { ArtCard } from './ArtCard';
 import { artCardPropsMocked } from './ArtCard.mock';
@@ -80,13 +83,9 @@ const nfts: INftMock[] = [
 
 const Template: ComponentStory<typeof ArtCard> = () => (
   <>
-    {nfts.map((nft) => {
-      return (
-        <ArtCard
-          {...nft}
-        />
-      );
-    })}
+    {nfts.map((nft) => (
+      <ArtCard {...nft} />
+    ))}
   </>
 );
 export const Default = Template.bind({});

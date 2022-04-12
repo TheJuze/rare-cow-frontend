@@ -18,24 +18,9 @@ export const Switch = ({
   className,
   id,
   onChange,
-}: SwitchProps) => {
-  return(
-    <label
-      className={cn(
-        styles.switch,
-        styles[variant],
-        styles[size],
-        className,
-      )}
-      htmlFor={id}
-    >
-      <input
-        id={id}
-        type="checkbox"
-        checked={checked}
-        onChange={onChange}
-      />
-      <span className={cn(styles.slider, styles[variant], styles[size])} />
-    </label>
-  );
-};
+}: SwitchProps) => (
+  <label className={cn(styles.switch, styles[variant], styles[size], className)} htmlFor={id}>
+    <input id={id} type="checkbox" checked={checked} onChange={onChange} />
+    <span className={cn(styles.slider, styles[variant], styles[size])} />
+  </label>
+);

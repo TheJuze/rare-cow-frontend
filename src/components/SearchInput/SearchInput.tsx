@@ -1,4 +1,4 @@
-import { VFC } from 'react';
+import React, { VFC } from 'react';
 
 import cn from 'clsx';
 
@@ -8,10 +8,4 @@ export interface SearchInputProps {
   className?: string;
 }
 
-export const SearchInput: VFC<SearchInputProps> = ({ className }) => {
-  return (
-    <div className={cn('searchInput', className)}>
-      Hello World!
-    </div>
-  );
-};
+export const SearchInput: VFC<SearchInputProps> = ({ className }) => <div className={cn('searchInput', className)}>Hello World!</div>;

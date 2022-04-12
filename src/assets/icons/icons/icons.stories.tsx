@@ -2,7 +2,7 @@ import React, { FC, ComponentType, ReactNode } from 'react';
 
 import forEach from 'lodash/forEach';
 
-import { Text } from 'components';
+import { Text } from '../../../components';
 import { IconProps } from './icons.types';
 
 import * as allIcons from '.';
@@ -15,33 +15,31 @@ interface IconVariantsProps {
   Icon: ComponentType<IconProps>;
 }
 
-const IconVariants: FC<IconVariantsProps> = ({ Icon }) => {
-  return (
+const IconVariants: FC<IconVariantsProps> = ({ Icon }) => (
+  <div
+    style={{
+      display: 'flex',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+    }}
+  >
+    <Text>{Icon.displayName}</Text>
     <div
       style={{
         display: 'flex',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
+        border: '1px solid lightgray',
+        margin: 10,
+        textAlign: 'center',
+        padding: 5,
       }}
     >
-      <Text>{Icon.displayName}</Text>
-      <div
-        style={{
-          display: 'flex',
-          border: '1px solid lightgray',
-          margin: 10,
-          textAlign: 'center',
-          padding: 5,
-        }}
-      >
+      <Icon />
+      <div>
         <Icon />
-        <div>
-          <Icon />
-        </div>
       </div>
     </div>
-  );
-};
+  </div>
+);
 
 export const Icons: FC = () => {
   const content: ReactNode[] = [];
