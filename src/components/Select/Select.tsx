@@ -46,6 +46,20 @@ export interface SelectProps extends ReactSelectProps {
   classNameLabel?: string;
   classNameSelectWithErrorWrap?: string;
   withPortal?: boolean;
+  name?: string;
+  options?: unknown[];
+  placeholder?: string;
+  onChange?: () => void;
+  closeMenuOnSelect: boolean,
+  hideSelectedOptions: boolean,
+  controlShouldRenderValue: boolean,
+  isClearable: boolean,
+  isSearchable: boolean,
+  className: string,
+  onMenuOpen: () => void,
+  onMenuClose: () => void,
+  menuPortalTarget: unknown,
+  components: any,
 }
 
 export const Select: FC<SelectProps> = ({

@@ -1,22 +1,13 @@
 import React, { useMemo } from 'react';
 
-import { useMediaQuery, useTheme } from '@material-ui/core';
-
-import { getFormatMedia } from 'utils';
-
 import { TOptionable } from 'types';
+import useWindowSize from 'utils/useWindowSize';
 import { WindowFormat } from './useBreakpoints.types';
 
-export const BreakpointsContext =
-  React.createContext<TOptionable<WindowFormat>>(undefined);
+export const BreakpointsContext = React.createContext<TOptionable<WindowFormat>>(undefined);
 
 export const BreakpointsProvider: React.FC = ({ children }) => {
-  const theme = useTheme();
-  const formatMedia = getFormatMedia(theme);
-
-  const isTablet = useMediaQuery(formatMedia.BREAKPOINT_TABLET);
-  const isDesktop = useMediaQuery(formatMedia.BREAKPOINT_DESKTOP);
-  const isWideDesktop = useMediaQuery(formatMedia.BREAKPOINT_WIDE_DESKTOP);
+  const [isTablet, isDesktop, isWideDesktop] = useWindowSize([390, 1024, 1440]);
 
   const format = useMemo(() => {
     if (isWideDesktop) {
@@ -31,9 +22,5 @@ export const BreakpointsProvider: React.FC = ({ children }) => {
     return WindowFormat.mobile;
   }, [isWideDesktop, isDesktop, isTablet]);
 
-  return (
-    <BreakpointsContext.Provider value={format}>
-      {children}
-    </BreakpointsContext.Provider>
-  );
+  return <BreakpointsContext.Provider value={format}>{children}</BreakpointsContext.Provider>;
 };
