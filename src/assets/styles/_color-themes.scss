@@ -16,6 +16,8 @@
 @import './component-variables/highlighted-text';
 @import './component-variables/search-item';
 @import './component-variables/search-input';
+@import './component-variables/art-card';
+@import './component-variables/breadcrumbs';
 
 :root {
 	$colors:(
@@ -34,9 +36,14 @@
 		$loaderColorsDefault,
 		$tabBarColorsDefault,
 		$avatarColorsDefault,
+<<<<<<< HEAD
 		$highlightedTextColorsDefault,
 		$searchItemColorsDefault,
 		$searchInputColorsDefault,
+=======
+		$artcardColorsDefault,
+		$breadcrumbsColorsDefault
+>>>>>>> d4cfb436f0818348955ffafca692eee0893c246c
 	);
 
 	@each $key_name in $colors {
