@@ -1,9 +1,9 @@
-import React, { FC, ComponentType, ReactNode } from 'react';
+import React, { FC, ReactNode } from 'react';
 
 import forEach from 'lodash/forEach';
 
 import { Text } from '../../../components';
-import { IconProps } from './icons.types';
+// import { IconProps } from './icons.types';
 
 import * as allIcons from '.';
 
@@ -12,7 +12,8 @@ export default {
 };
 
 interface IconVariantsProps {
-  Icon: ComponentType<IconProps>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Icon: any;
 }
 
 const IconVariants: FC<IconVariantsProps> = ({ Icon }) => (

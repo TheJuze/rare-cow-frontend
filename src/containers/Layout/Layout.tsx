@@ -28,7 +28,8 @@ export interface LayoutProps {
   route?: UrlObject | string;
 }
 
-export const Layout: FC<LayoutProps> = ({ children }) => {
+export const Layout: FC<LayoutProps> = ({ children, route }) => {
+  console.log(route);
   const { width } = useWindowState();
   const { pathname } = useLocation();
   const { connect, disconnect } = useWalletConnectorContext();

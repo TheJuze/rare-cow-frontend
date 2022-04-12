@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable max-len */
 import React, {
   FC, ReactNode, useCallback, useMemo,
@@ -42,6 +43,10 @@ export interface TableProps<T extends object = {}> extends TableOptions<T> {
   title?: string,
   maxHeight?: 'auto' | number,
   childrenHeader?: ReactNode,
+  columns?: any;
+  data?: any;
+  withSorting?: any;
+  refEndTable?: any;
 }
 
 export const Table: FC<TableProps> = React.forwardRef<HTMLDivElement, TableProps>(({
