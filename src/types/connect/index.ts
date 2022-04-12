@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { INetwork, IProvider, ISettings } from '@amfi/connect-wallet/dist/interface';
 

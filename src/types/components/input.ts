@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
 
+// eslint-disable-next-line no-shadow
 export enum EInputStatus {
   COMMON,
   SUCCESS,

@@ -1,6 +1,6 @@
 import { useCallback } from '@storybook/addons';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { TDropdownValue } from 'types/components/dropdown';
 
 import { Dropdown } from './Dropdown';

@@ -1,4 +1,4 @@
-import { useState } from '@storybook/addons';
+import React, { useState } from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import { SearchInput } from './SearchInput';

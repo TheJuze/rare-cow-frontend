@@ -1,3 +1,4 @@
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -13,6 +14,7 @@ const root = document.getElementById('root');
 
 const app = (
   <Provider store={store.store}>
+    {/* @ts-ignore */}
     <PersistGate loading={null} persistor={store.persistor}>
       <Router>
         <App />

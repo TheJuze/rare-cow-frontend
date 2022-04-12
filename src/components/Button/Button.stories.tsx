@@ -2,7 +2,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { StarIcon } from 'assets/icons/icons';
 import { Text } from 'components/Typography';
-import { FC, PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 
 import { Button, ButtonProps } from './Button';
 
@@ -14,11 +14,23 @@ export default {
 type TTemplateProps = FC<PropsWithChildren<ButtonProps & { designSrc: string }>>;
 
 const Template: ComponentStory<TTemplateProps> = (args) => (
-  <div style={{ paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+  <div
+    style={{
+      paddingLeft: '20px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px',
+    }}
+  >
     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
       <Text>
         Buttons
-        <a style={{ color: '#000', marginLeft: '10px' }} href={args.designSrc} target="_blank" rel="noreferrer">
+        <a
+          style={{ color: '#000', marginLeft: '10px' }}
+          href={args.designSrc}
+          target="_blank"
+          rel="noreferrer"
+        >
           Design source link
         </a>
       </Text>

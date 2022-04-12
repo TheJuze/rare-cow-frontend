@@ -1,4 +1,7 @@
-import { KeyboardEventHandler, SyntheticEvent, useCallback, useRef, useState, VFC } from 'react';
+/* eslint-disable max-len */
+import React, {
+  KeyboardEventHandler, SyntheticEvent, useCallback, useRef, useState, VFC,
+} from 'react';
 
 import cn from 'clsx';
 

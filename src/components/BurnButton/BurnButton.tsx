@@ -1,4 +1,4 @@
-import { useCallback, VFC } from 'react';
+import React, { useCallback, VFC } from 'react';
 
 import cn from 'clsx';
 

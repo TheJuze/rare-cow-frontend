@@ -8,7 +8,7 @@ import {
   OwnedIcon,
   SoldIcon,
 } from 'assets/icons/icons';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { TBarOption } from 'types';
 
 import { TabBar } from './TabBar';

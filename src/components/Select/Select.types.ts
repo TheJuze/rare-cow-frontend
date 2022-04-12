@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import { CSSProperties } from 'react';
 
 type CustomStyle = {

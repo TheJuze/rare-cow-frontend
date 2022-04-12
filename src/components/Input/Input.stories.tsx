@@ -1,3 +1,4 @@
+import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';

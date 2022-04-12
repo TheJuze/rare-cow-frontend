@@ -1,5 +1,5 @@
-import {
-  CSSProperties,
+import React, {
+  // CSSProperties,
   FC,
   PropsWithChildren,
   RefObject,
@@ -20,7 +20,7 @@ export interface ButtonProps {
   type?: 'button' | 'submit';
   disabled?: boolean;
   active?: boolean;
-  style?: CSSProperties;
+  // style?: CSSProperties;
   href?: string;
   btnRef?: RefObject<HTMLButtonElement>;
   to?: string;

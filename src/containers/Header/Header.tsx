@@ -1,5 +1,5 @@
 import { Button } from 'components';
-import { useCallback, VFC } from 'react';
+import React, { useCallback, VFC } from 'react';
 import { Chains, WalletProviders } from 'types';
 
 import s from './styles.module.scss';
@@ -15,7 +15,15 @@ export interface HeaderProps {
   chainType: 'testnet' | 'mainnet';
 }
 
-export const Header: VFC<HeaderProps> = ({ address, disconnect, onConnectWallet, onToggleChainType, isHomePage, isUserInfoLoading, chainType }) => {
+export const Header: VFC<HeaderProps> = ({
+  address,
+  disconnect,
+  onConnectWallet,
+  onToggleChainType,
+  isHomePage,
+  isUserInfoLoading,
+  chainType,
+}) => {
   console.debug(isHomePage, isUserInfoLoading);
 
   const handleChangeConnecting = useCallback(() => {
@@ -28,7 +36,9 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect, onConnectWallet,
 
   return (
     <header className={s.header}>
-      <Button onClick={handleChangeConnecting}>{address.length ? address : 'Connect Wallet'}</Button>
+      <Button onClick={handleChangeConnecting}>
+        {address.length ? address : 'Connect Wallet'}
+      </Button>
       <Button onClick={() => onToggleChainType()}>{chainType}</Button>
     </header>
   );

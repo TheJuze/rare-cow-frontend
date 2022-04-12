@@ -1,4 +1,4 @@
-import { VFC } from 'react';
+import React, { VFC } from 'react';
 import { Link } from 'react-router-dom';
 
 import cn from 'clsx';

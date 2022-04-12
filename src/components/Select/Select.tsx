@@ -1,7 +1,10 @@
+/* eslint-disable max-len */
 /* eslint-disable react/jsx-props-no-spreading,
 @typescript-eslint/no-explicit-any,
 react/destructuring-assignment */
-import React, { FC, ReactElement, useCallback, useMemo } from 'react';
+import React, {
+  FC, ReactElement, useCallback, useMemo,
+} from 'react';
 import cn from 'clsx';
 import { ChevronDown } from 'assets/icons/icons';
 import RSelect, {
@@ -43,6 +46,20 @@ export interface SelectProps extends ReactSelectProps {
   classNameLabel?: string;
   classNameSelectWithErrorWrap?: string;
   withPortal?: boolean;
+  name?: string;
+  options?: unknown[];
+  placeholder?: string;
+  onChange?: () => void;
+  closeMenuOnSelect?: boolean,
+  hideSelectedOptions?: boolean,
+  controlShouldRenderValue?: boolean,
+  isClearable?: boolean,
+  isSearchable?: boolean,
+  className?: string,
+  onMenuOpen?: () => void,
+  onMenuClose?: () => void,
+  menuPortalTarget?: unknown,
+  components?: any,
 }
 
 export const Select: FC<SelectProps> = ({
@@ -83,152 +100,147 @@ export const Select: FC<SelectProps> = ({
   menuPortalTarget,
   components,
 }) => {
-  const Control = useCallback((props: ControlProps<OptionType, boolean>) => (
-    <component.Control
-      {...props}
-      className={cn(
-        styles.control,
-        props.isFocused && styles.focused,
-        props.menuIsOpen && styles.open,
-        error && styles.errorControl,
-        classNameControl,
-      )}
-    />
-  ), [classNameControl, error]);
-
-  const Option = useCallback((props: OptionProps<OptionType, boolean>) => (
-    <component.Option
-      {...props}
-      className={cn(
-        styles.option,
-        props.isSelected && styles.selected,
-        props.isFocused && styles.focused,
-        classNameOption,
-      )}
-    >
-      {props.data.icon && <img src={props.data.icon} alt="icon" className={styles.iconOption} />}
-      <Text
+  const Control = useCallback(
+    (props: ControlProps<OptionType, boolean>) => (
+      <component.Control
         {...props}
-        tag="span"
-        weight="medium"
         className={cn(
-          styles.optionText,
-          classNameOptionText,
+          styles.control,
+          props.isFocused && styles.focused,
+          props.menuIsOpen && styles.open,
+          error && styles.errorControl,
+          classNameControl,
         )}
       />
-    </component.Option>
-  ), [classNameOption, classNameOptionText]);
+    ),
+    [classNameControl, error],
+  );
 
-  const Placeholder = useCallback((props: PlaceholderProps<OptionType, boolean>) => (
-    <component.Placeholder
-      {...props}
-      // tag="span"
-      isFocused={props.isFocused}
-      className={cn(
-        styles.placeholder,
-        classNamePlaceholder,
-      )}
-    />
-  ), [classNamePlaceholder]);
-
-  const MenuList = useCallback((props: MenuListProps<OptionType, boolean>) => (
-    <component.MenuList
-      {...props}
-      maxHeight={props.maxHeight}
-      className={cn(
-        styles.menuList,
-        classNameMenuList,
-      )}
-    />
-  ), [classNameMenuList]);
-
-  const Menu = useCallback((props: MenuProps) => (
-    <component.Menu
-      {...props}
-      className={cn(
-        styles.menu,
-        classNameMenu,
-      )}
-    />
-  ), [classNameMenu]);
-
-  const ValueContainer = useCallback((props) => (
-    <component.ValueContainer
-      {...props}
-      className={cn(
-        styles.valueContainer,
-        classNameValueContainer,
-      )}
-    >
-      <component.Placeholder
+  const Option = useCallback(
+    (props: OptionProps<OptionType, boolean>) => (
+      <component.Option
         {...props}
-        isFocused={props.isFocused}
         className={cn(
-          styles.placeholder,
-          classNamePlaceholder,
+          styles.option,
+          props.isSelected && styles.selected,
+          props.isFocused && styles.focused,
+          classNameOption,
         )}
       >
-        {props.selectProps.placeholder}
-      </component.Placeholder>
-      {React.Children.map(props.children, (child) => (child && child.type !== Placeholder ? child : null))}
-    </component.ValueContainer>
-  ), [Placeholder, classNamePlaceholder, classNameValueContainer]);
+        {props.data.icon && <img src={props.data.icon} alt="icon" className={styles.iconOption} />}
+        <Text
+          {...props}
+          tag="span"
+          weight="medium"
+          className={cn(styles.optionText, classNameOptionText)}
+        />
+      </component.Option>
+    ),
+    [classNameOption, classNameOptionText],
+  );
 
-  const SingleValue = useCallback((props: any) => (
-    <component.SingleValue
-      {...props}
-      className={cn(styles.singleValue, classNameSingleValue)}
-    >
-      {props.data.icon && <img src={props.data.icon} alt="icon" className={styles.iconOption} />}
-      {props.children}
-    </component.SingleValue>
-  ), [classNameSingleValue]);
+  const Placeholder = useCallback(
+    (props: PlaceholderProps<OptionType, boolean>) => (
+      <component.Placeholder
+        {...props}
+        // tag="span"
+        isFocused={props.isFocused}
+        className={cn(styles.placeholder, classNamePlaceholder)}
+      />
+    ),
+    [classNamePlaceholder],
+  );
 
-  const IndicatorsContainer = useCallback((props: IndicatorsContainerProps<OptionType, boolean>) => (
-    <component.IndicatorsContainer
-      {...props}
-      className={cn(
-        styles.indicatorsContainer,
-        classNameIndicatorsContainer,
-      )}
-    />
-  ), [classNameIndicatorsContainer]);
+  const MenuList = useCallback(
+    (props: MenuListProps<OptionType, boolean>) => (
+      <component.MenuList
+        {...props}
+        maxHeight={props.maxHeight}
+        className={cn(styles.menuList, classNameMenuList)}
+      />
+    ),
+    [classNameMenuList],
+  );
 
-  const DropdownIndicator = useCallback((props: any) => (
-    <ChevronDown
-      className={cn(
-        styles.dropdownIndicator,
-        props.selectProps.menuIsOpen && styles.open,
-        classNameDropdownIndicator,
-      )}
-    />
-  ), [classNameDropdownIndicator]);
+  const Menu = useCallback(
+    (props: MenuProps) => <component.Menu {...props} className={cn(styles.menu, classNameMenu)} />,
+    [classNameMenu],
+  );
 
-  const NoOptionsMessage = useCallback(() => (
-    <Text
-      className={styles.noOptionsMessage}
-      align="center"
-    >
-      Nothing found
-    </Text>
-  ), []);
+  const ValueContainer = useCallback(
+    (props) => (
+      <component.ValueContainer
+        {...props}
+        className={cn(styles.valueContainer, classNameValueContainer)}
+      >
+        <component.Placeholder
+          {...props}
+          isFocused={props.isFocused}
+          className={cn(styles.placeholder, classNamePlaceholder)}
+        >
+          {props.selectProps.placeholder}
+        </component.Placeholder>
+        {React.Children.map(props.children, (child) => (child && child.type !== Placeholder ? child : null))}
+      </component.ValueContainer>
+    ),
+    [Placeholder, classNamePlaceholder, classNameValueContainer],
+  );
 
-  const menuPortalTargetInfo = withPortal
-    ? menuPortalTarget || ROOT
-    : null;
+  const SingleValue = useCallback(
+    (props: any) => (
+      <component.SingleValue {...props} className={cn(styles.singleValue, classNameSingleValue)}>
+        {props.data.icon && <img src={props.data.icon} alt="icon" className={styles.iconOption} />}
+        {props.children}
+      </component.SingleValue>
+    ),
+    [classNameSingleValue],
+  );
 
-  const filterOptions = useMemo(() => options?.filter(({ value: optionValue }) => optionValue !== value?.value), [options, value]);
+  const IndicatorsContainer = useCallback(
+    (props: IndicatorsContainerProps<OptionType, boolean>) => (
+      <component.IndicatorsContainer
+        {...props}
+        className={cn(styles.indicatorsContainer, classNameIndicatorsContainer)}
+      />
+    ),
+    [classNameIndicatorsContainer],
+  );
+
+  const DropdownIndicator = useCallback(
+    (props: any) => (
+      <ChevronDown
+        className={cn(
+          styles.dropdownIndicator,
+          props.selectProps.menuIsOpen && styles.open,
+          classNameDropdownIndicator,
+        )}
+      />
+    ),
+    [classNameDropdownIndicator],
+  );
+
+  const NoOptionsMessage = useCallback(
+    () => (
+      <Text className={styles.noOptionsMessage} align="center">
+        Nothing found
+      </Text>
+    ),
+    [],
+  );
+
+  const menuPortalTargetInfo = withPortal ? menuPortalTarget || ROOT : null;
+
+  const filterOptions = useMemo(
+    () => options?.filter(({ value: optionValue }) => optionValue !== value?.value),
+    [options, value],
+  );
 
   return (
     <div className={cn(styles.selectWrap, className)}>
       {customLabel}
-      {(label && !customLabel) && (
+      {label && !customLabel && (
         <Text
-          className={cn(
-            styles.label,
-            disabled && styles.disabled,
-            classNameLabel,
-          )}
+          className={cn(styles.label, disabled && styles.disabled, classNameLabel)}
           tag="span"
           weight="medium"
         >
@@ -274,7 +286,9 @@ export const Select: FC<SelectProps> = ({
               top: state.hasValue || state.selectProps.inputValue ? 5 : '30%',
               left: 24,
               transition: 'top 0.1s, font-size 0.1s',
-              fontSize: `${(state.hasValue || state.selectProps.inputValue) ? '12px ' : '16px '} !important`,
+              fontSize: `${
+                state.hasValue || state.selectProps.inputValue ? '12px ' : '16px '
+              } !important`,
             }),
           }}
           menuPortalTarget={menuPortalTargetInfo}
@@ -285,12 +299,7 @@ export const Select: FC<SelectProps> = ({
           isSearchable={isSearchable}
         />
         {error && withErrorText && (
-          <Text
-            size="s"
-            color="error"
-            align="left"
-            className={styles.errorText}
-          >
+          <Text size="s" color="error" align="left" className={styles.errorText}>
             {error}
           </Text>
         )}

@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Chains, IChainType, IConnectWallet, IContracts } from 'types';
+import {
+  Chains, IChainType, IConnectWallet, IContracts,
+} from 'types';
 
 import { erc20Abi } from './abi';
 
@@ -65,6 +67,7 @@ export const connectWallet = (newChainName: Chains, type: IChainType): IConnectW
   };
 };
 
+// eslint-disable-next-line no-shadow
 export enum ContractsNames {
   token = 'token',
 }

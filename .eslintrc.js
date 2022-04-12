@@ -1,5 +1,8 @@
 module.exports = {
-  extends: ['airbnb-typescript', 'plugin:jest/recommended', 'plugin:storybook/recommended'],
+  extends: [
+    'airbnb-typescript',
+    'plugin:jest/recommended',
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',
@@ -8,16 +11,7 @@ module.exports = {
     'react/jsx-one-expression-per-line': 0,
     'react/prop-types': 0,
     'react/require-default-props': 0,
-    'operator-linebreak': [
-      'error',
-      'after',
-      {
-        overrides: {
-          '?': 'ignore',
-          ':': 'ignore',
-        },
-      },
-    ],
+    'operator-linebreak': ['error', 'after', { overrides: { '?': 'ignore', ':': 'ignore' } }],
     'linebreak-style': 0,
     'react/prefer-stateless-function': 0,
     'react/jsx-filename-extension': 0,
@@ -28,7 +22,6 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 0,
     'import/no-extraneous-dependencies': 0,
     'react/static-property-placement': 0,
-    'react/no-unused-prop-types': 0,
     'import/no-named-as-default-member': 0,
     'import/no-cycle': 0,
     'import/no-named-as-default': 0,
@@ -38,16 +31,10 @@ module.exports = {
     '@typescript-eslint/dot-notation': 0,
     '@typescript-eslint/keyword-spacing': 0,
     '@typescript-eslint/lines-between-class-members': 0,
-    '@typescript-eslint/no-explicit-any': 2,
+    "@typescript-eslint/no-explicit-any": 2,
     'object-curly-spacing': 2,
     'no-console': 1,
-    'react/jsx-props-no-spreading': 0,
-    'react/react-in-jsx-scope': 0,
-    'arrow-body-style': 0,
-    'object-curly-newline': 0,
-    'implicit-arrow-linebreak': 1,
-    'max-len': 0,
-    'no-shadow': 0,
+    "react/jsx-props-no-spreading": 0,
   },
   overrides: [
     {
@@ -69,5 +56,11 @@ module.exports = {
       },
     },
   },
-  plugins: ['react', 'import', 'react-hooks', 'jest', '@typescript-eslint'],
+  plugins: [
+    'react',
+    'import',
+    'react-hooks',
+    'jest',
+    '@typescript-eslint'
+  ],
 };

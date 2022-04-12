@@ -1,5 +1,8 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createContext, FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import {
+  createContext, FC, useCallback, useContext, useEffect, useMemo, useState,
+} from 'react';
 import { toast } from 'react-toastify';
 
 import { useDispatch } from 'react-redux';
@@ -9,7 +12,9 @@ import userSelector from 'store/user/selectors';
 import { Subscription } from 'rxjs';
 
 import { useShallowSelector } from 'hooks';
-import { Chains, State, UserState, WalletProviders } from 'types';
+import {
+  Chains, State, UserState, WalletProviders,
+} from 'types';
 import { WalletService } from 'services/WalletService';
 
 interface IContextValue {
@@ -84,6 +89,7 @@ const WalletConnectContext: FC = ({ children }) => {
     }
   }, [WalletProvider, address.length, connect]);
 
+  // eslint-disable-next-line react/react-in-jsx-scope
   return <Web3Context.Provider value={{ connect, disconnect, walletService: WalletConnect }}>{children}</Web3Context.Provider>;
 };
 

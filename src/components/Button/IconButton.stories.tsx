@@ -1,3 +1,4 @@
+import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { StarIcon } from 'assets/icons/icons';
 import { Text } from 'components/Typography';

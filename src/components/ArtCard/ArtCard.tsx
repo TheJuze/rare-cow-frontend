@@ -1,4 +1,4 @@
-import { useCallback, useRef, VFC } from 'react';
+import React, { useCallback, useRef, VFC } from 'react';
 
 import cn from 'clsx';
 
@@ -7,7 +7,7 @@ import { Text } from 'components/Typography';
 import './styles.scss';
 import { Link } from 'react-router-dom';
 import { Loader } from 'components/Loader';
-import sliceString from 'utils/sliceString';
+import { sliceString } from 'utils';
 import { BidedIcon } from 'assets/icons/icons';
 import { useTimeLeft } from 'hooks';
 import { Avatar } from 'components/Avatar';

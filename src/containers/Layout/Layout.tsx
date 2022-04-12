@@ -1,12 +1,17 @@
+/* eslint-disable max-len */
 import { UrlObject } from 'url';
 
-import { FC, useCallback, useMemo, useState } from 'react';
+import React, {
+  FC, useCallback, useMemo, useState,
+} from 'react';
 
 import { Footer, Header } from 'containers';
 import { MobileNavigation } from 'containers/MobileNavigation';
 import { useWalletConnectorContext } from 'services';
 import { useShallowSelector, useWindowState } from 'hooks';
-import { RequestStatus, State, UserState, WalletProviders } from 'types';
+import {
+  RequestStatus, State, UserState, WalletProviders,
+} from 'types';
 import userSelector from 'store/user/selectors';
 import { NotificationModal } from 'containers/NotificationModal';
 import uiSelector from 'store/ui/selectors';
@@ -23,7 +28,8 @@ export interface LayoutProps {
   route?: UrlObject | string;
 }
 
-export const Layout: FC<LayoutProps> = ({ children }) => {
+export const Layout: FC<LayoutProps> = ({ children, route }) => {
+  console.log(route);
   const { width } = useWindowState();
   const { pathname } = useLocation();
   const { connect, disconnect } = useWalletConnectorContext();

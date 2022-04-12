@@ -1,11 +1,13 @@
 // eslint-disable-next-line
 import { Modal } from 'components/Modal';
-import { useCallback, useMemo, VFC } from 'react';
+import React, { useCallback, useMemo, VFC } from 'react';
 
 import clsx from 'clsx';
 import userSelector from 'store/user/selectors';
 
-import { Modals, ModalsInitialState, State, UserState } from 'types/store';
+import {
+  Modals, ModalsInitialState, State, UserState,
+} from 'types/store';
 import modalsSelector from 'store/modals/selectors';
 import { useDispatch } from 'react-redux';
 import { setActiveModal } from 'store/modals/reducer';

@@ -1,4 +1,6 @@
-import { FormEvent, ReactElement, useCallback, useEffect, useState, VFC } from 'react';
+import React, {
+  FormEvent, ReactElement, useCallback, useEffect, useState, VFC,
+} from 'react';
 
 import cn from 'clsx';
 // import { Input } from 'components';
@@ -12,17 +14,15 @@ interface IQuantityOption {
   className: string;
 }
 
-const QuantityOption: VFC<IQuantityOption> = ({ type, onClick, className }) => {
-  return (
-    <button className={cn('add-remove-button', className)} type="button" onClick={onClick}>
-      {type === 'add' ? (
-        <AddIcon className="add-remove-button-icon" />
-      ) : (
-        <RemoveIcon className="add-remove-button-icon" />
-      )}
-    </button>
-  );
-};
+const QuantityOption: VFC<IQuantityOption> = ({ type, onClick, className }) => (
+  <button className={cn('add-remove-button', className)} type="button" onClick={onClick}>
+    {type === 'add' ? (
+      <AddIcon className="add-remove-button-icon" />
+    ) : (
+      <RemoveIcon className="add-remove-button-icon" />
+    )}
+  </button>
+);
 
 export interface QuantityInputProps {
   name: string;
