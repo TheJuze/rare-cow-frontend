@@ -46,6 +46,16 @@ const Option: VFC<OptionProps> = ({
   </label>
 );
 
+/**
+ * @param {string} name - the unique name of the selector
+ * @param {TOption[]} options - the list of options which will be displayed
+ * @param {TOption} selected - selected element
+ * @param {(val: TOption) => void} setSelected  - the callback function which takes as argument `TOption` value
+ * @param {string} [className] - the wrapper class name
+ * @param {('vertical' | 'horizontal')} [dir] - the direction of the options `initial = vertical`
+ * * vertical
+ * * horizontal
+ */
 export const OptionSelector: VFC<OptionSelectorProps> = ({
   name,
   options,

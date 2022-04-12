@@ -33,6 +33,37 @@ export interface ButtonProps {
   onMouseOver?: (event: SyntheticEvent) => void;
 }
 
+/**
+ * @param {('filled' | 'outlined' | 'text')} [variant] - the scheme type of the button `initial = filled`
+ * * filled
+ * * outlined
+ * * text
+ * @param {('common' | 'primary' | 'secondary' | 'tertiary')} [color] - the color scheme of the button `initial = common`
+ * * common
+ * * primary
+ * * secondary
+ * * tertiary
+ * @param {('lg' | 'md' | 'sm')} [size] - the size of the button `initial = md`
+ * * lg
+ * * md
+ * * sm
+ * @param {('button' | 'submit')} [type] - the type of the button `initial = button`
+ * * button
+ * * submit
+ * @param {boolean} [disabled] - set button *disabled* prop
+ * @param {boolean} [active] - apply active styles to the button
+ * @param {CSSProperties} [style] - the object of optional styles
+ * @param {string} [href] - the href to the another site
+ * @param {RefObject<HTMLButtonElement>}  [btnRef] - reference to the button object
+ * @param {string} [to] - the route which will redirect to the another page
+ * @param {string} [className] - the wrapper class name
+ * @param {ReactElement | string} [startAdornment] - add the element at the start of the component
+ * @param {ReactElement | string} [endAdornment] - add the element at the end of the component
+ * @param {ReactElement} [icon] - set the icon as the content of the component
+ * @param {(event: never) => void} [onClick] - on click event
+ * @param {(event: never) => void} [onMouseLeave] - on mouse leave event
+ * @param {(event: SyntheticEvent) => void} [onMouseOver] - on mouse over event
+ */
 export const Button: FC<PropsWithChildren<ButtonProps>> = ({
   variant = 'filled',
   size = 'md',

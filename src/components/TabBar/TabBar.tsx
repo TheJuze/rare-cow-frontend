@@ -14,6 +14,12 @@ export interface TabBarProps {
   tabClassName?: string;
 }
 
+/**
+ * @param {string} rootPath - the root path of the bar
+ * @param {TBarOptions[]} options - the list of the tabs
+ * @param {string} [className] - the wrapper class name
+ * @param {string} [tabClassName] - single tab class name
+ */
 export const TabBar: VFC<TabBarProps> = ({
   align = 'horizontal',
   className,

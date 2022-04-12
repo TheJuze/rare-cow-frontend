@@ -13,6 +13,9 @@
 @import './component-variables/loader';
 @import './component-variables/tab-bar';
 @import './component-variables/avatar';
+@import './component-variables/highlighted-text';
+@import './component-variables/search-item';
+@import './component-variables/search-input';
 
 :root {
 	$colors:(
@@ -30,7 +33,10 @@
 		$dropdownColorsDefault,
 		$loaderColorsDefault,
 		$tabBarColorsDefault,
-		$avatarColorsDefault
+		$avatarColorsDefault,
+		$highlightedTextColorsDefault,
+		$searchItemColorsDefault,
+		$searchInputColorsDefault,
 	);
 
 	@each $key_name in $colors {

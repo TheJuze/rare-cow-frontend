@@ -12,6 +12,13 @@ export interface CheckboxProps {
   disabled?: boolean;
 }
 
+/**
+ * @param {boolean} value - set the status of the checkbox
+ * @param {MouseEventHandler<HTMLInputElement>} [onChange] - the function which change state of the checkbox
+ * @param {string} [id] - the unique name of the checkbox
+ * @param {boolean} [disabled] - set *disabled* property of the checkbox
+ * @param {string} [className] - the wrapper class name
+ */
 export const Checkbox: FC<CheckboxProps> = ({
   className,
   disabled,
