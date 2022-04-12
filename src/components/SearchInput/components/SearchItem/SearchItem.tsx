@@ -1,4 +1,4 @@
-import { VFC } from 'react';
+import React, { VFC } from 'react';
 
 import cn from 'clsx';
 
@@ -22,22 +22,20 @@ export const SearchItem: VFC<SearchItemProps> = ({
   disabled,
   onClick,
   allMatches,
-}) => {
-  return (
-    <div
-      role="button"
-      tabIndex={disabled ? -1 : 0}
-      className={cn(styles.searchItem, { [styles.disabled]: disabled })}
-      onClick={onClick}
-    >
-      <div className={cn(styles.icon)}>
-        <img className={cn(styles.iconContent)} src={media} alt="🖼️" />
-      </div>
-      <div className={cn(styles.info)}>
-        <Text className={cn(styles.title)}>
-          <HighlightedText allMatches={allMatches} filter={filter} text={name} />
-        </Text>
-      </div>
+}) => (
+  <div
+    role="button"
+    tabIndex={disabled ? -1 : 0}
+    className={cn(styles.searchItem, { [styles.disabled]: disabled })}
+    onClick={onClick}
+  >
+    <div className={cn(styles.icon)}>
+      <img className={cn(styles.iconContent)} src={media} alt="🖼️" />
     </div>
-  );
-};
+    <div className={cn(styles.info)}>
+      <Text className={cn(styles.title)}>
+        <HighlightedText allMatches={allMatches} filter={filter} text={name} />
+      </Text>
+    </div>
+  </div>
+);

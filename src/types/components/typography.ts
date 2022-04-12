@@ -3,7 +3,7 @@ enum ColorValues {
   default,
   secondary,
   error,
-  gray,
+  gray6,
   dark,
   accent,
   light3

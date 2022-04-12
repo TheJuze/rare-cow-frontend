@@ -16,6 +16,48 @@
   line-height: 24px;
 }
 
+.display-1 {
+  font-weight: 700;
+  font-size: 60px;
+  line-height: 86px;
+}
+
+.heading-1 {
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 58px;
+}
+
+.heading-2 {
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 52px;
+}
+
+.subtitle-1 {
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 45px;
+}
+
+.body-1 {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+}
+
+.body-2 {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.medium-body{
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+}
+
 .center {
   text-align: center;
 }
@@ -30,13 +72,13 @@
 
 .text {
   &.xs {
-    font-size: 12px;
+    font-size: 14px;
     line-height: 20px;
   }
 
   &.s {
     font-size: 14px;
-    line-height: 20px;
+    line-height: 24px;
   }
 
   &.m {
@@ -62,20 +104,20 @@
   color: var(--typography-error-color);
 }
 
-.gray {
+.gray6 {
   color: var(--typography-gray-6-color);
 }
 
 .dark {
-  color: var(--typography-dark-color)
+  color: var(--typography-dark-color);
 }
 
 .accent {
-  color: var(--typography-accent-color)
+  color: var(--typography-accent-color);
 }
 
-.light3{
-  color: var(--typography-light-3-color)
+.light3 {
+  color: var(--typography-light-3-color);
 }
 
 .normalWeight {

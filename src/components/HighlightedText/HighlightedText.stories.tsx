@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import React, { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import { HighlightedText } from './HighlightedText';
 import { highlightedTextPropsMocked } from './HighlightedText.mock';

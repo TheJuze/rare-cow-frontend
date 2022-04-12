@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { FC, MouseEventHandler } from 'react';
 
 import cn from 'clsx';

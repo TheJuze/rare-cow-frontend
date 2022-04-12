@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { VFC } from 'react';
 import { Link } from 'react-router-dom';
 
