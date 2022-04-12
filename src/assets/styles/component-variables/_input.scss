@@ -23,7 +23,7 @@ $inputColorsDefault: (
   'input-focus-border': $accent,
   'input-focus-caret': $accent,
   'input-focus-width': 2px,
-  'input-focus-icon': currentColor,
+  'input-focus-icon': $accent,
 
   'input-disabled-background': $light-8,
   'input-disabled-label': $light-3,
@@ -73,7 +73,7 @@ $inputColorsLight: (
   'input-focus-border': $accent,
   'input-focus-caret': $accent,
   'input-focus-width': 2px,
-  'input-focus-icon': currentColor,
+  'input-focus-icon': $accent,
 
   'input-disabled-background': $light-8,
   'input-disabled-label': $light-3,

@@ -1,0 +1,14 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins';
+
+.highlighted-text {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  &-common {
+    color: var(--common-text-color);
+  }
+  &-highlight {
+    color: var(--highlighted-text-color);
+  }
+}

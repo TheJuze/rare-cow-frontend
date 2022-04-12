@@ -1,5 +1,6 @@
 export { default as nullAvatar } from './nullAvatar.png';
 export { default as profileAvatar } from './profileAvatar.png';
+export * from './mock';
 export { default as nftMock1 } from './nftMock1.png';
 export { default as nftMock2 } from './nftMock2.png';
 export { default as nftMock3 } from './nftMock3.png';

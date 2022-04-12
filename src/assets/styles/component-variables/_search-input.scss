@@ -1,0 +1,17 @@
+@import 'src/styles/variables';
+
+$searchInputColorsDefault: (
+  'search-input-default-result-background': $light-white,
+  'search-input-hover-result-background': $light-white,
+  'search-input-focus-result-background': $light-white,
+  'search-input-disabled-result-background': $light-white,
+
+  'search-input-default-result-border-width': 0px,
+  'search-input-default-result-border-color': transparent,
+  'search-input-hover-result-border-width': 0px,
+  'search-input-hover-result-border-color': transparent,
+  'search-input-focus-result-border-width': 0px,
+  'search-input-focus-result-border-color': transparent,
+  'search-input-disabled-result-border-width': 0px,
+  'search-input-disabled-result-border-color': transparent,
+);

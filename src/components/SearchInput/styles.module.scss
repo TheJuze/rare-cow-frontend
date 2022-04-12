@@ -1,0 +1,83 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.searchInput {
+  width: 342px;
+  position: relative;
+  .input {
+    width: 100%;
+    color: var(--input-default-color);
+    [class='input-body'] {
+      padding: space(8, 8, 8, 16);
+      [class='input-startAdornment'] {
+        position: relative;
+        top: -2px;
+        transform: scale(1.2);
+      }
+      [class='input-endAdornment'] {
+        svg {
+          color: var(--input-default-color);
+        }
+        &:hover {
+          svg {
+            color: var(--input-hover-color);
+          }
+        }
+      }
+    }
+
+    .clearBtn {
+      width: 26px;
+      height: 26px;
+      padding: 0;
+      top: 50%;
+      left: 50%;
+      position: relative;
+      transform: translate(-50%, -50%);
+    }
+  }
+  .results {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    top: calc(100% + var(--input-focus-width));
+    background: var(--search-input-default-result-background);
+    padding: space(16, 0);
+    border-radius: space(15);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    @include transition;
+    @include border-like-shadow(
+      var(--search-input-default-result-border-width),
+      var(--search-input-default-result-border-color)
+    );
+    &.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+    &:hover {
+      background: var(--search-input-hover-result-background);
+    }
+  }
+}
+
+@include forDesktopSm {
+  .searchInput {
+    width: auto;
+    max-width: 44px;
+    @include transition;
+    .input {
+      [class='input-body'] {
+        padding: spacing(1.2, 1.5);
+        overflow: hidden;
+        @include border-like-shadow(0px);
+      }
+    }
+    &.active{
+      max-width: 250px;
+    }
+  }
+}

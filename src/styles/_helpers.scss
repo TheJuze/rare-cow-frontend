@@ -5,7 +5,7 @@
 
 $spacing-step: 8;
 
-$spacing: (0,4,8,16,24,32,40,48,56,64,80,100);
+$spacing: (0, 4, 8, 16, 24, 32, 40, 48, 56, 64, 80, 100);
 
 @function scale-size($unit) {
   @return $unit * $main-unit + ' ';
@@ -20,17 +20,17 @@ $spacing: (0,4,8,16,24,32,40,48,56,64,80,100);
 }
 
 @function get-normalize-spacing($size) {
-  @if($size < list.nth($spacing,1)){
-    @return list.nth($spacing,1) + 'px ';
+  @if ($size < list.nth($spacing, 1)) {
+    @return list.nth($spacing, 1) + 'px ';
   }
-  @if($size > list.nth($spacing,-1)){
-    @return list.nth($spacing,-1) + 'px ';
+  @if ($size > list.nth($spacing, -1)) {
+    @return list.nth($spacing, -1) + 'px ';
   }
   $div: $size % $spacing-step;
-  @if($div == 0 or $size % 4 == 0){
+  @if ($div == 0 or $size % 4 == 0) {
     @return $size + 'px ';
   }
-  @if($div >= 4){
+  @if ($div >= 4) {
     $near-index: list.index($spacing, $size - $div + $spacing-step);
     @return list.nth($spacing, $near-index) + 'px ';
   } @else {
@@ -53,17 +53,17 @@ $spacing: (0,4,8,16,24,32,40,48,56,64,80,100);
   box-shadow: $shadow-0;
 }
 
-@mixin border-radius($type: "large-card"){
-  @if $type == "large-card"{
+@mixin border-radius($type: 'large-card') {
+  @if $type == 'large-card' {
     border-radius: $main-unit * 2;
   }
-  @if $type ==  "card"{
+  @if $type == 'card' {
     border-radius: $main-unit * 2.5;
   }
-  @if type == "input"{
-    border-radius:  $main-unit;
+  @if type == 'input' {
+    border-radius: $main-unit;
   }
-  @if type == "small-card"{
+  @if type == 'small-card' {
     border-radius: $main-unit * 1.5;
   }
   border-radius: $main-unit;

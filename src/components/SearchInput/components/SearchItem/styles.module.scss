@@ -1,0 +1,43 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.searchItem {
+  background: var(--search-item-default-background);
+  border-radius: 10px;
+  padding: spacing(1.25, 2);
+  @include flex(row, center, flex-start);
+  @include transition;
+  @include border-like-shadow(var(--search-item-default-border-width), var(--search-item-default-border-color));
+  .icon {
+    width: 25px;
+    height: 25px;
+    margin-right: space(12);
+    border-radius: 2px;
+    .iconContent {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+  .info {
+    @include flex(column, flex-start, center);
+  }
+  &:hover {
+    cursor: pointer;
+    padding: spacing(1.25, 3);
+    background: var(--search-item-hover-background);
+    @include border-like-shadow(var(--search-item-hover-border-width), var(--search-item-hover-border-color));
+  }
+  &:focus {
+    padding: spacing(1.25, 3);
+    background: var(--search-item-focus-background);
+    @include border-like-shadow(var(--search-item-focus-border-width), var(--search-item-focus-border-color));
+  }
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    background: var(--search-item-disabled-background);
+    @include border-like-shadow(var(--search-item-disabled-border-width), var(--search-item-disabled-border-color));
+  }
+}

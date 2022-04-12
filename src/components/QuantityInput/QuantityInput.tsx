@@ -39,6 +39,13 @@ export interface QuantityInputProps {
   onBlur?: (e: FormEvent) => void;
 }
 
+/**
+ * @param {string} value - the value of the input
+ * @param {(value: string) => void} setValue - function which change current state
+ * @param {(number | 'infinity')}  [maxAmount] - set the maximum of the input
+ * @param {number} [minAmount] - set the minimal of the input
+ * @param {(e: FormEvent) => void} [onBlur] - on blur event handler
+ */
 export const QuantityInput: VFC<QuantityInputProps> = ({
   value,
   // name,

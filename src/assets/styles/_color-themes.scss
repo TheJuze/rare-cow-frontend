@@ -13,6 +13,9 @@
 @import './component-variables/loader';
 @import './component-variables/tab-bar';
 @import './component-variables/avatar';
+@import './component-variables/highlighted-text';
+@import './component-variables/search-item';
+@import './component-variables/search-input';
 @import './component-variables/art-card';
 @import './component-variables/breadcrumbs';
 
@@ -33,6 +36,9 @@
 		$loaderColorsDefault,
 		$tabBarColorsDefault,
 		$avatarColorsDefault,
+		$highlightedTextColorsDefault,
+		$searchItemColorsDefault,
+		$searchInputColorsDefault,
 		$artcardColorsDefault,
 		$breadcrumbsColorsDefault
 	);

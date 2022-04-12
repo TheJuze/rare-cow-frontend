@@ -7,7 +7,7 @@
   // paste here max border size of the input state
   padding: var(--input-focus-width);
   @include flex(column, flex-start, flex-start);
-  &:hover:not(.input-disabled):not(.input-error):not(.input-success) {
+  &:hover:not(.input-disabled):not(.input-error):not(.input-success):not(.input-in-focus) {
     .input {
       &-label {
         color: var(--input-hover-label);
@@ -19,16 +19,16 @@
         .input {
           caret-color: var(--input-hover-caret);
           color: var(--input-hover-color);
-          .input-startAdornment,
-          .input-endAdornment {
-            svg {
-              path {
-                &[fill] {
-                  fill: var(--input-hover-icon);
-                }
-                &[stroke] {
-                  stroke: var(--input-hover-icon);
-                }
+        }
+        .input-startAdornment,
+        .input-endAdornment {
+          svg {
+            path {
+              &[fill]:not([fill=""]) {
+                fill: var(--input-hover-icon);
+              }
+              &[stroke]:not([stroke=""]) {
+                stroke: var(--input-hover-icon);
               }
             }
           }
@@ -52,16 +52,16 @@
           .input {
             caret-color: var(--input-focus-caret);
             color: var(--input-focus-color);
-            .input-startAdornment,
-            .input-endAdornment {
-              svg {
-                path {
-                  &[fill] {
-                    fill: var(--input-focus-icon);
-                  }
-                  &[stroke] {
-                    fill: var(--input-focus-icon);
-                  }
+          }
+          .input-startAdornment,
+          .input-endAdornment {
+            svg {
+              path {
+                &[fill]:not([fill=""]) {
+                  fill: var(--input-focus-icon);
+                }
+                &[stroke]:not([stroke=""]) {
+                  stroke: var(--input-focus-icon);
                 }
               }
             }
@@ -84,16 +84,16 @@
             pointer-events: none;
             caret-color: var(--input-disabled-caret);
             color: var(--input-disabled-color);
-            .input-startAdornment,
-            .input-endAdornment {
-              svg {
-                path {
-                  &[fill] {
-                    fill: var(--input-disabled-icon);
-                  }
-                  &[stroke] {
-                    stroke: var(--input-disabled-icon);
-                  }
+          }
+          .input-startAdornment,
+          .input-endAdornment {
+            svg {
+              path {
+                &[fill]:not([fill=""]) {
+                  fill: var(--input-disabled-icon);
+                }
+                &[stroke]:not([stroke=""]) {
+                  stroke: var(--input-disabled-icon);
                 }
               }
             }
@@ -116,16 +116,16 @@
           .input {
             caret-color: var(--input-success-caret);
             color: var(--input-success-color);
-            .input-startAdornment,
-            .input-endAdornment {
-              svg {
-                path {
-                  &[fill] {
-                    fill: var(--input-success-icon);
-                  }
-                  &[stroke] {
-                    stroke: var(--input-success-icon);
-                  }
+          }
+          .input-startAdornment,
+          .input-endAdornment {
+            svg {
+              path {
+                &[fill]:not([fill=""]) {
+                  fill: var(--input-success-icon);
+                }
+                &[stroke]:not([stroke=""]) {
+                  stroke: var(--input-success-icon);
                 }
               }
             }
@@ -148,16 +148,16 @@
           .input {
             caret-color: var(--input-error-caret);
             color: var(--input-error-color);
-            .input-startAdornment,
-            .input-endAdornment {
-              svg {
-                path {
-                  &[stroke] {
-                    stroke: var(--input-error-icon);
-                  }
-                  &[fill] {
-                    fill: var(--input-error-icon);
-                  }
+          }
+          .input-startAdornment,
+          .input-endAdornment {
+            svg {
+              path {
+                &[stroke]:not([stroke=""]) {
+                  stroke: var(--input-error-icon);
+                }
+                &[fill]:not([fill=""]) {
+                  fill: var(--input-error-icon);
                 }
               }
             }
@@ -197,7 +197,7 @@
           padding: space(10, 16);
           font-size: 16px;
           line-height: 24px;
-          .input{
+          .input {
             width: 85%;
           }
           &.textarea-body {
@@ -219,6 +219,7 @@
       }
     }
     &-body {
+      width: 100%;
       background: var(--input-default-background);
       display: inline-flex;
       align-items: center;
@@ -247,10 +248,10 @@
           height: 100%;
           path {
             @include transition;
-            &[stroke] {
+            &[stroke]:not([stroke=""]) {
               stroke: var(--input-default-icon);
             }
-            &[fill] {
+            &[fill]:not([fill=""]) {
               fill: var(--input-default-icon);
             }
           }

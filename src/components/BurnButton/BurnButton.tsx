@@ -11,6 +11,10 @@ export interface BurnButtonProps {
   className?: string;
 }
 
+/**
+ * @param {() => void} onBurn - function which be called when the button has been clicked
+ * @param {string} [className] - the wrapper class name
+ */
 export const BurnButton: VFC<BurnButtonProps> = ({ className, onBurn }) => {
   const onBurnButtonClickHandler = useCallback(() => {
     onBurn();

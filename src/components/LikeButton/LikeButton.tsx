@@ -13,6 +13,11 @@ export interface LikeButtonProps {
   isLiked: boolean;
 }
 
+/**
+ * @param {number} likesCount - count of likes at the moment of initialization
+ * @param {boolean} isLiked - the like state
+ * @param {string} [className] - the wrapper class name
+ */
 export const LikeButton: VFC<LikeButtonProps> = ({ className, likesCount, isLiked }) => {
   const [liked, setLiked] = useState(isLiked);
   const [count, setCount] = useState(likesCount);

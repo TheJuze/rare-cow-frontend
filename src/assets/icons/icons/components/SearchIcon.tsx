@@ -13,6 +13,7 @@ export const SearchIcon: React.FC<IconProps> = (props) => (
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
+      fill=""
     />
   </BaseSVGIcon>
 );
