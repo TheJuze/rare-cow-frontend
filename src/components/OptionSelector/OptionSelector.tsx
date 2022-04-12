@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { VFC, useCallback } from 'react';
 
 import cn from 'clsx';

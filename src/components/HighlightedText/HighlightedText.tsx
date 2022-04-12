@@ -1,5 +1,6 @@
+/* eslint-disable max-len */
 /* eslint-disable react/no-array-index-key */
-import { Fragment, VFC } from 'react';
+import React, { Fragment, VFC } from 'react';
 
 import cn from 'clsx';
 
@@ -24,14 +25,16 @@ export const HighlightedText: VFC<HighlightedTextProps> = ({
   filter = '',
   allMatches = false,
 }): JSX.Element => {
-  if (!filter) { return <span className={cn('highlighted-text-common', className)}>{text}</span>; }
+  if (!filter) {
+    return <span className={cn('highlighted-text-common', className)}>{text}</span>;
+  }
 
   const regexp = new RegExp(filter, 'ig');
   const matchValue = text.match(regexp);
 
   if (matchValue) {
     const res = text.split(regexp).map((s, index, array) => {
-      if(index < array.length - 1) {
+      if (index < array.length - 1) {
         const c = matchValue[index];
         if ((!allMatches && index === 0) || allMatches) {
           return (
@@ -41,7 +44,12 @@ export const HighlightedText: VFC<HighlightedTextProps> = ({
             </Fragment>
           );
         }
-        return <span key={index}>{s}{c}</span>;
+        return (
+          <span key={index}>
+            {s}
+            {c}
+          </span>
+        );
       }
       return <span key={index}>{s}</span>;
     });

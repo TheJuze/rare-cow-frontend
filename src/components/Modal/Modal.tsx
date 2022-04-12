@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { FC, ReactNode, useMemo } from 'react';
 
 import clsx from 'clsx';

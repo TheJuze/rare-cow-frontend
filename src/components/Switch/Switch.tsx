@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import cn from 'clsx';
 import styles from './styles.module.scss';
