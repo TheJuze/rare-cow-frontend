@@ -19,7 +19,6 @@ import { TDropdownValue } from 'types';
 import { Input } from 'components/Input';
 import { ArrowHeadDownIcon, SearchIcon, TriangleDownIcon } from 'assets/icons/icons';
 import { Loader } from 'components/Loader';
-import { Link } from 'react-router-dom';
 
 export interface DropdownProps {
   value: TDropdownValue;
@@ -187,17 +186,7 @@ export const Dropdown: VFC<DropdownProps> = ({
               className="dropdown-search-input"
             />
           )}
-          {options.map((option) => (option.route ? (
-            <Link
-              to={option.route}
-              className={cn('dropdown-content-body-option', 'dropdown_option-link', {
-                selected: option.id === value.id,
-              })}
-              key={`dropdown_option_${option.id}`}
-            >
-              {option.content}
-            </Link>
-          ) : (
+          {options.map((option) => (
             <div
               onKeyDown={() => {}}
               tabIndex={0}
@@ -210,7 +199,7 @@ export const Dropdown: VFC<DropdownProps> = ({
             >
               {option.content}
             </div>
-          )))}
+          ))}
         </div>
       </div>
     </OutsideClickHandler>

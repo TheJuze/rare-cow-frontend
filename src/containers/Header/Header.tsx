@@ -10,44 +10,38 @@ import { SearchInput, Dropdown, Avatar, UserPopover } from 'components';
 import { TDropdownValue } from 'types';
 import { sliceString } from 'utils';
 import { userPopoverPropsMocked } from 'components/UserPopover/UserPopover.mock';
+import { Link } from 'react-router-dom';
 import s from './styles.module.scss';
 import { headerPropsMocked } from './Header.mock';
 
 const dropdownOptions: TDropdownValue[] = [
   {
     id: 'all_categories',
-    content: 'All categories',
-    route: '/',
+    content: <Link to="/">All categories</Link>,
   },
   {
     id: 'anime',
-    content: 'Anime illustration',
-    route: '/',
+    content: <Link to="/">Anime illustration</Link>,
   },
   {
     id: 'photo',
-    content: 'Photo',
-    route: '/',
+    content: <Link to="/">Photo</Link>,
   },
   {
     id: 'art',
-    content: 'Art',
-    route: '/',
+    content: <Link to="/">Art</Link>,
   },
   {
     id: 'music',
-    content: 'Music',
-    route: '/',
+    content: <Link to="/">Music</Link>,
   },
   {
     id: 'picture',
-    content: 'Picture',
-    route: '/',
+    content: <Link to="/">Picture</Link>,
   },
   {
     id: 'movie',
-    content: 'Movie',
-    route: '/',
+    content: <Link to="/">Movie</Link>,
   },
 ];
 export interface HeaderProps {
@@ -118,11 +112,7 @@ export const Header: VFC<HeaderProps> = ({
         <div className={s.address}>{sliceString(headerPropsMocked.address)}</div>
         <div className={s.user}>
           <button type="button" tabIndex={0} onClick={handleChangeUserShown} className={s.arrowBtn}>
-            <img
-              src={arrow}
-              alt="arrow"
-              className={cn(s.arrow, { [s.arrowUp]: isUserShown })}
-            />
+            <img src={arrow} alt="arrow" className={cn(s.arrow, { [s.arrowUp]: isUserShown })} />
           </button>
           <Avatar avatar={profileAvatar} id={0} size="40" />
           <UserPopover {...userPopoverPropsMocked} visible={isUserShown} />
