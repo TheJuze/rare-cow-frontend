@@ -1,0 +1,18 @@
+@import 'src/styles/variables';
+
+$userPopoverColorsDefault:(
+  'userPopover-default-background-color': $light-white,
+  'userPopover-default-border-radius': 14px,
+  'userPopover-default-min-width': 338px,
+  'userPopover-edit-background-color': $metal-100,
+  'userPopover-edit-border-radius': 10px,
+  'userPopover-edit-icon-hover': $accent-2,
+
+  'userPopover-default-border-color': $card-border,
+  'userPopover-border-width': 1px,
+  'userPopover-border-radius': 20px,
+  'userPopover-auction-position': 28px,
+  'userPopover-auction-background-color': $accent,
+  'userPopover-auction-block-width': 90px,
+
+)

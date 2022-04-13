@@ -18,6 +18,8 @@
 @import './component-variables/search-input';
 @import './component-variables/art-card';
 @import './component-variables/breadcrumbs';
+@import './component-variables/user-popover';
+@import './component-variables/clipboard';
 
 :root {
 	$colors:(
@@ -40,7 +42,9 @@
 		$searchItemColorsDefault,
 		$searchInputColorsDefault,
 		$artcardColorsDefault,
-		$breadcrumbsColorsDefault
+		$breadcrumbsColorsDefault,
+		$userPopoverColorsDefault,
+		$clipboardColorsDefault
 	);
 
 	@each $key_name in $colors {

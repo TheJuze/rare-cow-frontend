@@ -75,12 +75,12 @@ export const ArtCard: VFC<ArtCardProps> = ({
     <div className={cn('artCard', className)}>
       {isAuction && (
         <div className="artCard-auction">
-          <Text color="gray">Auction</Text>
+          <Text color="gray6">Auction</Text>
         </div>
       )}
       {standart === 'ERC1155' && (
         <div className="artCard-auction">
-          <Text color="gray">In stock: {inStock}</Text>
+          <Text color="gray6">In stock: {inStock}</Text>
         </div>
       )}
       <Link

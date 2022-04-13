@@ -9,3 +9,7 @@ export * from './Input';
 export * from './QuantityInput';
 export * from './Loader';
 export * from './Avatar';
+export * from './Dropdown';
+export * from './SearchInput';
+export * from './UserPopover';
+export * from './Clipboard';

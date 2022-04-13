@@ -1,12 +1,10 @@
 import React, { FC } from 'react';
 
-import { ReactComponent as Logo } from 'assets/icons/logo.svg';
-
 import s from './Home.module.scss';
 
 const Home: FC = () => (
   <div className={s.homeWrapper}>
-    <Logo />
+    {/* <Logo /> */}
   </div>
 );
 export default Home;
