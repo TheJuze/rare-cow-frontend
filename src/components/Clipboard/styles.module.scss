@@ -1,0 +1,53 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.clipboard-wrapper {
+  &__btn {
+    position: relative;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    @include flex(row, center, flex-end);
+    &-status {
+      position: absolute;
+      bottom: 100%;
+      left: 35%;
+      transform: translateX(-50%);
+      opacity: 0;
+      pointer-events: none;
+      @include transition;
+      &.copy-out {
+        opacity: 0;
+        transform: translateX(-50%);
+      }
+      &.copy-fail,
+      &.copy-success {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-5px);
+      }
+      &.copy-fail {
+        color: var(--clipboard-error-color);
+      }
+      &.copy-success {
+        color: var(--clipboard-success-color);
+      }
+    }
+    &:disabled {
+      cursor: not-allowed;
+      svg {
+        filter: hue-rotate(90deg);
+      }
+    }
+    .clipboard-icon {
+      width: 16px !important;
+      height: 16px !important;
+    }
+  }
+}
+.input {
+  width: 100%;
+  input {
+    @include ellipsis;
+  }
+}

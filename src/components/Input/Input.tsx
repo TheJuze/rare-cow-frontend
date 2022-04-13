@@ -26,6 +26,7 @@ export interface InputProps {
   value?: string;
   placeholder?: string;
   className?: string;
+  classNameBody?: string;
   caption?: TInputCaption;
   startAdornment?: ReactElement | string;
   endAdornment?: ReactElement | string;
@@ -52,6 +53,7 @@ export interface InputProps {
  * @param {(string | ReactElement)} [label] - set the label of the component
  * @param {string} [placeholder] - the *placeholder* property
  * @param {string} [className] - the wrapper class name
+ * @param {string} [classNameBody] - the body class name
  * @param {TInputCaption} [caption] - the info under the input `initial = { status: EInputStatus.COMMON, caption: '' }`
  * @param {ReactElement | string} [startAdornment] - add the element at the start of the component
  * @param {ReactElement | string} [endAdornment] - add the element at the end of the component
@@ -77,6 +79,7 @@ export const Input: VFC<InputProps> = ({
   name,
   value,
   className,
+  classNameBody,
   placeholder,
   startAdornment,
   endAdornment,
@@ -128,7 +131,7 @@ export const Input: VFC<InputProps> = ({
           </Text>
         )}
         <div
-          className={cn('input-body', { 'textarea-body': component === 'textarea' }, { required })}
+          className={cn(classNameBody, 'input-body', { 'textarea-body': component === 'textarea' }, { required })}
         >
           {startAdornment && component !== 'textarea' && (
             <span className="input-startAdornment">{startAdornment}</span>

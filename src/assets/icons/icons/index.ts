@@ -17,3 +17,4 @@ export { ArrowHeadDownIcon } from './components/ArrowHeadDown';
 export { TriangleDownIcon } from './components/TriangleDown';
 export { CloseIcon } from './components/Close';
 export { HomeIcon } from './components/Home';
+export { PenIcon } from './components/Pen';

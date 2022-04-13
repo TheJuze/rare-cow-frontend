@@ -1,5 +1,5 @@
 module.exports = (plop) => {
-  const stylesPath = (entity) => `../src/${entity}s/{{ name }}/styles.scss`;
+  const stylesPath = (entity) => `../src/${entity}s/{{ name }}/styles.module.scss`;
   const mocksPath = (entity) => `../src/${entity}s/{{ name }}/{{ name }}.mock.tsx`;
   const testPath = (entity) => `../src/${entity}s/{{ name }}/{{ name }}.test.tsx`;
   const componentPath = (entity) => `../src/${entity}s/{{ name }}/{{ name }}.tsx`;

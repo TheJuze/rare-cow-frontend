@@ -30,6 +30,7 @@ export interface DropdownProps {
   underlined?: boolean;
   closeOnSelect?: boolean;
   className?: string;
+  classNameHead?: string;
   label?: string | ReactElement;
   error?: string | ReactElement;
   placeholder?: string;
@@ -60,6 +61,7 @@ const iconMap = {
  * @param {boolean} [underlined = true] - add underline on the `'outlined'` dropdown option
  * @param {boolean} [closeOnSelect = false] - flag which change selection action
  * @param {string} [className] - the wrapper class name
+ * @param {string} [classNameHead] - the head class name
  * @param {(string | ReactElement)} [label] - label of the dropdown
  * @param {(string | ReactElement)} [error] - error of the dropdown
  * @param {string} [placeholder] - value, which will be set if the current value isn't chosen
@@ -77,6 +79,7 @@ export const Dropdown: VFC<DropdownProps> = ({
   variant = 'transparent',
   dropPosition = 'relative',
   className,
+  classNameHead,
   closeOnSelect = false,
   underlined = true,
   name,
@@ -154,7 +157,7 @@ export const Dropdown: VFC<DropdownProps> = ({
           onKeyDown={() => {}}
           tabIndex={0}
           role="button"
-          className={cn('dropdown-content-head', variant, { disabled })}
+          className={cn(classNameHead, 'dropdown-content-head', variant, { disabled })}
           onClick={onHeadClick}
         >
           <div className={cn('dropdown-head-selection', { placeholder: placeholder && !value })}>

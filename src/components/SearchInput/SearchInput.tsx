@@ -23,6 +23,7 @@ export interface SearchInputProps {
   onClearSearch?: () => void;
   onSearch?: () => void;
   className?: string;
+  classNameInput?: string;
   allMatches?: boolean;
 }
 /**
@@ -33,10 +34,12 @@ export interface SearchInputProps {
  * @param {() => void} [onClearSearch = undefined] - function which will be called when the clear button has been clicked
  * @param {() => void} [onSearch = undefined] - function which well be called when 'ENTER' key has been clicked
  * @param {string} [className = undefined] - class name of the wrapper
+ * @param {string} [classNameInput = undefined] - class name of the input
  * @param {boolean} [allMatches = false] - set the flag if the search should highlight all matches in the result
  */
 export const SearchInput: VFC<SearchInputProps> = ({
   className,
+  classNameInput,
   presearchedNfts,
   isSearchResultsLoading,
   onSearchValueChange,
@@ -117,6 +120,7 @@ export const SearchInput: VFC<SearchInputProps> = ({
           )
         }
         className={styles.input}
+        classNameBody={classNameInput}
         onClick={handleSearchActiveOn}
       />
 
