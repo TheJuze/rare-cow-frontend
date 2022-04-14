@@ -99,7 +99,7 @@
         }
       }
 
-      // theme outlined
+      // theme dd
       &.outlined {
         background: var(--dropdown-outlined-default-head-background);
         padding: space(10, 16);
@@ -290,5 +290,30 @@
         overflow: hidden;
       }
     }
+  }
+}
+.head {
+  .dropdown-content-head {
+    box-shadow: none;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  &.active {
+    .outlined {
+      &.dropdown-content-head {
+        border-radius: 8px 8px 0 0;
+        box-shadow: none;
+      }
+      &.dropdown-content-body {
+        padding: space(0, 30, 16, 20);
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+  }
+  .dropdown-content-body {
+    background: var(--dropdown-outlined-default-head-background);
+    border-radius: 0 0 8px 8px;
   }
 }

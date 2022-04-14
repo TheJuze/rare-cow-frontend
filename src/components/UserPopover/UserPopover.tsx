@@ -137,6 +137,7 @@ export const UserPopover: VFC<UserPopoverProps> = ({ className, id, avatar, name
         variant="outlined"
         className={styles.dropdown}
         classNameHead={styles.dropdownWrapper}
+        dropVariant="head"
       />
       <div className={styles.links}>
         {links.map((link) => (
