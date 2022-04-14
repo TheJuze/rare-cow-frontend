@@ -27,6 +27,7 @@
           &.relative {
             max-height: 300px;
             overflow-y: auto;
+            padding: space(16, 30, 16, 20);
           }
         }
       }
@@ -179,12 +180,6 @@
           top: calc(100% + var(--dropdown-outlined-focus-head-border-width));
         }
       }
-      &.relative {
-        position: relative;
-        height: auto;
-        max-height: 0;
-        overflow: hidden;
-      }
       .dropdown-content-body-option {
         width: 100%;
         cursor: pointer;
@@ -286,6 +281,13 @@
             color: var(--dropdown-outlined-active-body-color);
           }
         }
+      }
+      &.relative {
+        position: relative;
+        height: auto;
+        max-height: 0;
+        padding: 0;
+        overflow: hidden;
       }
     }
   }

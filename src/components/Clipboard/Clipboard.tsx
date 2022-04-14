@@ -44,7 +44,14 @@ const CopyButton: VFC<CopyButtonProps> = ({ className, value }) => {
 
 const Clipboard: VFC<InputProps> = (props) => {
   const { value } = props;
-  return <Input {...props} className={styles.input} endAdornment={<CopyButton value={value} />} />;
+  return (
+    <Input
+      {...props}
+      className={styles.input}
+      classNameBody={styles.inputBody}
+      endAdornment={<CopyButton value={value} />}
+    />
+  );
 };
 
 export default Clipboard;

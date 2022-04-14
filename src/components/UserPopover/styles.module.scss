@@ -24,6 +24,35 @@
       }
     }
   }
+  .dropdown {
+    margin-top: space(8);
+    &Wrapper {
+      height: 44px;
+    }
+    &Head {
+      @include flex(row, center, flex-start);
+      gap: 8px;
+    }
+  }
+  .links {
+    @include flex(column, center, flex-start);
+    gap: 8px;
+    margin-top: space(8);
+    .link {
+      width: 100%;
+      height: 44px;
+      @include flex(row, center, flex-start);
+      padding: spacing(1, 2);
+      background-color: var(--userPopover-edit-background-color);
+      border-radius: var(--userPopover-edit-border-radius);
+      gap: 10px;
+    }
+  }
+  .theme {
+    margin: spacing(2, 0, 0, 0);
+    @include flex(row, center, flex-start);
+    gap: 12px;
+  }
 }
 .visible {
   display: block;

@@ -81,7 +81,7 @@ export const Dropdown: VFC<DropdownProps> = ({
   className,
   classNameHead,
   closeOnSelect = false,
-  underlined = true,
+  underlined = false,
   name,
   label,
   placeholder,
@@ -142,15 +142,19 @@ export const Dropdown: VFC<DropdownProps> = ({
   return (
     <OutsideClickHandler onOutsideClick={onOutsideClick}>
       {label && (
-        <Text size="m" weight="medium" className={cn('dropdown-label', className)}>
+        <Text size="m" weight="medium" className={cn('dropdown-label')}>
           {label}
         </Text>
       )}
       <div
-        className={cn('dropdown-content', {
-          active: visible && !disabled,
-          invalid: error,
-        })}
+        className={cn(
+          'dropdown-content',
+          {
+            active: visible && !disabled,
+            invalid: error,
+          },
+          className,
+        )}
         id={name}
       >
         <div

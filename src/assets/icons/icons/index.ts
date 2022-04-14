@@ -18,3 +18,5 @@ export { TriangleDownIcon } from './components/TriangleDown';
 export { CloseIcon } from './components/Close';
 export { HomeIcon } from './components/Home';
 export { PenIcon } from './components/Pen';
+export { CreateNFT } from './components/CreateNFT';
+export { LightTheme } from './components/LightTheme';
