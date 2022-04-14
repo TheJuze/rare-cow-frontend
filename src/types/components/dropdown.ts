@@ -4,5 +4,5 @@ export type TDropdownValue = {
   id: string;
   content: string | ReactElement;
   writableValue?: string;
-  route?: string
+  icon?: ReactElement
 };

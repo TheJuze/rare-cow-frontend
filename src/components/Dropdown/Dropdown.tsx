@@ -27,6 +27,7 @@ export interface DropdownProps {
   name: string;
   variant?: 'outlined' | 'transparent';
   dropPosition?: 'relative' | 'absolute';
+  dropVariant?: 'body' | 'head';
   underlined?: boolean;
   closeOnSelect?: boolean;
   className?: string;
@@ -58,6 +59,9 @@ const iconMap = {
  * @param {('relative' | 'absolute')} [dropPosition = relative] - position of the dropdown
  * * relative
  * * absolute
+ * @param {('body' | 'head')} [dropPosition = body] - body type of the dropdown
+ * * body
+ * * head
  * @param {boolean} [underlined = true] - add underline on the `'outlined'` dropdown option
  * @param {boolean} [closeOnSelect = false] - flag which change selection action
  * @param {string} [className] - the wrapper class name
@@ -78,10 +82,11 @@ export const Dropdown: VFC<DropdownProps> = ({
   options,
   variant = 'transparent',
   dropPosition = 'relative',
+  dropVariant = 'body',
   className,
   classNameHead,
   closeOnSelect = false,
-  underlined = true,
+  underlined = false,
   name,
   label,
   placeholder,
@@ -142,15 +147,20 @@ export const Dropdown: VFC<DropdownProps> = ({
   return (
     <OutsideClickHandler onOutsideClick={onOutsideClick}>
       {label && (
-        <Text size="m" weight="medium" className={cn('dropdown-label', className)}>
+        <Text size="m" weight="medium" className={cn('dropdown-label')}>
           {label}
         </Text>
       )}
       <div
-        className={cn('dropdown-content', {
-          active: visible && !disabled,
-          invalid: error,
-        })}
+        className={cn(
+          'dropdown-content',
+          dropVariant,
+          {
+            active: visible && !disabled,
+            invalid: error,
+          },
+          className,
+        )}
         id={name}
       >
         <div
