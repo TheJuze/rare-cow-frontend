@@ -1,0 +1,82 @@
+@import 'src/styles/helpers';
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  @include container;
+  padding-top: space(116);
+}
+
+.title {
+  @include flex(row, center, center);
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.notableDrops {
+  margin-top: 88px;
+}
+
+.drops {
+  display: flex;
+  justify-content: center;
+  margin: 40px auto 0 !important;
+  max-width: 1240px;
+  position: relative;
+}
+
+.noItems {
+  pad: 0 16px;
+}
+
+.drop {
+  max-width: 350px;
+  width: 100%;
+
+  &Double {
+    & + & {
+      margin-left: 24px !important;
+    }
+  }
+}
+
+.swiper {
+  width: 100%;
+  max-width: 1128px;
+}
+
+@include middle-mobile {
+  .notableDrops {
+    .title {
+      font-size: 24px;
+    }
+  }
+}
+.swiper-button-prev {
+  left: 10px  ;
+  background: url('../../../../assets/img/icons/arrowLeft.svg');
+}
+.swiper-button-next {
+  right: 10px;
+  background: url('../../../../assets/img/icons/arrowRight.svg');
+}
+.swiper-button-prev, .swiper-button-next {
+
+  width: 58px;
+  height: 58px;
+  background-size: 8px 12px;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  background-position: center center;
+  background-color: $light-white;
+  &::after{
+    content: '';
+  }
+
+  @include default-screen{
+    top: 100%;
+    bottom: 0;
+  }
+
+}
