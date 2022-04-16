@@ -11,7 +11,6 @@ import { TDropdownValue } from 'types';
 import { sliceString } from 'utils';
 import { userPopoverPropsMocked } from 'components/UserPopover/UserPopover.mock';
 import { Link } from 'react-router-dom';
-import { useWindowState } from 'hooks';
 import s from './styles.module.scss';
 import { headerPropsMocked } from './Header.mock';
 
@@ -74,7 +73,6 @@ export const Header: VFC<HeaderProps> = ({
     onToggleChainType,
     chainType,
   );
-  const { width } = useWindowState();
   const [isUserShown, setIsUserShown] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
   // const handleChangeConnecting = useCallback(() => {
@@ -85,9 +83,9 @@ export const Header: VFC<HeaderProps> = ({
   //   }
   // }, [address.length, disconnect, onConnectWallet]);
 
-  const handleChangeUserShown = useCallback(() => {
-    setIsUserShown(!isUserShown);
-  }, [isUserShown]);
+  const handleChangeUserShown = useCallback((value: boolean) => {
+    setIsUserShown(value);
+  }, []);
 
   const handleSearchActive = useCallback((value: boolean) => {
     setIsSearchActive(value);
@@ -96,30 +94,15 @@ export const Header: VFC<HeaderProps> = ({
   return (
     <header className={s.header}>
       <div className={s.headerLeft}>
-        {width > 474 ? (
-          <>
-            <img src={logo} alt="logo" className={s.logo} />
-            <SearchInput
-              searchValue=""
-              isSearchResultsLoading={false}
-              presearchedNfts={[]}
-              onSearchValueChange={() => {}}
-              classNameInput={s.headerInput}
-            />
-          </>
-        ) : (
-          <>
-            <SearchInput
-              searchValue=""
-              isSearchResultsLoading={false}
-              presearchedNfts={[]}
-              onSearchValueChange={() => {}}
-              classNameInput={s.headerInput}
-              sendIsSearchActive={handleSearchActive}
-            />
-            <img src={logo} alt="logo" className={cn(s.logo, s.logoMobile, { [s.closed]: isSearchActive })} />
-          </>
-        )}
+        <img src={logo} alt="logo" className={cn(s.logo, { [s.closed]: isSearchActive })} />
+        <SearchInput
+          searchValue=""
+          isSearchResultsLoading={false}
+          presearchedNfts={[]}
+          onSearchValueChange={() => {}}
+          classNameInput={s.headerInput}
+          sendIsSearchActive={handleSearchActive}
+        />
       </div>
       <div className={s.headerRight}>
         <Dropdown
@@ -133,11 +116,20 @@ export const Header: VFC<HeaderProps> = ({
         />
         <div className={s.address}>{sliceString(headerPropsMocked.address)}</div>
         <div className={s.user}>
-          <button type="button" tabIndex={0} onClick={handleChangeUserShown} className={s.arrowBtn}>
+          <button
+            type="button"
+            tabIndex={0}
+            onClick={() => handleChangeUserShown(!isUserShown)}
+            className={s.arrowBtn}
+          >
             <img src={arrow} alt="arrow" className={cn(s.arrow, { [s.arrowUp]: isUserShown })} />
           </button>
           <Avatar avatar={profileAvatar} id={0} size="40" />
-          <UserPopover {...userPopoverPropsMocked} visible={isUserShown} />
+          <UserPopover
+            {...userPopoverPropsMocked}
+            visible={isUserShown}
+            setVisible={() => handleChangeUserShown(false)}
+          />
         </div>
       </div>
     </header>

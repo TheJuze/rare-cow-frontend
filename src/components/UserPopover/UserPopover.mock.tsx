@@ -6,4 +6,5 @@ export const userPopoverPropsMocked: UserPopoverProps = {
   avatar: profileAvatar,
   name: 'Edward',
   visible: false,
+  setVisible: () => {},
 };
