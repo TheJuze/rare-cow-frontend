@@ -84,3 +84,9 @@
     margin: spacing(0, 0, 0, 0.75);
   }
 }
+@include middle-mobile{
+  .userPopover{
+    right: -24px;
+    width: 100vw;
+  }
+}

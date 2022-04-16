@@ -16,6 +16,20 @@
   }
   .logo {
     margin: spacing(0, 5, 0, 0);
+    max-width: 500px;
+    @include transition;
+    &.closed {
+      max-width: 0px;
+      overflow: hidden;
+      opacity: 0;
+      transform: scale(0);
+      @include transition;
+    }
+    &Mobile {
+      margin: 0;
+      position: absolute;
+      left: calc(50% - 105px / 2);
+    }
   }
   .headerInput {
     height: 44px;
@@ -58,4 +72,18 @@
     var(--dropdown-outlined-default-head-border-width),
     var(--dropdown-outlined-default-head-border)
   );
+}
+@include large-tablet {
+  .address,
+  .headerDropdown {
+    display: none;
+  }
+}
+@include middle-mobile {
+  .headerInput {
+    width: 100% !important;
+  }
+  .headerLeft {
+    // flex-direction: row-reverse;
+  }
 }

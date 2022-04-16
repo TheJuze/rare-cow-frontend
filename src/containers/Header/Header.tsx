@@ -11,6 +11,7 @@ import { TDropdownValue } from 'types';
 import { sliceString } from 'utils';
 import { userPopoverPropsMocked } from 'components/UserPopover/UserPopover.mock';
 import { Link } from 'react-router-dom';
+import { useWindowState } from 'hooks';
 import s from './styles.module.scss';
 import { headerPropsMocked } from './Header.mock';
 
@@ -73,8 +74,9 @@ export const Header: VFC<HeaderProps> = ({
     onToggleChainType,
     chainType,
   );
-
-  const [isUserShown, setIsUserShown] = useState(true);
+  const { width } = useWindowState();
+  const [isUserShown, setIsUserShown] = useState(false);
+  const [isSearchActive, setIsSearchActive] = useState(false);
   // const handleChangeConnecting = useCallback(() => {
   //   if (!address.length) {
   //     onConnectWallet(WalletProviders.metamask, Chains.bsc);
@@ -87,17 +89,37 @@ export const Header: VFC<HeaderProps> = ({
     setIsUserShown(!isUserShown);
   }, [isUserShown]);
 
+  const handleSearchActive = useCallback((value: boolean) => {
+    setIsSearchActive(value);
+  }, []);
+
   return (
     <header className={s.header}>
       <div className={s.headerLeft}>
-        <img src={logo} alt="logo" className={s.logo} />
-        <SearchInput
-          searchValue=""
-          isSearchResultsLoading={false}
-          presearchedNfts={[]}
-          onSearchValueChange={() => {}}
-          classNameInput={s.headerInput}
-        />
+        {width > 474 ? (
+          <>
+            <img src={logo} alt="logo" className={s.logo} />
+            <SearchInput
+              searchValue=""
+              isSearchResultsLoading={false}
+              presearchedNfts={[]}
+              onSearchValueChange={() => {}}
+              classNameInput={s.headerInput}
+            />
+          </>
+        ) : (
+          <>
+            <SearchInput
+              searchValue=""
+              isSearchResultsLoading={false}
+              presearchedNfts={[]}
+              onSearchValueChange={() => {}}
+              classNameInput={s.headerInput}
+              sendIsSearchActive={handleSearchActive}
+            />
+            <img src={logo} alt="logo" className={cn(s.logo, s.logoMobile, { [s.closed]: isSearchActive })} />
+          </>
+        )}
       </div>
       <div className={s.headerRight}>
         <Dropdown
