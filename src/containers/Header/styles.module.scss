@@ -16,6 +16,7 @@
   }
   .logo {
     margin: spacing(0, 5, 0, 0);
+    max-width: 500px;
   }
   .headerInput {
     height: 44px;
@@ -58,4 +59,31 @@
     var(--dropdown-outlined-default-head-border-width),
     var(--dropdown-outlined-default-head-border)
   );
+}
+@include large-tablet {
+  .address,
+  .headerDropdown {
+    display: none;
+  }
+}
+@include large-mobile {
+  .headerInput {
+    width: 100% !important;
+  }
+  .headerLeft {
+    flex-direction: row-reverse;
+    .logo {
+      margin: 0;
+      position: absolute;
+      left: calc(50% - 105px / 2);
+      @include transition;
+      &.closed {
+        max-width: 0px;
+        overflow: hidden;
+        opacity: 0;
+        transform: scale(0);
+        @include transition;
+      }
+    }
+  }
 }

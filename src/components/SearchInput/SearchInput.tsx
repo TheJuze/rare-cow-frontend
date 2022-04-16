@@ -1,6 +1,11 @@
 /* eslint-disable max-len */
 import React, {
-  KeyboardEventHandler, SyntheticEvent, useCallback, useRef, useState, VFC,
+  KeyboardEventHandler,
+  SyntheticEvent,
+  useCallback,
+  useRef,
+  useState,
+  VFC,
 } from 'react';
 
 import cn from 'clsx';
@@ -25,6 +30,7 @@ export interface SearchInputProps {
   className?: string;
   classNameInput?: string;
   allMatches?: boolean;
+  sendIsSearchActive?: (value: boolean) => void;
 }
 /**
  * @param {string} searchValue - search value
@@ -46,6 +52,7 @@ export const SearchInput: VFC<SearchInputProps> = ({
   onClearSearch,
   onSearch,
   searchValue,
+  sendIsSearchActive = () => {},
   allMatches = false,
 }) => {
   const [isSearchActive, setSearchActive] = useState(false);
@@ -55,11 +62,13 @@ export const SearchInput: VFC<SearchInputProps> = ({
     setSearchActive(true);
     if (inputRef.current) {
       inputRef.current.focus();
+      sendIsSearchActive(true);
     }
   }, []);
 
   const handleSearchActiveOff = useCallback(() => {
     setSearchActive(false);
+    sendIsSearchActive(false);
   }, []);
 
   const navigate = useNavigate();

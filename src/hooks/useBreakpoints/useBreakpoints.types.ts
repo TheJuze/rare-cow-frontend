@@ -2,6 +2,7 @@
 export enum WindowFormat {
   wideDesktop = 'wideDesktop',
   desktop = 'desktop',
+  middleMobile = 'middleMobile',
   tablet = 'tablet',
   mobile = 'mobile',
 }

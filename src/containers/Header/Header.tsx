@@ -73,8 +73,8 @@ export const Header: VFC<HeaderProps> = ({
     onToggleChainType,
     chainType,
   );
-
-  const [isUserShown, setIsUserShown] = useState(true);
+  const [isUserShown, setIsUserShown] = useState(false);
+  const [isSearchActive, setIsSearchActive] = useState(false);
   // const handleChangeConnecting = useCallback(() => {
   //   if (!address.length) {
   //     onConnectWallet(WalletProviders.metamask, Chains.bsc);
@@ -83,20 +83,25 @@ export const Header: VFC<HeaderProps> = ({
   //   }
   // }, [address.length, disconnect, onConnectWallet]);
 
-  const handleChangeUserShown = useCallback(() => {
-    setIsUserShown(!isUserShown);
-  }, [isUserShown]);
+  const handleChangeUserShown = useCallback((value: boolean) => {
+    setIsUserShown(value);
+  }, []);
+
+  const handleSearchActive = useCallback((value: boolean) => {
+    setIsSearchActive(value);
+  }, []);
 
   return (
     <header className={s.header}>
       <div className={s.headerLeft}>
-        <img src={logo} alt="logo" className={s.logo} />
+        <img src={logo} alt="logo" className={cn(s.logo, { [s.closed]: isSearchActive })} />
         <SearchInput
           searchValue=""
           isSearchResultsLoading={false}
           presearchedNfts={[]}
           onSearchValueChange={() => {}}
           classNameInput={s.headerInput}
+          sendIsSearchActive={handleSearchActive}
         />
       </div>
       <div className={s.headerRight}>
@@ -111,11 +116,20 @@ export const Header: VFC<HeaderProps> = ({
         />
         <div className={s.address}>{sliceString(headerPropsMocked.address)}</div>
         <div className={s.user}>
-          <button type="button" tabIndex={0} onClick={handleChangeUserShown} className={s.arrowBtn}>
+          <button
+            type="button"
+            tabIndex={0}
+            onClick={() => handleChangeUserShown(!isUserShown)}
+            className={s.arrowBtn}
+          >
             <img src={arrow} alt="arrow" className={cn(s.arrow, { [s.arrowUp]: isUserShown })} />
           </button>
           <Avatar avatar={profileAvatar} id={0} size="40" />
-          <UserPopover {...userPopoverPropsMocked} visible={isUserShown} />
+          <UserPopover
+            {...userPopoverPropsMocked}
+            visible={isUserShown}
+            setVisible={() => handleChangeUserShown(false)}
+          />
         </div>
       </div>
     </header>
