@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
+import { Banner } from './components';
 
 import s from './Home.module.scss';
 
 const Home: FC = () => (
   <div className={s.homeWrapper}>
-    {/* <Logo /> */}
+    <Banner />
   </div>
 );
 export default Home;
