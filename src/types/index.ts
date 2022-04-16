@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 export * from './connect';
 export * from './store';
 export * from './components';
@@ -12,7 +13,14 @@ export interface IModalProps {
   onClose: () => void;
 }
 
-// eslint-disable-next-line no-shadow
 export enum WalletProviders {
   metamask = 'MetaMask',
+}
+
+export enum CategoryName {
+  rooms = 'Rooms',
+  area = 'Area',
+  skins = 'Skins',
+  buildings = 'Buildings',
+  allCategories = 'All categories',
 }
