@@ -51,7 +51,7 @@
       }
     }
     &-price{
-      @include flex;
+      @include flex(row, center, center);
         &-currency{
           margin: spacing(0, 1, 0, 1);
         }
