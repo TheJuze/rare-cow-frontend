@@ -65,6 +65,7 @@
   background-color: $light-white;
   li {
     padding: 8px 16px;
+    list-style: none;
     &:hover {
       background-color: $accent-2;
     }

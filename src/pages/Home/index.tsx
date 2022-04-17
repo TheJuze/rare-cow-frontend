@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
-import { Banner, Featured, Trending } from './components';
+import {
+  Banner, Categories, Featured, Trending,
+} from './components';
 
 import s from './Home.module.scss';
 
@@ -8,6 +10,7 @@ const Home: FC = () => (
     <Banner />
     <Featured />
     <Trending />
+    <Categories />
   </div>
 );
 export default Home;

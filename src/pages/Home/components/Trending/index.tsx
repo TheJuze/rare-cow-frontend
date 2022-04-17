@@ -20,6 +20,12 @@ import { ArtCard, Text } from 'components';
 import { useWindowState } from 'hooks';
 import { CategoryName } from 'types';
 import { nfts } from 'components/ArtCard/ArtCard.stories';
+import Anime from 'assets/img/categoriesAnime.png';
+import Photo from 'assets/img/categoriesPhoto.png';
+import Art from 'assets/img/categoriesArt.png';
+import Music from 'assets/img/categoriesMusic.png';
+import Picture from 'assets/img/categoriesPicture.png';
+import Movie from 'assets/img/categoriesMovie.png';
 import { TitleDropdown } from './components';
 
 import 'swiper/swiper.less';
@@ -38,35 +44,36 @@ interface Category {
   name?: string;
   tags: Tag[];
 }
-const categories = [
+
+export const categories = [
   {
     id: 1,
-    name: 'Rooms',
+    name: 'Anime illustration',
     tags: [
       { id: 1, name: 'Category №1' },
       { id: 2, name: 'Category №2' },
       { id: 3, name: 'Category №3' },
     ],
-    image: 'https://ipfs11.rocknblock.io/ipfs/QmVU7Kw24rLdLXg2NkcJvNeWLLzd9J5wdo7Su27KiAsbK9',
+    image: Anime,
   },
   {
     id: 2,
-    name: 'Area',
+    name: 'Photo',
     tags: [
       { id: 4, name: 'Category №4' },
       { id: 5, name: 'Category №5' },
     ],
-    image: 'https://ipfs11.rocknblock.io/ipfs/QmTkNuZTg5XFQe1cHmqtW9QYwTRSigTjYLT95orEVkk3Xv',
+    image: Photo,
   },
   {
     id: 3,
-    name: 'Buildings',
+    name: 'Art',
     tags: [{ id: 6, name: 'Category №6' }],
-    image: 'https://ipfs11.rocknblock.io/ipfs/QmT2A2TQc6v8nk7jyVU9iQbmu2v5DSgnpqb7J5RESNWwEv',
+    image: Art,
   },
   {
     id: 4,
-    name: 'Skins',
+    name: 'Music',
     tags: [
       { id: 7, name: 'Category №7' },
       { id: 8, name: 'Category №8' },
@@ -74,7 +81,31 @@ const categories = [
       { id: 10, name: 'Category №10' },
       { id: 11, name: 'Category №11' },
     ],
-    image: 'https://ipfs11.rocknblock.io/ipfs/QmPh7SmG6maA5nq8wH4WoxjbD6Nu6sam6ipmTcLVxysS9u',
+    image: Music,
+  },
+  {
+    id: 5,
+    name: 'Picture',
+    tags: [
+      { id: 7, name: 'Category №7' },
+      { id: 8, name: 'Category №8' },
+      { id: 9, name: 'Category №9' },
+      { id: 10, name: 'Category №10' },
+      { id: 11, name: 'Category №11' },
+    ],
+    image: Picture,
+  },
+  {
+    id: 6,
+    name: 'Movie',
+    tags: [
+      { id: 7, name: 'Category №7' },
+      { id: 8, name: 'Category №8' },
+      { id: 9, name: 'Category №9' },
+      { id: 10, name: 'Category №10' },
+      { id: 11, name: 'Category №11' },
+    ],
+    image: Movie,
   },
 ];
 
