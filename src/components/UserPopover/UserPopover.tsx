@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable object-curly-newline */
 /* eslint-disable arrow-body-style */
 import React, { useCallback, useState, VFC } from 'react';
-import OutsideClickHandler from 'react-outside-click-handler';
 
 import cn from 'clsx';
 
@@ -91,7 +91,7 @@ export interface UserPopoverProps {
   avatar: string;
   name?: string;
   visible: boolean;
-  setVisible: (value: boolean) => void;
+  bodyRef: any;
 }
 
 export const UserPopover: VFC<UserPopoverProps> = ({
@@ -100,7 +100,7 @@ export const UserPopover: VFC<UserPopoverProps> = ({
   avatar,
   name,
   visible,
-  setVisible,
+  bodyRef,
 }) => {
   const [isLight, setIsLight] = useState(true);
 
@@ -108,61 +108,59 @@ export const UserPopover: VFC<UserPopoverProps> = ({
     setIsLight(value);
   }, []);
   return (
-    <OutsideClickHandler onOutsideClick={setVisible}>
-      <div className={cn(styles.userPopover, className, { [styles.visible]: visible })}>
-        <div className={styles.head}>
-          <div className={styles.headUser}>
-            <Avatar id={id} avatar={avatar} size="40" />
-            <Text className={styles.headUserName}>{name || 'User name'}</Text>
-          </div>
-          <Link to="/" className={styles.edit}>
-            <Text variant="body-2" className={styles.editText}>
-              Edit
-            </Text>
-            <PenIcon className={styles.editIcon} />
-          </Link>
+    <div ref={bodyRef} className={cn(styles.userPopover, className, { [styles.visible]: visible })}>
+      <div className={styles.head}>
+        <div className={styles.headUser}>
+          <Avatar id={id} avatar={avatar} size="40" />
+          <Text className={styles.headUserName}>{name || 'User name'}</Text>
         </div>
-        <div className={styles.balance}>
-          {balances.map((balance) => (
-            <div className={styles.balanceItem}>
-              <img src={balance.icon} alt="" className={styles.balanceItemIcon} />
-              <Text size="xs">{balance.value}</Text>
-            </div>
-          ))}
-        </div>
-        <Clipboard name="address" value="0xc78CD789D1483189C919A8d4dd22004CFD867Eb4" />
-        <Dropdown
-          name="create"
-          setValue={() => {}}
-          value={{
-            id: '0',
-            content: (
-              <div className={styles.dropdownHead}>
-                <CreateNFT />
-                <Text align="left">Create</Text>
-              </div>
-            ),
-          }}
-          options={dropdownOptions}
-          variant="outlined"
-          className={styles.dropdown}
-          classNameHead={styles.dropdownWrapper}
-          dropVariant="head"
-        />
-        <div className={styles.links}>
-          {links.map((link) => (
-            <Link to={link.value} className={styles.link}>
-              {link.icon}
-              <Text>{link.name}</Text>
-            </Link>
-          ))}
-        </div>
-        <div className={styles.theme}>
-          <Switch checked={isLight} onChange={() => handleChangeTheme(!isLight)} size="sm" />
-          <LightTheme />
-          <Text>{isLight ? 'Light' : 'Dark'}</Text>
-        </div>
+        <Link to="/" className={styles.edit}>
+          <Text variant="body-2" className={styles.editText}>
+            Edit
+          </Text>
+          <PenIcon className={styles.editIcon} />
+        </Link>
       </div>
-    </OutsideClickHandler>
+      <div className={styles.balance}>
+        {balances.map((balance) => (
+          <div className={styles.balanceItem}>
+            <img src={balance.icon} alt="" className={styles.balanceItemIcon} />
+            <Text size="xs">{balance.value}</Text>
+          </div>
+        ))}
+      </div>
+      <Clipboard name="address" value="0xc78CD789D1483189C919A8d4dd22004CFD867Eb4" />
+      <Dropdown
+        name="create"
+        setValue={() => {}}
+        value={{
+          id: '0',
+          content: (
+            <div className={styles.dropdownHead}>
+              <CreateNFT />
+              <Text align="left">Create</Text>
+            </div>
+          ),
+        }}
+        options={dropdownOptions}
+        variant="outlined"
+        className={styles.dropdown}
+        classNameHead={styles.dropdownWrapper}
+        dropVariant="head"
+      />
+      <div className={styles.links}>
+        {links.map((link) => (
+          <Link to={link.value} className={styles.link}>
+            {link.icon}
+            <Text>{link.name}</Text>
+          </Link>
+        ))}
+      </div>
+      <div className={styles.theme}>
+        <Switch checked={isLight} onChange={() => handleChangeTheme(!isLight)} size="sm" />
+        <LightTheme />
+        <Text>{isLight ? 'Light' : 'Dark'}</Text>
+      </div>
+    </div>
   );
 };

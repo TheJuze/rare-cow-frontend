@@ -1,5 +1,5 @@
 /* eslint-disable object-curly-newline */
-import React, { useCallback, useEffect, useState, VFC } from 'react';
+import React, { useCallback, useRef, useState, VFC } from 'react';
 // import { Chains, WalletProviders } from 'types';
 import logo from 'assets/icons/logo.svg';
 import arrow from 'assets/chevron-down.svg';
@@ -7,6 +7,7 @@ import { profileAvatar } from 'assets/img';
 import cn from 'classnames';
 
 import { SearchInput, Dropdown, Avatar, UserPopover } from 'components';
+import { useClickOutside } from 'hooks';
 import { TDropdownValue } from 'types';
 import { sliceString } from 'utils';
 import { userPopoverPropsMocked } from 'components/UserPopover/UserPopover.mock';
@@ -75,6 +76,8 @@ export const Header: VFC<HeaderProps> = ({
   );
   const [isUserShown, setIsUserShown] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
+  const headRef = useRef<HTMLButtonElement | null>(null);
+  const bodyRef = useRef<HTMLDivElement | null>(null);
   // const handleChangeConnecting = useCallback(() => {
   //   if (!address.length) {
   //     onConnectWallet(WalletProviders.metamask, Chains.bsc);
@@ -84,12 +87,10 @@ export const Header: VFC<HeaderProps> = ({
   // }, [address.length, disconnect, onConnectWallet]);
 
   const handleShowUser = useCallback(() => {
-    console.log('testShow');
     setIsUserShown(true);
   }, []);
 
   const handleHideUser = useCallback(() => {
-    console.log('testHide');
     setIsUserShown(false);
   }, []);
 
@@ -97,9 +98,7 @@ export const Header: VFC<HeaderProps> = ({
     setIsSearchActive(value);
   }, []);
 
-  useEffect(() => {
-    console.log('isUserShown', isUserShown);
-  }, [isUserShown]);
+  useClickOutside(bodyRef, handleHideUser, headRef);
 
   return (
     <header className={s.header}>
@@ -131,6 +130,7 @@ export const Header: VFC<HeaderProps> = ({
             tabIndex={0}
             onClick={isUserShown ? () => handleHideUser() : () => handleShowUser()}
             className={s.arrowBtn}
+            ref={headRef}
           >
             <img src={arrow} alt="arrow" className={cn(s.arrow, { [s.arrowUp]: isUserShown })} />
           </button>
@@ -138,7 +138,7 @@ export const Header: VFC<HeaderProps> = ({
           <UserPopover
             {...userPopoverPropsMocked}
             visible={isUserShown}
-            setVisible={handleHideUser}
+            bodyRef={bodyRef}
           />
         </div>
       </div>
