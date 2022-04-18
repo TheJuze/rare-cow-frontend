@@ -47,7 +47,10 @@
     &-author{
       @include flex(row, center, flex-start);
       &-name{
-        margin: spacing(0, 0, 0, 1);
+        margin: spacing(0, 0, 0, 1) !important;
+      }
+      &-like{
+        max-width: 74px;
       }
     }
     &-price{
