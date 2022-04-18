@@ -15,7 +15,7 @@ import { LikeButton } from 'components/LikeButton';
 
 export interface ArtCardProps {
   className?: string;
-  image: string;
+  media: string;
   name: string;
   isAuction?: boolean;
   currency: string;
@@ -25,15 +25,15 @@ export interface ArtCardProps {
   authorId: string | number;
   authorAvatar: string;
   authorName: string;
-  likesCount: number;
+  likeCount: number;
   isLiked: boolean;
-  standart: 'ERC721' | 'ERC1155';
+  standart: string | 'ERC721' | 'ERC1155';
   inStock: number;
 }
 
 export const ArtCard: VFC<ArtCardProps> = ({
   className,
-  image,
+  media,
   name,
   isAuction,
   currency,
@@ -43,7 +43,7 @@ export const ArtCard: VFC<ArtCardProps> = ({
   authorId,
   authorAvatar,
   authorName,
-  likesCount,
+  likeCount,
   isLiked,
   standart,
   inStock,
@@ -91,8 +91,8 @@ export const ArtCard: VFC<ArtCardProps> = ({
         onFocus={() => {}}
         ref={wrapRef}
       >
-        {image ? (
-          <img ref={imgRef} className="artCard-image" src={image} alt="" />
+        {media ? (
+          <img ref={imgRef} className="artCard-image" src={media} alt="" />
         ) : (
           <Loader className="artCard-loader" />
         )}
@@ -127,11 +127,11 @@ export const ArtCard: VFC<ArtCardProps> = ({
         <div className="artCard-info__line">
           <div className="artCard-info__line-author">
             <Avatar id={authorId} avatar={authorAvatar} size={28} />
-            <Text color="dark" className="artCard-info__line-author-name" weight="medium">
+            <Text size="xs" color="dark" className="artCard-info__line-author-name" weight="medium">
               {sliceString(authorName, 10, 5)}
             </Text>
           </div>
-          <LikeButton likesCount={likesCount} isLiked={isLiked} />
+          <LikeButton likesCount={likeCount} isLiked={isLiked} />
         </div>
       </div>
     </div>

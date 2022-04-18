@@ -1,0 +1,102 @@
+@import 'src/styles/helpers';
+
+.titleDropdown {
+  position: relative;
+  width: fit-content;
+}
+
+.gradientValue {
+  color: $accent;
+}
+
+.selected {
+  @include flex(row, center, flex-start);
+  cursor: pointer;
+  outline: none;
+
+  &Img {
+    border-radius: 100%;
+    transition: transform 0.3s ease-in-out;
+
+    &Open {
+      transform: rotate(0.5turn);
+      transition: transform 0.3s ease-in-out;
+    }
+  }
+}
+
+.triangle {
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  border: 16px solid transparent;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.dropdownContainer {
+  position: relative;
+}
+
+.selectionWrapper {
+  position: absolute;
+  z-index: 999;
+  top: 44px;
+  border-radius: 2px;
+  left: 50%;
+  opacity: 0;
+  transform: translate(-47.5%, 0);
+  pointer-events: none;
+  max-width: 154px;
+
+  @include default-screen {
+    left: -10%;
+  }
+
+  @include small-tablet {
+    left: -100%;
+  }
+}
+
+.body {
+  padding: 20px 0;
+  background-color: $light-white;
+  li {
+    padding: 8px 16px;
+    list-style: none;
+    &:hover {
+      background-color: $accent-2;
+    }
+  }
+}
+
+.activeDropdown {
+  opacity: 1;
+  pointer-events: all;
+  border-radius: $border-radius;
+  @include transition;
+}
+
+.option {
+  width: 208px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 160%;
+  text-align: left;
+
+  &Icon {
+    margin-right: 10px;
+  }
+}
+
+@include middle-mobile {
+  .titleDropdown {
+    .blueValue {
+      font-size: 24px;
+    }
+  }
+}

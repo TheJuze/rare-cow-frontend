@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import {
@@ -12,80 +13,158 @@ export default {
   component: ArtCard,
 } as ComponentMeta<typeof ArtCard>;
 
-interface INftMock {
+export interface INftMock {
   className?: string;
-  image: string;
+  media: string;
   name: string;
-  isAuction?: boolean;
-  currency: string;
+  highestBid?: any;
+  minimalBid?: string | number;
+  isAucSelling?: boolean;
+  currency: any;
   price: string | number;
   id: string | number;
   endAuction: number;
-  authorId: string | number;
-  authorAvatar: string;
-  authorName: string;
-  likesCount: number;
+  creator: any;
+  likeCount: number;
   isLiked: boolean;
   standart: 'ERC721' | 'ERC1155';
-  inStock: number;
+  available: number;
 }
 
-const nfts: INftMock[] = [
+export const nfts: INftMock[] = [
   {
     name: 'NFT name',
-    image: nftMock1,
-    currency: usdt,
-    isAuction: true,
-    price: '54.7',
+    media: nftMock1,
+    currency: { image: usdt },
+    isAucSelling: true,
+    price: '',
+    highestBid: { amount: '48.5' },
     id: '03423493',
     endAuction: 1649496517,
-    likesCount: 22,
+    likeCount: 22,
     isLiked: false,
-    authorName: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
-    authorAvatar: profileAvatar,
-    authorId: 1,
+    creator: {
+      name: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
+      avtar: profileAvatar,
+      url: '1',
+    },
     standart: 'ERC721',
-    inStock: 1,
+    available: 1,
   },
   {
     name: 'NFT name',
-    image: nftMock2,
-    currency: usdt,
-    isAuction: false,
+    media: nftMock2,
+    currency: { image: usdt },
+    isAucSelling: false,
     price: '',
-    id: '03423493',
+    id: '034293',
     endAuction: 0,
-    likesCount: 212223428374283,
+    likeCount: 28374283,
     isLiked: true,
-    authorName: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
-    authorAvatar: profileAvatar,
-    authorId: 2,
+    creator: {
+      name: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
+      avtar: profileAvatar,
+      url: 2,
+    },
     standart: 'ERC721',
-    inStock: 1,
+    available: 1,
   },
   {
     name: 'NFT name',
-    image: nftMock3,
-    currency: usdt,
-    isAuction: false,
+    media: nftMock3,
+    currency: { image: usdt },
+    isAucSelling: false,
     price: '4',
-    id: '03423493',
+    id: '0342349',
     endAuction: 0,
-    likesCount: 0,
+    likeCount: 0,
     isLiked: false,
-    authorName: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
-    authorAvatar: profileAvatar,
-    authorId: 2,
+    creator: {
+      name: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
+      avtar: profileAvatar,
+      url: 3,
+    },
     standart: 'ERC1155',
-    inStock: 24,
+    available: 24,
+  },
+  {
+    name: 'NFT name',
+    media: nftMock1,
+    currency: { image: usdt },
+    isAucSelling: true,
+    price: '',
+    minimalBid: '41.54',
+    id: '034493',
+    endAuction: 1649496517,
+    likeCount: 22,
+    isLiked: false,
+    creator: {
+      name: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
+      avtar: profileAvatar,
+      url: 4,
+    },
+    standart: 'ERC721',
+    available: 1,
+  },
+  {
+    name: 'NFT name',
+    media: nftMock1,
+    currency: { image: usdt },
+    isAucSelling: true,
+    price: '',
+    minimalBid: '41.54',
+    id: '0343',
+    endAuction: 1649496517,
+    likeCount: 22,
+    isLiked: false,
+    creator: {
+      name: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
+      avtar: profileAvatar,
+      url: 4,
+    },
+    standart: 'ERC721',
+    available: 1,
   },
 ];
 
 const Template: ComponentStory<typeof ArtCard> = () => (
   <>
-    {nfts.map((nft) => (
-      <ArtCard {...nft} />
-    ))}
+    {nfts.map((nft) => {
+      const {
+        id,
+        name,
+        price,
+        highestBid,
+        minimalBid,
+        media,
+        currency,
+        creator,
+        isAucSelling,
+        standart,
+        likeCount,
+        isLiked,
+        available,
+        endAuction,
+      } = nft;
+      return (
+        <ArtCard
+          id={id || 0}
+          inStock={available}
+          name={name}
+          price={price || highestBid?.amount || minimalBid}
+          media={media || ''}
+          currency={currency?.image || ''}
+          authorName={creator?.name || ''}
+          authorAvatar={creator?.avatar || ''}
+          authorId={creator?.url || '0'}
+          isAuction={isAucSelling || Boolean(endAuction)}
+          likeCount={likeCount}
+          isLiked={isLiked}
+          standart={standart}
+          endAuction={endAuction}
+        />
+      );
+    })}
   </>
 );
 export const Default = Template.bind({});

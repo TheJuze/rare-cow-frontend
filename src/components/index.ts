@@ -13,3 +13,4 @@ export * from './Dropdown';
 export * from './SearchInput';
 export * from './UserPopover';
 export * from './Clipboard';
+export * from './ArtCard';

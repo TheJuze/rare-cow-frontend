@@ -1,5 +1,5 @@
 /* eslint-disable object-curly-newline */
-import React, { useCallback, useState, VFC } from 'react';
+import React, { useCallback, useEffect, useState, VFC } from 'react';
 // import { Chains, WalletProviders } from 'types';
 import logo from 'assets/icons/logo.svg';
 import arrow from 'assets/chevron-down.svg';
@@ -83,13 +83,23 @@ export const Header: VFC<HeaderProps> = ({
   //   }
   // }, [address.length, disconnect, onConnectWallet]);
 
-  const handleChangeUserShown = useCallback((value: boolean) => {
-    setIsUserShown(value);
+  const handleShowUser = useCallback(() => {
+    console.log('testShow');
+    setIsUserShown(true);
+  }, []);
+
+  const handleHideUser = useCallback(() => {
+    console.log('testHide');
+    setIsUserShown(false);
   }, []);
 
   const handleSearchActive = useCallback((value: boolean) => {
     setIsSearchActive(value);
   }, []);
+
+  useEffect(() => {
+    console.log('isUserShown', isUserShown);
+  }, [isUserShown]);
 
   return (
     <header className={s.header}>
@@ -119,7 +129,7 @@ export const Header: VFC<HeaderProps> = ({
           <button
             type="button"
             tabIndex={0}
-            onClick={() => handleChangeUserShown(!isUserShown)}
+            onClick={isUserShown ? () => handleHideUser() : () => handleShowUser()}
             className={s.arrowBtn}
           >
             <img src={arrow} alt="arrow" className={cn(s.arrow, { [s.arrowUp]: isUserShown })} />
@@ -128,7 +138,7 @@ export const Header: VFC<HeaderProps> = ({
           <UserPopover
             {...userPopoverPropsMocked}
             visible={isUserShown}
-            setVisible={() => handleChangeUserShown(false)}
+            setVisible={handleHideUser}
           />
         </div>
       </div>
