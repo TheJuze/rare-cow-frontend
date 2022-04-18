@@ -16,3 +16,9 @@ export interface IModalProps {
 export enum WalletProviders {
   metamask = 'MetaMask',
 }
+
+export type NestedObject<ObjectType extends object> = {
+  [Key in keyof ObjectType & (string | number)]: ObjectType[Key] extends object
+    ? NestedObject<ObjectType[Key]>
+    : ObjectType[Key];
+}[keyof ObjectType & (string | number)];

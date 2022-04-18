@@ -1,11 +1,5 @@
-import { routes } from 'appConstants/routes';
-import { Home } from 'pages';
-import React, { FC } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { generateRoutes } from 'appConstants/routes';
+import { FC } from 'react';
 
-export const RouteManager: FC = () => (
-  <Routes>
-    <Route path="*" element={<Navigate to="/" />} />
-    <Route path={routes.root} element={<Home />} />
-  </Routes>
-);
+console.log(generateRoutes());
+export const RouteManager: FC = () => generateRoutes();
