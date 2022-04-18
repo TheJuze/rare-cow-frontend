@@ -1,3 +1,5 @@
+@import '../../../../../../assets/styles/variables';
+@import '../../../../../../assets/styles/mixins';
 @import 'src/styles/helpers';
 
 .titleDropdown {
@@ -62,12 +64,12 @@
 
 .body {
   padding: 20px 0;
-  background-color: $light-white;
+  background-color: var(--titleDropdown-default-background);
   li {
     padding: 8px 16px;
     list-style: none;
     &:hover {
-      background-color: $accent-2;
+      background-color: var(--titleDropdown-default-option-hover);
     }
   }
 }
