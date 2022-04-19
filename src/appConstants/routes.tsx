@@ -68,7 +68,7 @@ const normalizePath = (path: string) =>
 const parentPaths = [];
 const pathHandler = {
   get(route, key) {
-    if (typeof route[key] === 'object' && route[key] !== null) {
+    if (typeof route[key] === 'object' && route[key] !== null && key !== 'content') {
       if (key === 'nest') {
         if (!parentPaths.includes(route.path)) parentPaths.push(route.path);
       }
@@ -82,6 +82,7 @@ const pathHandler = {
       }
       return `${accumulatedPath}${route[key]}`;
     }
+    parentPaths.length = 0;
     return route[key];
   },
 };
@@ -129,26 +130,26 @@ const recursiveRoutesCollector = (nest: TRoutes[]) => {
   for (let i = 0; i < nest.length; i += 1) {
     const subPath = nest[i];
     if (subPath.nest) {
-      console.log(Object.entries(subPath.nest).map(([, data]) => data));
       return [
-        ...(subPath.content ? [subPath] : []),
+        ...(subPath.content ? [{ ...subPath, path: subPath.path }] : []),
         ...Object.entries(subPath.nest)
           .map(([, data]) => data)
           .map((s) => recursiveRoutesCollector([s])),
       ];
     }
-    return [subPath];
+    return [{ ...subPath, path: subPath.path }];
   }
   return [];
 };
 
 const flattenRoutes = (nest: TRoutes[]) => flatten(recursiveRoutesCollector(nest));
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getRoute = () =>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   flattenRoutes([routes as any]).map((subPath: TRoutes) => {
-    const { path } = subPath;
-    return <Route key={path} path={normalizePath(path)} element={subPath.content} />;
+    const { path, content } = subPath;
+    return <Route key={path} path={normalizePath(path)} element={content} />;
   });
 
 export const getAllAvailableRoutes = () =>
