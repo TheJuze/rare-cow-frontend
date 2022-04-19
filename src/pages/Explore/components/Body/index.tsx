@@ -20,8 +20,8 @@ const Body: VFC<IBodyProps> = () => {
   const [isUsdtActive, setIsUsdtActive] = useState(false);
   const [isDateLastActive, setIsDateLastActive] = useState(false);
   const [isDateNewActive, setIsDateNewActive] = useState(false);
-  const [isFavoritesUpActive, setIsFavoritesUpActive] = useState(false);
-  const [isFavoritesDownActive, setIsFavoritesDownActive] = useState(false);
+  const [isLikesUpActive, setIsLikesUpActive] = useState(false);
+  const [isLikesDownActive, setIsLikesDownActive] = useState(false);
   const [isPriceUpActive, setIsPriceUpActive] = useState(false);
   const [isPriceDownActive, setIsPriceDownActive] = useState(false);
 
@@ -89,16 +89,16 @@ const Body: VFC<IBodyProps> = () => {
       ),
     },
   ];
-  const favoritesOptions = [
+  const likesOptions = [
     {
       id: '0',
       content: (
         <CheckboxButton
-          isChecked={isFavoritesUpActive}
-          onChange={() => setIsFavoritesUpActive(!isFavoritesUpActive)}
+          isChecked={isLikesUpActive}
+          onChange={() => setIsLikesUpActive(!isLikesUpActive)}
           content={(
             <div className={styles.currency}>
-              <Text variant="body-2">Favorite</Text>
+              <Text variant="body-2">Likes</Text>
               <img src={arrowUp} alt="arrowUp" />
             </div>
 )}
@@ -109,11 +109,11 @@ const Body: VFC<IBodyProps> = () => {
       id: '1',
       content: (
         <CheckboxButton
-          isChecked={isFavoritesDownActive}
-          onChange={() => setIsFavoritesDownActive(!isFavoritesDownActive)}
+          isChecked={isLikesDownActive}
+          onChange={() => setIsLikesDownActive(!isLikesDownActive)}
           content={(
             <div className={styles.currency}>
-              <Text variant="body-2">Favorite</Text>
+              <Text variant="body-2">Likes</Text>
               <img src={arrowDown} alt="arrowDown" />
             </div>
 )}
@@ -213,11 +213,11 @@ const Body: VFC<IBodyProps> = () => {
         </div>
         <div className={styles.dropdown}>
           <Dropdown
-            value={{ id: '0', content: 'Favorites' }}
+            value={{ id: '0', content: 'Likes' }}
             setValue={() => {}}
             classNameBody={styles.dropdownBody}
-            options={favoritesOptions}
-            name="favorites"
+            options={likesOptions}
+            name="likes"
             variant="transparent"
             isOutsideClickClose={false}
           />
