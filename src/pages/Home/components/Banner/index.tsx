@@ -2,6 +2,7 @@
 /* eslint-disable arrow-body-style */
 import { FC } from 'react';
 import logo from 'assets/img/logo.png';
+import logoSmall from 'assets/img/logoSmall.png';
 
 import { Button, Text } from 'components';
 
@@ -13,7 +14,7 @@ const Banner: FC = () => {
   return (
     <div className={styles.banner}>
       <div className={styles.bannerBody}>
-        {width < 767 ? (
+        {width < 1179 ? (
           <>
             <div className={styles.titleTop}>
               <Text variant="heading-2">RareCow</Text>{' '}
@@ -30,7 +31,7 @@ const Banner: FC = () => {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
               incididunt ut labore et dolore magna aliqua.
             </Text>
-            <img src={logo} alt="logo" className={styles.logo} />
+            <img src={logoSmall} alt="logo" className={styles.logo} />
             <div className={styles.bannerBtns}>
               <Button className={styles.btn} href="/">
                 Explore
@@ -67,9 +68,9 @@ const Banner: FC = () => {
                 </Button>
               </div>
             </div>
-            <div className={styles.bannerBodyRight}>
-              <img src={logo} alt="logo" className={styles.logo} />
-            </div>
+            {/* <div className={styles.bannerBodyRight}> */}
+            <img src={logo} alt="logo" className={styles.logo} />
+            {/* </div> */}
           </>
         )}
       </div>
