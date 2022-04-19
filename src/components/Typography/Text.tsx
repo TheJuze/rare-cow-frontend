@@ -51,7 +51,7 @@ type Props = {
  * @param {( xs | s | m | l)} [size] - extra sizes of the font
  * * xs - font-size = 14px, line-height = 20px
  * * s - font-size = 14px, line-height = 24px
- * * m - empty
+ * * m - font-size = 24px, line-height = 68px
  * * l - empty
  * @param {(default, secondary, error, gray6, dark, accent, light3)} [color] - color of the font `initial = default`
  * * default - $metal500

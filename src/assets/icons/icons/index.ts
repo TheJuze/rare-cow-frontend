@@ -20,3 +20,4 @@ export { HomeIcon } from './components/Home';
 export { PenIcon } from './components/Pen';
 export { CreateNFT } from './components/CreateNFT';
 export { LightTheme } from './components/LightTheme';
+export * from './socials';
