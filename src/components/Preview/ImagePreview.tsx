@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import s from './styles.module.scss';
 
-type TImagePreview = {
+export type TImagePreview = {
   src: string;
   className?: string;
   title?: string;

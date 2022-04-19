@@ -5,7 +5,7 @@ import cn from 'classnames';
 import s from './styles.module.scss';
 import { ImagePreview } from './ImagePreview';
 
-type TThreePreview = {
+export type TThreePreview = {
   previewSrc: string;
   mediaSrc: string;
   className?: string;
@@ -14,7 +14,7 @@ type TThreePreview = {
   cover?: 'cover' | 'contain';
 };
 
-export const VideoPreview: VFC<TThreePreview> = ({
+export const ThreePreview: VFC<TThreePreview> = ({
   previewSrc,
   mediaSrc,
   className,
@@ -22,7 +22,7 @@ export const VideoPreview: VFC<TThreePreview> = ({
   alt = '',
   cover = 'cover',
 }) => (
-  <div className={cn(s.videoContainer, className)}>
+  <div className={cn(s.threeContainer, className)}>
     <ImagePreview src={previewSrc} alt={alt} title={title} cover={cover} />
     <model-viewer
       bounds="tight"

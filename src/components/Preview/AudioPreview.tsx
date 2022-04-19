@@ -5,7 +5,7 @@ import cn from 'classnames';
 import s from './styles.module.scss';
 import { ImagePreview } from './ImagePreview';
 
-type TAudioPreview = {
+export type TAudioPreview = {
   previewSrc: string;
   mediaSrc: string;
   className?: string;
