@@ -13,12 +13,13 @@
 }
 
 .avatar {
-  margin: 0 16px 0 29px !important;
+  margin: 0 16px 0 12px !important;
 }
 .info{
   overflow: hidden;
   .name{
     @include ellipsis;
+    font-weight: 600;
   }
 }
 .price{

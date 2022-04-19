@@ -37,7 +37,7 @@ const CollectionCard: FC<IProps> = ({
       )}
       <Avatar avatar={avatar} id={id} isCollection size={56} className={styles.avatar} />
       <div className={styles.info}>
-        <Text weight="semiBold" size="m" className={styles.name}>
+        <Text variant="body-2" className={styles.name}>
           {name}
         </Text>
         {price ? (
