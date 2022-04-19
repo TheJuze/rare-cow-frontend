@@ -75,12 +75,16 @@ export const ArtCard: VFC<ArtCardProps> = ({
     <div className={cn('artCard', className)}>
       {isAuction && (
         <div className="artCard-auction">
-          <Text size="xs" color="gray6">Auction</Text>
+          <Text size="xs" color="gray6">
+            Auction
+          </Text>
         </div>
       )}
       {standart === 'ERC1155' && (
         <div className="artCard-auction">
-          <Text size="xs" color="gray6">In stock: {inStock}</Text>
+          <Text size="xs" color="gray6">
+            In stock: {inStock}
+          </Text>
         </div>
       )}
       <Link
@@ -131,7 +135,11 @@ export const ArtCard: VFC<ArtCardProps> = ({
               {sliceString(authorName, 7, 5)}
             </Text>
           </div>
-          <LikeButton likesCount={likeCount} isLiked={isLiked} className="artCard-info__line-author-like" />
+          <LikeButton
+            likesCount={likeCount}
+            isLiked={isLiked}
+            className="artCard-info__line-author-like"
+          />
         </div>
       </div>
     </div>
