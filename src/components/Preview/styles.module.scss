@@ -1,0 +1,26 @@
+@import '/src/styles/helpers';
+
+.image {
+  width: 100%;
+  height: 100%;
+  &Container {
+    width: 100%;
+    height: 100%;
+    border-radius: spacing(2);
+    overflow: hidden;
+  }
+}
+
+.audio{
+    margin-top: space(20);
+    &Container{
+        @include flex(column, center, flex-start);
+    }
+}
+
+.video{
+    margin-top: space(20);
+    &Container{
+        @include flex(column, center, flex-start);
+    }
+}
