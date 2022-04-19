@@ -23,6 +23,13 @@
     border-radius: var(--artcard-auction-border-radius);
     @include flex(row, center, center);
   }
+  &-promo{
+    position: absolute;
+    top: var(--artcard-auction-position);
+    right: var(--artcard-auction-position);
+    @include flex(row, center, center);
+
+  }
   &-imageWrapper{
     overflow: hidden;
     flex: 0 1 80%;

@@ -7,8 +7,9 @@ enum ColorValues {
   dark,
   accent,
   light3,
+  light4,
   iris100,
-  metal800
+  metal800,
 }
 
 enum SizeValues {

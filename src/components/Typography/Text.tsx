@@ -61,6 +61,7 @@ type Props = {
  * * dark - $dark
  * * accent - $accent
  * * light3 - $light-3
+ * * light4 - $light-4
  * * iris100 - $iris-100
  * * metal800 - $metal-800
  * @param {(left | center | right)} [align] - alignment of the font `initial = left`

@@ -8,7 +8,7 @@ import './styles.scss';
 import { Link } from 'react-router-dom';
 import { Loader } from 'components/Loader';
 import { sliceString } from 'utils';
-import { BidedIcon } from 'assets/icons/icons';
+import { BidedIcon, Promo } from 'assets/icons/icons';
 import { useTimeLeft } from 'hooks';
 import { Avatar } from 'components/Avatar';
 import { LikeButton } from 'components/LikeButton';
@@ -29,6 +29,7 @@ export interface ArtCardProps {
   isLiked: boolean;
   standart: string | 'ERC721' | 'ERC1155';
   inStock: number;
+  isPromo?: boolean;
 }
 
 export const ArtCard: VFC<ArtCardProps> = ({
@@ -47,6 +48,7 @@ export const ArtCard: VFC<ArtCardProps> = ({
   isLiked,
   standart,
   inStock,
+  isPromo = false,
 }) => {
   const wrapRef = useRef<HTMLAnchorElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -85,6 +87,11 @@ export const ArtCard: VFC<ArtCardProps> = ({
           <Text size="xs" color="gray6">
             In stock: {inStock}
           </Text>
+        </div>
+      )}
+      {isPromo && (
+        <div className="artCard-promo">
+          <Promo />
         </div>
       )}
       <Link
