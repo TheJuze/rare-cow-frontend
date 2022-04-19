@@ -1,6 +1,7 @@
 export const routes = {
   root: '/',
   title: 'Home',
+  explore: '/explore',
   // ------------ example profile route ------------
   // profile: {
   //   root: '/profile/:id/*',

@@ -12,9 +12,9 @@
     }
   }
   .logo{
-    max-width: 400px;
-    min-width: 300px;
     width: 100%;
+    margin-top: -150px;
+    margin-right: -100px;
   }
   .bannerBtns {
     margin-top: space(42);
@@ -35,14 +35,13 @@
     max-width: 420px;
   }
 }
-@include middle-tablet {
+@include default-screen {
   .bannerBody {
     flex-direction: column;
     align-items: center;
-    .logo {
-      margin-top: space(48);
-      max-width: 300px;
-      min-width: none;
+    .logo{
+    margin-top: -50px;
+    margin-right: 0;
     }
     .bannerBtns {
       flex-direction: column;

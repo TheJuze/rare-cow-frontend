@@ -20,6 +20,9 @@
 @import './component-variables/breadcrumbs';
 @import './component-variables/user-popover';
 @import './component-variables/clipboard';
+@import './component-variables/swiper';
+@import './component-variables/title-dropdown';
+@import './component-variables/collection-card';
 
 :root {
 	$colors:(
@@ -44,7 +47,10 @@
 		$artcardColorsDefault,
 		$breadcrumbsColorsDefault,
 		$userPopoverColorsDefault,
-		$clipboardColorsDefault
+		$clipboardColorsDefault,
+		$swiperColorsDefault,
+		$titleDropdownColorsDefault,
+		$collectionCardColorsDefault
 	);
 
 	@each $key_name in $colors {

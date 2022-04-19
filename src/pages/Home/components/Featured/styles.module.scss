@@ -1,3 +1,5 @@
+@import '../../../../assets/styles/variables';
+@import '../../../../assets/styles/mixins';
 @import 'src/styles/helpers';
 
 .wrapper {
@@ -54,29 +56,28 @@
   }
 }
 .swiper-button-prev {
-  left: 10px  ;
+  left: 10px;
   background: url('../../../../assets/img/icons/arrowLeft.svg');
 }
 .swiper-button-next {
   right: 10px;
   background: url('../../../../assets/img/icons/arrowRight.svg');
 }
-.swiper-button-prev, .swiper-button-next {
-
+.swiper-button-prev,
+.swiper-button-next {
   width: 58px;
   height: 58px;
   background-size: 8px 12px;
   background-repeat: no-repeat;
   border-radius: 50%;
   background-position: center center;
-  background-color: $light-white;
-  &::after{
+  background-color: var(--swiper-default-background);
+  &::after {
     content: '';
   }
 
-  @include default-screen{
+  @include default-screen {
     top: 100%;
     bottom: 0;
   }
-
 }
