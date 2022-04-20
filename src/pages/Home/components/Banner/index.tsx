@@ -7,6 +7,7 @@ import logoSmall from 'assets/img/logoSmall.png';
 import { Button, Text } from 'components';
 
 import { useWindowState } from 'hooks';
+import { routes } from 'appConstants';
 import styles from './styles.module.scss';
 
 const Banner: FC = () => {
@@ -60,7 +61,7 @@ const Banner: FC = () => {
                 incididunt ut labore et dolore magna aliqua.
               </Text>
               <div className={styles.bannerBtns}>
-                <Button className={styles.btn} href="/">
+                <Button className={styles.btn} href={routes.explore}>
                   Explore
                 </Button>
                 <Button variant="outlined" className={styles.btn} href="/">

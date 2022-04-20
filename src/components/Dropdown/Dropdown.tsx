@@ -32,6 +32,7 @@ export interface DropdownProps {
   closeOnSelect?: boolean;
   className?: string;
   classNameHead?: string;
+  classNameBody?: string;
   label?: string | ReactElement;
   error?: string | ReactElement;
   placeholder?: string;
@@ -41,6 +42,7 @@ export interface DropdownProps {
   searchValue?: string;
   setSearchValue?: (val: string) => void;
   isSearching?: boolean;
+  isOutsideClickClose?: boolean;
 }
 
 const iconMap = {
@@ -66,6 +68,7 @@ const iconMap = {
  * @param {boolean} [closeOnSelect = false] - flag which change selection action
  * @param {string} [className] - the wrapper class name
  * @param {string} [classNameHead] - the head class name
+ * @param {string} [classNameBody] - the body class name
  * @param {(string | ReactElement)} [label] - label of the dropdown
  * @param {(string | ReactElement)} [error] - error of the dropdown
  * @param {string} [placeholder] - value, which will be set if the current value isn't chosen
@@ -75,6 +78,7 @@ const iconMap = {
  * @param {string} [searchValue] - search input value
  * @param {(val: string) => void} [setSearchValue] - set the search input value
  * @param {boolean} [isSearching] - disable the search input and add loader
+ * @param {boolean} [isOutsideClickClose = true] - enable closing dropdown after outside click
  */
 export const Dropdown: VFC<DropdownProps> = ({
   value,
@@ -85,6 +89,7 @@ export const Dropdown: VFC<DropdownProps> = ({
   dropVariant = 'body',
   className,
   classNameHead,
+  classNameBody,
   closeOnSelect = false,
   underlined = false,
   name,
@@ -99,6 +104,7 @@ export const Dropdown: VFC<DropdownProps> = ({
   },
   isSearching = false,
   onBlur,
+  isOutsideClickClose = true,
 }) => {
   const [visible, setVisible] = useState(false);
 
@@ -145,7 +151,7 @@ export const Dropdown: VFC<DropdownProps> = ({
   );
 
   return (
-    <OutsideClickHandler onOutsideClick={onOutsideClick}>
+    <OutsideClickHandler onOutsideClick={isOutsideClickClose ? (e) => onOutsideClick(e) : () => {}}>
       {label && (
         <Text size="m" weight="medium" className={cn('dropdown-label')}>
           {label}
@@ -182,7 +188,7 @@ export const Dropdown: VFC<DropdownProps> = ({
             {error}
           </Text>
         )}
-        <div className={cn('dropdown-content-body', variant, dropPosition, { underlined })}>
+        <div className={cn('dropdown-content-body', classNameBody, variant, dropPosition, { underlined })}>
           {withSearch && (
             <Input
               value={searchValue}

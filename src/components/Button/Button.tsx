@@ -100,7 +100,7 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
         tag: 'a',
         tabIndex: disabled ? -1 : 0,
         props: {
-          target: '_blank',
+          target: '_self',
           rel: 'noopener noreferrer',
           href,
         },

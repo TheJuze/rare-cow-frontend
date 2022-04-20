@@ -159,6 +159,7 @@ const Trending: FC<Props> = ({ className }) => {
                             isLiked={isLiked}
                             standart={standart}
                             endAuction={endAuction}
+                            isPromo
                           />
                         </Link>
                       </SwiperSlide>
@@ -201,6 +202,7 @@ const Trending: FC<Props> = ({ className }) => {
                       isLiked={isLiked}
                       standart={standart}
                       endAuction={endAuction}
+                      isPromo
                     />
                   </Link>
                 );
