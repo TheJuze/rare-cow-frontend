@@ -40,7 +40,7 @@ const Categories: FC<Props> = ({ className }) => {
   return (
     <div className={cx(styles.categories, className)}>
       <div className={styles.title}>
-        <Text variant="heading-2" align="center" color="accent">
+        <Text variant="heading-2" weight="bold" align="center" color="accent">
           Categories
         </Text>
       </div>
@@ -50,13 +50,17 @@ const Categories: FC<Props> = ({ className }) => {
             return tag.name ? (
               <Link className={styles.tag} to="/">
                 <img alt="category" className={styles.image} src={tag.image} />
-                <Text className={styles.text}>{tag.name}</Text>
+                <Text color="dark0" className={styles.text}>
+                  {tag.name}
+                </Text>
               </Link>
             ) : (
               <div className={styles.coming}>
                 <div className={styles.comingImage}>
                   <img alt="category" className={styles.image} src={tag.image} />
-                  <Text className={styles.comingText}>Coming soon</Text>
+                  <Text color="dark1" weight="semiBold" className={styles.comingText}>
+                    Coming soon
+                  </Text>
                 </div>
               </div>
             );

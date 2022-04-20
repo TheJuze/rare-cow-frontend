@@ -18,13 +18,13 @@ const Banner: FC = () => {
         {width < 1179 ? (
           <>
             <div className={styles.titleTop}>
-              <Text variant="heading-2">RareCow</Text>{' '}
-              <Text variant="heading-2" color="accent">
+              <Text variant="heading-2" weight="bold">RareCow</Text>{' '}
+              <Text variant="heading-2" color="accent" weight="bold">
                 NFT
               </Text>
             </div>
             <div className={styles.titleBottom}>
-              <Text variant="heading-2" color="accent">
+              <Text variant="heading-2" color="accent" weight="bold">
                 Marketplace
               </Text>
             </div>
@@ -46,17 +46,17 @@ const Banner: FC = () => {
           <>
             <div className={styles.bannerBodyLeft}>
               <div className={styles.titleTop}>
-                <Text variant="display-1">RareCow</Text>{' '}
-                <Text variant="display-1" color="accent">
+                <Text variant="display-1" weight="bold">RareCow</Text>{' '}
+                <Text variant="display-1" color="accent" weight="bold">
                   NFT
                 </Text>
               </div>
               <div className={styles.titleBottom}>
-                <Text variant="display-1" color="accent">
+                <Text variant="display-1" color="accent" weight="bold">
                   Marketplace
                 </Text>
               </div>
-              <Text variant="body-1" className={styles.subtitle}>
+              <Text variant="body-1" color="dark0" className={styles.subtitle}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                 incididunt ut labore et dolore magna aliqua.
               </Text>

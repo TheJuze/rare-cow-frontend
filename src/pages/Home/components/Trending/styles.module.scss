@@ -56,11 +56,11 @@
   }
 }
 .swiper-button-prev {
-  left: 10px;
+  left: -10px;
   background: url('../../../../assets/img/icons/arrowLeft.svg');
 }
 .swiper-button-next {
-  right: 10px;
+  right: -10px;
   background: url('../../../../assets/img/icons/arrowRight.svg');
 }
 .swiper-button-prev,
@@ -79,5 +79,13 @@
   @include default-screen {
     top: 100%;
     bottom: 0;
+  }
+}
+@include default-screen {
+  .swiper-button-prev {
+    left: 10px;
+  }
+  .swiper-button-next {
+    right: 10px;
   }
 }

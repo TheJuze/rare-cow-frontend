@@ -165,7 +165,7 @@ const Trending: FC<Props> = ({ className }) => {
   return (
     <div className={styles.wrapper}>
       <div className={cx(styles.notableDrops, className)}>
-        <Text variant="heading-2" className={styles.title} align="center">
+        <Text variant="heading-2" weight="bold" color="dark" className={styles.title} align="center">
           Trending in
           {categories?.length && (
             <TitleDropdown
