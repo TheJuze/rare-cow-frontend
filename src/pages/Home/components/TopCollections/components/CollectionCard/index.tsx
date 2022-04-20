@@ -31,7 +31,7 @@ const CollectionCard: FC<IProps> = ({
   return (
     <li className={cx(styles.collectionCard, className)}>
       {index && (
-        <Text color="secondary" weight="bold" size="m">
+        <Text color="secondary" weight="bold" className={styles.index}>
           {index}
         </Text>
       )}
@@ -41,7 +41,7 @@ const CollectionCard: FC<IProps> = ({
           {name}
         </Text>
         {price ? (
-          <Text size="xs" weight="bold" color="iris100" className={styles.price}>
+          <Text variant="medium-body" weight="bold" color="iris100" className={styles.price}>
             Floor price:
             <img src={currency} alt="currency" className={styles.currency} />
             <Text size="xs" color="accent" weight="bold" className={styles.price}>

@@ -110,23 +110,23 @@ export const ArtCard: VFC<ArtCardProps> = ({
       </Link>
       <div className="artCard-info__wrapper">
         <div className="artCard-info__line">
-          <Text color="dark" weight="medium">
+          <Text size="s" color="dark" weight="medium">
             {sliceString(name, 20, 0)}
           </Text>
           {price ? (
             <div className="artCard-info__line-price">
               {isAuction && <BidedIcon />}
               <img src={currency} alt="currency" className="artCard-info__line-price-currency" />
-              <Text color="accent">{price}</Text>
+              <Text variant="body-2" color="accent">{price}</Text>
             </div>
           ) : (
             <></>
           )}
         </div>
         <div className="artCard-info__line">
-          <Text color="light3">Id: {id}</Text>
+          <Text size="s" color="light3">Id: {id}</Text>
           {endAuction && timeLeft ? (
-            <Text color="light3">
+            <Text size="s" color="light3">
               {timeLeft.hours < 10 ? `0${timeLeft.hours}` : timeLeft.hours}:
               {timeLeft.minutes < 10 ? `0${timeLeft.minutes}` : timeLeft.minutes}:
               {timeLeft.seconds < 10 ? `0${timeLeft.seconds}` : timeLeft.seconds}

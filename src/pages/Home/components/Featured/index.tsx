@@ -81,7 +81,7 @@ const Trending: FC<Props> = ({ className }) => {
   return (
     <div className={styles.wrapper}>
       <div className={cx(styles.notableDrops, className)}>
-        <Text variant="heading-2" color="accent" className={styles.title} align="center">
+        <Text variant="heading-2" weight="bold" color="accent" className={styles.title} align="center">
           Featured tokens
         </Text>
         {nfts.length ? (

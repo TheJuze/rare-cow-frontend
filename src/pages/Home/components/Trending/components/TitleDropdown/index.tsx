@@ -42,7 +42,7 @@ const TitleDropdown: FC<IProps> = ({
           onClick={() => setIsOpen((prevState) => !prevState)}
           className={styles.selected}
         >
-          <Text variant="heading-2" color="accent" className={styles.blueValue}>
+          <Text variant="heading-2" weight="bold" color="accent" className={styles.blueValue}>
             {value.name}
           </Text>
           <div className={styles.dropdownContainer}>
