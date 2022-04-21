@@ -1,0 +1,90 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.filters {
+  padding-right: space(24);
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  height: fit-content;
+  .dropdown {
+    margin-bottom: space(8);
+    .dropdownBody {
+      margin-top: space(8);
+      padding: 0 !important;
+    }
+  }
+  .currency {
+    @include flex(row, center, center);
+    gap: 8px;
+  }
+  .auction {
+    margin-top: space(17);
+  }
+  &Head {
+    @include flex(row, center, space-between);
+    .cross {
+      display: none;
+    }
+  }
+  &Buttons {
+    margin-top: space(24) !important;
+    @include flex(column, flex-start, flex-start);
+    gap: 8px;
+    .btn {
+      width: 100%;
+      font-weight: 400;
+    }
+  }
+  .standarts {
+    margin-bottom: space(24);
+    .standart {
+      margin-top: space(8);
+    }
+  }
+  .price {
+    @include flex(row, center, center);
+    gap: 8px;
+    &Inputs {
+      @include flex(column, center, center);
+      .priceInput {
+        height: 44px;
+        width: 100%;
+      }
+      .priceTitle {
+        font-size: 12px;
+        line-height: 16px;
+        width: 50%;
+      }
+    }
+    &Titles,
+    &Items {
+      @include flex(row, center, flex-start);
+      width: 100%;
+    }
+  }
+}
+@include large-mobile {
+  .filters {
+    position: fixed;
+    padding: 0;
+    opacity: 0;
+    top: 100%;
+    transform: scale(1);
+    &.active {
+      opacity: 1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      width: 100%;
+      background-color: var(--filters-default-background-color);
+      padding: 16px 24px 24px;
+      z-index: 100;
+      .cross {
+        display: block;
+        cursor: pointer;
+      }
+    }
+  }
+}
