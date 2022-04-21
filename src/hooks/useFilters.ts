@@ -7,7 +7,7 @@ export const useFilters = () => {
   const [isAuction, setIsAuction] = useState(false);
   const [isSingleNft, setIsSingleNft] = useState(false);
   const [isMultipleNft, setIsMultipleNft] = useState(false);
-  const [activeCurrencies, setActiveCurrencies] = useState<any>([]);
+  const [activeCurrency, setActiveCurrency] = useState<any>([]);
   const [priceDirection, setPriceDirection] = useState<SortDirection | ''>('');
   const [dateDirection, setDateDirection] = useState<SortDirection | ''>('');
   const [likesDirection, setLikesDirection] = useState<SortDirection | ''>('');
@@ -19,7 +19,7 @@ export const useFilters = () => {
     isSingleNft,
     isMultipleNft,
     isAuction,
-    activeCurrencies,
+    activeCurrency,
     priceDirection,
     dateDirection,
     likesDirection,
@@ -29,7 +29,7 @@ export const useFilters = () => {
     setIsSingleNft,
     setIsMultipleNft,
     setIsAuction,
-    setActiveCurrencies,
+    setActiveCurrency,
     setPriceDirection,
     setDateDirection,
     setLikesDirection,

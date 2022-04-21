@@ -1,0 +1,35 @@
+@import 'assets/styles/variables';
+@import 'assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.chips {
+  @include flex(row, center, space-between);
+  background-color: var(--chips-default-background-color);
+  border: var(--chips-border-width) solid var(--chips-default-border-color);
+  border-radius: var(--chips-border-radius);
+  height: 32px;
+  padding: 6px 8px !important;
+  gap: 8px;
+  cursor: pointer;
+  .chipsText {
+    @include ellipsis;
+  }
+  .chipsIcon {
+    width: 16px;
+    height: 16px;
+  }
+  &:hover {
+    background-color: var(--chips-hover-background-color);
+    border-color: var(--chips-hover-border-color);
+    .chipsIcon {
+      path {
+        fill: var(--chips-hover-border-color);
+      }
+    }
+  }
+  &:active {
+    .chipsText {
+      color: var(--chips-active-color);
+    }
+  }
+}

@@ -1,0 +1,12 @@
+@import 'src/styles/variables';
+
+$chipsColorsDefault:(
+  'chips-default-background-color': $metal-50,
+  'chips-default-border-color': $metal-300,
+  'chips-border-width': 1px,
+  'chips-border-radius': 8px,
+  'chips-hover-background-color': $light-100,
+  'chips-hover-border-color': $accent-300,
+  'chips-active-color': $accent-2,
+
+)

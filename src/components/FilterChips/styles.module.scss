@@ -1,0 +1,12 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.filterChips {
+  @include flex(row, center, flex-start);
+  gap: 8px;
+  .label{
+    @include flex(row, center, flex-start);
+    gap: 4px;
+  }
+}

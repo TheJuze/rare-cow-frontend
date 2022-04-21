@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, VFC } from 'react';
-import { ArtCard, Button, Text } from 'components';
+import React, { useCallback, useState, VFC } from 'react';
+import { ArtCard, Button, FilterChips, Text } from 'components';
 
 import { nfts } from 'components/ArtCard/ArtCard.stories';
 import { Link } from 'react-router-dom';
@@ -15,7 +15,13 @@ interface IBodyProps {}
 
 const Body: VFC<IBodyProps> = () => {
   const [isShowFilters, setIsShowFilters] = useState(false);
+  const [isShowChips, setIsShowChips] = useState(false);
   const filters = useFilters();
+
+  const onApply = useCallback(() => {
+    setIsShowChips(true);
+    setIsShowFilters(false);
+  }, []);
 
   const minSize = 264;
   return (
@@ -30,12 +36,13 @@ const Body: VFC<IBodyProps> = () => {
         >
           <Text color="metal700">Filters</Text>
         </Button>
+        {isShowChips && <FilterChips filters={filters} />}
       </div>
       <div className={styles.bodyContent}>
         <Filters
           filters={filters}
           isShowFilters={isShowFilters}
-          onClose={() => setIsShowFilters(false)}
+          onClose={onApply}
         />
         <div
           className={styles.bodyResults}

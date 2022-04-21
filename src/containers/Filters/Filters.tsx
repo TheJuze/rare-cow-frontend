@@ -15,7 +15,7 @@ import styles from './styles.module.scss';
 export interface FiltersProps {
   filters: any;
   onClose: () => void;
-  isShowFilters: boolean
+  isShowFilters: boolean;
 }
 
 export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) => {
@@ -25,14 +25,14 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
     isSingleNft,
     isMultipleNft,
     isAuction,
-    activeCurrencies,
+    activeCurrency,
     priceDirection,
     dateDirection,
     likesDirection,
     setIsSingleNft,
     setIsMultipleNft,
     setIsAuction,
-    setActiveCurrencies,
+    setActiveCurrency,
     setPriceDirection,
     setDateDirection,
     setLikesDirection,
@@ -57,13 +57,9 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
 
   const handleChangeCurrencyValue = useCallback(
     (newCurrency) => {
-      setActiveCurrencies(
-        activeCurrencies.includes(newCurrency)
-          ? activeCurrencies.filter((currency) => currency !== newCurrency)
-          : [...activeCurrencies, newCurrency],
-      );
+      setActiveCurrency(newCurrency);
     },
-    [activeCurrencies, setActiveCurrencies],
+    [setActiveCurrency],
   );
 
   const handleChangePriceDirection = useCallback(
@@ -126,6 +122,7 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
     setIsSingleNft(false);
     setIsMultipleNft(false);
     setIsAuction(false);
+    setActiveCurrency({});
     setPriceDirection('');
     setDateDirection('');
     setLikesDirection('');
@@ -137,6 +134,7 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
     setIsSingleNft,
     setIsMultipleNft,
     setIsAuction,
+    setActiveCurrency,
     setPriceDirection,
     setDateDirection,
     setLikesDirection,
@@ -149,8 +147,8 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
       id: String(index),
       content: (
         <CheckboxButton
-          isChecked={activeCurrencies.includes(rate.symbol)}
-          onChange={() => handleChangeCurrencyValue(rate.symbol)}
+          isChecked={activeCurrency && activeCurrency.symbol === rate.symbol}
+          onChange={() => handleChangeCurrencyValue(rate)}
           content={
             <div className={styles.currency}>
               <img src={rate.image} alt="currency" />
@@ -296,12 +294,7 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
         <Text variant="body-2" className={styles.filtersTitle}>
           Filter
         </Text>
-        <div
-          className={styles.cross}
-          role="button"
-          tabIndex={0}
-          onClick={() => onClose()}
-        >
+        <div className={styles.cross} role="button" tabIndex={0} onClick={() => onClose()}>
           <img src={CloseIcon} alt="cross" />
         </div>
       </div>
@@ -365,7 +358,7 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
         {(isSingleNft ||
           isMultipleNft ||
           isAuction ||
-          activeCurrencies.length ||
+          activeCurrency.symbol ||
           priceDirection ||
           dateDirection ||
           likesDirection ||
