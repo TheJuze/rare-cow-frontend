@@ -24,6 +24,7 @@
 @import './component-variables/title-dropdown';
 @import './component-variables/collection-card';
 @import './component-variables/checkbox-button';
+@import './component-variables/filters';
 
 :root {
 	$colors:(
@@ -52,7 +53,8 @@
 		$swiperColorsDefault,
 		$titleDropdownColorsDefault,
 		$collectionCardColorsDefault,
-		$checkboxButtonColorsDefault
+		$checkboxButtonColorsDefault,
+		$filtersColorsDefault
 	);
 
 	@each $key_name in $colors {

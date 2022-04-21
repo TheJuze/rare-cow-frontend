@@ -21,4 +21,5 @@ export { PenIcon } from './components/Pen';
 export { CreateNFT } from './components/CreateNFT';
 export { LightTheme } from './components/LightTheme';
 export { Promo } from './components/Promo';
+export { Filters } from './components/Filters';
 export * from './socials';

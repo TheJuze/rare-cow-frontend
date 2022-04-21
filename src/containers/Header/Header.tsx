@@ -103,7 +103,9 @@ export const Header: VFC<HeaderProps> = ({
   return (
     <header className={s.header}>
       <div className={s.headerLeft}>
-        <img src={logo} alt="logo" className={cn(s.logo, { [s.closed]: isSearchActive })} />
+        <Link to="/" className={cn(s.logo, { [s.closed]: isSearchActive })}>
+          <img src={logo} alt="logo" />
+        </Link>
         <SearchInput
           searchValue=""
           isSearchResultsLoading={false}
@@ -135,11 +137,7 @@ export const Header: VFC<HeaderProps> = ({
             <img src={arrow} alt="arrow" className={cn(s.arrow, { [s.arrowUp]: isUserShown })} />
           </button>
           <Avatar avatar={profileAvatar} id={0} size="40" />
-          <UserPopover
-            {...userPopoverPropsMocked}
-            visible={isUserShown}
-            bodyRef={bodyRef}
-          />
+          <UserPopover {...userPopoverPropsMocked} visible={isUserShown} bodyRef={bodyRef} />
         </div>
       </div>
     </header>
