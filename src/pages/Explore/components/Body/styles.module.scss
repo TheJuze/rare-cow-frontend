@@ -44,6 +44,15 @@
         display: none;
       }
     }
+    &Buttons {
+      margin-top: space(24);
+      @include flex(column, flex-start, flex-start);
+      gap: 8px;
+      .btn {
+        width: 100%;
+        font-weight: 400;
+      }
+    }
   }
   &Results {
     display: grid;
