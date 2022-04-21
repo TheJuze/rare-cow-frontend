@@ -11,6 +11,7 @@ enum ColorValues {
   light3,
   light4,
   iris100,
+  metal700,
   metal800,
 }
 
