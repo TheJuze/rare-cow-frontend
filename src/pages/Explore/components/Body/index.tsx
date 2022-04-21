@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, VFC } from 'react';
+import React, { useCallback, useState, VFC } from 'react';
 import cn from 'classnames';
 import { ArtCard, Button, Checkbox, CheckboxButton, Dropdown, Input, Text } from 'components';
 
@@ -12,63 +12,161 @@ import arrowDown from 'assets/img/icons/arrowDown.svg';
 import arrowUp from 'assets/img/icons/arrowUp.svg';
 import { CloseIcon } from 'assets/icons';
 import { Filters } from 'assets/icons/icons';
+import { SortDirection, useFilters } from 'hooks';
+import { validateOnlyNumbers } from 'utils';
 import styles from './styles.module.scss';
 
 interface IBodyProps {}
 
 const Body: VFC<IBodyProps> = () => {
-  const [isAuction, setIsAuction] = useState(false);
-  const [is721Active, setIs721Active] = useState(false);
-  const [is1155Active, setIs1155Active] = useState(false);
-  const [isMaticActive, setIsMaticActive] = useState(false);
-  const [isUsdtActive, setIsUsdtActive] = useState(false);
-  const [isDateLastActive, setIsDateLastActive] = useState(false);
-  const [isDateNewActive, setIsDateNewActive] = useState(false);
-  const [isLikesUpActive, setIsLikesUpActive] = useState(false);
-  const [isLikesDownActive, setIsLikesDownActive] = useState(false);
-  const [isPriceUpActive, setIsPriceUpActive] = useState(false);
-  const [isPriceDownActive, setIsPriceDownActive] = useState(false);
   const [isShowFilters, setIsShowFilters] = useState(false);
+  const [minValue, setMinValue] = useState('');
+  const [maxValue, setMaxValue] = useState('');
+  const filters = useFilters();
+  const {
+    isSingleNft,
+    isMultipleNft,
+    isAuction,
+    activeCurrencies,
+    priceDirection,
+    dateDirection,
+    likesDirection,
+    setIsSingleNft,
+    setIsMultipleNft,
+    setIsAuction,
+    setActiveCurrencies,
+    setPriceDirection,
+    setDateDirection,
+    setLikesDirection,
+    setMinPrice,
+    setMaxPrice,
+  } = filters;
+
+  const rates = [
+    {
+      rate: '425.000000000',
+      symbol: 'USDT',
+      name: 'Usdt',
+      image: usdt,
+    },
+    {
+      rate: '123.000000000',
+      symbol: 'MATIC',
+      name: 'Matic',
+      image: matic,
+    },
+  ];
+
+  const handleChangeCurrencyValue = useCallback((newCurrency) => {
+    setActiveCurrencies(
+      activeCurrencies.includes(newCurrency)
+        ? activeCurrencies.filter((currency) => currency !== newCurrency)
+        : [...activeCurrencies, newCurrency],
+    );
+  }, [activeCurrencies, setActiveCurrencies]);
+
+  const handleChangePriceDirection = useCallback(
+    (direction: SortDirection) => {
+      if (direction === priceDirection) {
+        setPriceDirection('');
+        return;
+      }
+
+      setPriceDirection(direction);
+    },
+    [priceDirection, setPriceDirection],
+  );
+
+  const handleChangeLikesDirection = useCallback(
+    (direction: SortDirection) => {
+      if (direction === likesDirection) {
+        setLikesDirection('');
+        return;
+      }
+
+      setLikesDirection(direction);
+    },
+    [likesDirection, setLikesDirection],
+  );
+
+  const handleChangeDateDirection = useCallback(
+    (direction: SortDirection) => {
+      if (direction === dateDirection) {
+        setDateDirection('');
+        return;
+      }
+
+      setDateDirection(direction);
+    },
+    [dateDirection, setDateDirection],
+  );
+
+  const handleMinValueChange = useCallback((newMinValue: string) => {
+    if (!validateOnlyNumbers(newMinValue)) return;
+    setMinValue(newMinValue);
+  }, []);
+
+  const handleMaxValueChange = useCallback((newMaxValue: string) => {
+    if (!validateOnlyNumbers(newMaxValue)) return;
+    setMaxValue(newMaxValue);
+  }, []);
+
+  const handleToggleAuction = useCallback(() => {
+    setIsAuction(!isAuction);
+  }, [isAuction, setIsAuction]);
+
+  const handleSubmit = useCallback(() => {
+    setMinPrice(minValue);
+    setMaxPrice(maxValue);
+    setIsShowFilters(false);
+  }, [minValue, maxValue, setMinPrice, setMaxPrice]);
+
+  const handleClearAllFilters = useCallback(() => {
+    setIsSingleNft(false);
+    setIsMultipleNft(false);
+    setIsAuction(false);
+    setPriceDirection('');
+    setDateDirection('');
+    setLikesDirection('');
+    setMinPrice('');
+    setMaxPrice('');
+    setMinValue('');
+    setMaxValue('');
+  }, [
+    setIsSingleNft,
+    setIsMultipleNft,
+    setIsAuction,
+    setPriceDirection,
+    setDateDirection,
+    setLikesDirection,
+    setMinPrice,
+    setMaxPrice,
+  ]);
 
   const currencyOptions = [
-    {
-      id: '0',
+    ...rates.map((rate, index) => ({
+      id: String(index),
       content: (
         <CheckboxButton
-          isChecked={isMaticActive}
-          onChange={() => setIsMaticActive(!isMaticActive)}
+          isChecked={activeCurrencies.includes(rate.symbol)}
+          onChange={() => handleChangeCurrencyValue(rate.symbol)}
           content={
             <div className={styles.currency}>
-              <img src={matic} alt="currency" />
-              <Text variant="body-2">MATIC</Text>
+              <img src={rate.image} alt="currency" />
+              <Text variant="body-2">{rate.symbol}</Text>
             </div>
           }
         />
       ),
-    },
-    {
-      id: '1',
-      content: (
-        <CheckboxButton
-          isChecked={isUsdtActive}
-          onChange={() => setIsUsdtActive(!isUsdtActive)}
-          content={
-            <div className={styles.currency}>
-              <img src={usdt} alt="currency" />
-              <Text variant="body-2">USDT</Text>
-            </div>
-          }
-        />
-      ),
-    },
+    })),
   ];
   const dateOptions = [
     {
       id: '0',
       content: (
         <CheckboxButton
-          isChecked={isDateLastActive}
-          onChange={() => setIsDateLastActive(!isDateLastActive)}
+          isChecked={dateDirection === 'desc'}
+          onChange={() => handleChangeDateDirection('desc')}
           content={
             <div className={styles.currency}>
               <Text variant="body-2">Date Last</Text>
@@ -82,8 +180,8 @@ const Body: VFC<IBodyProps> = () => {
       id: '1',
       content: (
         <CheckboxButton
-          isChecked={isDateNewActive}
-          onChange={() => setIsDateNewActive(!isDateNewActive)}
+          isChecked={dateDirection === 'asc'}
+          onChange={() => handleChangeDateDirection('asc')}
           content={
             <div className={styles.currency}>
               <Text variant="body-2">Date New</Text>
@@ -99,8 +197,8 @@ const Body: VFC<IBodyProps> = () => {
       id: '0',
       content: (
         <CheckboxButton
-          isChecked={isLikesUpActive}
-          onChange={() => setIsLikesUpActive(!isLikesUpActive)}
+          isChecked={likesDirection === 'asc'}
+          onChange={() => handleChangeLikesDirection('asc')}
           content={
             <div className={styles.currency}>
               <Text variant="body-2">Likes</Text>
@@ -114,8 +212,8 @@ const Body: VFC<IBodyProps> = () => {
       id: '1',
       content: (
         <CheckboxButton
-          isChecked={isLikesDownActive}
-          onChange={() => setIsLikesDownActive(!isLikesDownActive)}
+          isChecked={likesDirection === 'desc'}
+          onChange={() => handleChangeLikesDirection('desc')}
           content={
             <div className={styles.currency}>
               <Text variant="body-2">Likes</Text>
@@ -132,8 +230,8 @@ const Body: VFC<IBodyProps> = () => {
       content: (
         <div className={styles.price}>
           <CheckboxButton
-            isChecked={isPriceUpActive}
-            onChange={() => setIsPriceUpActive(!isPriceUpActive)}
+            isChecked={priceDirection === 'asc'}
+            onChange={() => handleChangePriceDirection('asc')}
             content={
               <div className={styles.currency}>
                 <Text variant="body-2">Price</Text>
@@ -142,8 +240,8 @@ const Body: VFC<IBodyProps> = () => {
             }
           />
           <CheckboxButton
-            isChecked={isPriceDownActive}
-            onChange={() => setIsPriceDownActive(!isPriceDownActive)}
+            isChecked={priceDirection === 'desc'}
+            onChange={() => handleChangePriceDirection('desc')}
             content={
               <div className={styles.currency}>
                 <Text variant="body-2">Price</Text>
@@ -168,11 +266,23 @@ const Body: VFC<IBodyProps> = () => {
           </div>
           <div className={styles.priceItems}>
             <div className={styles.priceItem}>
-              <Input name="min" classNameBody={styles.priceInput} placeholder="0.00" />
+              <Input
+                name="min"
+                classNameBody={styles.priceInput}
+                placeholder="0.00"
+                value={minValue}
+                onChange={(e) => handleMinValueChange(e.target.value)}
+              />
             </div>
             <Text>-</Text>
             <div className={styles.priceItem}>
-              <Input name="max" classNameBody={styles.priceInput} placeholder="0.00" />
+              <Input
+                name="max"
+                classNameBody={styles.priceInput}
+                placeholder="0.00"
+                value={maxValue}
+                onChange={(e) => handleMaxValueChange(e.target.value)}
+              />
             </div>
           </div>
         </div>
@@ -210,14 +320,14 @@ const Body: VFC<IBodyProps> = () => {
           </div>
           <div className={styles.standarts}>
             <CheckboxButton
-              isChecked={is721Active}
-              onChange={() => setIs721Active(!is721Active)}
+              isChecked={isSingleNft}
+              onChange={() => setIsSingleNft(!isSingleNft)}
               content={<Text variant="body-2">721 NFT</Text>}
               className={styles.standart}
             />
             <CheckboxButton
-              isChecked={is1155Active}
-              onChange={() => setIs1155Active(!is1155Active)}
+              isChecked={isMultipleNft}
+              onChange={() => setIsMultipleNft(!isMultipleNft)}
               content={<Text variant="body-2">1155 NFT</Text>}
               className={styles.standart}
             />
@@ -265,8 +375,26 @@ const Body: VFC<IBodyProps> = () => {
               variant="transparent"
               isOutsideClickClose={false}
             />
+            {(isSingleNft ||
+              isMultipleNft ||
+              isAuction ||
+              activeCurrencies.length ||
+              priceDirection ||
+              dateDirection ||
+              likesDirection ||
+              minValue ||
+              maxValue) && (
+              <div className={styles.bodyFiltersButtons}>
+                <Button className={styles.btn} onClick={handleSubmit}>
+                  Apply
+                </Button>
+                <Button variant="outlined" className={styles.btn} onClick={handleClearAllFilters}>
+                  Clear
+                </Button>
+              </div>
+            )}
             <div className={styles.auction}>
-              <Checkbox value={isAuction} onChange={() => setIsAuction(!isAuction)}>
+              <Checkbox value={isAuction} onChange={handleToggleAuction}>
                 <Text size="xs">Auction</Text>
               </Checkbox>
             </div>
