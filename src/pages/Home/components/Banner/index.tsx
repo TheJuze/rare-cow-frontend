@@ -8,7 +8,6 @@ import { Button, Text } from 'components';
 
 import { useWindowState } from 'hooks';
 import { routes } from 'appConstants';
-import { NavLink } from 'react-router-dom';
 import styles from './styles.module.scss';
 
 const Banner: FC = () => {
@@ -35,9 +34,9 @@ const Banner: FC = () => {
             </Text>
             <img src={logoSmall} alt="logo" className={styles.logo} />
             <div className={styles.bannerBtns}>
-              <NavLink className={styles.btn} to={routes.nest.explore.path}>
+              <Button className={styles.btn} to={routes.nest.explore.path}>
                 Explore
-              </NavLink>
+              </Button>
               <Button variant="outlined" className={styles.btn} href="/">
                 Create
               </Button>
@@ -62,9 +61,9 @@ const Banner: FC = () => {
                 incididunt ut labore et dolore magna aliqua.
               </Text>
               <div className={styles.bannerBtns}>
-                <NavLink className={styles.btn} to={routes.nest.explore.path}>
+                <Button className={styles.btn} to={routes.nest.explore.path}>
                   Explore
-                </NavLink>
+                </Button>
                 <Button variant="outlined" className={styles.btn} href="/">
                   Create
                 </Button>

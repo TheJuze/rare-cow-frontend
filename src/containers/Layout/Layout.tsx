@@ -18,8 +18,6 @@ import { useSmoothTopScroll } from 'hooks/useSmoothTopScroll';
 import { useDispatch } from 'react-redux';
 import { updateUserState } from 'store/user/reducer';
 import clsx from 'clsx';
-import { useBreadcrumbs } from 'hooks/useBreadcrumbs';
-import { Breadcrumbs } from 'components/Breadcrumbs';
 import styles from './styles.module.scss';
 
 export interface LayoutProps {
@@ -31,7 +29,6 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
   const { connect, disconnect } = useWalletConnectorContext();
 
   const dispatch = useDispatch();
-  const { breadcrumbs } = useBreadcrumbs();
 
   const { address, chainType } = useShallowSelector<State, UserState>(userSelector.getUser);
   const { [actionTypesUser.UPDATE_USER_INFO]: userInfoRequest } = useShallowSelector(
@@ -64,11 +61,10 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
 
   const isHomePage = useMemo(() => pathname === '/', [pathname]);
 
-  const isNeedToShowHeaderFooter = useMemo(() => isHomePage, [isHomePage]);
+  const isNeedToShowHeaderFooter = useMemo(() => true, []);
   return (
     <div className={clsx(styles.app)}>
       <div className={styles.content}>
-        <Breadcrumbs paths={breadcrumbs} />
         {isNeedToShowHeaderFooter && (
           <Header
             address={address}
