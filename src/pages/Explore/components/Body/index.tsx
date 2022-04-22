@@ -1,8 +1,9 @@
+/* eslint-disable max-len */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, VFC } from 'react';
-import { ArtCard, Button, Text } from 'components';
+import React, { useCallback, useState, VFC } from 'react';
+import { ArtCard, Button, FilterChips, Text } from 'components';
 
 import { nfts } from 'components/ArtCard/ArtCard.stories';
 import { Link } from 'react-router-dom';
@@ -15,7 +16,30 @@ interface IBodyProps {}
 
 const Body: VFC<IBodyProps> = () => {
   const [isShowFilters, setIsShowFilters] = useState(false);
-  const filters = useFilters();
+  const [isShowChips, setIsShowChips] = useState(false);
+  const [appliedFilters, setAppliedFilters] = useState({
+    ERC721: false,
+    ERC1155: false,
+    isAuction: false,
+    currency: [],
+    price: '',
+    date: '',
+    likes: '',
+    minPrice: '',
+    maxPrice: '',
+  });
+  const { filters, handleChangeFilter, handleClearFilters } = useFilters();
+
+  const onApply = useCallback(() => {
+    setIsShowChips(true);
+    setIsShowFilters(false);
+    setAppliedFilters({ ...filters });
+  }, [filters]);
+
+  const handlDeleteChips = useCallback((key, value) => {
+    handleChangeFilter(key, value);
+    setAppliedFilters({ ...appliedFilters, [key]: value });
+  }, [appliedFilters, handleChangeFilter]);
 
   const minSize = 264;
   return (
@@ -31,11 +55,25 @@ const Body: VFC<IBodyProps> = () => {
           <Text color="metal700">Filters</Text>
         </Button>
       </div>
+      {isShowChips && (
+        <div className={styles.total}>
+          <Text color="metal800" className={styles.totalText}>
+            Total({nfts.length})
+          </Text>
+          <FilterChips
+            className={styles.chips}
+            filters={appliedFilters}
+            handleChangeFilter={handlDeleteChips}
+          />
+        </div>
+      )}
       <div className={styles.bodyContent}>
         <Filters
           filters={filters}
           isShowFilters={isShowFilters}
-          onClose={() => setIsShowFilters(false)}
+          handleChangeFilter={handleChangeFilter}
+          onClose={onApply}
+          handleClearFilters={handleClearFilters}
         />
         <div
           className={styles.bodyResults}
