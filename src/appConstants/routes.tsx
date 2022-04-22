@@ -63,35 +63,38 @@ const routesConfig = {
     },
   },
 };
+class RouteWorker<T extends object> {
+  routes: T;
+  constructor(route: T) {
+    const routeWithGetters = { ...route };
+    const parentPaths = [];
+    const recursiveGetterGenerator = (nest) => {
+      for (let i = 0; i < nest.length; i += 1) {
+        const currentPathObject = nest[i];
+        const currentPath = currentPathObject.path;
+        const fullPath = `${parentPaths.join('/')}/${currentPath}`.replace(
+          new RegExp(/\/+(?=\/)/g),
+          '',
+        );
+        Object.defineProperty(currentPathObject, 'path', {
+          get: () => fullPath,
+        });
+        if (currentPathObject.nest) {
+          parentPaths.push(currentPath);
+          recursiveGetterGenerator(Object.entries(currentPathObject.nest).map(([, data]) => data));
+          parentPaths.pop();
+        }
+      }
+    };
+    recursiveGetterGenerator([routeWithGetters]);
+    this.routes = routeWithGetters;
+  }
+}
 
 const normalizePath = (path: string) =>
   `${path.startsWith('/') ? '' : '/'}${path}${path.endsWith('/') ? '' : '/'}`;
 
-const parentPaths = [];
-const pathHandler = {
-  get(route, key) {
-    if (typeof route[key] === 'object' && route[key] !== null && key !== 'content') {
-      if (key === 'nest') {
-        if (!parentPaths.includes(route.path)) parentPaths.push(route.path);
-      }
-      return new Proxy(route[key], pathHandler);
-    }
-    if (key === 'path') {
-      let accumulatedPath = '';
-      while (parentPaths.length) {
-        const subPath = parentPaths.shift();
-        accumulatedPath += subPath + (subPath.endsWith('/') ? '' : '/');
-      }
-      return `${accumulatedPath}${route[key]}`;
-    }
-    if (key !== 'render') {
-      parentPaths.length = 0;
-    }
-    return route[key];
-  },
-};
-
-export const routes = new Proxy<typeof routesConfig>(routesConfig, pathHandler);
+export const { routes } = new RouteWorker<typeof routesConfig>({ ...routesConfig });
 
 export const createDynamicLink = (path: string, values: TDynamicValues) => {
   let normalPath = path;
@@ -148,7 +151,6 @@ const recursiveRoutesCollector = (nest: TRoutes[]) => {
 const flatten = (ary) => ary.reduce((a, b) => [...a, ...(Array.isArray(b) ? flatten(b) : [b])], []);
 const flattenRoutes = (nest: TRoutes[]) => flatten(recursiveRoutesCollector(nest));
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getRoute = () =>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   flattenRoutes([routes as any]).map((subPath: TRoutes) => {
@@ -158,7 +160,7 @@ const getRoute = () =>
 
 export const getAllAvailableRoutes = () =>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  flattenRoutes([{ ...routes }] as any).map((routeObject: TRoutes) => routeObject.path);
+  flattenRoutes([routes] as any).map((routeObject: TRoutes) => routeObject.path);
 
 export const generateOutletRoutes = () => (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
