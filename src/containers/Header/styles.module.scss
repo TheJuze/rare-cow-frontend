@@ -1,9 +1,93 @@
-// @import '../../assets/styles/mixins';
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
 @import 'src/styles/helpers';
 
 .header {
   width: 100%;
-  height: 100px;
-  gap: 50px;
-  background-image: linear-gradient(to right, #fa709a 0%, #fee140 100%);
+  padding-top: 24px;
+  @include flex(row, center, space-between);
+  @include container;
+  max-width: 1440px;
+  &Left,
+  &Right {
+    @include flex(row, center, flex-start);
+  }
+  &Right {
+    gap: 20px;
+  }
+  .logo {
+    margin: spacing(0, 5, 0, 0);
+    max-width: 500px;
+  }
+  .headerInput {
+    height: 44px;
+    width: 250px;
+  }
+  .headerDropdown {
+    height: 44px;
+    width: 160px;
+  }
+}
+.user {
+  @include flex(row, center, flex-start);
+  gap: 16px;
+  position: relative;
+}
+.arrow {
+  transform: rotate(0);
+  @include transition;
+  &.arrowUp {
+    transform: rotate(180deg);
+    @include transition;
+  }
+  &Btn {
+    border: none;
+    background: transparent;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    cursor: pointer;
+  }
+}
+.address {
+  background: var(--dropdown-outlined-default-head-background);
+  padding: space(10, 16);
+  color: var(--dropdown-outlined-default-head-color);
+  height: 44px;
+  @include flex(row, center, center);
+  @include border-radius('input');
+  @include border-like-shadow(
+    var(--dropdown-outlined-default-head-border-width),
+    var(--dropdown-outlined-default-head-border)
+  );
+}
+@include large-tablet {
+  .user{
+    gap: 12px;
+  }
+  .address,
+  .headerDropdown {
+    display: none;
+  }
+}
+@include large-mobile {
+  .headerInput {
+    width: 100% !important;
+  }
+  .headerLeft {
+    flex-direction: row-reverse;
+    .logo {
+      margin: 0;
+      position: absolute;
+      left: calc(50% - 105px / 2);
+      @include transition;
+      &.closed {
+        max-width: 0px;
+        overflow: hidden;
+        opacity: 0;
+        transform: scale(0);
+        @include transition;
+      }
+    }
+  }
 }

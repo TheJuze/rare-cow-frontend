@@ -67,7 +67,7 @@
 @include forDesktopSm {
   .searchInput {
     width: auto;
-    max-width: 44px;
+    max-width: 48px;
     @include transition;
     .input {
       [class='input-body'] {

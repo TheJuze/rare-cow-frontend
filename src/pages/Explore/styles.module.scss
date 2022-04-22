@@ -1,0 +1,6 @@
+@import 'src/styles/helpers';
+
+.explore{
+  @include container;
+  max-width: 1440px;
+}

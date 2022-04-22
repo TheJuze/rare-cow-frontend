@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable implicit-arrow-linebreak */
+import { Explore, Home } from 'pages';
 import React, { ReactElement } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import { TGuards } from 'types';
@@ -18,7 +19,7 @@ export type TRoutes = {
 
 const routesConfig = {
   path: '/',
-  content: <div>Home</div>,
+  content: <Home />,
   label: 'Home',
   nest: {
     profile: {
@@ -58,8 +59,8 @@ const routesConfig = {
     },
     explore: {
       path: 'explore',
-      content: 'explore',
-      label: 'explore',
+      content: <Explore />,
+      label: 'Explore',
     },
   },
 };
@@ -116,7 +117,7 @@ const getOutletRoute = (nest: TRoutes[]) => {
           path={subPath.path}
           element={(
             <>
-              {subPath.content || ''} <Outlet />
+              {subPath.content} <Outlet />
             </>
           )}
         >

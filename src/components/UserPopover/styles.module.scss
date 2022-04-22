@@ -1,0 +1,92 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.userPopover {
+  display: none;
+  position: absolute;
+  background-color: var(--userPopover-default-background-color);
+  padding: space(20);
+  border-radius: var(--userPopover-default-border-radius);
+  min-width: var(--userPopover-default-min-width);
+  top: 44px;
+  right: 0;
+  @include transition;
+  .balance {
+    @include flex(row, center, flex-start);
+    margin-top: space(20);
+    margin-bottom: space(20);
+    gap: 20px;
+    &Item {
+      @include flex(row, center, flex-start);
+      &Icon {
+        margin: spacing(0, 1, 0, 0);
+      }
+    }
+  }
+  .dropdown {
+    margin-top: space(8);
+    &Wrapper {
+      height: 44px;
+    }
+    &Head {
+      @include flex(row, center, flex-start);
+      gap: 8px;
+    }
+  }
+  .links {
+    @include flex(column, center, flex-start);
+    gap: 8px;
+    margin-top: space(8);
+    .link {
+      width: 100%;
+      height: 44px;
+      @include flex(row, center, flex-start);
+      padding: spacing(1, 2);
+      background-color: var(--userPopover-edit-background-color);
+      border-radius: var(--userPopover-edit-border-radius);
+      gap: 10px;
+    }
+  }
+  .theme {
+    margin: spacing(2, 0, 0, 0);
+    @include flex(row, center, flex-start);
+    gap: 12px;
+  }
+}
+.visible {
+  display: block;
+  @include transition;
+}
+.head {
+  @include flex(row, center, space-between);
+  &User {
+    @include flex(row, center, flex-start);
+    .headUserName {
+      margin: spacing(0, 0, 0, 2);
+    }
+  }
+}
+.edit {
+  padding: spacing(1, 2);
+  background-color: var(--userPopover-edit-background-color);
+  border-radius: var(--userPopover-edit-border-radius);
+  @include flex(row, center, space-between);
+  &:hover {
+    cursor: pointer;
+    .editIcon {
+      path {
+        fill: var(--userPopover-edit-icon-hover);
+      }
+    }
+  }
+  &Icon {
+    margin: spacing(0, 0, 0, 0.75);
+  }
+}
+@include middle-mobile{
+  .userPopover{
+    right: -24px;
+    width: 100vw;
+  }
+}

@@ -6,6 +6,7 @@
   position: relative;
   width: 100%;
   max-width: 283px;
+  margin: 0 auto !important;
   min-width: 163px;
   background-color: var(--artcard-default-background-color);
   border: var(--artcard-border-width) solid var(--artcard-default-border-color);
@@ -21,6 +22,14 @@
     width: var(--artcard-auction-block-width);
     border-radius: var(--artcard-auction-border-radius);
     @include flex(row, center, center);
+    padding: 1px 0;
+  }
+  &-promo{
+    position: absolute;
+    top: var(--artcard-auction-position);
+    right: var(--artcard-auction-position);
+    @include flex(row, center, center);
+
   }
   &-imageWrapper{
     overflow: hidden;
@@ -29,6 +38,7 @@
     height: 100%;
     border-radius: 20px 20px 0 0;
     min-height: 143px;
+    max-height: 240px;
     @include flex(row, flex-start, center);
     @include transition;
     margin: spacing(0, 0, 3, 0);
@@ -45,11 +55,14 @@
     &-author{
       @include flex(row, center, flex-start);
       &-name{
-        margin: spacing(0, 0, 0, 1);
+        margin: spacing(0, 0, 0, 1) !important;
+      }
+      &-like{
+        max-width: 74px;
       }
     }
     &-price{
-      @include flex;
+      @include flex(row, center, center);
         &-currency{
           margin: spacing(0, 1, 0, 1);
         }

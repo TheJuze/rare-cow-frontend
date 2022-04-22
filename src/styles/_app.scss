@@ -4,11 +4,14 @@
 
 body {
   margin: 0;
+
+  @include inter;
   font-size: $font-size-default;
   font-weight: 400;
   line-height: $line-height-default;
 
   color: black;
+  overflow-x: hidden;
 
   span,
   div {

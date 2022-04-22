@@ -91,3 +91,7 @@ $spacing: (0, 4, 8, 16, 24, 32, 40, 48, 56, 64, 80, 100);
     transition: $property $duration $function $delay;
   }
 }
+// fonts
+@mixin inter {
+  font-family: 'Inter', sans-serif;
+}

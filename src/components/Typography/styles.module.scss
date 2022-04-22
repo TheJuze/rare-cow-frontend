@@ -82,8 +82,8 @@
   }
 
   &.m {
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 24px;
+    line-height: 68px;
   }
 
   &.l {
@@ -112,12 +112,44 @@
   color: var(--typography-dark-color);
 }
 
+.dark0 {
+  color: var(--typography-dark-0-color);
+}
+
+.dark1 {
+  color: var(--typography-dark-1-color);
+}
+
 .accent {
   color: var(--typography-accent-color);
 }
 
 .light3 {
   color: var(--typography-light-3-color);
+}
+
+.light4{
+  color: var(--typography-light-4-color);
+}
+
+.iris100{
+  color: var(--typography-iris-100-color);
+}
+
+.metal50{
+  color: var(--typography-metal-50-color);
+}
+
+.metal600{
+  color: var(--typography-metal-600-color);
+}
+
+.metal700{
+  color: var(--typography-metal-700-color);
+}
+
+.metal800{
+  color: var(--typography-metal-800-color);
 }
 
 .normalWeight {

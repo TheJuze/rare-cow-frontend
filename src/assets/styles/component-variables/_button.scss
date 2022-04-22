@@ -193,7 +193,10 @@ $buttonColorsDefault: (
 
   //misc
   'button-disabled-background': #191a1d,
-  'button-disabled-color': #64656a
+  'button-disabled-color': #64656a,
+
+  //like button
+  'button-like-default-background': $metal-100,
 );
 
 $buttonColorsLight: (

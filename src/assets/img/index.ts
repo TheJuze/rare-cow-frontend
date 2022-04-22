@@ -6,3 +6,4 @@ export { default as nftMock2 } from './nftMock2.png';
 export { default as nftMock3 } from './nftMock3.png';
 export { default as nftMock4 } from './nftMock4.png';
 export { default as usdt } from './usdt.png';
+export { default as matic } from './matic.png';

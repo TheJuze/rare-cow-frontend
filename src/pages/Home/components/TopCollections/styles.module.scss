@@ -1,0 +1,48 @@
+@import 'src/styles/helpers';
+
+.topCollections {
+  @include container;
+  margin-bottom: 161px !important;
+}
+
+.collections {
+  height: auto;
+  overflow: hidden;
+  margin-top: 20px !important;
+  @include transition;
+}
+
+.title {
+  @include flex(row, center, center);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.goRankingBtn {
+  margin: 20px auto 0;
+  padding: 0 32px;
+  max-width: 180px;
+}
+
+.collectionsWrapper {
+  display: grid;
+  grid-column-gap: 24px;
+  grid-row-gap: 24px;
+  grid-auto-flow: row;
+
+  @include default-screen {
+    @include flex(row, center, center);
+    flex-direction: column;
+  }
+}
+
+.srcToRanking {
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.noItems {
+  margin: 0 auto;
+  text-align: center !important;
+  margin-top: 16px;
+}

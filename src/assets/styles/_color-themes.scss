@@ -18,6 +18,14 @@
 @import './component-variables/search-input';
 @import './component-variables/art-card';
 @import './component-variables/breadcrumbs';
+@import './component-variables/user-popover';
+@import './component-variables/clipboard';
+@import './component-variables/swiper';
+@import './component-variables/title-dropdown';
+@import './component-variables/collection-card';
+@import './component-variables/checkbox-button';
+@import './component-variables/filters';
+@import './component-variables/chips';
 
 :root {
 	$colors:(
@@ -40,7 +48,15 @@
 		$searchItemColorsDefault,
 		$searchInputColorsDefault,
 		$artcardColorsDefault,
-		$breadcrumbsColorsDefault
+		$breadcrumbsColorsDefault,
+		$userPopoverColorsDefault,
+		$clipboardColorsDefault,
+		$swiperColorsDefault,
+		$titleDropdownColorsDefault,
+		$collectionCardColorsDefault,
+		$checkboxButtonColorsDefault,
+		$filtersColorsDefault,
+		$chipsColorsDefault
 	);
 
 	@each $key_name in $colors {

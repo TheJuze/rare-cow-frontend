@@ -5,8 +5,16 @@ enum ColorValues {
   error,
   gray6,
   dark,
+  dark0,
+  dark1,
   accent,
-  light3
+  light3,
+  light4,
+  iris100,
+  metal50,
+  metal600,
+  metal700,
+  metal800,
 }
 
 enum SizeValues {

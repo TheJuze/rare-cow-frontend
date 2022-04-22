@@ -1,0 +1,11 @@
+@import 'src/styles/variables';
+
+$checkboxButtonColorsDefault:(
+  'checkboxButton-default-background-color': $metal-50,
+  'checkboxButton-default-border-color': $metal-300,
+  'checkboxButton-border-width': 1px,
+  'checkboxButton-border-radius': 8px,
+  'checkboxButton-hover-border-color': $accent,
+  'checkboxButton-active-background-color': $light-100,
+  'checkboxButton-active-border-color': $light-100,
+)
