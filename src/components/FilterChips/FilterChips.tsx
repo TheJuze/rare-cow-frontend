@@ -1,3 +1,5 @@
+/* eslint-disable object-curly-newline */
+/* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,108 +14,96 @@ import { Chips } from './components';
 export interface FilterChipsProps {
   className?: string;
   filters: any;
+  handleChangeFilter: any;
 }
 
-export const FilterChips: VFC<FilterChipsProps> = ({ className, filters }) => {
-  const {
-    isSingleNft,
-    isMultipleNft,
-    isAuction,
-    activeCurrency,
-    priceDirection,
-    dateDirection,
-    likesDirection,
-    minPrice,
-    maxPrice,
-    setIsSingleNft,
-    setIsMultipleNft,
-    setIsAuction,
-    setActiveCurrency,
-    setPriceDirection,
-    setDateDirection,
-    setLikesDirection,
-    setMinPrice,
-    setMaxPrice,
-  } = filters;
+export const FilterChips: VFC<FilterChipsProps> = ({ className, filters, handleChangeFilter }) => {
+  const { ERC721, ERC1155, isAuction, currency, price, date, likes, minPrice, maxPrice } = filters;
 
   const minMaxLabel = useMemo(() => {
     if (!minPrice && !maxPrice) return '';
     return `Price: ${minPrice && 'from'} ${minPrice}  ${maxPrice && 'to'} ${maxPrice} ${
-      activeCurrency.symbol || 'Any currency'
+      currency.length ? currency.map((currentCurrency) => currentCurrency) : 'Any currency'
     }`;
-  }, [minPrice, maxPrice]);
+  }, [minPrice, maxPrice, currency]);
   return (
     <div className={cn(styles.filterChips, className)}>
-      {isSingleNft && <Chips label="Single NFT" onClose={() => setIsSingleNft(false)} />}
-      {isMultipleNft && <Chips label="Multiple NFT" onClose={() => setIsMultipleNft(false)} />}
-      {activeCurrency.length ? (
-        activeCurrency.map((currency) => (
+      {ERC721 && <Chips label="Single NFT" onClose={() => handleChangeFilter('ERC721', false)} />}
+      {ERC1155 && (
+        <Chips label="Multiple NFT" onClose={() => handleChangeFilter('ERC1155', false)} />
+      )}
+      {currency.length ? (
+        currency.map((currentCurrency) => (
           <Chips
             label={currency}
             onClose={() =>
-              setActiveCurrency(
-                activeCurrency.filter((deletedCurrency) => deletedCurrency !== currency),
-              )}
+              handleChangeFilter(
+                'currency',
+                currency.filter((deletedCurrency) => deletedCurrency !== currentCurrency),
+              )
+            }
           />
         ))
       ) : (
         <></>
       )}
-      {dateDirection && (
+      {date && (
         <Chips
           label={
             <div className={styles.label}>
               Date
-              {dateDirection === 'asc' ? (
+              {date === 'asc' ? (
                 <img src={arrowUp} alt="arrowUp" />
               ) : (
                 <img src={arrowDown} alt="arrowDown" />
               )}
             </div>
           }
-          onClose={() => setDateDirection('')}
+          onClose={() => handleChangeFilter('date', '')}
         />
       )}
-      {likesDirection && (
+      {likes && (
         <Chips
           label={
             <div className={styles.label}>
               Likes
-              {likesDirection === 'asc' ? (
+              {likes === 'asc' ? (
                 <img src={arrowUp} alt="arrowUp" />
               ) : (
                 <img src={arrowDown} alt="arrowDown" />
               )}
             </div>
           }
-          onClose={() => setLikesDirection('')}
+          onClose={() => handleChangeFilter('likes', '')}
         />
       )}
-      {priceDirection && (
+      {price && (
         <Chips
           label={
             <div className={styles.label}>
               Price
-              {priceDirection === 'asc' ? (
+              {price === 'asc' ? (
                 <img src={arrowUp} alt="arrowUp" />
               ) : (
                 <img src={arrowDown} alt="arrowDown" />
               )}
             </div>
           }
-          onClose={() => setPriceDirection('')}
+          onClose={() => handleChangeFilter('price', '')}
         />
       )}
       {minMaxLabel && (
         <Chips
           label={minMaxLabel}
           onClose={() => {
-            setMinPrice('');
-            setMaxPrice('');
+            handleChangeFilter('minPrice', '');
+            handleChangeFilter('maxPrice', '');
           }}
         />
       )}
-      {isAuction && <Chips label="on Auction" onClose={() => setIsAuction(false)} />}
+      {isAuction && (
+        <Chips label="on Auction" onClose={() => handleChangeFilter('isAuction', false)} />
+      )}
     </div>
   );
 };

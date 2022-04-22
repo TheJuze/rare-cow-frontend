@@ -1,40 +1,43 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export type SortDirection = 'asc' | 'desc';
 
 export const useFilters = () => {
-  const [isAuction, setIsAuction] = useState(false);
-  const [isSingleNft, setIsSingleNft] = useState(false);
-  const [isMultipleNft, setIsMultipleNft] = useState(false);
-  const [activeCurrency, setActiveCurrency] = useState<any>([]);
-  const [priceDirection, setPriceDirection] = useState<SortDirection | ''>('');
-  const [dateDirection, setDateDirection] = useState<SortDirection | ''>('');
-  const [likesDirection, setLikesDirection] = useState<SortDirection | ''>('');
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
+  const [filters, setFilters] = useState({
+    ERC721: false,
+    ERC1155: false,
+    isAuction: false,
+    currency: [],
+    price: '',
+    date: '',
+    likes: '',
+    minPrice: '',
+    maxPrice: '',
+  });
+
+  const handleChangeFilter = useCallback((key, value) => {
+    setFilters({ ...filters, [key]: value });
+  }, [filters]);
+
+  const handleClearFilters = useCallback(() => {
+    setFilters({
+      ERC721: false,
+      ERC1155: false,
+      isAuction: false,
+      currency: [],
+      price: '',
+      date: '',
+      likes: '',
+      minPrice: '',
+      maxPrice: '',
+    });
+  }, []);
 
   return {
-    // activeCollection,
-    isSingleNft,
-    isMultipleNft,
-    isAuction,
-    activeCurrency,
-    priceDirection,
-    dateDirection,
-    likesDirection,
-    minPrice,
-    maxPrice,
-    // setActiveCollection,
-    setIsSingleNft,
-    setIsMultipleNft,
-    setIsAuction,
-    setActiveCurrency,
-    setPriceDirection,
-    setDateDirection,
-    setLikesDirection,
-    setMinPrice,
-    setMaxPrice,
+    filters,
+    handleChangeFilter,
+    handleClearFilters,
   };
 };
 

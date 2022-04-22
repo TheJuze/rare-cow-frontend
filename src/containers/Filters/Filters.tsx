@@ -16,29 +16,20 @@ export interface FiltersProps {
   filters: any;
   onClose: () => void;
   isShowFilters: boolean;
+  handleChangeFilter: any;
+  handleClearFilters: any;
 }
 
-export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) => {
+export const Filters: VFC<FiltersProps> = ({
+  filters,
+  onClose,
+  isShowFilters,
+  handleChangeFilter,
+  handleClearFilters,
+}) => {
   const [minValue, setMinValue] = useState('');
   const [maxValue, setMaxValue] = useState('');
-  const {
-    isSingleNft,
-    isMultipleNft,
-    isAuction,
-    activeCurrency,
-    priceDirection,
-    dateDirection,
-    likesDirection,
-    setIsSingleNft,
-    setIsMultipleNft,
-    setIsAuction,
-    setActiveCurrency,
-    setPriceDirection,
-    setDateDirection,
-    setLikesDirection,
-    setMinPrice,
-    setMaxPrice,
-  } = filters;
+  const { ERC721, ERC1155, isAuction, currency, price, date, likes } = filters;
 
   const rates = [
     {
@@ -57,101 +48,78 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
 
   const handleChangeCurrencyValue = useCallback(
     (newCurrency) => {
-      setActiveCurrency(
-        activeCurrency.includes(newCurrency)
-          ? activeCurrency.filter((currency) => currency !== newCurrency)
-          : [...activeCurrency, newCurrency],
+      handleChangeFilter(
+        'currency',
+        currency.includes(newCurrency)
+          ? currency.filter((currentCurrency) => currentCurrency !== newCurrency)
+          : [...currency, newCurrency],
       );
     },
-    [activeCurrency, setActiveCurrency],
+    [currency, handleChangeFilter],
   );
 
   const handleChangePriceDirection = useCallback(
     (direction: SortDirection) => {
-      if (direction === priceDirection) {
-        setPriceDirection('');
+      if (direction === price) {
+        handleChangeFilter('price', '');
         return;
       }
 
-      setPriceDirection(direction);
+      handleChangeFilter('price', direction);
     },
-    [priceDirection, setPriceDirection],
+    [handleChangeFilter, price],
   );
 
   const handleChangeLikesDirection = useCallback(
     (direction: SortDirection) => {
-      if (direction === likesDirection) {
-        setLikesDirection('');
+      if (direction === likes) {
+        handleChangeFilter('likes', '');
         return;
       }
 
-      setLikesDirection(direction);
+      handleChangeFilter('likes', direction);
     },
-    [likesDirection, setLikesDirection],
+    [handleChangeFilter, likes],
   );
 
   const handleChangeDateDirection = useCallback(
     (direction: SortDirection) => {
-      if (direction === dateDirection) {
-        setDateDirection('');
+      if (direction === date) {
+        handleChangeFilter('date', '');
         return;
       }
 
-      setDateDirection(direction);
+      handleChangeFilter('date', direction);
     },
-    [dateDirection, setDateDirection],
+    [date, handleChangeFilter],
   );
 
   const handleMinValueChange = useCallback((newMinValue: string) => {
     if (!validateOnlyNumbers(newMinValue)) return;
     setMinValue(newMinValue);
-  }, []);
+    handleChangeFilter('minPrice', newMinValue);
+  }, [handleChangeFilter]);
 
   const handleMaxValueChange = useCallback((newMaxValue: string) => {
     if (!validateOnlyNumbers(newMaxValue)) return;
     setMaxValue(newMaxValue);
-  }, []);
+    handleChangeFilter('maxPrice', newMaxValue);
+  }, [handleChangeFilter]);
 
   const handleToggleAuction = useCallback(() => {
-    setIsAuction(!isAuction);
-  }, [isAuction, setIsAuction]);
+    handleChangeFilter('isAuction', !isAuction);
+  }, [handleChangeFilter, isAuction]);
 
   const handleSubmit = useCallback(() => {
-    setMinPrice(minValue);
-    setMaxPrice(maxValue);
     onClose();
-  }, [minValue, maxValue, setMinPrice, setMaxPrice, onClose]);
-
-  const handleClearAllFilters = useCallback(() => {
-    setIsSingleNft(false);
-    setIsMultipleNft(false);
-    setIsAuction(false);
-    setActiveCurrency({});
-    setPriceDirection('');
-    setDateDirection('');
-    setLikesDirection('');
-    setMinPrice('');
-    setMaxPrice('');
-    setMinValue('');
-    setMaxValue('');
-  }, [
-    setIsSingleNft,
-    setIsMultipleNft,
-    setIsAuction,
-    setActiveCurrency,
-    setPriceDirection,
-    setDateDirection,
-    setLikesDirection,
-    setMinPrice,
-    setMaxPrice,
-  ]);
+  }, [onClose]);
 
   const currencyOptions = [
     ...rates.map((rate, index) => ({
       id: String(index),
       content: (
         <CheckboxButton
-          isChecked={activeCurrency.includes(rate.symbol)}
+          isChecked={currency.includes(rate.symbol)}
           onChange={() => handleChangeCurrencyValue(rate.symbol)}
           content={
             <div className={styles.currency}>
@@ -168,12 +136,12 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
       id: '0',
       content: (
         <CheckboxButton
-          isChecked={dateDirection === 'desc'}
-          onChange={() => handleChangeDateDirection('desc')}
+          isChecked={date === 'asc'}
+          onChange={() => handleChangeDateDirection('asc')}
           content={
             <div className={styles.currency}>
-              <Text variant="body-2">Date Last</Text>
-              <img src={arrowDown} alt="arrowDown" />
+              <Text variant="body-2">Date New</Text>
+              <img src={arrowUp} alt="arrowUp" />
             </div>
           }
         />
@@ -183,12 +151,12 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
       id: '1',
       content: (
         <CheckboxButton
-          isChecked={dateDirection === 'asc'}
-          onChange={() => handleChangeDateDirection('asc')}
+          isChecked={date === 'desc'}
+          onChange={() => handleChangeDateDirection('desc')}
           content={
             <div className={styles.currency}>
-              <Text variant="body-2">Date New</Text>
-              <img src={arrowUp} alt="arrowUp" />
+              <Text variant="body-2">Date Last</Text>
+              <img src={arrowDown} alt="arrowDown" />
             </div>
           }
         />
@@ -200,7 +168,7 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
       id: '0',
       content: (
         <CheckboxButton
-          isChecked={likesDirection === 'asc'}
+          isChecked={likes === 'asc'}
           onChange={() => handleChangeLikesDirection('asc')}
           content={
             <div className={styles.currency}>
@@ -215,7 +183,7 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
       id: '1',
       content: (
         <CheckboxButton
-          isChecked={likesDirection === 'desc'}
+          isChecked={likes === 'desc'}
           onChange={() => handleChangeLikesDirection('desc')}
           content={
             <div className={styles.currency}>
@@ -233,7 +201,7 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
       content: (
         <div className={styles.price}>
           <CheckboxButton
-            isChecked={priceDirection === 'asc'}
+            isChecked={price === 'asc'}
             onChange={() => handleChangePriceDirection('asc')}
             content={
               <div className={styles.currency}>
@@ -243,7 +211,7 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
             }
           />
           <CheckboxButton
-            isChecked={priceDirection === 'desc'}
+            isChecked={price === 'desc'}
             onChange={() => handleChangePriceDirection('desc')}
             content={
               <div className={styles.currency}>
@@ -304,14 +272,14 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
       </div>
       <div className={styles.standarts}>
         <CheckboxButton
-          isChecked={isSingleNft}
-          onChange={() => setIsSingleNft(!isSingleNft)}
+          isChecked={ERC721}
+          onChange={() => handleChangeFilter('ERC721', !ERC721)}
           content={<Text variant="body-2">721 NFT</Text>}
           className={styles.standart}
         />
         <CheckboxButton
-          isChecked={isMultipleNft}
-          onChange={() => setIsMultipleNft(!isMultipleNft)}
+          isChecked={ERC1155}
+          onChange={() => handleChangeFilter('ERC1155', !ERC1155)}
           content={<Text variant="body-2">1155 NFT</Text>}
           className={styles.standart}
         />
@@ -359,20 +327,20 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
           variant="transparent"
           isOutsideClickClose={false}
         />
-        {(isSingleNft ||
-          isMultipleNft ||
+        {(ERC721 ||
+          ERC1155 ||
           isAuction ||
-          activeCurrency.length ||
-          priceDirection ||
-          dateDirection ||
-          likesDirection ||
+          currency.length ||
+          price ||
+          date ||
+          likes ||
           minValue ||
           maxValue) && (
           <div className={styles.filtersButtons}>
             <Button className={styles.btn} onClick={handleSubmit}>
               Apply
             </Button>
-            <Button variant="outlined" className={styles.btn} onClick={handleClearAllFilters}>
+            <Button variant="outlined" className={styles.btn} onClick={handleClearFilters}>
               Clear
             </Button>
           </div>
