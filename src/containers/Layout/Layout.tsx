@@ -18,7 +18,7 @@ import { useSmoothTopScroll } from 'hooks/useSmoothTopScroll';
 import { useDispatch } from 'react-redux';
 import { updateUserState } from 'store/user/reducer';
 import clsx from 'clsx';
-import { useBreadcrumbs } from 'hooks/useBreadcrumbs';
+// import { useBreadcrumbs } from 'hooks/useBreadcrumbs';
 import { Breadcrumbs } from 'components/Breadcrumbs';
 import { createDynamicLink, routes } from 'appConstants';
 import styles from './styles.module.scss';
@@ -32,7 +32,7 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
   const { connect, disconnect } = useWalletConnectorContext();
 
   const dispatch = useDispatch();
-  const { breadcrumbs } = useBreadcrumbs();
+  // const { breadcrumbs } = useBreadcrumbs();
 
   const { address, chainType } = useShallowSelector<State, UserState>(userSelector.getUser);
   const { [actionTypesUser.UPDATE_USER_INFO]: userInfoRequest } = useShallowSelector(
@@ -73,7 +73,7 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
         <NavLink to={createDynamicLink(routes.nest.profile.nest.edit.path, { id: 1 })}>Edit</NavLink>
         <NavLink to="/create/single">Single</NavLink>
         <NotificationModal />
-        <Breadcrumbs paths={breadcrumbs} />
+        <Breadcrumbs paths={[]} />
         {isNeedToShowHeaderFooter && (
           <Header
             address={address}

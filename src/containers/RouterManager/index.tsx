@@ -1,5 +1,5 @@
-import { generateRoutes } from 'appConstants/routes';
+import { getAllAvailableRoutes } from 'appConstants/routes';
 import { FC } from 'react';
 
-console.log(generateRoutes());
-export const RouteManager: FC = () => generateRoutes();
+console.log(getAllAvailableRoutes());
+export const RouteManager: FC = () => null;

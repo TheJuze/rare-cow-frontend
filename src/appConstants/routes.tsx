@@ -9,6 +9,7 @@ export type TNestRoute = { [key: string]: TRoutes };
 
 export type TRoutes = {
   path: string;
+  render?: boolean;
   content?: string | ReactElement;
   label?: string | ReactElement;
   nest?: TNestRoute;
@@ -22,6 +23,7 @@ const routesConfig = {
   nest: {
     profile: {
       path: 'profile/:id',
+      render: false,
       nest: {
         aboutMe: {
           path: 'about-me',
@@ -82,7 +84,9 @@ const pathHandler = {
       }
       return `${accumulatedPath}${route[key]}`;
     }
-    parentPaths.length = 0;
+    if (key !== 'render') {
+      parentPaths.length = 0;
+    }
     return route[key];
   },
 };
@@ -124,24 +128,24 @@ const getOutletRoute = (nest: TRoutes[]) => {
   return null;
 };
 
-const flatten = (ary) => ary.reduce((a, b) => [...a, ...(Array.isArray(b) ? flatten(b) : [b])], []);
-
 const recursiveRoutesCollector = (nest: TRoutes[]) => {
+  const resultRoute = [];
   for (let i = 0; i < nest.length; i += 1) {
     const subPath = nest[i];
+    const newPath = subPath.path;
+    resultRoute.push(...(subPath.render !== false ? [{ ...subPath, path: newPath }] : []));
     if (subPath.nest) {
-      return [
-        ...(subPath.content ? [{ ...subPath, path: subPath.path }] : []),
+      resultRoute.push([
         ...Object.entries(subPath.nest)
           .map(([, data]) => data)
           .map((s) => recursiveRoutesCollector([s])),
-      ];
+      ]);
     }
-    return [{ ...subPath, path: subPath.path }];
   }
-  return [];
+  return resultRoute;
 };
 
+const flatten = (ary) => ary.reduce((a, b) => [...a, ...(Array.isArray(b) ? flatten(b) : [b])], []);
 const flattenRoutes = (nest: TRoutes[]) => flatten(recursiveRoutesCollector(nest));
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -155,6 +159,7 @@ const getRoute = () =>
 export const getAllAvailableRoutes = () =>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   flattenRoutes([{ ...routes }] as any).map((routeObject: TRoutes) => routeObject.path);
+
 export const generateOutletRoutes = () => (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   <Routes>{getOutletRoute([{ ...routesConfig }] as any)}</Routes>

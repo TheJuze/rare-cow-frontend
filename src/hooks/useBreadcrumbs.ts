@@ -64,7 +64,7 @@ const recursiveChecker = (nest: TRoutes[], fullPath: string, pathData: TPathData
     if (isInPath) {
       if (subPath.nest && !fullPath.match(new RegExp(`(^|/)${isInPath.regLink}($)`))) {
         return [
-          ...(subPath.content ? [{ ...isInPath, label: subPath.label }] : []),
+          ...(subPath.render !== false ? [{ ...isInPath, label: subPath.label }] : []),
           ...recursiveChecker(
             Object.entries(subPath.nest).map(([, data]) => data),
             fullPath,
