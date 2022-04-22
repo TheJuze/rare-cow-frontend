@@ -57,9 +57,13 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
 
   const handleChangeCurrencyValue = useCallback(
     (newCurrency) => {
-      setActiveCurrency(newCurrency);
+      setActiveCurrency(
+        activeCurrency.includes(newCurrency)
+          ? activeCurrency.filter((currency) => currency !== newCurrency)
+          : [...activeCurrency, newCurrency],
+      );
     },
-    [setActiveCurrency],
+    [activeCurrency, setActiveCurrency],
   );
 
   const handleChangePriceDirection = useCallback(
@@ -147,8 +151,8 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
       id: String(index),
       content: (
         <CheckboxButton
-          isChecked={activeCurrency && activeCurrency.symbol === rate.symbol}
-          onChange={() => handleChangeCurrencyValue(rate)}
+          isChecked={activeCurrency.includes(rate.symbol)}
+          onChange={() => handleChangeCurrencyValue(rate.symbol)}
           content={
             <div className={styles.currency}>
               <img src={rate.image} alt="currency" />
@@ -358,7 +362,7 @@ export const Filters: VFC<FiltersProps> = ({ filters, onClose, isShowFilters }) 
         {(isSingleNft ||
           isMultipleNft ||
           isAuction ||
-          activeCurrency.symbol ||
+          activeCurrency.length ||
           priceDirection ||
           dateDirection ||
           likesDirection ||

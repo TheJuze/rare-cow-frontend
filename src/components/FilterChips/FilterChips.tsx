@@ -1,3 +1,4 @@
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useMemo, VFC } from 'react';
@@ -45,8 +46,18 @@ export const FilterChips: VFC<FilterChipsProps> = ({ className, filters }) => {
     <div className={cn(styles.filterChips, className)}>
       {isSingleNft && <Chips label="Single NFT" onClose={() => setIsSingleNft(false)} />}
       {isMultipleNft && <Chips label="Multiple NFT" onClose={() => setIsMultipleNft(false)} />}
-      {activeCurrency && activeCurrency.symbol && (
-        <Chips label={activeCurrency.symbol} onClose={() => setActiveCurrency({})} />
+      {activeCurrency.length ? (
+        activeCurrency.map((currency) => (
+          <Chips
+            label={currency}
+            onClose={() =>
+              setActiveCurrency(
+                activeCurrency.filter((deletedCurrency) => deletedCurrency !== currency),
+              )}
+          />
+        ))
+      ) : (
+        <></>
       )}
       {dateDirection && (
         <Chips

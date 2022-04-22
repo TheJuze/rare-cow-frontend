@@ -4,6 +4,7 @@
 
 .filterChips {
   @include flex(row, center, flex-start);
+  flex-wrap: wrap;
   gap: 8px;
   .label{
     @include flex(row, center, flex-start);

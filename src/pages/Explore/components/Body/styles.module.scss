@@ -89,6 +89,19 @@
       width: 100%;
     }
   }
+  .total{
+    @include flex(row, center, flex-start);
+    margin-top: space(16);
+    width: 100%;
+    &Text{
+      font-size: 20px;
+      line-height: 32px;
+      margin-right: space(24);
+    }
+  }
+  .chips{
+    width: 100%;
+  }
 }
 @include middle-tablet {
   .body {
@@ -127,6 +140,13 @@
           display: block;
           cursor: pointer;
         }
+      }
+    }
+    .total{
+      flex-direction: column;
+      &Text{
+        margin-right: 0;
+        margin-bottom: space(8);
       }
     }
   }

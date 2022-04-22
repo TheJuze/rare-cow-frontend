@@ -36,14 +36,17 @@ const Body: VFC<IBodyProps> = () => {
         >
           <Text color="metal700">Filters</Text>
         </Button>
-        {isShowChips && <FilterChips filters={filters} />}
       </div>
+      {isShowChips && (
+        <div className={styles.total}>
+          <Text color="metal800" className={styles.totalText}>
+            Total({nfts.length})
+          </Text>
+          <FilterChips className={styles.chips} filters={filters} />
+        </div>
+      )}
       <div className={styles.bodyContent}>
-        <Filters
-          filters={filters}
-          isShowFilters={isShowFilters}
-          onClose={onApply}
-        />
+        <Filters filters={filters} isShowFilters={isShowFilters} onClose={onApply} />
         <div
           className={styles.bodyResults}
           style={{
