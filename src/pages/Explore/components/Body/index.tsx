@@ -36,10 +36,13 @@ const Body: VFC<IBodyProps> = () => {
     setAppliedFilters({ ...filters });
   }, [filters]);
 
-  const handlDeleteChips = useCallback((key, value) => {
-    handleChangeFilter(key, value);
-    setAppliedFilters({ ...appliedFilters, [key]: value });
-  }, [appliedFilters, handleChangeFilter]);
+  const handlDeleteChips = useCallback(
+    (key, value) => {
+      handleChangeFilter(key, value);
+      setAppliedFilters({ ...appliedFilters, [key]: value });
+    },
+    [appliedFilters, handleChangeFilter],
+  );
 
   const minSize = 264;
   return (
@@ -57,7 +60,7 @@ const Body: VFC<IBodyProps> = () => {
       </div>
       {isShowChips && (
         <div className={styles.total}>
-          <Text color="metal800" className={styles.totalText}>
+          <Text color="metal800" align="left" className={styles.totalText}>
             Total({nfts.length})
           </Text>
           <FilterChips
