@@ -8,6 +8,8 @@ import React, { useMemo, VFC } from 'react';
 import cn from 'classnames';
 import arrowDown from 'assets/img/icons/arrowDown.svg';
 import arrowUp from 'assets/img/icons/arrowUp.svg';
+import { Button } from 'components/Button';
+import { Text } from 'components';
 import styles from './styles.module.scss';
 import { Chips } from './components';
 
@@ -15,9 +17,17 @@ export interface FilterChipsProps {
   className?: string;
   filters: any;
   handleChangeFilter: any;
+  handleClearFilters: any;
+  isAppliedFilters: boolean;
 }
 
-export const FilterChips: VFC<FilterChipsProps> = ({ className, filters, handleChangeFilter }) => {
+export const FilterChips: VFC<FilterChipsProps> = ({
+  className,
+  filters,
+  handleChangeFilter,
+  handleClearFilters,
+  isAppliedFilters,
+}) => {
   const { ERC721, ERC1155, isAuction, currency, price, date, likes, minPrice, maxPrice } = filters;
 
   const minMaxLabel = useMemo(() => {
@@ -35,7 +45,7 @@ export const FilterChips: VFC<FilterChipsProps> = ({ className, filters, handleC
       {currency.length ? (
         currency.map((currentCurrency) => (
           <Chips
-            label={currency}
+            label={currentCurrency}
             onClose={() =>
               handleChangeFilter(
                 'currency',
@@ -103,6 +113,13 @@ export const FilterChips: VFC<FilterChipsProps> = ({ className, filters, handleC
       )}
       {isAuction && (
         <Chips label="on Auction" onClose={() => handleChangeFilter('isAuction', false)} />
+      )}
+      {isAppliedFilters && (
+        <Button onClick={handleClearFilters} className={styles.clear}>
+          <Text color="metal50" weight="medium" size="xs">
+            Clear all
+          </Text>
+        </Button>
       )}
     </div>
   );

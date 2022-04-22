@@ -1,8 +1,9 @@
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useCallback, useState, VFC } from 'react';
+import React, { useCallback, useMemo, useState, VFC } from 'react';
 import { ArtCard, Button, FilterChips, Text } from 'components';
 
 import { nfts } from 'components/ArtCard/ArtCard.stories';
@@ -29,6 +30,31 @@ const Body: VFC<IBodyProps> = () => {
     maxPrice: '',
   });
   const { filters, handleChangeFilter, handleClearFilters } = useFilters();
+  const isAppliedFilters = useMemo(
+    () =>
+      Boolean(
+        appliedFilters.ERC721 ||
+          appliedFilters.ERC1155 ||
+          appliedFilters.isAuction ||
+          appliedFilters.currency.length ||
+          appliedFilters.price ||
+          appliedFilters.date ||
+          appliedFilters.likes ||
+          appliedFilters.minPrice ||
+          appliedFilters.maxPrice,
+      ),
+    [
+      appliedFilters.ERC1155,
+      appliedFilters.ERC721,
+      appliedFilters.currency,
+      appliedFilters.date,
+      appliedFilters.isAuction,
+      appliedFilters.likes,
+      appliedFilters.maxPrice,
+      appliedFilters.minPrice,
+      appliedFilters.price,
+    ],
+  );
 
   const onApply = useCallback(() => {
     setIsShowChips(true);
@@ -36,10 +62,28 @@ const Body: VFC<IBodyProps> = () => {
     setAppliedFilters({ ...filters });
   }, [filters]);
 
-  const handlDeleteChips = useCallback((key, value) => {
-    handleChangeFilter(key, value);
-    setAppliedFilters({ ...appliedFilters, [key]: value });
-  }, [appliedFilters, handleChangeFilter]);
+  const handlDeleteChips = useCallback(
+    (key, value) => {
+      handleChangeFilter(key, value);
+      setAppliedFilters({ ...appliedFilters, [key]: value });
+    },
+    [appliedFilters, handleChangeFilter],
+  );
+
+  const handleClearChips = useCallback(() => {
+    handleClearFilters();
+    setAppliedFilters({
+      ERC721: false,
+      ERC1155: false,
+      isAuction: false,
+      currency: [],
+      price: '',
+      date: '',
+      likes: '',
+      minPrice: '',
+      maxPrice: '',
+    });
+  }, [handleClearFilters]);
 
   const minSize = 264;
   return (
@@ -55,15 +99,17 @@ const Body: VFC<IBodyProps> = () => {
           <Text color="metal700">Filters</Text>
         </Button>
       </div>
-      {isShowChips && (
+      {isShowChips && isAppliedFilters && (
         <div className={styles.total}>
-          <Text color="metal800" className={styles.totalText}>
+          <Text color="metal800" align="left" className={styles.totalText}>
             Total({nfts.length})
           </Text>
           <FilterChips
             className={styles.chips}
             filters={appliedFilters}
             handleChangeFilter={handlDeleteChips}
+            handleClearFilters={handleClearChips}
+            isAppliedFilters={isAppliedFilters}
           />
         </div>
       )}
