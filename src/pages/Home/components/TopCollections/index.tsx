@@ -240,7 +240,7 @@ const TopCollections: FC<Props> = ({ className }) => {
       <Text
         variant="heading-2"
         color="accent"
-        weight="semiBold"
+        weight="bold"
         className={styles.title}
         align="center"
       >

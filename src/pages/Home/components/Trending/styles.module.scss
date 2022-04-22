@@ -56,11 +56,11 @@
   }
 }
 .swiper-button-prev {
-  left: 10px;
+  left: -64px;
   background: url('../../../../assets/img/icons/arrowLeft.svg');
 }
 .swiper-button-next {
-  right: 10px;
+  right: -64px;
   background: url('../../../../assets/img/icons/arrowRight.svg');
 }
 .swiper-button-prev,
@@ -76,8 +76,16 @@
     content: '';
   }
 
-  @include default-screen {
+  @include middle-screen {
     top: 100%;
     bottom: 0;
+  }
+}
+@include middle-screen {
+  .swiper-button-prev {
+    left: 10px;
+  }
+  .swiper-button-next {
+    right: 10px;
   }
 }

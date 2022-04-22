@@ -22,6 +22,14 @@
     width: var(--artcard-auction-block-width);
     border-radius: var(--artcard-auction-border-radius);
     @include flex(row, center, center);
+    padding: 1px 0;
+  }
+  &-promo{
+    position: absolute;
+    top: var(--artcard-auction-position);
+    right: var(--artcard-auction-position);
+    @include flex(row, center, center);
+
   }
   &-imageWrapper{
     overflow: hidden;

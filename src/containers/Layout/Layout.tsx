@@ -22,6 +22,7 @@ import { useDispatch } from 'react-redux';
 import { updateUserState } from 'store/user/reducer';
 import clsx from 'clsx';
 // import { Switch } from 'components/Switch';
+import { routes } from 'appConstants';
 import styles from './styles.module.scss';
 
 export interface LayoutProps {
@@ -62,9 +63,11 @@ export const Layout: FC<LayoutProps> = ({ children, route }) => {
 
   const isHomePage = useMemo(() => pathname === '/', [pathname]);
 
+  const isExplorePage = useMemo(() => pathname === routes.explore, [pathname]);
+
   const isNeedToShowHeaderFooter = useMemo(
-    () => isHomePage,
-    [isHomePage],
+    () => isHomePage || isExplorePage,
+    [isHomePage, isExplorePage],
   );
 
   const [islight] = useState(false);

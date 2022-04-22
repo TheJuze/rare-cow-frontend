@@ -64,12 +64,12 @@
 
 @mixin container {
   margin: 0 auto !important;
-  max-width: 1320px;
+  max-width: 1200px;
   width: 100%;
   padding-left: 32px;
   padding-right: 32px;
   @include default-screen{
-    max-width: 1082px;
+    // max-width: 1320px;
   }
   @include middle-tablet {
     padding-left: 20px;

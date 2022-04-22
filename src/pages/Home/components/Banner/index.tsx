@@ -7,6 +7,7 @@ import logoSmall from 'assets/img/logoSmall.png';
 import { Button, Text } from 'components';
 
 import { useWindowState } from 'hooks';
+import { routes } from 'appConstants';
 import styles from './styles.module.scss';
 
 const Banner: FC = () => {
@@ -17,13 +18,13 @@ const Banner: FC = () => {
         {width < 1179 ? (
           <>
             <div className={styles.titleTop}>
-              <Text variant="heading-2">RareCow</Text>{' '}
-              <Text variant="heading-2" color="accent">
+              <Text variant="heading-2" weight="bold">RareCow</Text>{' '}
+              <Text variant="heading-2" color="accent" weight="bold">
                 NFT
               </Text>
             </div>
             <div className={styles.titleBottom}>
-              <Text variant="heading-2" color="accent">
+              <Text variant="heading-2" color="accent" weight="bold">
                 Marketplace
               </Text>
             </div>
@@ -33,7 +34,7 @@ const Banner: FC = () => {
             </Text>
             <img src={logoSmall} alt="logo" className={styles.logo} />
             <div className={styles.bannerBtns}>
-              <Button className={styles.btn} href="/">
+              <Button className={styles.btn} href={routes.explore}>
                 Explore
               </Button>
               <Button variant="outlined" className={styles.btn} href="/">
@@ -45,22 +46,22 @@ const Banner: FC = () => {
           <>
             <div className={styles.bannerBodyLeft}>
               <div className={styles.titleTop}>
-                <Text variant="display-1">RareCow</Text>{' '}
-                <Text variant="display-1" color="accent">
+                <Text variant="display-1" weight="bold">RareCow</Text>{' '}
+                <Text variant="display-1" color="accent" weight="bold">
                   NFT
                 </Text>
               </div>
               <div className={styles.titleBottom}>
-                <Text variant="display-1" color="accent">
+                <Text variant="display-1" color="accent" weight="bold">
                   Marketplace
                 </Text>
               </div>
-              <Text variant="body-1" className={styles.subtitle}>
+              <Text variant="body-1" color="dark0" className={styles.subtitle}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                 incididunt ut labore et dolore magna aliqua.
               </Text>
               <div className={styles.bannerBtns}>
-                <Button className={styles.btn} href="/">
+                <Button className={styles.btn} href={routes.explore}>
                   Explore
                 </Button>
                 <Button variant="outlined" className={styles.btn} href="/">

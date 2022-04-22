@@ -8,7 +8,7 @@ import './styles.scss';
 import { Link } from 'react-router-dom';
 import { Loader } from 'components/Loader';
 import { sliceString } from 'utils';
-import { BidedIcon } from 'assets/icons/icons';
+import { BidedIcon, Promo } from 'assets/icons/icons';
 import { useTimeLeft } from 'hooks';
 import { Avatar } from 'components/Avatar';
 import { LikeButton } from 'components/LikeButton';
@@ -29,6 +29,7 @@ export interface ArtCardProps {
   isLiked: boolean;
   standart: string | 'ERC721' | 'ERC1155';
   inStock: number;
+  isPromo?: boolean;
 }
 
 export const ArtCard: VFC<ArtCardProps> = ({
@@ -47,6 +48,7 @@ export const ArtCard: VFC<ArtCardProps> = ({
   isLiked,
   standart,
   inStock,
+  isPromo = false,
 }) => {
   const wrapRef = useRef<HTMLAnchorElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -87,6 +89,11 @@ export const ArtCard: VFC<ArtCardProps> = ({
           </Text>
         </div>
       )}
+      {isPromo && (
+        <div className="artCard-promo">
+          <Promo />
+        </div>
+      )}
       <Link
         to="/"
         // to={isCollection ? routes.collection.link(artId) : routes.nft.link(artId)}
@@ -103,23 +110,23 @@ export const ArtCard: VFC<ArtCardProps> = ({
       </Link>
       <div className="artCard-info__wrapper">
         <div className="artCard-info__line">
-          <Text color="dark" weight="medium">
+          <Text size="s" color="dark" weight="medium">
             {sliceString(name, 20, 0)}
           </Text>
           {price ? (
             <div className="artCard-info__line-price">
               {isAuction && <BidedIcon />}
               <img src={currency} alt="currency" className="artCard-info__line-price-currency" />
-              <Text color="accent">{price}</Text>
+              <Text variant="body-2" color="accent">{price}</Text>
             </div>
           ) : (
             <></>
           )}
         </div>
         <div className="artCard-info__line">
-          <Text color="light3">Id: {id}</Text>
+          <Text size="s" color="light3">Id: {id}</Text>
           {endAuction && timeLeft ? (
-            <Text color="light3">
+            <Text size="s" color="light3">
               {timeLeft.hours < 10 ? `0${timeLeft.hours}` : timeLeft.hours}:
               {timeLeft.minutes < 10 ? `0${timeLeft.minutes}` : timeLeft.minutes}:
               {timeLeft.seconds < 10 ? `0${timeLeft.seconds}` : timeLeft.seconds}

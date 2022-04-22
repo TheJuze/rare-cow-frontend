@@ -1,7 +1,7 @@
 /* eslint-disable arrow-body-style */
 import React, { VFC } from 'react';
 import banner from 'assets/img/exploreBanner.png';
-import { Header } from './components';
+import { Body, Header } from './components';
 
 import styles from './styles.module.scss';
 
@@ -15,6 +15,7 @@ const Explore: VFC = () => {
   return (
     <div className={styles.explore}>
       <Header category={category} />
+      <Body />
     </div>
   );
 };
