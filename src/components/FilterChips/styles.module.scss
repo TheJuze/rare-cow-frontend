@@ -10,4 +10,7 @@
     @include flex(row, center, flex-start);
     gap: 4px;
   }
+  .clear{
+    height: 32px;
+  }
 }
