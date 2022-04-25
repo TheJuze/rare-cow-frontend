@@ -1,5 +1,6 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable arrow-body-style */
-import React, { useEffect, useState, VFC } from 'react';
+import React, { useCallback, useEffect, useState, VFC } from 'react';
 
 import cn from 'clsx';
 
@@ -18,6 +19,12 @@ const CopyButton: VFC<CopyButtonProps> = ({ className, value }) => {
   const { copyStatus, copy } = useClipboard(value);
   const [statusText, setStatusText] = useState('copied!');
 
+  const handleCopy = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    copy();
+  }, [copy]);
+
   useEffect(() => {
     if (copyStatus !== 0) setStatusText(copyStatus === 1 ? 'copied!' : 'fail to copy');
   }, [copyStatus]);
@@ -26,7 +33,7 @@ const CopyButton: VFC<CopyButtonProps> = ({ className, value }) => {
       disabled={copyStatus !== 0}
       className={cn(styles['clipboard-wrapper__btn'], className)}
       type="button"
-      onClick={copy}
+      onClick={handleCopy}
     >
       <CopyIcon className={styles['clipboard-icon']} />
       <Text

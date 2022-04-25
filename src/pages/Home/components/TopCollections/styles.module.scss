@@ -29,6 +29,7 @@
   grid-column-gap: 24px;
   grid-row-gap: 24px;
   grid-auto-flow: row;
+  padding: 0;
 
   @include default-screen {
     @include flex(row, center, center);
