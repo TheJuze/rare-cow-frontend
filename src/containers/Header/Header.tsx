@@ -12,6 +12,8 @@ import { TDropdownValue } from 'types';
 import { sliceString } from 'utils';
 import { userPopoverPropsMocked } from 'components/UserPopover/UserPopover.mock';
 import { Link } from 'react-router-dom';
+import { Breadcrumbs } from 'components/Breadcrumbs';
+import { useBreadcrumbs } from 'hooks/useBreadcrumbs';
 import s from './styles.module.scss';
 import { headerPropsMocked } from './Header.mock';
 
@@ -78,6 +80,7 @@ export const Header: VFC<HeaderProps> = ({
   const [isSearchActive, setIsSearchActive] = useState(false);
   const headRef = useRef<HTMLButtonElement | null>(null);
   const bodyRef = useRef<HTMLDivElement | null>(null);
+  const { breadcrumbs } = useBreadcrumbs();
   // const handleChangeConnecting = useCallback(() => {
   //   if (!address.length) {
   //     onConnectWallet(WalletProviders.metamask, Chains.bsc);
@@ -102,44 +105,47 @@ export const Header: VFC<HeaderProps> = ({
 
   return (
     <header className={s.header}>
-      <div className={s.headerLeft}>
-        <Link to="/" className={cn(s.logo, { [s.closed]: isSearchActive })}>
-          <img src={logo} alt="logo" />
-        </Link>
-        <SearchInput
-          searchValue=""
-          isSearchResultsLoading={false}
-          presearchedNfts={[]}
-          onSearchValueChange={() => {}}
-          classNameInput={s.headerInput}
-          sendIsSearchActive={handleSearchActive}
-        />
-      </div>
-      <div className={s.headerRight}>
-        <Dropdown
-          name="Explore"
-          value={{ id: '0', content: 'Explore' }}
-          setValue={() => {}}
-          options={dropdownOptions}
-          variant="outlined"
-          classNameHead={s.headerDropdown}
-          dropPosition="absolute"
-        />
-        <div className={s.address}>{sliceString(headerPropsMocked.address)}</div>
-        <div className={s.user}>
-          <button
-            type="button"
-            tabIndex={0}
-            onClick={isUserShown ? () => handleHideUser() : () => handleShowUser()}
-            className={s.arrowBtn}
-            ref={headRef}
-          >
-            <img src={arrow} alt="arrow" className={cn(s.arrow, { [s.arrowUp]: isUserShown })} />
-          </button>
-          <Avatar avatar={profileAvatar} id={0} size="40" />
-          <UserPopover {...userPopoverPropsMocked} visible={isUserShown} bodyRef={bodyRef} />
+      <div className={s.headerContainer}>
+        <div className={s.headerLeft}>
+          <Link to="/" className={cn(s.logo, { [s.closed]: isSearchActive })}>
+            <img src={logo} alt="logo" />
+          </Link>
+          <SearchInput
+            searchValue=""
+            isSearchResultsLoading={false}
+            presearchedNfts={[]}
+            onSearchValueChange={() => {}}
+            classNameInput={s.headerInput}
+            sendIsSearchActive={handleSearchActive}
+          />
+        </div>
+        <div className={s.headerRight}>
+          <Dropdown
+            name="Explore"
+            value={{ id: '0', content: 'Explore' }}
+            setValue={() => {}}
+            options={dropdownOptions}
+            variant="outlined"
+            classNameHead={s.headerDropdown}
+            dropPosition="absolute"
+          />
+          <div className={s.address}>{sliceString(headerPropsMocked.address)}</div>
+          <div className={s.user}>
+            <button
+              type="button"
+              tabIndex={0}
+              onClick={isUserShown ? () => handleHideUser() : () => handleShowUser()}
+              className={s.arrowBtn}
+              ref={headRef}
+            >
+              <img src={arrow} alt="arrow" className={cn(s.arrow, { [s.arrowUp]: isUserShown })} />
+            </button>
+            <Avatar avatar={profileAvatar} id={0} size="40" />
+            <UserPopover {...userPopoverPropsMocked} visible={isUserShown} bodyRef={bodyRef} />
+          </div>
         </div>
       </div>
+      <Breadcrumbs paths={breadcrumbs} />
     </header>
   );
 };

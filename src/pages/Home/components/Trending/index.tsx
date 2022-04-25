@@ -19,7 +19,7 @@ import { ArtCard, Text } from 'components';
 
 import { useWindowState } from 'hooks';
 import { CategoryName } from 'types';
-import { nfts } from 'components/ArtCard/ArtCard.stories';
+import { nfts } from 'components/ArtCard/ArtCard.mock';
 import Anime from 'assets/img/categoriesAnime.png';
 import Photo from 'assets/img/categoriesPhoto.png';
 import Art from 'assets/img/categoriesArt.png';

@@ -3,11 +3,12 @@
 @import 'src/styles/helpers';
 
 .header {
-  width: 100%;
-  padding-top: 24px;
-  @include flex(row, center, space-between);
   @include container;
   max-width: 1440px;
+  &Container {
+    padding: space(24, 0);
+    @include flex(row, center, space-between);
+  }
   &Left,
   &Right {
     @include flex(row, center, flex-start);
@@ -30,7 +31,7 @@
 }
 .user {
   @include flex(row, center, flex-start);
-  gap: 16px;
+  gap: 16px; // dont use with flex
   position: relative;
 }
 .arrow {
@@ -62,7 +63,7 @@
   );
 }
 @include large-tablet {
-  .user{
+  .user {
     gap: 12px;
   }
   .address,

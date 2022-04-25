@@ -13,6 +13,7 @@ import React, {
 import cn from 'clsx';
 
 import './styles.scss';
+import { useNavigateFunction } from 'hooks';
 
 export interface ButtonProps {
   variant?: 'filled' | 'outlined' | 'text';
@@ -84,13 +85,16 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
   onMouseOver = () => {},
   children,
 }) => {
+  const navigateFunction = useNavigateFunction(to || '/');
   const creationData = useMemo(() => {
     if (to) {
       return {
-        tag: 'a',
+        tag: 'button',
         tabIndex: disabled ? -1 : 0,
         props: {
-          to,
+          type: 'button',
+          disabled,
+          onClick: navigateFunction,
         },
       };
     }
@@ -118,7 +122,7 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
         onMouseOver,
       },
     };
-  }, [to, href, type, disabled, btnRef, onClick, onMouseLeave, onMouseOver]);
+  }, [to, href, type, disabled, btnRef, onClick, onMouseLeave, onMouseOver, navigateFunction]);
 
   return createElement(
     creationData.tag,

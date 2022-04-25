@@ -34,7 +34,7 @@ const Banner: FC = () => {
             </Text>
             <img src={logoSmall} alt="logo" className={styles.logo} />
             <div className={styles.bannerBtns}>
-              <Button className={styles.btn} href={routes.explore}>
+              <Button className={styles.btn} to={routes.nest.explore.path}>
                 Explore
               </Button>
               <Button variant="outlined" className={styles.btn} href="/">
@@ -61,7 +61,7 @@ const Banner: FC = () => {
                 incididunt ut labore et dolore magna aliqua.
               </Text>
               <div className={styles.bannerBtns}>
-                <Button className={styles.btn} href={routes.explore}>
+                <Button className={styles.btn} to={routes.nest.explore.path}>
                   Explore
                 </Button>
                 <Button variant="outlined" className={styles.btn} href="/">
