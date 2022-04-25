@@ -12,6 +12,18 @@ type TPathDataObject = {
   label?: string;
 };
 
+const textFormatters = ['upper', 'lower', 'capitalize'] as const;
+
+const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+const upper = (str: string) => str.toUpperCase();
+const lower = (str: string) => str.toLowerCase();
+
+const textFormatterMap = {
+  upper,
+  lower,
+  capitalize,
+};
+
 const findPath = (path: string, search: string | RegExp) => {
   const regexp = new RegExp(search);
   const match = path.match(regexp);
@@ -82,7 +94,24 @@ const modifyLabels = (label: string, values: { [key: string]: string }) => {
   let modifyLabel = label;
   if (values) {
     Object.entries(values).forEach(([field, fieldValue]) => {
-      modifyLabel = modifyLabel.replace(`{{${field}}}`, fieldValue);
+      let newFieldValue = fieldValue;
+      if (modifyLabel.includes('|')) {
+        const splittedByPipes = modifyLabel
+          .slice(modifyLabel.indexOf('{{'), modifyLabel.indexOf('}}'))
+          .split('|')
+          .slice(1)
+          .map((pipe) => pipe.trim());
+        splittedByPipes.forEach((formatter) => {
+          const pipe = new RegExp(`\\|( *)${formatter}`, 'i');
+          console.log(pipe);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          if (textFormatters.includes(formatter as any)) {
+            newFieldValue = textFormatterMap[formatter](newFieldValue);
+          }
+          modifyLabel = modifyLabel.replace(pipe, '');
+        });
+      }
+      modifyLabel = modifyLabel.replace(new RegExp(`{{( *)${field}( *)}}`), newFieldValue);
     });
   }
   return modifyLabel;

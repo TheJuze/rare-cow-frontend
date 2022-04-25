@@ -1,0 +1,71 @@
+@import '/src/styles/helpers.scss';
+
+$min-card-size: 300px;
+$preferred-card-size: 33.333%;
+$max-card-size: 380px;
+
+.wrapper {
+  min-height: 582px;
+  @include flex(column, flex-start, flex-start);
+  .title {
+    margin-left: 11.5px;
+  }
+  .body {
+    width: 100%;
+    margin-top: space(44);
+    @include flex(row, center, center, wrap);
+  }
+}
+
+.createCard {
+  &Container {
+    flex: 0 0 clamp($min-card-size, $preferred-card-size, $max-card-size);
+  }
+  &Wrapper {
+    margin: 11.5px;
+    background: var(--createCard-default-background);
+    border-radius: 20px;
+    padding: 56px 20px 36px;
+    min-height: 204px;
+    @include flex(column, center, flex-start);
+    &Icon {
+      width: 54px;
+      height: 54px;
+      background: var(--createCard-icon-default-background);
+      border-radius: 50%;
+      margin-bottom: 25px;
+      box-shadow: var(--createCard-icon-default-shadow);
+      @include transition;
+      @include flex(row, center, center);
+    }
+    &Title {
+      font-size: 20px;
+      line-height: 32px;
+      color: var(--createCard-font-color);
+      margin: space(24) auto 0 !important;
+    }
+
+    &.withAnimation {
+      @include transition;
+      &:hover {
+        background: var(--createCard-hover-background);
+        .createCardWrapper {
+          &Icon {
+            background: var(--createCard-icon-hover-background);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: var(--createCard-icon-hover-shadow);
+          }
+        }
+      }
+    }
+  }
+}
+
+@include middle-tablet {
+  .wrapper {
+    @include flex(column, center, flex-start);
+    .title {
+      margin-left: 0;
+    }
+  }
+}

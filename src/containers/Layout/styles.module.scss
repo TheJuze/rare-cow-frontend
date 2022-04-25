@@ -1,5 +1,29 @@
-@import '../../assets/styles/index.scss';
+@import '/src/assets/styles/index.scss';
+@import '/src/styles/helpers';
 
 .app {
   background-color: var(--default-background);
+  min-height: 100vh;
+  .content {
+    min-height: 100vh;
+    @include flex(column, center, flex-start);
+    .main {
+      width: 100%;
+      @include container;
+      padding-top: space(65);
+    }
+    .footer {
+      margin-top: auto;
+    }
+  }
+}
+
+@include middle-tablet {
+  .app {
+    .content {
+      .main {
+        padding-top: space(24);
+      }
+    }
+  }
 }
