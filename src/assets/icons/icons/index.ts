@@ -23,3 +23,4 @@ export { LightTheme } from './components/LightTheme';
 export { Promo } from './components/Promo';
 export { FiltersIcon } from './components/Filters';
 export * from './socials';
+export * from './pages';

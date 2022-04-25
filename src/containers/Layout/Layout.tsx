@@ -76,8 +76,8 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
             onToggleChainType={handleToggleChainType}
           />
         )}
-        {children}
-        {isNeedToShowHeaderFooter && <Footer />}
+        <main className={styles.main}>{children}</main>
+        {isNeedToShowHeaderFooter && <Footer className={styles.footer} />}
       </div>
     </div>
   );

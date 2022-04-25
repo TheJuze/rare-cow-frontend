@@ -1,0 +1,21 @@
+@import 'src/styles/variables';
+
+$createCardColorsDefault: (
+  'createCard-default-background': $light-white,
+  'createCard-hover-background': $metal-200,
+  'createCard-icon-default-background': $metal-300,
+  'createCard-icon-hover-background': $light-white,
+  'createCard-icon-default-shadow': none,
+  'createCard-icon-hover-shadow': $shadow-0,
+  'createCard-font-color': $text-dark,
+);
+
+$createCardColorsLight: (
+  'createCard-default-background': $light-white,
+  'createCard-hover-background': $metal-200,
+  'createCard-icon-default-background': $metal-300,
+  'createCard-icon-hover-background': $light-white,
+  'createCard-icon-default-shadow': none,
+  'createCard-icon-hover-shadow': $shadow-0,
+  'createCard-font-color': $text-dark,
+);

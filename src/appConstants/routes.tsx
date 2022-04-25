@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 /* eslint-disable implicit-arrow-linebreak */
-import { Explore, Home } from 'pages';
+import {
+  Create, CreateForm, Explore, Home,
+} from 'pages';
 import React, { ReactElement } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import { TGuards } from 'types';
@@ -41,19 +43,24 @@ const routesConfig = {
     },
     create: {
       path: 'create',
-      content: 'create',
+      content: <Create />,
       label: 'Create',
       guards: ['auth'],
       nest: {
         single: {
           path: 'single',
-          content: 'Create single NFT',
+          content: <CreateForm />,
           label: 'Single NFT',
         },
         multiple: {
           path: 'multiple',
-          content: 'Create multiple NFT',
+          content: <CreateForm />,
           label: 'Multiple NFT',
+        },
+        collection: {
+          path: 'collection/:type',
+          content: <CreateForm />,
+          label: '{{type | capitalize}} collection',
         },
       },
     },
