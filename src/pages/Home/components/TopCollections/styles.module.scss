@@ -1,8 +1,10 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins';
 @import 'src/styles/helpers';
 
 .topCollections {
   @include container;
-  margin-bottom: 161px !important;
+  margin-bottom: 94px !important;
 }
 
 .collections {
