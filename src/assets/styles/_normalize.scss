@@ -70,6 +70,10 @@ div[id='root'] {
 }
 body {
   overflow-x: hidden;
+
+  .app {
+    overflow-x: hidden;
+  }
 }
 //   // toastify styles
 //   .Toastify__toast-container {

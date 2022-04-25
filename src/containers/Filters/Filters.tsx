@@ -94,17 +94,23 @@ export const Filters: VFC<FiltersProps> = ({
     [date, handleChangeFilter],
   );
 
-  const handleMinValueChange = useCallback((newMinValue: string) => {
-    if (!validateOnlyNumbers(newMinValue)) return;
-    setMinValue(newMinValue);
-    handleChangeFilter('minPrice', newMinValue);
-  }, [handleChangeFilter]);
+  const handleMinValueChange = useCallback(
+    (newMinValue: string) => {
+      if (!validateOnlyNumbers(newMinValue)) return;
+      setMinValue(newMinValue);
+      handleChangeFilter('minPrice', newMinValue);
+    },
+    [handleChangeFilter],
+  );
 
-  const handleMaxValueChange = useCallback((newMaxValue: string) => {
-    if (!validateOnlyNumbers(newMaxValue)) return;
-    setMaxValue(newMaxValue);
-    handleChangeFilter('maxPrice', newMaxValue);
-  }, [handleChangeFilter]);
+  const handleMaxValueChange = useCallback(
+    (newMaxValue: string) => {
+      if (!validateOnlyNumbers(newMaxValue)) return;
+      setMaxValue(newMaxValue);
+      handleChangeFilter('maxPrice', newMaxValue);
+    },
+    [handleChangeFilter],
+  );
 
   const handleToggleAuction = useCallback(() => {
     handleChangeFilter('isAuction', !isAuction);
@@ -124,7 +130,7 @@ export const Filters: VFC<FiltersProps> = ({
           content={
             <div className={styles.currency}>
               <img src={rate.image} alt="currency" />
-              <Text variant="body-2">{rate.symbol}</Text>
+              <Text variant="body-2" color="light1">{rate.symbol}</Text>
             </div>
           }
         />
@@ -140,7 +146,7 @@ export const Filters: VFC<FiltersProps> = ({
           onChange={() => handleChangeDateDirection('asc')}
           content={
             <div className={styles.currency}>
-              <Text variant="body-2">Date New</Text>
+              <Text variant="body-2" color="light1">Date New</Text>
               <img src={arrowUp} alt="arrowUp" />
             </div>
           }
@@ -155,7 +161,7 @@ export const Filters: VFC<FiltersProps> = ({
           onChange={() => handleChangeDateDirection('desc')}
           content={
             <div className={styles.currency}>
-              <Text variant="body-2">Date Last</Text>
+              <Text variant="body-2" color="light1">Date Last</Text>
               <img src={arrowDown} alt="arrowDown" />
             </div>
           }
@@ -172,7 +178,7 @@ export const Filters: VFC<FiltersProps> = ({
           onChange={() => handleChangeLikesDirection('asc')}
           content={
             <div className={styles.currency}>
-              <Text variant="body-2">Likes</Text>
+              <Text variant="body-2" color="light1">Likes</Text>
               <img src={arrowUp} alt="arrowUp" />
             </div>
           }
@@ -187,7 +193,7 @@ export const Filters: VFC<FiltersProps> = ({
           onChange={() => handleChangeLikesDirection('desc')}
           content={
             <div className={styles.currency}>
-              <Text variant="body-2">Likes</Text>
+              <Text variant="body-2" color="light1">Likes</Text>
               <img src={arrowDown} alt="arrowDown" />
             </div>
           }
@@ -205,7 +211,7 @@ export const Filters: VFC<FiltersProps> = ({
             onChange={() => handleChangePriceDirection('asc')}
             content={
               <div className={styles.currency}>
-                <Text variant="body-2">Price</Text>
+                <Text variant="body-2" color="light1">Price</Text>
                 <img src={arrowUp} alt="arrowUp" />
               </div>
             }
@@ -215,7 +221,7 @@ export const Filters: VFC<FiltersProps> = ({
             onChange={() => handleChangePriceDirection('desc')}
             content={
               <div className={styles.currency}>
-                <Text variant="body-2">Price</Text>
+                <Text variant="body-2" color="light1">Price</Text>
                 <img src={arrowDown} alt="arrowDown" />
               </div>
             }
@@ -263,7 +269,7 @@ export const Filters: VFC<FiltersProps> = ({
   return (
     <div className={cn(styles.filters, { [styles.active]: isShowFilters })}>
       <div className={styles.filtersHead}>
-        <Text variant="body-2" className={styles.filtersTitle}>
+        <Text variant="body-2" className={styles.filtersTitle} color="light1">
           Filter
         </Text>
         <div className={styles.cross} role="button" tabIndex={0} onClick={() => onClose()}>
@@ -274,13 +280,13 @@ export const Filters: VFC<FiltersProps> = ({
         <CheckboxButton
           isChecked={ERC721}
           onChange={() => handleChangeFilter('ERC721', !ERC721)}
-          content={<Text variant="body-2">721 NFT</Text>}
+          content={<Text variant="body-2" color="metal800">721 NFT</Text>}
           className={styles.standart}
         />
         <CheckboxButton
           isChecked={ERC1155}
           onChange={() => handleChangeFilter('ERC1155', !ERC1155)}
-          content={<Text variant="body-2">1155 NFT</Text>}
+          content={<Text variant="body-2" color="metal800">1155 NFT</Text>}
           className={styles.standart}
         />
       </div>
@@ -347,7 +353,7 @@ export const Filters: VFC<FiltersProps> = ({
         )}
         <div className={styles.auction}>
           <Checkbox value={isAuction} onChange={handleToggleAuction}>
-            <Text size="xs">Auction</Text>
+            <Text size="xs" color="metal800">Auction</Text>
           </Checkbox>
         </div>
       </div>

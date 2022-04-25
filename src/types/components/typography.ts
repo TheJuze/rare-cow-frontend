@@ -8,6 +8,7 @@ enum ColorValues {
   dark0,
   dark1,
   accent,
+  light1,
   light3,
   light4,
   iris100,

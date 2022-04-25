@@ -119,7 +119,7 @@ const Body: VFC<IBodyProps> = () => {
           isShowFilters={isShowFilters}
           handleChangeFilter={handleChangeFilter}
           onClose={onApply}
-          handleClearFilters={handleClearFilters}
+          handleClearFilters={handleClearChips}
         />
         <div
           className={styles.bodyResults}
