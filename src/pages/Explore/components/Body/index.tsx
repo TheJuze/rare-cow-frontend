@@ -6,7 +6,7 @@
 import React, { useCallback, useMemo, useState, VFC } from 'react';
 import { ArtCard, Button, FilterChips, Text } from 'components';
 
-import { nfts } from 'components/ArtCard/ArtCard.stories';
+import { nfts } from 'components/ArtCard/ArtCard.mock';
 import { Link } from 'react-router-dom';
 import { FiltersIcon } from 'assets/icons/icons';
 import { useFilters } from 'hooks';

@@ -18,7 +18,7 @@ import { Swiper, SwiperSlide } from 'swiper/react/swiper-react';
 import { ArtCard, Text } from 'components';
 
 import { useWindowState } from 'hooks';
-import { nfts } from 'components/ArtCard/ArtCard.stories';
+import { nfts } from 'components/ArtCard/ArtCard.mock';
 
 import 'swiper/swiper.less';
 

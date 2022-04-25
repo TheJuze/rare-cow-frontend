@@ -1,14 +1,11 @@
 /* eslint-disable max-len */
-import { UrlObject } from 'url';
+// import { UrlObject } from 'url';
 
-import React, {
-  FC, useCallback, useMemo, useState,
-} from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 
 import { Footer, Header } from 'containers';
-import { MobileNavigation } from 'containers/MobileNavigation';
 import { useWalletConnectorContext } from 'services';
-import { useShallowSelector, useWindowState } from 'hooks';
+import { useShallowSelector } from 'hooks';
 import {
   RequestStatus, State, UserState, WalletProviders,
 } from 'types';
@@ -21,26 +18,27 @@ import { useSmoothTopScroll } from 'hooks/useSmoothTopScroll';
 import { useDispatch } from 'react-redux';
 import { updateUserState } from 'store/user/reducer';
 import clsx from 'clsx';
-// import { Switch } from 'components/Switch';
-import { routes } from 'appConstants';
 import styles from './styles.module.scss';
 
 export interface LayoutProps {
-  route?: UrlObject | string;
+  // route?: UrlObject | string;
 }
 
-export const Layout: FC<LayoutProps> = ({ children, route }) => {
-  console.log(route);
-  const { width } = useWindowState();
+export const Layout: FC<LayoutProps> = ({ children }) => {
   const { pathname } = useLocation();
   const { connect, disconnect } = useWalletConnectorContext();
 
   const dispatch = useDispatch();
 
   const { address, chainType } = useShallowSelector<State, UserState>(userSelector.getUser);
-  const { [actionTypesUser.UPDATE_USER_INFO]: userInfoRequest } = useShallowSelector(uiSelector.getUI);
+  const { [actionTypesUser.UPDATE_USER_INFO]: userInfoRequest } = useShallowSelector(
+    uiSelector.getUI,
+  );
 
-  const isUserInfoLoading = useMemo(() => userInfoRequest === RequestStatus.REQUEST, [userInfoRequest]);
+  const isUserInfoLoading = useMemo(
+    () => userInfoRequest === RequestStatus.REQUEST,
+    [userInfoRequest],
+  );
 
   const handleConnectWallet = useCallback(
     async (provider = WalletProviders.metamask, newChain) => {
@@ -63,26 +61,10 @@ export const Layout: FC<LayoutProps> = ({ children, route }) => {
 
   const isHomePage = useMemo(() => pathname === '/', [pathname]);
 
-  const isExplorePage = useMemo(() => pathname === routes.explore, [pathname]);
-
-  const isNeedToShowHeaderFooter = useMemo(
-    () => isHomePage || isExplorePage,
-    [isHomePage, isExplorePage],
-  );
-
-  const [islight] = useState(false);
-
-  // const handleSwitchTheme = useCallback(() => {
-  //   setIsLight(!islight);
-  // }, [islight]);
-
+  const isNeedToShowHeaderFooter = useMemo(() => true, []);
   return (
-    <div className={clsx(styles.app, { [styles.light]: islight })}>
-      {/* <Switch checked={islight} onChange={handleSwitchTheme} />
-      <i className="icon-checkmark" /> */}
+    <div className={clsx(styles.app)}>
       <div className={styles.content}>
-        {/* <NotificationModal /> */}
-        {+width < 800 && <MobileNavigation />}
         {isNeedToShowHeaderFooter && (
           <Header
             address={address}
@@ -94,7 +76,6 @@ export const Layout: FC<LayoutProps> = ({ children, route }) => {
             onToggleChainType={handleToggleChainType}
           />
         )}
-
         {children}
         {isNeedToShowHeaderFooter && <Footer />}
       </div>
