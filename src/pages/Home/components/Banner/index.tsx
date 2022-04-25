@@ -18,7 +18,9 @@ const Banner: FC = () => {
         {width < 1179 ? (
           <>
             <div className={styles.titleTop}>
-              <Text variant="heading-2" weight="bold">RareCow</Text>{' '}
+              <Text variant="heading-2" weight="bold" color="dark0">
+                RareCow
+              </Text>{' '}
               <Text variant="heading-2" color="accent" weight="bold">
                 NFT
               </Text>
@@ -28,7 +30,7 @@ const Banner: FC = () => {
                 Marketplace
               </Text>
             </div>
-            <Text size="xs" align="center" className={styles.subtitle}>
+            <Text size="xs" align="center" className={styles.subtitle} color="dark0">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
               incididunt ut labore et dolore magna aliqua.
             </Text>
@@ -46,7 +48,9 @@ const Banner: FC = () => {
           <>
             <div className={styles.bannerBodyLeft}>
               <div className={styles.titleTop}>
-                <Text variant="display-1" weight="bold">RareCow</Text>{' '}
+                <Text variant="display-1" weight="bold">
+                  RareCow
+                </Text>{' '}
                 <Text variant="display-1" color="accent" weight="bold">
                   NFT
                 </Text>
