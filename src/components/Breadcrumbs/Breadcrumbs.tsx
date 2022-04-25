@@ -19,9 +19,11 @@ export interface BreadcrumbsProps {
 export const Breadcrumbs: VFC<BreadcrumbsProps> = ({ paths, className }) => (
   <div className="breadcrumbs__wrapper">
     <nav className={cn('breadcrumbs', className)}>
-      <NavLink to="/" className="breadcrumb-label">
-        <HomeIcon className="breadcrumb-home" />
-      </NavLink>
+      {paths.length > 1 && (
+        <NavLink to="/" className="breadcrumb-label">
+          <HomeIcon className="breadcrumb-home" />
+        </NavLink>
+      )}
       <ul className="breadcrumbs-container">
         {paths.length > 1 &&
           paths.map(({ label, path }, index) => (
