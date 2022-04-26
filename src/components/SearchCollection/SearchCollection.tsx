@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line object-curly-newline
 import React, { useCallback, useRef, useState, VFC } from 'react';
 import { Text } from 'components';
@@ -12,14 +13,19 @@ import styles from './styles.module.scss';
 
 export interface SearchCollectionProps {
   className?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   collections: any;
+  activeCollections: any;
+  handleClickCollection: any;
 }
 
-export const SearchCollection: VFC<SearchCollectionProps> = ({ className, collections }) => {
+export const SearchCollection: VFC<SearchCollectionProps> = ({
+  className,
+  collections,
+  activeCollections,
+  handleClickCollection,
+}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const headRef = useRef<any>(null);
   const bodyRef = useRef<HTMLDivElement | null>(null);
   const handleHideCollections = useCallback(() => {
@@ -51,7 +57,11 @@ export const SearchCollection: VFC<SearchCollectionProps> = ({ className, collec
         <div className={styles.collections}>
           {collections.map((collection) => (
             <div className={styles.collectionsItem}>
-              <Checkbox value={false} />
+              <Checkbox
+                id={collection.url}
+                value={activeCollections.includes(collection.name)}
+                onChange={() => handleClickCollection(collection.name)}
+              />
               <Avatar
                 size={36}
                 avatar={collection.avatar}

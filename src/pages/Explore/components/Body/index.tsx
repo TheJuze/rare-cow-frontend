@@ -15,7 +15,7 @@ import styles from './styles.module.scss';
 
 interface IBodyProps {}
 
-export const collections = [
+export const collectionsMock = [
   {
     url: 12,
     description: 'bad collection',
@@ -273,6 +273,7 @@ const Body: VFC<IBodyProps> = () => {
     ERC1155: false,
     isAuction: false,
     currency: [],
+    collections: [],
     price: '',
     date: '',
     likes: '',
@@ -287,6 +288,7 @@ const Body: VFC<IBodyProps> = () => {
           appliedFilters.ERC1155 ||
           appliedFilters.isAuction ||
           appliedFilters.currency.length ||
+          appliedFilters.collections.length ||
           appliedFilters.price ||
           appliedFilters.date ||
           appliedFilters.likes ||
@@ -296,7 +298,8 @@ const Body: VFC<IBodyProps> = () => {
     [
       appliedFilters.ERC1155,
       appliedFilters.ERC721,
-      appliedFilters.currency,
+      appliedFilters.collections.length,
+      appliedFilters.currency.length,
       appliedFilters.date,
       appliedFilters.isAuction,
       appliedFilters.likes,
@@ -304,6 +307,18 @@ const Body: VFC<IBodyProps> = () => {
       appliedFilters.minPrice,
       appliedFilters.price,
     ],
+  );
+
+  const handleCollectionChange = useCallback(
+    (newCollection) => {
+      handleChangeFilter(
+        'collections',
+        filters.collections.includes(newCollection)
+          ? filters.collections.filter((currentCollection) => currentCollection !== newCollection)
+          : [...filters.collections, newCollection],
+      );
+    },
+    [filters.collections, handleChangeFilter],
   );
 
   const onApply = useCallback(() => {
@@ -327,6 +342,7 @@ const Body: VFC<IBodyProps> = () => {
       ERC1155: false,
       isAuction: false,
       currency: [],
+      collections: [],
       price: '',
       date: '',
       likes: '',
@@ -348,7 +364,12 @@ const Body: VFC<IBodyProps> = () => {
         >
           <Text color="metal700">Filters</Text>
         </Button>
-        <SearchCollection collections={collections} className={styles.collections} />
+        <SearchCollection
+          collections={collectionsMock}
+          className={styles.collections}
+          activeCollections={filters.collections}
+          handleClickCollection={handleCollectionChange}
+        />
       </div>
       {isShowChips && isAppliedFilters && (
         <div className={styles.total}>

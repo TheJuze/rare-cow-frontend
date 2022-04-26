@@ -18,7 +18,7 @@ import {
   Text,
 } from 'components';
 import { CloseIcon } from 'assets/icons';
-import { collections } from 'pages/Explore/components/Body';
+import { collectionsMock } from 'pages/Explore/components/Body';
 import styles from './styles.module.scss';
 
 export interface FiltersProps {
@@ -38,7 +38,7 @@ export const Filters: VFC<FiltersProps> = ({
 }) => {
   const [minValue, setMinValue] = useState('');
   const [maxValue, setMaxValue] = useState('');
-  const { ERC721, ERC1155, isAuction, currency, price, date, likes } = filters;
+  const { ERC721, ERC1155, isAuction, currency, collections, price, date, likes } = filters;
 
   const rates = [
     {
@@ -124,6 +124,20 @@ export const Filters: VFC<FiltersProps> = ({
   const handleToggleAuction = useCallback(() => {
     handleChangeFilter('isAuction', !isAuction);
   }, [handleChangeFilter, isAuction]);
+
+  const handleCollectionChange = useCallback(
+    (newCollection) => {
+      // eslint-disable-next-line no-debugger
+      debugger;
+      handleChangeFilter(
+        'collections',
+        collections.includes(newCollection)
+          ? collections.filter((currentCollection) => currentCollection !== newCollection)
+          : [...collections, newCollection],
+      );
+    },
+    [collections, handleChangeFilter],
+  );
 
   const handleSubmit = useCallback(() => {
     onClose();
@@ -291,7 +305,12 @@ export const Filters: VFC<FiltersProps> = ({
   ];
   return (
     <div className={cn(styles.filters, { [styles.active]: isShowFilters })}>
-      <SearchCollection collections={collections} className={styles.collections} />
+      <SearchCollection
+        collections={collectionsMock}
+        className={styles.collections}
+        activeCollections={collections}
+        handleClickCollection={handleCollectionChange}
+      />
       <div className={styles.filtersHead}>
         <Text variant="body-2" className={styles.filtersTitle} color="light1">
           Filter
@@ -369,6 +388,7 @@ export const Filters: VFC<FiltersProps> = ({
           ERC1155 ||
           isAuction ||
           currency.length ||
+          collections.length ||
           price ||
           date ||
           likes ||
