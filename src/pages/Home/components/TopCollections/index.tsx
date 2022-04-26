@@ -213,7 +213,7 @@ const TopCollections: FC<Props> = ({ className }) => {
 
   const withoutDefault = useMemo(
     () => collections.filter((c: any) => !c.collection.isDefault),
-    [collections],
+    [],
   );
 
   // const handleFetchTopCollections = useCallback(() => {
