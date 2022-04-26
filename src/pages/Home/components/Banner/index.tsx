@@ -30,8 +30,8 @@ const Banner: FC = () => {
             </Text>
           </div>
           <Text variant="body-1" color="dark0" className={styles.subtitle}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua.
+            RareCow will provide all the tools to create, sell and showcase your creations. Earn
+            significant income through a fully digital ecosystem.
           </Text>
           {width < 1179 && <img src={logoSmall} alt="logo" className={styles.logo} />}
           <div className={styles.bannerBtns}>
