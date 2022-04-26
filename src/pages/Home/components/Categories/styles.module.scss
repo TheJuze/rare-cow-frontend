@@ -63,8 +63,10 @@
   &Text {
     font-size: 20px;
     position: absolute;
-    top: calc(50% - 30px/2);
-    left: calc(50% - 107px/2);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
   }
 }
 

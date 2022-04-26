@@ -22,5 +22,6 @@ export { CreateNFT } from './components/CreateNFT';
 export { LightTheme } from './components/LightTheme';
 export { Promo } from './components/Promo';
 export { FiltersIcon } from './components/Filters';
+export { ImageIconSVG } from './components/ImageIcon';
 export * from './socials';
 export * from './pages';

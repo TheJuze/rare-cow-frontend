@@ -1,0 +1,21 @@
+@import 'src/styles/variables';
+
+$fileUploaderColorsDefault: (
+  'fileUploader-border': 1px dashed $accent,
+  'fileUploader-hover-border': 1px solid $accent,
+  'fileUploader-background': transparent,
+  'fileUploader-hover-background': rgba($accent, 0.05),
+  
+  'fileUploader-error-border': 1px dashed $red,
+  'fileUploader-error-background': rgba($red, 0.05),
+);
+
+$fileUploaderColorsLight: (
+  'fileUploader-border': 1px dashed $accent,
+  'fileUploader-hover-border': 1px solid $accent,
+  'fileUploader-background': transparent,
+  'fileUploader-hover-background': rgba($accent, 0.05),
+  
+  'fileUploader-error-border': 1px dashed $red,
+  'fileUploader-error-background': rgba($red, 0.05),
+);

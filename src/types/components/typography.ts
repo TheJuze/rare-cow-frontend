@@ -15,6 +15,7 @@ enum ColorValues {
   metal600,
   metal700,
   metal800,
+  base900,
 }
 
 enum SizeValues {
