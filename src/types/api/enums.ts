@@ -5,25 +5,27 @@
  * This file was automatically generated.
  */
 
-export enum APIState {
-  Pending = 'Pending',
-  Failed = 'Failed',
-  Committed = 'Committed',
-  Burned = 'Burned',
-  Expired = 'Expired',
-}
-
-export enum Rarity {
-  COMMON = 'COMMON',
-  UNCOMMON = 'UNCOMMON',
-  RARE = 'RARE',
-  EPIC = 'EPIC',
-  LEGENDARY = 'LEGENDARY',
-}
-
+export enum Display_theme {
+    Padded = "Padded",
+    Contained = "Contained",
+    Covered = "Covered"
+} 
+ 
+export enum Standart {
+    ERC721 = "ERC721",
+    ERC1155 = "ERC1155"
+} 
+ 
 export enum Type {
-  UNKNOWN = 'UNKNOWN',
-  GENERAL = 'GENERAL',
-  UNIT = 'UNIT',
-  EQUIPMENT = 'EQUIPMENT',
-}
+    Featured = "Featured",
+    Premium = "Premium"
+} 
+ 
+export enum State {
+    Pending = "Pending",
+    Failed = "Failed",
+    Committed = "Committed",
+    Burned = "Burned",
+    Expired = "Expired"
+} 
+ 

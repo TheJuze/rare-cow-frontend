@@ -49,17 +49,17 @@ const routesConfig = {
       nest: {
         single: {
           path: 'single',
-          content: <CreateForm />,
+          content: <CreateForm createType="ERC721" />,
           label: 'Single NFT',
         },
         multiple: {
           path: 'multiple',
-          content: <CreateForm />,
+          content: <CreateForm createType="ERC1155" />,
           label: 'Multiple NFT',
         },
         collection: {
           path: 'collection/:type',
-          content: <CreateForm />,
+          content: <CreateForm createType="ERC1155" />,
           label: '{{type | capitalize}} collection',
         },
       },

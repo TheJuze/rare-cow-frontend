@@ -27,6 +27,8 @@
 @import './component-variables/filters';
 @import './component-variables/chips';
 @import './component-variables/create-card';
+@import './component-variables/create-form';
+@import './component-variables/file-uploader';
 
 :root {
 	$colors:(
@@ -59,6 +61,8 @@
 		$filtersColorsDefault,
 		$chipsColorsDefault,
 		$createCardColorsDefault,
+		$createFormColorsDefault,
+		$fileUploaderColorsDefault,
 	);
 
 	@each $key_name in $colors {

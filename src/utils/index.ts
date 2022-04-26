@@ -7,3 +7,4 @@ export * from './numberFormatter';
 export * from './useWindowSize';
 export * from './validateOnlyNumbers';
 export { default as sliceString } from './sliceString';
+export * from './byteSize';
