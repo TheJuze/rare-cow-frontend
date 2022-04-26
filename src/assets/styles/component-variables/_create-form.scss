@@ -1,0 +1,11 @@
+@import 'src/styles/variables';
+
+$createFormColorsDefault: (
+  'createForm-minting-fee-background': $base-50,
+  'createForm-minting-fee-font-color': $text-dark,
+);
+
+$createFormColorsLight: (
+  'createForm-minting-fee-background': $base-50,
+  'createForm-minting-fee-font-color': $text-dark,
+);

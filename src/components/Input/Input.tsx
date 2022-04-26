@@ -45,7 +45,7 @@ export interface InputProps {
 /**
  * @param {string} name - the unique name of the component
  * @param {string} [id] - unique id for the component, if it isn't passed, *name* property will be used
- * @param {('input' | 'textarea')} [component] - type of the component `initial = text`
+ * @param {('input' | 'textarea')} [component] - type of the component `initial = input`
  * * input
  * * textarea
  * @param {('text' | 'number' | 'password')} [type] - set type of the input `initial = text`

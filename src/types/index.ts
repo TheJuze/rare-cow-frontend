@@ -2,7 +2,7 @@
 export * from './connect';
 export * from './store';
 export * from './components';
-export * from './api';
+export * from './pages';
 
 export type TNullable<T> = T | null;
 export type TOptionable<T> = T | undefined;

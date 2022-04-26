@@ -29,6 +29,8 @@
 @import './component-variables/create-card';
 @import './component-variables/search-collection';
 @import './component-variables/scrollbar';
+@import './component-variables/create-form';
+@import './component-variables/file-uploader';
 
 :root {
 	$colors:(
@@ -63,6 +65,8 @@
 		$createCardColorsDefault,
 		$searchCollectionColorsDefault,
 		$scrollbarColorsDefault
+		$createFormColorsDefault,
+		$fileUploaderColorsDefault,
 	);
 
 	@each $key_name in $colors {

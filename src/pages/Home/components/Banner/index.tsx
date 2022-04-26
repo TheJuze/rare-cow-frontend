@@ -38,7 +38,7 @@ const Banner: FC = () => {
             <Button className={styles.btn} to={routes.nest.explore.path}>
               Explore
             </Button>
-            <Button variant="outlined" className={styles.btn} href="/">
+            <Button variant="outlined" className={styles.btn} to={routes.nest.create.path}>
               Create
             </Button>
           </div>

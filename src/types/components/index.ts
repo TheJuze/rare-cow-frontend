@@ -4,3 +4,4 @@ export * from './dropdown';
 export * from './input';
 export * from './tabBar';
 export * from './guards';
+export * from './properties';

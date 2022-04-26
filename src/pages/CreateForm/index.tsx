@@ -1,20 +1,58 @@
-import { fees } from 'appConstants';
-import { Text, FileUploader } from 'components';
-import React, { VFC } from 'react';
-import { useParams } from 'react-router-dom';
+import { fees, standardsMap, TStandards } from 'appConstants';
+import { Text } from 'components';
+import React, { useCallback, useMemo, VFC } from 'react';
+import { ICreateForm } from 'types';
+import { CreateNFTForm } from './Form';
 
 import styles from './styles.module.scss';
 
-const CreatePage: VFC = () => {
-  const { create_type: createType } = useParams();
+interface ICreatePage {
+  createType: TStandards;
+}
+
+const CreatePage: VFC<ICreatePage> = ({ createType }) => {
+  const initialValues = useMemo<ICreateForm>(
+    () => ({
+      name: '',
+      type: createType,
+      description: '',
+      category: null,
+      properties: [],
+      collections: {
+        withCollection: false,
+        collections: null,
+      },
+      media: null,
+      preview: null,
+      quantity: '1',
+      listing: {
+        listNow: false,
+        price: '',
+        listType: 0,
+        timestamp: 0,
+      },
+    }),
+    [createType],
+  );
+
+  const handleSubmit = useCallback((values: ICreateForm) => {
+    console.log(values);
+  }, []);
+
   return (
     <section className={styles.create}>
       <div className={styles.createHeader}>
-        <Text variant="subtitle-1">{createType} NFT</Text>
-        <div className={styles.createHeaderMintingFee}>Minting fee is {fees.minting} %</div>
+        <Text color="dark0" variant="subtitle-1">
+          {standardsMap[createType]} NFT
+        </Text>
+        <div className={styles.createHeaderMintingFee}>
+          <Text variant="body-2" color="accent">
+            Minting fee is {fees.minting} %
+          </Text>
+        </div>
       </div>
       <div>
-        <FileUploader />
+        <CreateNFTForm formValues={initialValues} handleSubmit={handleSubmit} />
       </div>
     </section>
   );
