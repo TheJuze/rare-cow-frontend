@@ -5,6 +5,11 @@
 .titleDropdown {
   position: relative;
   width: fit-content;
+
+  .dropdownContainer {
+    position: relative;
+    @include flex(row, center, center);
+  }
 }
 
 .gradientValue {
@@ -38,33 +43,22 @@
   pointer-events: none;
 }
 
-.dropdownContainer {
-  position: relative;
-}
-
 .selectionWrapper {
   position: absolute;
   z-index: 999;
   top: 44px;
   border-radius: 2px;
-  left: 50%;
+  left: -300%;
   opacity: 0;
   transform: translate(-47.5%, 0);
   pointer-events: none;
-  max-width: 154px;
-
-  @include default-screen {
-    left: -10%;
-  }
-
-  @include small-tablet {
-    left: -100%;
-  }
+  max-width: 200px;
 }
 
 .body {
   padding: 20px 0;
   background-color: var(--titleDropdown-default-background);
+  box-shadow: var(--titleDropdown-default-body-shadow);
   li {
     padding: 8px 16px;
     list-style: none;

@@ -11,7 +11,7 @@
       max-width: 420px;
     }
   }
-  .logo{
+  .logo {
     width: 100%;
     margin-top: -150px;
   }
@@ -25,6 +25,9 @@
     }
   }
   .title {
+    font-weight: 700;
+    font-size: 60px;
+    line-height: 86px;
     &Top {
       @include flex;
       gap: 16px;
@@ -39,12 +42,30 @@
   .bannerBody {
     flex-direction: column;
     align-items: center;
-    .logo{
-    margin-top: -50px;
-    margin-right: 0;
+    &Left {
+      flex-direction: column;
+      align-items: center;
+      max-width: 100%;
+    }
+    .titleTop,
+    .titleBottom {
+      .title {
+        font-weight: 500;
+        font-size: 36px;
+        line-height: 52px;
+      }
+    }
+    .subtitle {
+      font-size: 14px;
+      line-height: 20px;
+    }
+    .logo {
+      margin-top: -50px;
+      margin-right: 0;
     }
     .bannerBtns {
       flex-direction: column;
+      align-items: center;
       .btn {
         min-width: 220px;
       }

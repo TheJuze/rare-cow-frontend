@@ -4,8 +4,10 @@
 
 .breadcrumbs {
   @include flex(row, center, flex-start);
-  &-container{
+  .breadcrumbs-container{
     @include flex(row, center, flex-start);
+    padding: 0;
+    margin-left: space(12);
   }
   .breadcrumb{
     @include flex(row, center, flex-start);

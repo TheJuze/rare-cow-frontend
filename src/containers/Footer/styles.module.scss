@@ -27,8 +27,8 @@
   &Items {
     padding: space(20, 4);
     @include flex(row, center, flex-start);
-    a {
-      margin-right: space(15);
+    .socialsItem + .socialsItem {
+      margin-left: space(11);
     }
   }
 }
@@ -60,8 +60,8 @@
       padding: space(0, 4);
     }
   }
-  .copyright{
-    .privacy{
+  .copyright {
+    .privacy {
       margin-top: space(8);
     }
   }

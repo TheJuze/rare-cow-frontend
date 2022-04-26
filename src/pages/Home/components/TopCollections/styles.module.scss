@@ -1,8 +1,10 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins';
 @import 'src/styles/helpers';
 
 .topCollections {
   @include container;
-  margin-bottom: 161px !important;
+  margin-bottom: 94px !important;
 }
 
 .collections {
@@ -29,6 +31,7 @@
   grid-column-gap: 24px;
   grid-row-gap: 24px;
   grid-auto-flow: row;
+  padding: 0;
 
   @include default-screen {
     @include flex(row, center, center);
