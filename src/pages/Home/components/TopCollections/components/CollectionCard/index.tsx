@@ -31,13 +31,13 @@ const CollectionCard: FC<IProps> = ({
   return (
     <li className={cx(styles.collectionCard, className)}>
       {index && (
-        <Text color="secondary" weight="bold" className={styles.index}>
+        <Text weight="bold" color="dark" className={styles.index}>
           {index}
         </Text>
       )}
       <Avatar avatar={avatar} id={id} isCollection size={56} className={styles.avatar} />
       <div className={styles.info}>
-        <Text variant="body-2" className={styles.name}>
+        <Text variant="body-2" color="dark" className={styles.name}>
           {name}
         </Text>
         {price ? (

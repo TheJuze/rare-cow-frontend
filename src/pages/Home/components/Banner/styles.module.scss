@@ -39,6 +39,9 @@
   }
 }
 @include default-screen {
+  .banner{
+    margin-top: space(48) !important;
+  }
   .bannerBody {
     flex-direction: column;
     align-items: center;
