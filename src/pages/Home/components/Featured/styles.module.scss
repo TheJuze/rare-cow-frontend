@@ -6,7 +6,6 @@
   position: relative;
   width: 100%;
   @include container;
-  padding-top: space(116);
 }
 
 .title {
@@ -72,11 +71,14 @@
   border-radius: 50%;
   background-position: center center;
   background-color: var(--swiper-default-background);
+  transform: translate(0, -50%);
+  white-space: nowrap;
   &::after {
     content: '';
   }
 
   @include middle-screen {
+    transform: none;
     top: 100%;
     bottom: 0;
   }
@@ -87,5 +89,10 @@
   }
   .swiper-button-next {
     right: 10px;
+  }
+}
+@include default-screen {
+  .wrapper {
+    padding-top: space(50);
   }
 }

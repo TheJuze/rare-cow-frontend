@@ -9,15 +9,46 @@ enum ClipStatus {
 
 const useClipboard = (
   text: string,
-  notifyTimeout = 5000,
+  notifyTimeout = 1000,
 ): { copyStatus: ClipStatus; copy: (
   ) => void } => {
   const [copyStatus, setCopyStatus] = useState(ClipStatus.inactive);
+  // eslint-disable-next-line consistent-return
   const copy = useCallback(() => {
-    navigator.clipboard.writeText(text).then(
-      () => setCopyStatus(ClipStatus.copied),
-      () => setCopyStatus(ClipStatus.failed),
-    );
+    if (navigator.clipboard && window.isSecureContext) {
+      // navigator clipboard api method'
+      navigator.clipboard.writeText(text).then(
+        () => setCopyStatus(ClipStatus.copied),
+        () => setCopyStatus(ClipStatus.failed),
+      );
+    } else {
+      // text area method
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      // make the textarea out of viewport
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      return new Promise<void>(() => {
+        // here the magic happens
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        document.execCommand('copy')
+          ? setCopyStatus(ClipStatus.copied)
+          : setCopyStatus(ClipStatus.failed);
+        textArea.remove();
+      });
+    }
+    // if (!navigator?.clipboard) {
+    //   alert(text);
+    // } else {
+    //   navigator.clipboard.writeText(text).then(
+    //     () => setCopyStatus(ClipStatus.copied),
+    //     () => setCopyStatus(ClipStatus.failed),
+    //   );
+    // }
   }, [text]);
 
   useEffect(() => {

@@ -62,6 +62,7 @@ type Props = {
  * * dark0 - $dark-0
  * * dark1 - $dark-1
  * * accent - $accent
+ * * light1 - $light-1
  * * light3 - $light-3
  * * light4 - $light-4
  * * iris100 - $iris-100

@@ -46,6 +46,9 @@
       background-color: var(--userPopover-edit-background-color);
       border-radius: var(--userPopover-edit-border-radius);
       gap: 10px;
+      &:visited {
+        color: var(--userPopover-link-icon-avctive);
+      }
     }
   }
   .theme {
@@ -84,8 +87,8 @@
     margin: spacing(0, 0, 0, 0.75);
   }
 }
-@include middle-mobile{
-  .userPopover{
+@include middle-mobile {
+  .userPopover {
     right: -24px;
     width: 100vw;
   }

@@ -1,4 +1,4 @@
-*{
+* {
   font-family: Inter, sans-serif;
 }
 
@@ -21,6 +21,9 @@ div[id='root'] {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
+    &:focus-visible {
+      outline: none;
+    }
   }
   *,
   ::after,
@@ -67,6 +70,10 @@ div[id='root'] {
 }
 body {
   overflow-x: hidden;
+
+  .app {
+    overflow-x: hidden;
+  }
 }
 //   // toastify styles
 //   .Toastify__toast-container {

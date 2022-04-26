@@ -15,65 +15,35 @@ const Banner: FC = () => {
   return (
     <div className={styles.banner}>
       <div className={styles.bannerBody}>
-        {width < 1179 ? (
-          <>
-            <div className={styles.titleTop}>
-              <Text variant="heading-2" weight="bold">RareCow</Text>{' '}
-              <Text variant="heading-2" color="accent" weight="bold">
-                NFT
-              </Text>
-            </div>
-            <div className={styles.titleBottom}>
-              <Text variant="heading-2" color="accent" weight="bold">
-                Marketplace
-              </Text>
-            </div>
-            <Text size="xs" align="center" className={styles.subtitle}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua.
+        <div className={styles.bannerBodyLeft}>
+          <div className={styles.titleTop}>
+            <Text weight="bold" color="dark0" className={styles.title}>
+              RareCow
+            </Text>{' '}
+            <Text color="accent" weight="bold" className={styles.title}>
+              NFT
             </Text>
-            <img src={logoSmall} alt="logo" className={styles.logo} />
-            <div className={styles.bannerBtns}>
-              <Button className={styles.btn} to={routes.nest.explore.path}>
-                Explore
-              </Button>
-              <Button variant="outlined" className={styles.btn} to={routes.nest.create.path}>
-                Create
-              </Button>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className={styles.bannerBodyLeft}>
-              <div className={styles.titleTop}>
-                <Text variant="display-1" weight="bold">RareCow</Text>{' '}
-                <Text variant="display-1" color="accent" weight="bold">
-                  NFT
-                </Text>
-              </div>
-              <div className={styles.titleBottom}>
-                <Text variant="display-1" color="accent" weight="bold">
-                  Marketplace
-                </Text>
-              </div>
-              <Text variant="body-1" color="dark0" className={styles.subtitle}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua.
-              </Text>
-              <div className={styles.bannerBtns}>
-                <Button className={styles.btn} to={routes.nest.explore.path}>
-                  Explore
-                </Button>
-                <Button variant="outlined" className={styles.btn} to={routes.nest.create.path}>
-                  Create
-                </Button>
-              </div>
-            </div>
-            {/* <div className={styles.bannerBodyRight}> */}
-            <img src={logo} alt="logo" className={styles.logo} />
-            {/* </div> */}
-          </>
-        )}
+          </div>
+          <div className={styles.titleBottom}>
+            <Text color="accent" weight="bold" className={styles.title}>
+              Marketplace
+            </Text>
+          </div>
+          <Text variant="body-1" color="dark0" className={styles.subtitle}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua.
+          </Text>
+          {width < 1179 && <img src={logoSmall} alt="logo" className={styles.logo} />}
+          <div className={styles.bannerBtns}>
+            <Button className={styles.btn} to={routes.nest.explore.path}>
+              Explore
+            </Button>
+            <Button variant="outlined" className={styles.btn} href="/">
+              Create
+            </Button>
+          </div>
+        </div>
+        {width >= 1179 && <img src={logo} alt="logo" className={styles.logo} />}
       </div>
     </div>
   );

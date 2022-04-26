@@ -42,11 +42,11 @@ export const Footer: VFC<FooterProps> = ({ className }) => (
       </div>
       <div className={s.socials}>
         <a href="#id" target="_blank" referrerPolicy="no-referrer">
-          <Text className={s.documents} color="dark">Documents</Text>
+          <Text className={s.documents} color="accent">Documents</Text>
         </a>
         <div className={s.socialsItems}>
           {socials.map((social) => (
-            <a href={social.src} referrerPolicy="no-referrer">
+            <a href={social.src} referrerPolicy="no-referrer" className={s.socialsItem}>
               {social.icon}
             </a>
           ))}
