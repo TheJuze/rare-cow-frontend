@@ -31,12 +31,14 @@ export interface SearchInputProps {
   classNameInput?: string;
   allMatches?: boolean;
   sendIsSearchActive?: (value: boolean) => void;
+  placeholder?: string
 }
 /**
  * @param {string} searchValue - search value
  * @param {boolean} isSearchResultsLoading - set the loader if the results are loading
  * @param {TokenFastSearch[]} presearchedNfts - list of components which will be displayed before user starts to type
  * @param {(e: SyntheticEvent) => void} onSearchValueChange - handler which change the search result value
+ * @param {string} [placeholder = undefined] - input placeholder
  * @param {() => void} [onClearSearch = undefined] - function which will be called when the clear button has been clicked
  * @param {() => void} [onSearch = undefined] - function which well be called when 'ENTER' key has been clicked
  * @param {string} [className = undefined] - class name of the wrapper
@@ -54,6 +56,7 @@ export const SearchInput: VFC<SearchInputProps> = ({
   searchValue,
   sendIsSearchActive = () => {},
   allMatches = false,
+  placeholder,
 }) => {
   const [isSearchActive, setSearchActive] = useState(false);
   const inputRef = useRef<HTMLImageElement | null>(null);
@@ -110,7 +113,7 @@ export const SearchInput: VFC<SearchInputProps> = ({
         onFocus={handleSearchActiveOn}
         onBlur={handleBlur}
         onKeyPress={onEnterPress}
-        placeholder="NFT Name, ID"
+        placeholder={placeholder}
         startAdornment={<SearchIcon className="searchIcon" />}
         endAdornment={
           // eslint-disable-next-line no-nested-ternary

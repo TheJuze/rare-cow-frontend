@@ -27,6 +27,8 @@
 @import './component-variables/filters';
 @import './component-variables/chips';
 @import './component-variables/create-card';
+@import './component-variables/search-collection';
+@import './component-variables/scrollbar';
 
 :root {
 	$colors:(
@@ -59,6 +61,8 @@
 		$filtersColorsDefault,
 		$chipsColorsDefault,
 		$createCardColorsDefault,
+		$searchCollectionColorsDefault,
+		$scrollbarColorsDefault
 	);
 
 	@each $key_name in $colors {

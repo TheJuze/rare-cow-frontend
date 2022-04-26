@@ -117,6 +117,7 @@ export const Header: VFC<HeaderProps> = ({
             onSearchValueChange={() => {}}
             classNameInput={s.headerInput}
             sendIsSearchActive={handleSearchActive}
+            placeholder="NFT Name, ID"
           />
         </div>
         <div className={s.headerRight}>
