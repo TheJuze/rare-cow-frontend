@@ -28,7 +28,18 @@ export const FilterChips: VFC<FilterChipsProps> = ({
   handleClearFilters,
   isAppliedFilters,
 }) => {
-  const { ERC721, ERC1155, isAuction, currency, price, date, likes, minPrice, maxPrice } = filters;
+  const {
+    ERC721,
+    ERC1155,
+    isAuction,
+    currency,
+    collections,
+    price,
+    date,
+    likes,
+    minPrice,
+    maxPrice,
+  } = filters;
 
   const minMaxLabel = useMemo(() => {
     if (!minPrice && !maxPrice) return '';
@@ -38,6 +49,23 @@ export const FilterChips: VFC<FilterChipsProps> = ({
   }, [minPrice, maxPrice, currency]);
   return (
     <div className={cn(styles.filterChips, className)}>
+      {collections.length &&
+        collections.map(
+          (currentCollection) => (
+            <Chips
+              label={`Collection: ${currentCollection}`}
+              onClose={() =>
+                handleChangeFilter(
+                  'collections',
+                  collections.filter(
+                    (deletedCollection) => deletedCollection !== currentCollection,
+                  ),
+                )
+              }
+            />
+          ),
+          [],
+        )}
       {ERC721 && <Chips label="Single NFT" onClose={() => handleChangeFilter('ERC721', false)} />}
       {ERC1155 && (
         <Chips label="Multiple NFT" onClose={() => handleChangeFilter('ERC1155', false)} />

@@ -8,6 +8,7 @@
   position: -webkit-sticky;
   top: 0;
   height: fit-content;
+  z-index: 1;
   .dropdown {
     margin-bottom: space(8);
     .dropdownBody {
@@ -64,6 +65,9 @@
       width: 100%;
     }
   }
+  .collections{
+    margin-bottom: space(24);
+  }
 }
 @include large-mobile {
   .filters {
@@ -85,6 +89,9 @@
         display: block;
         cursor: pointer;
       }
+    }
+    .collections{
+      display: none;
     }
   }
 }

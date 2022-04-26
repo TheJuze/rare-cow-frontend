@@ -1,0 +1,98 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.searchCollection {
+  position: relative;
+  &Button {
+    height: 44px;
+    padding-left: space(16);
+    padding-right: space(16);
+    border: var(--searchCollection-border-width) solid var(--searchCollection-default-border-color);
+    background-color: var(--searchCollection-default-background-color);
+    border-radius: var(--searchCollection-border-radius);
+    @include flex(row, center, space-between);
+    cursor: pointer;
+    &:hover {
+      border-color: var(--searchCollection-hover-border-color);
+    }
+    &.active {
+      background: var(--searchCollection-active-background-color);
+      background: var(--searchCollection-active-border-color);
+    }
+    .arrow {
+      transform: rotate(-90deg);
+      @include transition;
+      &.reverted {
+        transform: rotate(90deg);
+      }
+    }
+  }
+  .body {
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    left: 110%;
+    background-color: var(--searchCollection-body-background-color);
+    border-radius: var(--searchCollection-body-border-radius);
+    padding: spacing(2.5, 3);
+    z-index: -1;
+    max-width: 274px;
+    max-height: 446px;
+    transform: translateX(-274px);
+    @include transition;
+    &.open {
+      opacity: 1;
+      transform: translateX(0);
+      z-index: 1;
+    }
+    .search {
+      max-width: 229px;
+    }
+    .collections {
+      margin-top: space(12);
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 346px;
+      padding: space(0, 4);
+      &Item {
+        height: 57px;
+        border-bottom:  var(--searchCollection-border-width) solid var(--searchCollection-item-border-color);
+        @include flex(row, center, flex-start);
+        .avatar {
+          margin-right: space(12);
+        }
+        .name {
+          @include ellipsis;
+        }
+      }
+    }
+  }
+  .collections::-webkit-scrollbar {
+    width: 8px;
+  }
+  .collections::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-default-background-color);
+    border: var(--scrollbar-border-width) solid var(--scrollbar-default-border-color);
+    box-sizing: border-box;
+    border-radius: var(--scrollbar-border-radius);
+    width: 8px;
+  }
+  .collections::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+@include large-mobile {
+  .searchCollection {
+    position: static;
+    .body {
+      top: 48px;
+      left: 0;
+      max-width: 100%;
+      width: 100%;
+      .search{
+        max-width: 100%;
+      }
+    }
+  }
+}
