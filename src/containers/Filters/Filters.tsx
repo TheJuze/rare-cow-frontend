@@ -176,7 +176,7 @@ export const Filters: VFC<FiltersProps> = ({
           content={
             <div className={styles.currency}>
               <Text variant="body-2" color="light1">
-                Date New
+                New
               </Text>
               <img src={arrowUp} alt="arrowUp" />
             </div>
@@ -193,7 +193,7 @@ export const Filters: VFC<FiltersProps> = ({
           content={
             <div className={styles.currency}>
               <Text variant="body-2" color="light1">
-                Date Last
+                Last
               </Text>
               <img src={arrowDown} alt="arrowDown" />
             </div>
