@@ -9,8 +9,8 @@ import { Tag } from "./Tag";
 
 
 export interface Category {
-    id?: number;
+    id: number;
     image: string;
-    name?: string;
+    name: string;
     tags: Tag[];
 }
