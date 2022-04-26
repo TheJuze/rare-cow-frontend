@@ -71,12 +71,14 @@
   border-radius: 50%;
   background-position: center center;
   background-color: var(--swiper-default-background);
-  top: calc(50% - 58px / 2);
+  transform: translate(0, -50%);
+  white-space: nowrap;
   &::after {
     content: '';
   }
 
   @include middle-screen {
+    transform: none;
     top: 100%;
     bottom: 0;
   }
