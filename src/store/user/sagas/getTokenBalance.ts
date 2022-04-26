@@ -9,6 +9,7 @@ import { contractsConfig, ContractsNames } from 'config';
 import { getTokenAmountDisplay } from 'utils';
 
 import { Chains } from 'types';
+import { isMainnet } from 'config/constants';
 import { updateUserState } from '../reducer';
 
 import { getTokenBalance } from '../actions';
@@ -16,13 +17,11 @@ import actionTypes from '../actionTypes';
 
 export function* getTokenBalanceSaga({
   type,
-  payload: { web3Provider, chainType },
+  payload: { web3Provider },
 }: ReturnType<typeof getTokenBalance>) {
   yield put(apiActions.request(type));
   const { abi: tokenAbi, address: tokenAddress } =
-    contractsConfig.contracts[ContractsNames.token][
-      chainType === 'mainnet' ? 'mainnet' : 'testnet'
-    ];
+    contractsConfig.contracts[ContractsNames.token][isMainnet ? 'mainnet' : 'testnet'];
 
   const myAddress = yield select(userSelector.getProp('address'));
   try {

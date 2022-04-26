@@ -15,7 +15,7 @@ import { CloseIcon, SearchIcon } from 'assets/icons/icons';
 import { Loader } from 'components/Loader';
 import { Button } from 'components/Button';
 import { Input } from 'components/Input';
-import { TokenFastSearch } from 'types';
+import { TokenFastSearch } from 'types/api/TokenFastSearch';
 import OutsideClickHandler from 'react-outside-click-handler';
 import styles from './styles.module.scss';
 import { SearchItem } from './components/SearchItem';

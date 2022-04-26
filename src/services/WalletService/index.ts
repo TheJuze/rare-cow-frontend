@@ -5,7 +5,7 @@ import { IConnect, IError } from '@amfi/connect-wallet/dist/interface';
 
 import { connectWallet as connectWalletConfig } from 'config';
 
-import { Chains, IChainType, WalletProviders } from 'types';
+import { Chains, WalletProviders } from 'types';
 
 export class WalletService {
   public connectWallet: ConnectWallet;
@@ -17,9 +17,8 @@ export class WalletService {
   public async initWalletConnect(
     providerName: WalletProviders,
     chainName: Chains,
-    type: IChainType,
   ): Promise<boolean | {}> {
-    const { provider, network, settings } = connectWalletConfig(chainName, type);
+    const { provider, network, settings } = connectWalletConfig(chainName);
 
     try {
       const connecting = await this.connectWallet.connect(

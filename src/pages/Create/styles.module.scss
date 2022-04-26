@@ -7,6 +7,8 @@ $max-card-size: 380px;
 .wrapper {
   min-height: 582px;
   @include flex(column, flex-start, flex-start);
+  @include container;
+  padding-top: space(65);
   .title {
     margin-left: 11.5px;
   }
