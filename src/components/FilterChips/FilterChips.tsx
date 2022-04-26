@@ -49,7 +49,7 @@ export const FilterChips: VFC<FilterChipsProps> = ({
   }, [minPrice, maxPrice, currency]);
   return (
     <div className={cn(styles.filterChips, className)}>
-      {collections.length &&
+      {collections.length ? (
         collections.map(
           (currentCollection) => (
             <Chips
@@ -65,7 +65,10 @@ export const FilterChips: VFC<FilterChipsProps> = ({
             />
           ),
           [],
-        )}
+        )
+      ) : (
+        <></>
+      )}
       {ERC721 && <Chips label="Single NFT" onClose={() => handleChangeFilter('ERC721', false)} />}
       {ERC1155 && (
         <Chips label="Multiple NFT" onClose={() => handleChangeFilter('ERC1155', false)} />

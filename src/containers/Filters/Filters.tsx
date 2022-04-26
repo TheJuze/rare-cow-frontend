@@ -141,6 +141,12 @@ export const Filters: VFC<FiltersProps> = ({
     onClose();
   }, [onClose]);
 
+  const handleClear = useCallback(() => {
+    handleClearFilters();
+    setMaxValue('');
+    setMinValue('');
+  }, [handleClearFilters]);
+
   const currencyOptions = [
     ...rates.map((rate, index) => ({
       id: String(index),
@@ -396,7 +402,7 @@ export const Filters: VFC<FiltersProps> = ({
             <Button className={styles.btn} onClick={handleSubmit}>
               Apply
             </Button>
-            <Button variant="outlined" className={styles.btn} onClick={handleClearFilters}>
+            <Button variant="outlined" className={styles.btn} onClick={handleClear}>
               Clear
             </Button>
           </div>
