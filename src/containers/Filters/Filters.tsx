@@ -127,8 +127,6 @@ export const Filters: VFC<FiltersProps> = ({
 
   const handleCollectionChange = useCallback(
     (newCollection) => {
-      // eslint-disable-next-line no-debugger
-      debugger;
       handleChangeFilter(
         'collections',
         collections.includes(newCollection)
