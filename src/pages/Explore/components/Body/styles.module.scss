@@ -11,6 +11,9 @@
       background-color: var(--filters-button-background-color);
       display: none;
     }
+    .collections{
+      display: none;
+    }
   }
   &Content {
     display: grid;
@@ -115,8 +118,14 @@
   .body {
     .bodyTop {
       margin-top: space(24);
+      position: relative;
       .filters {
         display: flex;
+        margin-right: space(16);
+      }
+      .collections{
+        display: block;
+        width: 100%;
       }
     }
     &Content {

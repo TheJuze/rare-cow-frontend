@@ -1,0 +1,15 @@
+@import 'src/styles/variables';
+
+$searchCollectionColorsDefault:(
+  'searchCollection-default-background-color': $light-8,
+  'searchCollection-default-border-color': $light-5,
+  'searchCollection-border-width': 1px,
+  'searchCollection-border-radius': 8px,
+  'searchCollection-hover-border-color': $accent,
+  'searchCollection-active-background-color': $light-100,
+  'searchCollection-active-border-color': $light-100,
+  'searchCollection-body-background-color': $light-white,
+  'searchCollection-body-border-radius': 12px,
+  'searchCollection-item-border-color': $light-middle,
+
+)

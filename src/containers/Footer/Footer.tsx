@@ -6,6 +6,7 @@ import { Text } from 'components';
 
 import { NavLink } from 'react-router-dom';
 import { socials } from 'appConstants';
+import logo from 'assets/icons/logo.svg';
 import s from './styles.module.scss';
 
 export interface FooterProps {
@@ -28,21 +29,17 @@ export const Footer: VFC<FooterProps> = ({ className }) => (
     <section className={s.container}>
       <hr className={s.line} />
       <div className={s.generalInfo}>
-        <Text color="dark" tag="span" size="m" weight="bold">
-          Rare
-          <Text tag="span" size="m" weight="bold" color="accent">
-            Cow
-          </Text>
-        </Text>
+        <img src={logo} alt="logo" />
         <Text className={s.info} size="xs" color="dark">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-          been the industry&apos;s standard dummy text ever since the 1500s, when an unknown printer
-          took a galley of type and scrambled it to make a type specimen book.
+          We are happy to work with people who are inspired, curious and motivated to build the
+          future with us! Join RareCow, we will help your creation stand out!
         </Text>
       </div>
       <div className={s.socials}>
         <a href="#id" target="_blank" referrerPolicy="no-referrer">
-          <Text className={s.documents} color="accent">Documents</Text>
+          <Text className={s.documents} color="accent">
+            Documents
+          </Text>
         </a>
         <div className={s.socialsItems}>
           {socials.map((social) => (

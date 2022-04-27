@@ -120,7 +120,7 @@ export const ArtCard: VFC<ArtCardProps> = ({
               <Text variant="body-2" color="accent">{price}</Text>
             </div>
           ) : (
-            <></>
+            null
           )}
         </div>
         <div className="artCard-info__line">
@@ -132,7 +132,7 @@ export const ArtCard: VFC<ArtCardProps> = ({
               {timeLeft.seconds < 10 ? `0${timeLeft.seconds}` : timeLeft.seconds}
             </Text>
           ) : (
-            <></>
+            null
           )}
         </div>
         <div className="artCard-info__line">

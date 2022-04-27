@@ -21,9 +21,6 @@ div[id='root'] {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
-    &:focus-visible {
-      outline: none;
-    }
   }
   *,
   ::after,
@@ -67,6 +64,10 @@ div[id='root'] {
 }
 * {
   font-family: Inter, sans-serif;
+
+  &:focus-visible {
+    outline: none;
+  }
 }
 body {
   overflow-x: hidden;

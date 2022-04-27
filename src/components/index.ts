@@ -18,3 +18,4 @@ export * from './Checkbox';
 export * from './CheckboxButton';
 export * from './FilterChips';
 export * from './FileUploader';
+export * from './SearchCollection';
