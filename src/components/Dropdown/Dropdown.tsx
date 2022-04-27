@@ -21,9 +21,10 @@ import { ArrowHeadDownIcon, SearchIcon, TriangleDownIcon } from 'assets/icons/ic
 import { Loader } from 'components/Loader';
 
 export interface DropdownProps {
-  value: TDropdownValue;
+  value?: TDropdownValue;
   setValue: (str: TDropdownValue) => void;
   options: TDropdownValue[];
+  emptyOptionsMsg?: string | ReactElement;
   name: string;
   variant?: 'outlined' | 'transparent';
   dropPosition?: 'relative' | 'absolute';
@@ -84,6 +85,7 @@ export const Dropdown: VFC<DropdownProps> = ({
   value,
   setValue,
   options,
+  emptyOptionsMsg = 'There is no options',
   variant = 'transparent',
   dropPosition = 'relative',
   dropVariant = 'body',
@@ -153,7 +155,7 @@ export const Dropdown: VFC<DropdownProps> = ({
   return (
     <OutsideClickHandler onOutsideClick={isOutsideClickClose ? (e) => onOutsideClick(e) : () => {}}>
       {label && (
-        <Text size="m" weight="medium" className={cn('dropdown-label')}>
+        <Text variant="body-2" color="metal700" weight="medium" className={cn('dropdown-label')}>
           {label}
         </Text>
       )}
@@ -177,7 +179,9 @@ export const Dropdown: VFC<DropdownProps> = ({
           onClick={onHeadClick}
         >
           <div className={cn('dropdown-head-selection', { placeholder: placeholder && !value })}>
-            {value ? value.content : placeholder}
+            <Text variant="body-2" color="metal700">
+              {value ? value.content : placeholder}
+            </Text>
           </div>
           <span className={cn('dropdown-head-icon', { 'dropdown-head-icon-active': visible })}>
             {iconMap[variant]}
@@ -188,7 +192,11 @@ export const Dropdown: VFC<DropdownProps> = ({
             {error}
           </Text>
         )}
-        <div className={cn('dropdown-content-body', classNameBody, variant, dropPosition, { underlined })}>
+        <div
+          className={cn('dropdown-content-body', classNameBody, variant, dropPosition, {
+            underlined,
+          })}
+        >
           {withSearch && (
             <Input
               value={searchValue}
@@ -202,20 +210,22 @@ export const Dropdown: VFC<DropdownProps> = ({
               className="dropdown-search-input"
             />
           )}
-          {options.map((option) => (
-            <div
-              onKeyDown={() => {}}
-              tabIndex={0}
-              role="button"
-              className={cn('dropdown-content-body-option', {
-                selected: option.id === value.id,
-              })}
-              onClick={() => handleClick(option)}
-              key={`dropdown_option_${option.id}`}
-            >
-              {option.content}
-            </div>
-          ))}
+          {options.length
+            ? options.map((option) => (
+              <div
+                onKeyDown={() => {}}
+                tabIndex={0}
+                role="button"
+                className={cn('dropdown-content-body-option', {
+                  selected: option.id === value.id,
+                })}
+                onClick={() => handleClick(option)}
+                key={`dropdown_option_${option.id}`}
+              >
+                {option.content}
+              </div>
+            ))
+            : emptyOptionsMsg}
         </div>
       </div>
     </OutsideClickHandler>

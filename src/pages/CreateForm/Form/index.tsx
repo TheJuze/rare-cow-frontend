@@ -3,12 +3,15 @@ import {
   Dropdown, FileUploader, Input, Text,
 } from 'components';
 import { Field, Form, Formik } from 'formik';
-import { useShallowSelector } from 'hooks';
+import { useSearch, useShallowSelector } from 'hooks';
 import React, { VFC } from 'react';
-import { EInputStatus, ICreateForm, TInputCaption } from 'types';
+import {
+  EInputStatus, ICreateForm, TInputCaption, TSingleProp,
+} from 'types';
 import nftSelector from 'store/nfts/selectors';
 
 import styles from './styles.module.scss';
+import { Properties } from './components';
 
 interface ICreateNFTForm {
   handleSubmit: (values: ICreateForm) => void;
@@ -26,6 +29,7 @@ const captionGenerator = (touched: boolean, errors: string | undefined) => {
 
 export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues }) => {
   const categories = useShallowSelector(nftSelector.getProp('categories'));
+  const searchValues = useSearch();
   return (
     <Formik initialValues={{ ...formValues }} onSubmit={handleSubmit} enableReinitialize>
       {({
@@ -82,11 +86,35 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues })
             <Field id="category" name="category" required>
               {({ form: { isSubmitting } }) => (
                 <Dropdown
-                  value={{ id: values.category?.id.toString() || '0', content: values.category?.name || 'Category' }}
+                  value={
+                    values.category
+                      ? { id: values.category.id.toString(), content: values.category.name }
+                      : null
+                  }
+                  placeholder="Choose category"
+                  label="Category"
                   disabled={isSubmitting}
-                  options={categories?.map((c) => ({ id: c?.id.toString(), content: c?.name }))}
+                  options={
+                    categories.length
+                      ? categories.map((c) => ({ id: c.id.toString(), content: c.name }))
+                      : []
+                  }
                   name="nftCategory"
                   setValue={(category) => setFieldValue('category', category)}
+                  withSearch
+                  dropPosition="absolute"
+                  variant="outlined"
+                  {...searchValues}
+                />
+              )}
+            </Field>
+            <Field id="properties" name="properties">
+              {() => (
+                <Properties
+                  initProps={values.properties}
+                  setProps={(value: TSingleProp[]) => setFieldValue('properties', value)}
+                  onBlur={handleBlur('properties')}
+                  initErrors={touched.properties && errors.properties}
                 />
               )}
             </Field>

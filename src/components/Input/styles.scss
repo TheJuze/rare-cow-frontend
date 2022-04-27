@@ -178,6 +178,9 @@
             width: 80%;
             font-size: 12px;
             line-height: 16px;
+            &.withoutEndAdornment{
+              width: 100%;
+            }
             &-startAdornment {
               margin-right: space(4);
             }
@@ -199,6 +202,9 @@
           line-height: 24px;
           .input {
             width: 85%;
+            &.withoutEndAdornment{
+              width: 100%;
+            }
           }
           &.textarea-body {
             padding: space(10, 10, 10, 16);

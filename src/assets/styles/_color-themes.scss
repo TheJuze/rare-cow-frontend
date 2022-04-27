@@ -29,6 +29,7 @@
 @import './component-variables/create-card';
 @import './component-variables/create-form';
 @import './component-variables/file-uploader';
+@import './component-variables/properties';
 
 :root {
 	$colors:(
@@ -63,6 +64,7 @@
 		$createCardColorsDefault,
 		$createFormColorsDefault,
 		$fileUploaderColorsDefault,
+		$propertiesColorsDefault,
 	);
 
 	@each $key_name in $colors {

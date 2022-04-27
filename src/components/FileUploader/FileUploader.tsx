@@ -65,7 +65,7 @@ export const FileUploader: VFC<FileUploaderProps> = ({
           <ImageIconSVG />
         </div>
         <div className={styles.title}>{title(isDragActive)}</div>
-        <Text weight="normal" size="xs" color="base900" className={styles.information}>
+        <Text align="center" weight="normal" size="xs" color="base900" className={styles.information}>
           ({availableFiles.map((e) => e.toUpperCase()).join(', ')}. Max {maxSize.size}{' '}
           {maxSize.unit}
           .)

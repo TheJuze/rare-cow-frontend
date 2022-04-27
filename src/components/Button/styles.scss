@@ -650,6 +650,48 @@
     }
   }
 
+  &.text {
+    &-common {
+      background: transparent;
+      border: 0px solid transparent;
+
+      & > svg > path {
+        fill: transparent;
+        stroke: var(--icon-button-outlined-default-icon-color);
+        @include transition;
+      }
+
+      &:hover {
+        background: var(--icon-button-outlined-hover-background);
+        border: $button-border-width solid var(--icon-button-outlined-hover-border);
+
+        & > svg > path {
+          stroke: var(--icon-button-outlined-hover-icon-color);
+        }
+      }
+
+      &:active {
+        background: var(--icon-button-outlined-active-background);
+        border: $button-border-width solid var(--icon-button-outlined-active-border);
+
+        & > svg > path {
+          stroke: var(--icon-button-outlined-active-icon-color);
+        }
+      }
+
+      &:disabled {
+        background: var(--icon-button-outlined-default-background);
+        border: $button-border-width solid var(--icon-button-outlined-default-border);
+        opacity: 0.45;
+        pointer-events: none;
+
+        & > svg > path {
+          stroke: var(--icon-button-outlined-secondary-disabled-icon-color);
+        }
+      }
+    }
+  }
+
   &.filled {
     &-common {
       background: var(--icon-button-filled-default-background);

@@ -23,5 +23,6 @@ export { LightTheme } from './components/LightTheme';
 export { Promo } from './components/Promo';
 export { FiltersIcon } from './components/Filters';
 export { ImageIconSVG } from './components/ImageIcon';
+export { TrashIcon } from './components/Trash';
 export * from './socials';
 export * from './pages';

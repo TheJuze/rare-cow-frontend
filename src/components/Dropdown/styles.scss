@@ -3,6 +3,9 @@
 @import 'src/styles/helpers';
 
 .dropdown {
+  &-label{
+    margin-bottom: space(8) !important;
+  }
   &-content {
     position: relative;
     &.active {

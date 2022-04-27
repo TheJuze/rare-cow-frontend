@@ -145,7 +145,7 @@ export const Input: VFC<InputProps> = ({
             placeholder,
             autoComplete,
             disabled,
-            className: cn(component, { bigRightPadding: isCorrect }),
+            className: cn(component, { bigRightPadding: isCorrect, withoutEndAdornment: !startAdornment || !endAdornment }),
             ref: inputRef,
             onChange,
             onFocus: onFocusHandler,
