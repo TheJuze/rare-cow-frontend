@@ -11,6 +11,7 @@
   min-width: var(--userPopover-default-min-width);
   top: 44px;
   right: 0;
+  z-index: 1;
   @include transition;
   .balance {
     @include flex(row, center, flex-start);

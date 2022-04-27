@@ -66,7 +66,7 @@ const Categories: FC<Props> = ({ className }) => {
             );
           })
         ) : (
-          <></>
+          null
         )}
       </div>
     </div>

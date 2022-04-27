@@ -1,7 +1,8 @@
+/* eslint-disable max-len */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable object-curly-newline */
-import React, { useCallback, useState, VFC } from 'react';
+import React, { useCallback, useMemo, useState, VFC } from 'react';
 import cn from 'classnames';
 import arrowDown from 'assets/img/icons/arrowDown.svg';
 import arrowUp from 'assets/img/icons/arrowUp.svg';
@@ -19,6 +20,7 @@ import {
 } from 'components';
 import { CloseIcon } from 'assets/icons';
 import { collectionsMock } from 'pages/Explore/components/Body';
+import BigNumber from 'bignumber.js';
 import styles from './styles.module.scss';
 
 export interface FiltersProps {
@@ -39,6 +41,10 @@ export const Filters: VFC<FiltersProps> = ({
   const [minValue, setMinValue] = useState('');
   const [maxValue, setMaxValue] = useState('');
   const { ERC721, ERC1155, isAuction, currency, collections, price, date, likes } = filters;
+  const isApplyDisabled = useMemo(
+    () => minValue && maxValue && !new BigNumber(minValue).isLessThanOrEqualTo(new BigNumber(maxValue)),
+    [maxValue, minValue],
+  );
 
   const rates = [
     {
@@ -141,6 +147,12 @@ export const Filters: VFC<FiltersProps> = ({
     onClose();
   }, [onClose]);
 
+  const handleClear = useCallback(() => {
+    handleClearFilters();
+    setMaxValue('');
+    setMinValue('');
+  }, [handleClearFilters]);
+
   const currencyOptions = [
     ...rates.map((rate, index) => ({
       id: String(index),
@@ -170,7 +182,7 @@ export const Filters: VFC<FiltersProps> = ({
           content={
             <div className={styles.currency}>
               <Text variant="body-2" color="light1">
-                Date New
+                New
               </Text>
               <img src={arrowUp} alt="arrowUp" />
             </div>
@@ -187,7 +199,7 @@ export const Filters: VFC<FiltersProps> = ({
           content={
             <div className={styles.currency}>
               <Text variant="body-2" color="light1">
-                Date Last
+                Last
               </Text>
               <img src={arrowDown} alt="arrowDown" />
             </div>
@@ -393,10 +405,10 @@ export const Filters: VFC<FiltersProps> = ({
           minValue ||
           maxValue) && (
           <div className={styles.filtersButtons}>
-            <Button className={styles.btn} onClick={handleSubmit}>
+            <Button className={styles.btn} onClick={handleSubmit} disabled={isApplyDisabled}>
               Apply
             </Button>
-            <Button variant="outlined" className={styles.btn} onClick={handleClearFilters}>
+            <Button variant="outlined" className={styles.btn} onClick={handleClear}>
               Clear
             </Button>
           </div>
