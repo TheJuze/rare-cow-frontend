@@ -67,7 +67,7 @@ export const FilterChips: VFC<FilterChipsProps> = ({
           [],
         )
       ) : (
-        <></>
+        null
       )}
       {ERC721 && <Chips label="Single NFT" onClose={() => handleChangeFilter('ERC721', false)} />}
       {ERC1155 && (
@@ -86,7 +86,7 @@ export const FilterChips: VFC<FilterChipsProps> = ({
           />
         ))
       ) : (
-        <></>
+        null
       )}
       {date && (
         <Chips

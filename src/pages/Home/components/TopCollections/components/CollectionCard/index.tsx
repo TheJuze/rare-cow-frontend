@@ -50,7 +50,7 @@ const CollectionCard: FC<IProps> = ({
             </Text>
           </Text>
         ) : (
-          <></>
+          null
         )}
       </div>
       {profitIncrease && (
