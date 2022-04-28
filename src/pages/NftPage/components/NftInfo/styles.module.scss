@@ -1,0 +1,20 @@
+@import 'assets/styles/variables';
+@import 'assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.nftInfo {
+  width: 100%;
+  &Top {
+    @include flex(row, center, space-between);
+  }
+  .nftInfoDescription {
+    position: relative;
+    margin-top: space(22);
+    .dots{
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      cursor: pointer;
+    }
+  }
+}

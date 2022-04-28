@@ -7,11 +7,13 @@ import './styles.scss';
 import { TBarOption } from 'types';
 
 export interface TabBarProps {
-  rootPath: string;
+  rootPath?: string;
   align?: 'vertical' | 'horizontal';
   className?: string;
   options: TBarOption[];
   tabClassName?: string;
+  activeTab?: string;
+  onChange?: (value: string) => void;
 }
 
 /**
@@ -26,10 +28,12 @@ export const TabBar: VFC<TabBarProps> = ({
   options,
   tabClassName,
   rootPath,
+  activeTab,
+  onChange,
 }) => (
   <section className={cn('tab-bar__wrapper', className)}>
     <nav className={cn('tab-bar__wrapper__body', align)}>
-      {options.map((opt) => (
+      {options.map((opt) => (opt.redirect ? (
         <NavLink
           key={opt.value}
           className={({ isActive }) => cn('tab-bar__wrapper__body-tab', tabClassName, {
@@ -40,7 +44,18 @@ export const TabBar: VFC<TabBarProps> = ({
           {opt.icon && <div className="tab-bar__wrapper__body-tab-icon__wrapper">{opt.icon}</div>}
           {opt.name || opt.value}
         </NavLink>
-      ))}
+      ) : (
+        <div
+          key={opt.value}
+          className={cn('tab-bar__wrapper__body-tab', tabClassName, {
+            'active-tab': activeTab === opt.value,
+          })}
+          onClick={() => onChange(opt.value)}
+        >
+          {opt.icon && <div className="tab-bar__wrapper__body-tab-icon__wrapper">{opt.icon}</div>}
+          {opt.name || opt.value}
+        </div>
+      )))}
     </nav>
   </section>
 );

@@ -4,4 +4,5 @@ export type TBarOption = {
   value: string;
   name?: string;
   icon?: ReactElement;
+  redirect?: boolean;
 };

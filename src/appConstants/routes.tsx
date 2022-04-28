@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable implicit-arrow-linebreak */
 import {
-  Create, CreateForm, Explore, Home,
+  Create, CreateForm, Explore, Home, NftPage,
 } from 'pages';
 import React, { ReactElement } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
@@ -68,6 +68,11 @@ const routesConfig = {
       path: 'explore',
       content: <Explore />,
       label: 'Explore',
+    },
+    nft: {
+      path: 'nft/:id',
+      content: <NftPage />,
+      label: 'NftPage',
     },
   },
 };
