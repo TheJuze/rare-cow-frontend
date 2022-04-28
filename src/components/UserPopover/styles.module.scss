@@ -33,6 +33,7 @@
     &Head {
       @include flex(row, center, flex-start);
       gap: 8px;
+      
     }
   }
   .links {
