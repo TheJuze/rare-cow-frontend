@@ -6,3 +6,4 @@ export { default as useClipboard } from './useClipboard';
 export { default as useClickOutside } from './useClickOutside';
 export { default as useNavigateFunction } from './useNavigateFunction';
 export * from './useFilters';
+export { default as useBreakpoints } from './useBreakpoints';
