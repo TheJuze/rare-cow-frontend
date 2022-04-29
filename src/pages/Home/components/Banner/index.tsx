@@ -6,12 +6,12 @@ import logoSmall from 'assets/img/logoSmall.png';
 
 import { Button, Text } from 'components';
 
-import { useWindowState } from 'hooks';
+import { useBreakpoints } from 'hooks';
 import { routes } from 'appConstants';
 import styles from './styles.module.scss';
 
 const Banner: FC = () => {
-  const { width } = useWindowState();
+  const isDefaultScreen = useBreakpoints([1179]);
   return (
     <div className={styles.banner}>
       <div className={styles.bannerBody}>
@@ -33,7 +33,7 @@ const Banner: FC = () => {
             RareCow will provide all the tools to create, sell and showcase your creations. Earn
             significant income through a fully digital ecosystem.
           </Text>
-          {width < 1179 && <img src={logoSmall} alt="logo" className={styles.logo} />}
+          {!isDefaultScreen && <img src={logoSmall} alt="logo" className={styles.logo} />}
           <div className={styles.bannerBtns}>
             <Button className={styles.btn} to={routes.nest.explore.path}>
               Explore
@@ -43,7 +43,7 @@ const Banner: FC = () => {
             </Button>
           </div>
         </div>
-        {width >= 1179 && <img src={logo} alt="logo" className={styles.logo} />}
+        {isDefaultScreen && <img src={logo} alt="logo" className={styles.logo} />}
       </div>
     </div>
   );
