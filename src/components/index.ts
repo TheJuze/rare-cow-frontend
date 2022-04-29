@@ -21,3 +21,5 @@ export * from './FileUploader';
 export * from './SearchCollection';
 export * from './Countdown';
 export * from './TabBar';
+export * from './Selector';
+export * from './OptionSelector';

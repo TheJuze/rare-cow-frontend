@@ -4,8 +4,56 @@
 
 .nftPayment {
   @include flex(column, flex-start, flex-start);
+  width: 100%;
+  .selector {
+    margin-top: space(24);
+    max-width: 365px;
+    width: 100%;
+  }
   .countdown {
     margin-top: space(23);
+  }
+  .transfer {
+    margin-top: space(24);
+    .send {
+      margin-top: space(16);
+    }
+  }
+  .listing {
+    width: 100%;
+    .method{
+      margin-top: space(24);
+    }
+    .rates {
+      height: 40px;
+      margin-top: space(24);
+      @include flex(row, center, flex-start);
+      .currency {
+        @include flex(row, center, center);
+        &Wrapper {
+          max-width: 150px;
+          height: 100%;
+        }
+        &Text {
+          margin-left: space(8);
+        }
+      }
+      .currencyWrapper + .currencyWrapper {
+        margin-left: space(8);
+      }
+    }
+  }
+  .createLot {
+    margin-top: space(24);
+    &Input {
+      max-width: 306px;
+      @include flex(row, center, flex-start);
+    }
+    &Button {
+      max-width: 132px;
+      width: 100%;
+      margin-left: space(8);
+    }
   }
   .price {
     padding: space(8);
@@ -31,12 +79,29 @@
       line-height: 24px;
       font-weight: 400;
       margin-top: space(8);
+      @include ellipsis;
+    }
+  }
+  .bidder {
+    @include flex(row, center, flex-start);
+    &Name {
+      @include ellipsis;
+      max-width: 50%;
+      margin-left: space(16);
+      margin-right: space(6);
     }
   }
   .buy {
     max-width: 128px;
     width: 100%;
     margin-top: space(16);
+  }
+}
+@include middle-tablet {
+  .nftPayment {
+    .selector {
+      max-width: 100%;
+    }
   }
 }
 @include large-mobile {
