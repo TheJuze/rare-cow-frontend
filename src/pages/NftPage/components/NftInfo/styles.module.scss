@@ -10,10 +10,10 @@
   .nftInfoDescription {
     position: relative;
     margin-top: space(22);
+    @include flex(row, flex-start, flex-start);
     .dots{
-      position: absolute;
-      bottom: 0;
-      right: 0;
+      height: fit-content;
+      align-self: flex-end;
       cursor: pointer;
     }
   }

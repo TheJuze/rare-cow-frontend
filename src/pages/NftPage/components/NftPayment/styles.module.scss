@@ -33,9 +33,17 @@
       margin-top: space(8);
     }
   }
-  .buy{
+  .buy {
     max-width: 128px;
     width: 100%;
     margin-top: space(16);
+  }
+}
+@include large-mobile {
+  .nftPayment {
+    width: 100%;
+    .buy {
+      max-width: 100%;
+    }
   }
 }

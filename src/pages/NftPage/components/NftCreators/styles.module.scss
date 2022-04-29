@@ -17,3 +17,13 @@
     }
   }
 }
+
+@include large-mobile{
+  .nftCreators{
+    flex-direction: column;
+    align-items: flex-start;
+    .creator + .collection {
+      margin-top: space(16);
+    }
+  }
+}

@@ -9,10 +9,27 @@
   .nftImage {
     max-width: 456px;
     width: 100%;
+
+    img {
+      width: 100%;
+    }
   }
   .nftBlock {
     @include flex(column, flex-start, flex-start);
     max-width: 456px;
     width: 100%;
+  }
+  .nftImage + .nftBlock {
+    margin-left: space(145);
+  }
+}
+@include middle-tablet {
+  .nftWrapper {
+    flex-direction: column;
+    justify-content: center;
+    .nftImage{
+      margin: 0 auto;
+      margin-top: space(24);
+    }
   }
 }

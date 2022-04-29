@@ -1,7 +1,8 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable arrow-body-style */
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 
+import { useWindowState } from 'hooks';
 import styles from './styles.module.scss';
 import { NftCreators, NftInfo, NftOwners, NftPayment } from './components';
 
@@ -58,7 +59,8 @@ const nft = {
   is_liked: false,
   like_count: 0,
   minimal_bid: 1,
-  description: "Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday friday friday fri",
+  description:
+    "Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday Thanks god it's Friday friday friday fri",
   royalty: 0,
   created_at: '2022-03-31T07:38:11.928800Z',
   format: 'image',
@@ -228,6 +230,36 @@ const nft = {
 };
 
 const NftPage: FC = () => {
+  const { width } = useWindowState();
+  const isMobile = useMemo(() => width <= 767 || window.innerWidth <= 767, [width]);
+
+  if (isMobile) {
+    return (
+      <div className={styles.nftWrapper}>
+        <NftInfo
+          name={nft.name}
+          id={nft.id}
+          description={nft.description}
+          likeCount={nft.like_count}
+          isLiked={nft.is_liked}
+        />
+        <div className={styles.nftImage}>
+          <img src={nft.media} alt="nft" />
+        </div>
+        <NftPayment endAuction={nft.end_auction} price={nft.price} usdPrice={nft.usd_price} />
+        <NftCreators
+          creatorAvatar={nft.creator.avatar}
+          creatorId={String(nft.creator.url)}
+          creatorName={nft.creator.display_name}
+          collectionAvatar={nft.collection.avatar}
+          collectionId={String(nft.collection.url)}
+          collectionName={nft.collection.name}
+        />
+        <NftOwners owners={nft.owners} properties={nft.properties} history={nft.history} />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.nftWrapper}>
       <div className={styles.nftImage}>

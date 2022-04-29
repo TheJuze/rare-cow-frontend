@@ -72,7 +72,7 @@ const routesConfig = {
     nft: {
       path: 'nft/:id',
       content: <NftPage />,
-      label: 'NftPage',
+      label: 'Nft Card',
     },
   },
 };
