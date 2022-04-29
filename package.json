@@ -71,6 +71,7 @@
     "ethereum-types": "^3.2.0",
     "formik": "^2.2.9",
     "history": "^4.10.0",
+    "moment": "^2.29.3",
     "node-sass": "^6.0.0",
     "rc-dialog": "^8.7.0",
     "react": "17.0.2",

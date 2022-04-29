@@ -1,0 +1,29 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.countdown {
+  @include flex(column, flex-start, center);
+  .countdownTitle{
+    margin-bottom: space(21);
+  }
+  .time{
+    background-color: $metal-200;
+    border-radius: 8px;
+    padding: space(10, 17);
+    @include flex(row, center, flex-start);
+    &Item{
+      @include flex(row, center, center);
+    }
+    .timeItem + .timeItem {
+      margin-left: space(8);
+    }
+    &Text{
+      font-size: 16px;
+      line-height: 24px;
+    }
+    .timeText + .timeText{
+      margin-left: space(4);
+    }
+  }
+}

@@ -1,0 +1,41 @@
+@import 'assets/styles/variables';
+@import 'assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.nftOwners {
+  width: 100%;
+  .tabs {
+    padding: 0;
+    border-bottom: var(--nftpage-owners-border);
+  }
+  .tab {
+    width: fit-content;
+  }
+  .tab + .tab {
+    margin-left: space(16);
+  }
+  .owners {
+    .owner {
+      margin-top: space(16);
+      @include flex(row, center, space-between);
+      .left {
+        @include flex(row, center, flex-start);
+      }
+      &Info {
+        @include flex(column, flex-start, flex-start);
+        margin-left: space(13);
+      }
+    }
+  }
+  .property {
+    margin-top: space(16);
+  }
+  .historyItem {
+    margin-top: space(16);
+    @include flex(row, center, flex-start);
+    &Info {
+      @include flex(column, flex-start, flex-start);
+      margin-left: space(13);
+    }
+  }
+}
