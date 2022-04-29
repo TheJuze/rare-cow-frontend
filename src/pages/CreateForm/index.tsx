@@ -52,7 +52,7 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
         </div>
       </div>
       <div>
-        <CreateNFTForm formValues={initialValues} handleSubmit={handleSubmit} />
+        <CreateNFTForm type={createType} formValues={initialValues} handleSubmit={handleSubmit} />
       </div>
     </section>
   );

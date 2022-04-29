@@ -1,4 +1,4 @@
-import { createValidator } from 'appConstants';
+import { createValidator, standardsMap, TStandards } from 'appConstants';
 import {
   Dropdown, FileUploader, Input, Text,
 } from 'components';
@@ -9,13 +9,15 @@ import {
   EInputStatus, ICreateForm, TInputCaption, TSingleProp,
 } from 'types';
 import nftSelector from 'store/nfts/selectors';
+import userSelector from 'store/user/selectors';
 
 import styles from './styles.module.scss';
-import { Properties } from './components';
+import { Collections, Properties } from './components';
 
 interface ICreateNFTForm {
   handleSubmit: (values: ICreateForm) => void;
   formValues: ICreateForm;
+  type: TStandards;
 }
 
 const captionGenerator = (touched: boolean, errors: string | undefined) => {
@@ -27,8 +29,10 @@ const captionGenerator = (touched: boolean, errors: string | undefined) => {
   return inputState;
 };
 
-export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues }) => {
+export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues, type }) => {
   const categories = useShallowSelector(nftSelector.getProp('categories'));
+  const collections = useShallowSelector(userSelector.getProp('collections'));
+
   const searchValues = useSearch();
   return (
     <Formik initialValues={{ ...formValues }} onSubmit={handleSubmit} enableReinitialize>
@@ -115,6 +119,17 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues })
                   setProps={(value: TSingleProp[]) => setFieldValue('properties', value)}
                   onBlur={handleBlur('properties')}
                   initErrors={touched.properties && errors.properties}
+                />
+              )}
+            </Field>
+            <Field id="collections" name="collections">
+              {() => (
+                <Collections
+                  initCollections={collections}
+                  setIsCollectionsAdded={(value: boolean) => setFieldValue('collections', { ...values.collections, withCollection: value })}
+                  isCollectionsAdded={values.collections.withCollection}
+                  setSelectedCollection={(value) => setFieldValue('collections', { ...values.collections, collections: value })}
+                  type={standardsMap[type].toLowerCase()}
                 />
               )}
             </Field>
