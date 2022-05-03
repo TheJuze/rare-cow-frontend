@@ -138,7 +138,7 @@ export const UserPopover: VFC<UserPopoverProps> = ({
           content: (
             <div className={styles.dropdownHead}>
               <CreateNFT />
-              <Text align="left">Create</Text>
+              <Text weight="normal" color="metal800" align="left">Create</Text>
             </div>
           ),
         }}
@@ -152,7 +152,9 @@ export const UserPopover: VFC<UserPopoverProps> = ({
         {links.map((link) => (
           <Link to={link.value} className={styles.link}>
             {link.icon}
-            <Text>{link.name}</Text>
+            <Text weight="normal" color="metal800">
+              {link.name}
+            </Text>
           </Link>
         ))}
       </div>

@@ -33,6 +33,7 @@
 @import './component-variables/file-uploader';
 @import './component-variables/properties';
 @import './component-variables/avatar-uploader';
+@import './component-variables/nft-page';
 
 :root {
 	$colors:(
@@ -71,6 +72,7 @@
 		$fileUploaderColorsDefault,
 		$propertiesColorsDefault,
 		$avatarUploaderColorsDefault,
+		$nftpageColorsDefault
 	);
 
 	@each $key_name in $colors {

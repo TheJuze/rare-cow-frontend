@@ -31,8 +31,10 @@
 }
 .user {
   @include flex(row, center, flex-start);
-  gap: 16px; // dont use with flex
   position: relative;
+  .arrowBtn {
+    margin-right: space(16);
+  }
 }
 .arrow {
   transform: rotate(0);
@@ -63,8 +65,8 @@
   );
 }
 @include large-tablet {
-  .user {
-    gap: 12px;
+  .arrowBtn {
+    margin-right: space(0) !important;
   }
   .address,
   .headerDropdown {

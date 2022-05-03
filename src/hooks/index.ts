@@ -7,3 +7,4 @@ export { default as useClickOutside } from './useClickOutside';
 export { default as useNavigateFunction } from './useNavigateFunction';
 export * from './useFilters';
 export * from './useSearch';
+export { default as useBreakpoints } from './useBreakpoints';
