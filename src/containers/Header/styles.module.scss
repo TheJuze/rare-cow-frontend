@@ -66,7 +66,7 @@
 }
 @include large-tablet {
   .arrowBtn {
-    margin-right: space(12) !important;
+    margin-right: space(0) !important;
   }
   .address,
   .headerDropdown {
@@ -74,9 +74,6 @@
   }
 }
 @include large-mobile {
-  .arrowBtn {
-    margin-right: space(0) !important;
-  }
   .headerInput {
     width: 100% !important;
   }

@@ -65,7 +65,7 @@ export const OptionSelector: VFC<OptionSelectorProps> = ({
   className,
   dir = 'vertical',
 }) => {
-  const onOptionClick = useCallback((val: TOption) => () => setSelected(val), [setSelected]);
+  const onOptionClick = useCallback((val: TOption) => setSelected(val), [setSelected]);
 
   return (
     <section className={cn(dir, 'option-selector', className)}>

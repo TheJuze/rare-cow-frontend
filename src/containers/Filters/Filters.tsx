@@ -31,6 +31,21 @@ export interface FiltersProps {
   handleClearFilters: any;
 }
 
+export const rates = [
+  {
+    rate: '425.000000000',
+    symbol: 'USDT',
+    name: 'Usdt',
+    image: usdt,
+  },
+  {
+    rate: '123.000000000',
+    symbol: 'MATIC',
+    name: 'Matic',
+    image: matic,
+  },
+];
+
 export const Filters: VFC<FiltersProps> = ({
   filters,
   onClose,
@@ -45,21 +60,6 @@ export const Filters: VFC<FiltersProps> = ({
     () => minValue && maxValue && !new BigNumber(minValue).isLessThanOrEqualTo(new BigNumber(maxValue)),
     [maxValue, minValue],
   );
-
-  const rates = [
-    {
-      rate: '425.000000000',
-      symbol: 'USDT',
-      name: 'Usdt',
-      image: usdt,
-    },
-    {
-      rate: '123.000000000',
-      symbol: 'MATIC',
-      name: 'Matic',
-      image: matic,
-    },
-  ];
 
   const handleChangeCurrencyValue = useCallback(
     (newCurrency) => {

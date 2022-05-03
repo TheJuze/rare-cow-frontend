@@ -1,8 +1,8 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable arrow-body-style */
-import React, { FC, useMemo } from 'react';
+import React, { FC } from 'react';
 
-import { useWindowState } from 'hooks';
+import { useBreakpoints } from 'hooks';
 import styles from './styles.module.scss';
 import { NftCreators, NftInfo, NftOwners, NftPayment } from './components';
 
@@ -230,8 +230,7 @@ const nft = {
 };
 
 const NftPage: FC = () => {
-  const { width } = useWindowState();
-  const isMobile = useMemo(() => width <= 767 || window.innerWidth <= 767, [width]);
+  const [isMobile] = useBreakpoints([767]);
 
   if (isMobile) {
     return (
@@ -246,7 +245,14 @@ const NftPage: FC = () => {
         <div className={styles.nftImage}>
           <img src={nft.media} alt="nft" />
         </div>
-        <NftPayment endAuction={nft.end_auction} price={nft.price} usdPrice={nft.usd_price} />
+        <NftPayment
+          endAuction={nft.end_auction}
+          price={nft.price}
+          usdPrice={nft.usd_price}
+          isAucSelling={nft.is_auc_selling}
+          isTimedAucSelling={nft.is_timed_auc_selling}
+          highestBid={nft.highest_bid}
+        />
         <NftCreators
           creatorAvatar={nft.creator.avatar}
           creatorId={String(nft.creator.url)}
@@ -273,7 +279,14 @@ const NftPage: FC = () => {
           likeCount={nft.like_count}
           isLiked={nft.is_liked}
         />
-        <NftPayment endAuction={nft.end_auction} price={nft.price} usdPrice={nft.usd_price} />
+        <NftPayment
+          endAuction={nft.end_auction}
+          price={nft.price}
+          usdPrice={nft.usd_price}
+          isAucSelling={nft.is_auc_selling}
+          isTimedAucSelling={nft.is_timed_auc_selling}
+          highestBid={nft.highest_bid}
+        />
         <NftCreators
           creatorAvatar={nft.creator.avatar}
           creatorId={String(nft.creator.url)}
