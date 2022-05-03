@@ -29,45 +29,26 @@
       margin-right: 10px;
     }
   }
-  &__body{
+  &__body {
     padding: 0 2px;
     opacity: 0.5;
     pointer-events: none;
     @include transition;
-    &.collections-active{
+    &.collections-active {
       opacity: 1;
       pointer-events: all;
     }
   }
   &__add {
     margin-top: space(24);
-    &-body {
-      &:hover {
-        .collection-section__wrapper {
-          &__add {
-            &-body {
-              &__detail {
-                animation: adding 1s ease-in-out;
-              }
-            }
+    .collection-section__wrapper {
+      &__add {
+        &-body {
+          &__detail {
+            margin-left: space(4);
           }
         }
       }
     }
-  }
-}
-
-@keyframes adding {
-  0% {
-    transform: rotate(0);
-  }
-  40% {
-    transform: rotate(180deg);
-  }
-  60% {
-    transform: rotate(180deg);
-  }
-  100% {
-    transform: rotate(0);
   }
 }

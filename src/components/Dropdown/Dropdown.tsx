@@ -217,7 +217,7 @@ export const Dropdown: VFC<DropdownProps> = ({
                 tabIndex={0}
                 role="button"
                 className={cn('dropdown-content-body-option', {
-                  selected: option.id === value.id,
+                  selected: value ? option.id === value.id : false,
                 })}
                 onClick={() => handleClick(option)}
                 key={`dropdown_option_${option.id}`}

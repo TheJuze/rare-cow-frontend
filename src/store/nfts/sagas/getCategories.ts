@@ -8,7 +8,6 @@ import actionTypes from '../actionTypes';
 
 export function* getCategoriesSaga({ type }: ReturnType<typeof getCategories>) {
   yield put(apiActions.request(type));
-
   try {
     const { data } = yield call(baseApi.getCategories);
     yield put(setCategories(data));

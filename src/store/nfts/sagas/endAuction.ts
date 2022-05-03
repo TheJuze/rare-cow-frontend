@@ -25,8 +25,8 @@ export function* endAuctionSaga({
   try {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const responce = yield call(baseApi.verificateBet, { id });
-    if (responce.data.invalid_bet && Object.keys(responce.data.invalid_bet).length) {
+    const response = yield call(baseApi.verificateBet, { id });
+    if (response.data.invalid_bet && Object.keys(response.data.invalid_bet).length) {
       toast.error({
         message: 'Highest bid is not correct',
       });

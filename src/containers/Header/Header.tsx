@@ -1,21 +1,18 @@
 /* eslint-disable object-curly-newline */
 import React, { useCallback, useRef, useState, VFC } from 'react';
-// import { Chains, WalletProviders } from 'types';
 import logo from 'assets/icons/logo.svg';
 import arrow from 'assets/chevron-down.svg';
-import { profileAvatar } from 'assets/img';
 import cn from 'classnames';
 
-import { SearchInput, Dropdown, Avatar, UserPopover } from 'components';
-import { useClickOutside } from 'hooks';
-import { TDropdownValue } from 'types';
+import { SearchInput, Dropdown, Avatar, UserPopover, Button } from 'components';
+import { useClickOutside, useShallowSelector } from 'hooks';
+import { Chains, TDropdownValue, WalletProviders } from 'types';
 import { sliceString } from 'utils';
-import { userPopoverPropsMocked } from 'components/UserPopover/UserPopover.mock';
 import { Link } from 'react-router-dom';
 import { Breadcrumbs } from 'components/Breadcrumbs';
 import { useBreadcrumbs } from 'hooks/useBreadcrumbs';
+import userSelector from 'store/user/selectors';
 import s from './styles.module.scss';
-import { headerPropsMocked } from './Header.mock';
 
 const dropdownOptions: TDropdownValue[] = [
   {
@@ -58,36 +55,23 @@ export interface HeaderProps {
   chainType: 'testnet' | 'mainnet';
 }
 
-export const Header: VFC<HeaderProps> = ({
-  address,
-  disconnect,
-  onConnectWallet,
-  onToggleChainType,
-  isHomePage,
-  isUserInfoLoading,
-  chainType,
-}) => {
-  console.debug(
-    isHomePage,
-    isUserInfoLoading,
-    address,
-    disconnect,
-    onConnectWallet,
-    onToggleChainType,
-    chainType,
-  );
+export const Header: VFC<HeaderProps> = ({ address, disconnect, onConnectWallet }) => {
   const [isUserShown, setIsUserShown] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
+
+  const user = useShallowSelector(userSelector.getUser);
   const headRef = useRef<HTMLButtonElement | null>(null);
   const bodyRef = useRef<HTMLDivElement | null>(null);
+
   const { breadcrumbs } = useBreadcrumbs();
-  // const handleChangeConnecting = useCallback(() => {
-  //   if (!address.length) {
-  //     onConnectWallet(WalletProviders.metamask, Chains.bsc);
-  //   } else {
-  //     disconnect();
-  //   }
-  // }, [address.length, disconnect, onConnectWallet]);
+
+  const handleChangeConnecting = useCallback(() => {
+    if (!address.length) {
+      onConnectWallet(WalletProviders.metamask, Chains.polygon);
+    } else {
+      disconnect();
+    }
+  }, [address.length, disconnect, onConnectWallet]);
 
   const handleShowUser = useCallback(() => {
     setIsUserShown(true);
@@ -130,20 +114,28 @@ export const Header: VFC<HeaderProps> = ({
             classNameHead={s.headerDropdown}
             dropPosition="absolute"
           />
-          <div className={s.address}>{sliceString(headerPropsMocked.address)}</div>
-          <div className={s.user}>
-            <button
-              type="button"
-              tabIndex={0}
-              onClick={isUserShown ? () => handleHideUser() : () => handleShowUser()}
-              className={s.arrowBtn}
-              ref={headRef}
-            >
-              <img src={arrow} alt="arrow" className={cn(s.arrow, { [s.arrowUp]: isUserShown })} />
-            </button>
-            <Avatar avatar={profileAvatar} id={0} size="40" />
-            <UserPopover {...userPopoverPropsMocked} visible={isUserShown} bodyRef={bodyRef} />
-          </div>
+          <div className={s.address}>{sliceString(address)}</div>
+          {address.length ? (
+            <div className={s.user}>
+              <button
+                type="button"
+                tabIndex={0}
+                onClick={isUserShown ? () => handleHideUser() : () => handleShowUser()}
+                className={s.arrowBtn}
+                ref={headRef}
+              >
+                <img
+                  src={arrow}
+                  alt="arrow"
+                  className={cn(s.arrow, { [s.arrowUp]: isUserShown })}
+                />
+              </button>
+              <Avatar avatar={user.avatar} id={user.id} size="40" />
+              <UserPopover {...user} visible={isUserShown} bodyRef={bodyRef} />
+            </div>
+          ) : (
+            <Button onClick={handleChangeConnecting}>connect wallet</Button>
+          )}
         </div>
       </div>
       <Breadcrumbs paths={breadcrumbs} />

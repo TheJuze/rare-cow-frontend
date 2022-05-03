@@ -1,7 +1,8 @@
+@import 'src/assets/styles/variables';
 @import '/src/styles/helpers';
 
-.fullSize{
-    width: 100%;
+.fullSize {
+  width: 100%;
 }
 
 .wrapper {
@@ -14,15 +15,31 @@
     padding-right: 10%;
   }
 
-  .information{
-      max-width: 360px;
-      &Title{
-          font-size: 20px;
-          line-height: 34px;
-          margin-bottom: space(12);
+  .information {
+    max-width: 360px;
+    &Title {
+      font-size: 20px;
+      line-height: 34px;
+      margin-bottom: space(12);
+    }
+    .counter {
+      margin-top: space(4);
+    }
+  }
+  .listing {
+    margin-bottom: space(32);
+    background: var(--property-block-background);
+    border-radius: 20px;
+    padding: space(24);
+    &Body {
+      margin-top: space(24) !important;
+      opacity: 0.5;
+      pointer-events: none;
+      @include transition;
+      &.active {
+        opacity: 1;
+        pointer-events: all;
       }
-      .counter{
-          margin-top: space(4);
-      }
+    }
   }
 }

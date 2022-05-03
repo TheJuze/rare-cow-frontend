@@ -90,14 +90,14 @@ export default {
     return ajax({
       method: 'post',
       url: URL.transfer(data.id),
-      data
+      data,
     });
   },
   burn(data: { id: string | number; amount?: string | number }) {
     return ajax({
       method: 'post',
       url: URL.burn(data.id),
-      data
+      data,
     });
   },
   buyReject({ id, owner }: RejectAction) {

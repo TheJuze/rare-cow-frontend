@@ -3,6 +3,9 @@ import Web3 from 'web3';
 import { Token } from 'types/api/Token';
 import { User } from 'types/api/User';
 import { Category } from 'types/api/Category';
+import { ContractsNames } from 'config';
+import { TCurrencies } from 'appConstants';
+import { Chains } from 'types/connect';
 
 export type BodyWithToken<T = never> = {
   token?: string;
@@ -40,15 +43,17 @@ export type GetStakesReq = {
 
 export type ApproveReq = {
   web3Provider: Web3;
-  spender: string;
+  spender: ContractsNames;
   amount: string;
-  tokenAddress: string;
+  approveAddress: ContractsNames;
+  currency: TCurrencies;
 };
 
 export type ApproveNftReq = {
   id: number | string;
   isSingle: boolean;
   web3Provider: Web3;
+  currency: TCurrencies;
 };
 
 export type SetOnAuctionReq = {
@@ -68,7 +73,7 @@ export type SetOnAuctionPreReq = {
   internalId: number | string;
   minimalBid: number | string;
   isSingle: boolean;
-  currency?: string;
+  currency?: TCurrencies;
   end_auction?: number;
   auctionDuration?: number;
   endAuction?: number;
@@ -87,7 +92,7 @@ export type SetOnSalePreReq = {
   internalId: number | string;
   price: number | string;
   isSingle: boolean;
-  currency?: string;
+  currency?: TCurrencies;
   amount?: number | string;
   web3Provider: Web3;
 };
@@ -103,6 +108,7 @@ export type TResponseCategories = Category[];
 export type GetTokenBalanceReq = {
   web3Provider: Web3;
   address: string;
+  token: TCurrencies;
 };
 
 export type LoginReq = {
@@ -133,6 +139,7 @@ export type BuyReq = {
   tokenAmount?: string | number;
   sellerId?: number | string;
   web3Provider: Web3;
+  currency: TCurrencies,
 };
 
 export type LikeReq = {
@@ -149,7 +156,7 @@ export type EndAucReq = {
 export type BidReq = {
   id: number | string;
   amount: number | string;
-  currency: string;
+  currency: TCurrencies;
   web3Provider: Web3;
 };
 
@@ -235,7 +242,7 @@ User,
 >;
 
 export type RequestWithNetwork = {
-  network: string;
+  network: Chains;
 };
 
 export type GetLikedNFTsRequest = {

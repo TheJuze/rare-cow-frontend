@@ -5,10 +5,12 @@ import { INetwork, IProvider, ISettings } from '@amfi/connect-wallet/dist/interf
 export enum ChainsEnum {
   'Binance-Smart-Chain' = 'Binance-Smart-Chain',
   Ethereum = 'Ethereum',
+  'Polygon' = 'Polygon',
 }
 
 export enum Chains {
-  bsc = 'Binance-Smart-Chain',
+  bsc = ChainsEnum['Binance-Smart-Chain'],
+  polygon = ChainsEnum.Polygon,
 }
 export type IChainType = 'testnet' | 'mainnet';
 

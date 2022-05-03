@@ -1,6 +1,9 @@
 import type { State, UserState } from 'types';
 
-export default {
+const userSelector = {
   getUser: (state: State): UserState => state.user,
-  getProp: <T extends keyof UserState>(propKey: T) => (state: State) => state.user[propKey],
+  getProp:
+    <T extends keyof UserState>(propKey: T) => (state: State) => state.user[propKey],
 };
+
+export default userSelector;
