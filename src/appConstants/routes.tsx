@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable implicit-arrow-linebreak */
 import {
+  Collection,
   Create, CreateForm, Explore, Home, NftPage,
 } from 'pages';
 import React, { ReactElement } from 'react';
@@ -73,6 +74,11 @@ const routesConfig = {
       path: 'nft/:id',
       content: <NftPage />,
       label: 'Nft Card',
+    },
+    collection: {
+      path: 'collection/:id',
+      content: <Collection />,
+      label: 'Collection',
     },
   },
 };
