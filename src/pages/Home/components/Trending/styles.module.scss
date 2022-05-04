@@ -62,10 +62,10 @@
   width: 40px;
   height: 6px;
   border-radius: 20px;
-  background-color: $light-white;
+  background-color: var(--swiper-bullet-background);
   opacity: 1;
   &.active{
-    background-color: $accent-2;
+    background-color: var(--swiper-bullet-background-active);
   }
 }
 .swiper-button-prev {
