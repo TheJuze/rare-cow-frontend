@@ -121,6 +121,7 @@ const Trending: FC<Props> = ({ className }) => {
   const { width } = useWindowState();
   const prevRef = useRef(null);
   const nextRef = useRef(null);
+  const bulletsRef = useRef(null);
   const slidesToShow = (widthValue: number) => {
     if (widthValue < 850) {
       return 1;
@@ -193,12 +194,19 @@ const Trending: FC<Props> = ({ className }) => {
                   ref={nextRef}
                   className={cx('swiper-button-next', styles['swiper-button-next'])}
                 />
+                <div className={styles.bullets} ref={bulletsRef} />
                 <Swiper
                   spaceBetween={30}
                   // centeredSlides
                   navigation={{
                     prevEl: prevRef.current,
                     nextEl: nextRef.current,
+                  }}
+                  pagination={{
+                    clickable: true,
+                    el: bulletsRef.current,
+                    bulletClass: cx(styles['swiper-pagination-bullet'], 'swiper-pagination-bullet'),
+                    bulletActiveClass: cx(styles.active, 'swiper-pagination-bullet-active'),
                   }}
                   slidesPerView={numberOfSlide}
                   loop
