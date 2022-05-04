@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-param-reassign */
@@ -37,17 +38,18 @@ const Trending: FC<Props> = ({ className }) => {
   const { width } = useWindowState();
   const prevRef = useRef(null);
   const nextRef = useRef(null);
+  const bulletsRef = useRef(null);
   const slidesToShow = (widthValue: number) => {
-    if (widthValue < 850) {
-      return 1;
-    }
-    if (widthValue < 1050) {
+    if (widthValue > 850) {
       return 2;
     }
-    if (widthValue < 1200) {
+    if (widthValue > 1050) {
       return 3;
     }
-    return 4;
+    if (widthValue > 1200) {
+      return 4;
+    }
+    return 1;
   };
 
   SwiperCore.use([Navigation, Pagination]);
@@ -81,7 +83,13 @@ const Trending: FC<Props> = ({ className }) => {
   return (
     <div className={styles.wrapper}>
       <div className={cx(styles.notableDrops, className)}>
-        <Text variant="heading-2" weight="bold" color="accent" className={styles.title} align="center">
+        <Text
+          variant="heading-2"
+          weight="bold"
+          color="accent"
+          className={styles.title}
+          align="center"
+        >
           Featured tokens
         </Text>
         {nfts.length ? (
@@ -96,12 +104,19 @@ const Trending: FC<Props> = ({ className }) => {
                   ref={nextRef}
                   className={cx('swiper-button-next', styles['swiper-button-next'])}
                 />
+                <div className={styles.bullets} ref={bulletsRef} />
                 <Swiper
                   spaceBetween={30}
                   // centeredSlides
                   navigation={{
                     prevEl: prevRef.current,
                     nextEl: nextRef.current,
+                  }}
+                  pagination={{
+                    clickable: true,
+                    el: bulletsRef.current,
+                    bulletClass: cx(styles['swiper-pagination-bullet'], 'swiper-pagination-bullet'),
+                    bulletActiveClass: cx(styles.active, 'swiper-pagination-bullet-active'),
                   }}
                   slidesPerView={numberOfSlide}
                   loop
