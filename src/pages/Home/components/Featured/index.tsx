@@ -40,16 +40,16 @@ const Trending: FC<Props> = ({ className }) => {
   const nextRef = useRef(null);
   const bulletsRef = useRef(null);
   const slidesToShow = (widthValue: number) => {
-    if (widthValue < 850) {
-      return 1;
-    }
-    if (widthValue < 1050) {
+    if (widthValue > 850) {
       return 2;
     }
-    if (widthValue < 1200) {
+    if (widthValue > 1050) {
       return 3;
     }
-    return 4;
+    if (widthValue > 1200) {
+      return 4;
+    }
+    return 1;
   };
 
   SwiperCore.use([Navigation, Pagination]);
