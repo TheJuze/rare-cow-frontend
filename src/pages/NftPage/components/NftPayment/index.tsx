@@ -4,21 +4,16 @@
 /* eslint-disable arrow-body-style */
 import { ArrowGreen } from 'assets/icons/icons';
 import { matic } from 'assets/img';
-import BigNumber from 'bignumber.js';
 import {
   Text,
   Countdown,
   Button,
   Selector,
   Input,
-  CheckboxButton,
   Avatar,
-  OptionSelector,
+  Listing,
 } from 'components';
-import { rates } from 'containers';
 import React, { FC, useCallback, useMemo, useState } from 'react';
-import { TOption } from 'types';
-import { validateOnlyNumbers } from 'utils';
 
 import styles from './styles.module.scss';
 
@@ -32,11 +27,6 @@ type Props = {
 };
 const isOwner = true;
 const isUserCanBuy = true;
-const methods: TOption[] = [
-  { content: 'Price', value: 'price' },
-  { content: 'Auction', value: 'auction' },
-  { content: 'Auction time', value: 'time' },
-];
 
 const NftPayment: FC<Props> = ({
   endAuction,
@@ -47,9 +37,6 @@ const NftPayment: FC<Props> = ({
   highestBid,
 }) => {
   const [isTransfer, setIsTransfer] = useState(false);
-  const [priceValue, setPriceValue] = useState('');
-  const [activeCurrency, setActiveCurrency] = useState(rates[0]);
-  const [method, setMethod] = useState(methods[0]);
   const isAuction = useMemo(
     () => isAucSelling || isTimedAucSelling,
     [isAucSelling, isTimedAucSelling],
@@ -58,19 +45,6 @@ const NftPayment: FC<Props> = ({
   const handleChaneTransfer = useCallback(() => {
     setIsTransfer(!isTransfer);
   }, [isTransfer]);
-
-  const handleChangeCurrency = useCallback((newCurrency) => {
-    setActiveCurrency(newCurrency);
-  }, []);
-
-  const handleChangeMethod = useCallback((newMethod) => {
-    setMethod(newMethod);
-  }, []);
-
-  const handlePriceValueChange = useCallback((newPriceValue: string) => {
-    if (!validateOnlyNumbers(newPriceValue)) return;
-    setPriceValue(newPriceValue);
-  }, []);
 
   return (
     <div className={styles.nftPayment}>
@@ -94,66 +68,7 @@ const NftPayment: FC<Props> = ({
               </Button>
             </div>
           ) : (
-            <div className={styles.listing}>
-              <div className={styles.method}>
-                <OptionSelector
-                  name="method"
-                  options={methods}
-                  selected={method}
-                  setSelected={handleChangeMethod}
-                  dir="horizontal"
-                />
-                {/* // TODO: Вставить 12, 24, 48 часов */}
-              </div>
-              <div className={styles.rates}>
-                {rates.map((rate) => (
-                  <CheckboxButton
-                    isChecked={rate.symbol === activeCurrency.symbol}
-                    onChange={() => handleChangeCurrency(rate)}
-                    className={styles.currencyWrapper}
-                    content={
-                      <div className={styles.currency}>
-                        <img src={rate.image} alt="currency" />
-                        <Text variant="body-2" color="light1" className={styles.currencyText}>
-                          {rate.symbol}
-                        </Text>
-                      </div>
-                    }
-                  />
-                ))}
-              </div>
-              <div className={styles.createLot}>
-                <Text size="xs" color="base900">
-                  {method.value === 'price' ? 'Price' : 'Bid'}
-                </Text>
-                <div className={styles.createLotInput}>
-                  <Input
-                    placeholder="0.00"
-                    name="price"
-                    value={priceValue}
-                    onChange={(e) => handlePriceValueChange(e.target.value)}
-                    endAdornment={
-                      <img
-                        src={activeCurrency.image}
-                        alt="currency"
-                        className={styles.createLotInputImage}
-                      />
-                    }
-                  />
-                  <Button className={styles.createLotButton} size="sm">
-                    <Text variant="body-2" color="light">
-                      Create lot
-                    </Text>
-                  </Button>
-                </div>
-                <Text className={styles.priceUsd}>
-                  ${' '}
-                  {new BigNumber(activeCurrency.rate)
-                    .times(new BigNumber(priceValue || '0'))
-                    .toFixed(2)}
-                </Text>
-              </div>
-            </div>
+            <Listing optionsDirection="horizontal" buttonText="Create lot" className={styles.listing} />
           )}
         </>
       )}

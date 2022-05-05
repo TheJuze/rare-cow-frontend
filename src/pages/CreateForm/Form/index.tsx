@@ -48,7 +48,6 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues, t
         errors, touched, values, handleBlur, setFieldValue,
       }) => (
         <Form className={styles.wrapper}>
-          {console.log(values)}
           <div className={styles.uploader}>
             <Field id="media" name="media" required>
               {() => <FileUploader onUpload={(file) => setFieldValue('media', file[0])} />}

@@ -12,6 +12,7 @@
 
     img {
       width: 100%;
+      border-radius: 16px;
     }
   }
   .nftBlock {
@@ -23,11 +24,21 @@
     margin-left: space(145);
   }
 }
+@include large-tablet {
+  .nftWrapper {
+    .nftBlock{
+      max-width: 356px;
+    }
+    .nftImage + .nftBlock {
+      margin-left: space(32);
+    }
+  }
+}
 @include middle-tablet {
   .nftWrapper {
     flex-direction: column;
     justify-content: center;
-    .nftImage{
+    .nftImage {
       margin: 0 auto;
       margin-top: space(24);
     }
