@@ -46,3 +46,5 @@ export const getFileGroup = (extension: TAvailableExtensions): TFilesGroup | nul
   }
   return null;
 };
+
+export const getExtension = (filePath: string) => filePath.slice(filePath.lastIndexOf('.') + 1);

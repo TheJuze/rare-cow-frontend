@@ -5,6 +5,7 @@ import React, {
   FC,
   useCallback,
   useContext,
+  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -21,7 +22,7 @@ import {
   Chains, State, UserState, WalletProviders,
 } from 'types';
 import { WalletService } from 'services/WalletService';
-import { login } from 'store/user/actions';
+import { login, updateUserInfo } from 'store/user/actions';
 
 interface IContextValue {
   connect: (provider: WalletProviders, chain: Chains) => Promise<void>;
@@ -35,10 +36,11 @@ const WalletConnectContext: FC = ({ children }) => {
   const [currentSubscriber, setCurrentSubscriber] = useState<Subscription>();
   const WalletConnect = useRef(new WalletService());
   const dispatch = useDispatch();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { address, provider: WalletProvider } = useShallowSelector<State, UserState>(
-    userSelector.getUser,
-  );
+  const {
+    address,
+    key,
+    provider: WalletProvider,
+  } = useShallowSelector<State, UserState>(userSelector.getUser);
 
   const disconnect = useCallback(() => {
     dispatch(disconnectWalletState());
@@ -46,11 +48,15 @@ const WalletConnectContext: FC = ({ children }) => {
     currentSubscriber?.unsubscribe();
   }, [currentSubscriber, dispatch]);
 
-  const subscriberSuccess = useCallback(() => {
-    if (document.visibilityState !== 'visible') {
-      disconnect();
-    }
-  }, [disconnect]);
+  const subscriberSuccess = useCallback(
+    (data: any) => {
+      if (data.name === 'accountsChanged') {
+        dispatch(login({ address: data.address, web3Provider: WalletConnect.current.Web3() }));
+        toast.info('Please sign login message at MetaMask');
+      }
+    },
+    [dispatch],
+  );
 
   const subscriberError = useCallback(
     (err: any) => {
@@ -74,6 +80,11 @@ const WalletConnectContext: FC = ({ children }) => {
             .subscribe(subscriberSuccess, subscriberError);
           const accountInfo: any = await WalletConnect.current.getAccount();
 
+          if (key?.length && address === accountInfo?.address) {
+            dispatch(updateUserInfo({ web3Provider: WalletConnect.current.Web3() }));
+            return;
+          }
+
           if (accountInfo.address) {
             dispatch(
               login({ address: accountInfo.address, web3Provider: WalletConnect.current.Web3() }),
@@ -96,8 +107,14 @@ const WalletConnectContext: FC = ({ children }) => {
         }
       }
     },
-    [WalletConnect, dispatch, subscriberError, subscriberSuccess],
+    [address, dispatch, key?.length, subscriberError, subscriberSuccess],
   );
+
+  useEffect(() => {
+    if (WalletProvider) {
+      connect(WalletProviders.metamask, Chains.polygon);
+    }
+  }, [WalletProvider, address, connect]);
 
   return (
     <Web3Context.Provider value={{ connect, disconnect, walletService: WalletConnect.current }}>

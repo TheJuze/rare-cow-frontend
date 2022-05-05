@@ -47,6 +47,7 @@ export function* createTokenSaga({ type, payload }: ReturnType<typeof createToke
       } catch (e: unknown) {
         yield call(baseApi.mintReject, {
           id: token.id,
+          type: 'token',
           owner: token.creator.url,
         });
         // yield put(

@@ -21,11 +21,11 @@ export default {
       data: collection,
     });
   },
-  mintReject({ id, owner }: RejectAction) {
+  mintReject({ id, type, owner }: RejectAction) {
     return ajax({
       method: 'post',
       url: URL.mintReject,
-      data: { id, owner },
+      data: { id, type, owner },
     });
   },
 };

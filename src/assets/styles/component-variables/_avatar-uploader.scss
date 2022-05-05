@@ -3,17 +3,19 @@
 $avatarUploaderColorsDefault: (
   'avatarUploader-border': 1px dashed $base-400,
   'avatarUploader-hover-border': 1px solid $base-400,
-  'avatarUploader-background': $light-3,
-  'avatarUploader-hover-background': rgba($light-3, 0.6),
+  'avatarUploader-background': $light-8,
+  'avatarUploader-hover-background': rgba($light-8, 0.6),
   'avatarUploader-error-border': 1px dashed $red,
   'avatarUploader-error-background': rgba($red, 0.05),
+  'avatarUploader-icon-color': #231F20,
 );
 
 $avatarUploaderColorsLight: (
   'avatarUploader-border': 1px dashed $base-400,
   'avatarUploader-hover-border': 1px solid $base-400,
-  'avatarUploader-background': $light-3,
-  'avatarUploader-hover-background': rgba($light-3, 0.6),
+  'avatarUploader-background': $light-8,
+  'avatarUploader-hover-background': rgba($light-8, 0.6),
   'avatarUploader-error-border': 1px dashed $red,
   'avatarUploader-error-background': rgba($red, 0.05),
+  'avatarUploader-icon-color': #231F20,
 );

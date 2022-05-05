@@ -1,0 +1,15 @@
+@import '/src/styles/helpers';
+
+.create {
+  @include container;
+  padding-top: space(61);
+  &Header {
+    &MintingFee {
+      border-radius: space(8);
+      padding: space(12, 16);
+      background: var(--createForm-minting-fee-background);
+      display: inline-block;
+      margin: space(27, 0, 61) !important;
+    }
+  }
+}

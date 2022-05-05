@@ -14,8 +14,9 @@ export interface FileUploaderProps {
   availableFiles?: TAvailableExtensions[];
   title?: (isDragActive: boolean) => string | ReactElement;
   reqMaxSize?: TMaxSize;
-  onUpload?: (file: File[]) => void;
-  onErrorUpload?: (file: FileRejection[]) => void;
+  onUpload?: (files: File[]) => void;
+  onErrorUpload?: (files: FileRejection[]) => void;
+  disabled?: boolean;
 }
 
 export const FileUploader: VFC<FileUploaderProps> = ({
@@ -33,6 +34,7 @@ export const FileUploader: VFC<FileUploaderProps> = ({
   reqMaxSize = maxSize,
   onUpload,
   onErrorUpload,
+  disabled = false,
 }) => {
   const onDrop = useCallback(
     (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
@@ -51,6 +53,7 @@ export const FileUploader: VFC<FileUploaderProps> = ({
     accept: availableFiles.map((f) => `.${f}`),
     multiple: false,
     maxSize: byteSize(reqMaxSize),
+    disabled,
   });
 
   return (

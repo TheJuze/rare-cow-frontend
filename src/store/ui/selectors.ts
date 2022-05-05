@@ -1,6 +1,8 @@
 import type { StateWithUIState } from 'types';
 
-export default {
+const uiSelector = {
   getUI: (state: StateWithUIState) => state.ui,
   getProp: (propKey: string) => (state: StateWithUIState) => state.ui[propKey],
 };
+
+export default uiSelector;
