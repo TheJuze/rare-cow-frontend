@@ -20,8 +20,8 @@ export type TCurrencies = {
 };
 
 export const currencies: TCurrencies[] = [
-  { name: 'USDT', isNative: false },
   { name: 'MATIC', isNative: true },
+  { name: 'USDT', isNative: false },
 ];
 
 export const fromNameToCurrencyObj = (currency: string) => {

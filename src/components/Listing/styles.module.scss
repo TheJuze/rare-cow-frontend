@@ -31,6 +31,7 @@
       &Wrapper {
         flex: 0 0 50%;
         padding-bottom: space(8);
+        max-width: 150px;
         &:nth-child(odd) {
           padding-right: space(4);
         }
@@ -48,7 +49,10 @@
     }
     &Button{
         margin-top: 2px;
-        height: 35px;
+        height: 44px;
+    }
+    &Price{
+      height: 44px;
     }
   }
 }

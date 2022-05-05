@@ -29,6 +29,7 @@ export interface FiltersProps {
   isShowFilters: boolean;
   handleChangeFilter: any;
   handleClearFilters: any;
+  isWithCollections?: boolean;
 }
 
 export const rates = [
@@ -52,6 +53,7 @@ export const Filters: VFC<FiltersProps> = ({
   isShowFilters,
   handleChangeFilter,
   handleClearFilters,
+  isWithCollections = true,
 }) => {
   const [minValue, setMinValue] = useState('');
   const [maxValue, setMaxValue] = useState('');
@@ -315,12 +317,14 @@ export const Filters: VFC<FiltersProps> = ({
   ];
   return (
     <div className={cn(styles.filters, { [styles.active]: isShowFilters })}>
-      <SearchCollection
-        collections={collectionsMock}
-        className={styles.collections}
-        activeCollections={collections}
-        handleClickCollection={handleCollectionChange}
-      />
+      {isWithCollections && (
+        <SearchCollection
+          collections={collectionsMock}
+          className={styles.collections}
+          activeCollections={collections}
+          handleClickCollection={handleCollectionChange}
+        />
+      )}
       <div className={styles.filtersHead}>
         <Text variant="body-2" className={styles.filtersTitle} color="light1">
           Filter
