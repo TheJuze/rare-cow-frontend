@@ -1,6 +1,8 @@
-import React, {
-  ChangeEvent, useCallback, useEffect, useMemo, useState, VFC,
-} from 'react';
+/* eslint-disable object-curly-newline */
+/* eslint-disable react/jsx-wrap-multilines */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable no-confusing-arrow */
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useState, VFC } from 'react';
 
 import cn from 'clsx';
 
@@ -49,21 +51,29 @@ export const Listing: VFC<ListingProps> = ({
   );
 
   const [listType, setListType] = useState(listingOptions[0]);
+  const sortedCurrencies = useMemo(
+    () =>
+      listType.value === 'Price'
+        ? availableCurrencies
+        : availableCurrencies.filter((curr) => curr.isNative),
+    [availableCurrencies, listType.value],
+  );
   const onListTypeOptionClickHandler = useCallback((val: TOption) => {
     setListType(val);
   }, []);
 
-  const [selectedCurrency, setSelectedCurrency] = useState(availableCurrencies[0]);
+  const [selectedCurrency, setSelectedCurrency] = useState(sortedCurrencies[0]);
   const onCurrencyClickHandler = useCallback(
     (currency: TCurrencies) => () => setSelectedCurrency(currency),
     [],
   );
 
   const timestampOptions = useMemo(
-    () => initialTimestampOptions.map((timestamp) => ({
-      value: timestamp,
-      content: `${secondToHours(timestamp)} h`,
-    })),
+    () =>
+      initialTimestampOptions.map((timestamp) => ({
+        value: timestamp,
+        content: `${secondToHours(timestamp)} h`,
+      })),
     [],
   );
   const isTimestampSelectorActive = useMemo(
@@ -152,10 +162,10 @@ export const Listing: VFC<ListingProps> = ({
         </div>
       )}
       <div className={styles.listingCurrency}>
-        {availableCurrencies.map((currency) => (
+        {sortedCurrencies.map((currency) => (
           <div className={styles.listingCurrencyItemWrapper}>
             <CheckboxButton
-              content={(
+              content={
                 <div className={styles.listingCurrencyItemBody}>
                   <img
                     className={styles.listingCurrencyItemIcon}
@@ -164,7 +174,7 @@ export const Listing: VFC<ListingProps> = ({
                   />
                   {currency.name}
                 </div>
-              )}
+              }
               isChecked={currency.name === selectedCurrency.name}
               onChange={onCurrencyClickHandler(currency)}
               className={styles.listingCurrencyItem}
@@ -179,7 +189,7 @@ export const Listing: VFC<ListingProps> = ({
           label={priceLabel}
           placeholder="0.00"
           onChange={onPriceChangeHandler}
-          className={styles.listingBottomPrice}
+          classNameBody={styles.listingBottomPrice}
           caption={{
             status: EInputStatus.COMMON,
             caption: (

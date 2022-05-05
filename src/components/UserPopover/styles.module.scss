@@ -11,7 +11,7 @@
   min-width: var(--userPopover-default-min-width);
   top: 44px;
   right: 0;
-  z-index: 1;
+  z-index: 5;
   @include transition;
   .balance {
     @include flex(row, center, flex-start);
@@ -69,6 +69,7 @@
     @include flex(row, center, flex-start);
     .headUserName {
       margin: spacing(0, 0, 0, 2);
+      @include ellipsis;
     }
   }
 }
