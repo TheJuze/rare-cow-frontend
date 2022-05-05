@@ -6,7 +6,6 @@ import { setActiveModal } from 'store/modals/reducer';
 
 import { snakeize } from 'utils/camelize';
 
-import { DEFAULT_CURRENCY } from 'appConstants';
 import { Modals } from 'types';
 import { SetOnAuctionReq } from 'types/requests';
 
@@ -20,7 +19,7 @@ export function* setOnAuctionSaga({
   payload: {
     id,
     internalId,
-    currency = DEFAULT_CURRENCY,
+    currency,
     isSingle,
     minimalBid,
     auctionDuration,
@@ -34,7 +33,7 @@ export function* setOnAuctionSaga({
     const dateNow = Math.floor(Date.now() / 1000);
     requestData = {
       minimalBid,
-      currency,
+      currency: currency.name,
       startAuction: dateNow,
       endAuction: dateNow + auctionDuration,
     };
@@ -43,7 +42,7 @@ export function* setOnAuctionSaga({
   if (!auctionDuration) {
     requestData = {
       minimalBid,
-      currency,
+      currency: currency.name,
     };
   }
   try {
@@ -53,6 +52,7 @@ export function* setOnAuctionSaga({
         id: internalId,
         isSingle,
         web3Provider,
+        currency,
       },
     });
 

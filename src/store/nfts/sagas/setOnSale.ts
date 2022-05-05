@@ -6,7 +6,6 @@ import { setActiveModal } from 'store/modals/reducer';
 
 import { snakeize } from 'utils/camelize';
 
-import { DEFAULT_CURRENCY } from 'appConstants';
 import { Modals } from 'types';
 import { SetOnSaleReq } from 'types/requests';
 
@@ -18,14 +17,14 @@ import { getDetailedNftSaga } from './getDetailedNft';
 export function* setOnSaleSaga({
   type,
   payload: {
-    id, internalId, currency = DEFAULT_CURRENCY, isSingle, price, amount, web3Provider,
+    id, internalId, currency, isSingle, price, amount, web3Provider,
   },
 }: ReturnType<typeof setOnSale>) {
   yield put(apiActions.request(type));
   let requestData: Partial<SetOnSaleReq> = {};
   requestData = {
     price,
-    currency,
+    currency: currency.name,
     amount,
   };
 
@@ -36,6 +35,7 @@ export function* setOnSaleSaga({
         id: internalId,
         isSingle,
         web3Provider,
+        currency,
       },
     });
 

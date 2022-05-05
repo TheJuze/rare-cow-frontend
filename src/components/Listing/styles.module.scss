@@ -1,0 +1,54 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.listing {
+  width: 100%;
+  &Type {
+    margin-bottom: space(16) !important;
+  }
+  &Timestamp {
+    margin-bottom: space(16) !important;
+    @include flex(row, center, flex-start);
+    &Item {
+      flex: 0 0 68px;
+      height: 44px;
+      &:not(:last-child) {
+        margin-right: space(8);
+      }
+    }
+  }
+  &Currency {
+    margin-bottom: space(16) !important;
+    @include flex(row, center, flex-start, wrap);
+    &Item {
+      &Body {
+        @include flex(row, center, flex-start);
+      }
+      &Icon {
+        margin-right: space(8);
+      }
+      &Wrapper {
+        flex: 0 0 50%;
+        padding-bottom: space(8);
+        &:nth-child(odd) {
+          padding-right: space(4);
+        }
+        &:nth-child(even) {
+          padding-left: space(4);
+        }
+      }
+    }
+  }
+  &Bottom {
+    @include flex(row, center, flex-start, wrap);
+    & > div {
+      flex: 0 0 50%;
+      margin-right: space(16) !important;
+    }
+    &Button{
+        margin-top: 2px;
+        height: 35px;
+    }
+  }
+}

@@ -1,6 +1,13 @@
 import { fees, standardsMap, TStandards } from 'appConstants';
 import { Text } from 'components';
-import React, { useCallback, useMemo, VFC } from 'react';
+import { useShallowSelector } from 'hooks';
+import React, {
+  useCallback, useEffect, useMemo, VFC,
+} from 'react';
+import { useDispatch } from 'react-redux';
+import { getCategories } from 'store/nfts/actions';
+import { getSelfCollections } from 'store/user/actions';
+import userSelector from 'store/user/selectors';
 import { ICreateForm } from 'types';
 import { CreateNFTForm } from './Form';
 
@@ -35,9 +42,20 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
     [createType],
   );
 
+  const dispatch = useDispatch();
+  const chain = useShallowSelector(userSelector.getProp('chain'));
+
   const handleSubmit = useCallback((values: ICreateForm) => {
     console.log(values);
   }, []);
+
+  useEffect(() => {
+    dispatch(getCategories({}));
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getSelfCollections({ network: chain }));
+  }, [chain, dispatch]);
 
   return (
     <section className={styles.create}>
@@ -52,7 +70,7 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
         </div>
       </div>
       <div>
-        <CreateNFTForm formValues={initialValues} handleSubmit={handleSubmit} />
+        <CreateNFTForm type={createType} formValues={initialValues} handleSubmit={handleSubmit} />
       </div>
     </section>
   );

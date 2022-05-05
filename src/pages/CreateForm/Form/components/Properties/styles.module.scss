@@ -1,0 +1,53 @@
+@import '/src/styles/helpers.scss';
+
+.properties-wrapper {
+  margin-bottom: space(60);
+  position: relative;
+  &__title {
+    line-height: 32px;
+    margin-bottom: 17px;
+  }
+  &__body {
+    margin-bottom: 16px;
+    max-height: 500px;
+    overflow-x: hidden;
+    @include flex(column, center, flex-start);
+  }
+  &__add{
+    margin-top: space(16) !important;
+  }
+}
+
+.single-prop__body {
+  padding: space(24);
+  background: var(--property-block-background);
+  border-radius: 20px;
+  width: 100%;
+  position: relative;
+  @include flex(row, center, flex-start);
+  &:not(:last-child) {
+    margin-bottom: space(16);
+  }
+  &-inputs {
+    margin-bottom: space(16);
+    @include flex(row, flex-start, space-between);
+    &__input {
+      width: 90%;
+    }
+  }
+  &__remove {
+    position: absolute;
+    top: 0;
+    right: 0;
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+@include large-mobile {
+  .single-prop__body {
+    padding: space(24, 20);
+  }
+}

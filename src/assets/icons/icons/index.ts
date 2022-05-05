@@ -24,6 +24,7 @@ export { Promo } from './components/Promo';
 export { Dots } from './components/Dots';
 export { FiltersIcon } from './components/Filters';
 export { ImageIconSVG } from './components/ImageIcon';
+export { TrashIcon } from './components/Trash';
 export { ArrowGreen } from './components/ArrowGreen';
 export * from './socials';
 export * from './pages';

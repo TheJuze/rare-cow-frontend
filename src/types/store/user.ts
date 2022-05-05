@@ -1,5 +1,5 @@
 import { Collection } from 'types/api/Collection';
-import { IChainType } from 'types/connect';
+import { Chains, IChainType } from 'types/connect';
 
 export type UserState = {
   id: number | null;
@@ -8,7 +8,7 @@ export type UserState = {
   balance: string | number;
   key: string;
   provider: string;
-  chain: string;
+  chain: Chains;
   displayName: string;
   collections: Collection[];
   isWhitelisted: boolean,

@@ -1,9 +1,8 @@
 export default [
   {
     inputs: [
-      { internalType: 'contract IERC721', name: '_token721', type: 'address' },
-      { internalType: 'contract IERC1155', name: '_token1155', type: 'address' },
-      { internalType: 'contract IERC20', name: '_token20', type: 'address' },
+      { internalType: 'address', name: '_signer', type: 'address' },
+      { internalType: 'address', name: '_feeReceiver', type: 'address' },
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',
@@ -12,48 +11,13 @@ export default [
     anonymous: false,
     inputs: [
       {
-        indexed: true, internalType: 'bytes32', name: 'role', type: 'bytes32',
+        indexed: true, internalType: 'address', name: 'previousOwner', type: 'address',
       },
       {
-        indexed: true, internalType: 'bytes32', name: 'previousAdminRole', type: 'bytes32',
-      },
-      {
-        indexed: true, internalType: 'bytes32', name: 'newAdminRole', type: 'bytes32',
+        indexed: true, internalType: 'address', name: 'newOwner', type: 'address',
       },
     ],
-    name: 'RoleAdminChanged',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true, internalType: 'bytes32', name: 'role', type: 'bytes32',
-      },
-      {
-        indexed: true, internalType: 'address', name: 'account', type: 'address',
-      },
-      {
-        indexed: true, internalType: 'address', name: 'sender', type: 'address',
-      },
-    ],
-    name: 'RoleGranted',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true, internalType: 'bytes32', name: 'role', type: 'bytes32',
-      },
-      {
-        indexed: true, internalType: 'address', name: 'account', type: 'address',
-      },
-      {
-        indexed: true, internalType: 'address', name: 'sender', type: 'address',
-      },
-    ],
-    name: 'RoleRevoked',
+    name: 'OwnershipTransferred',
     type: 'event',
   },
   {
@@ -64,6 +28,9 @@ export default [
       },
       {
         indexed: false, internalType: 'address[2]', name: 'fromTo', type: 'address[2]',
+      },
+      {
+        indexed: false, internalType: 'address[2]', name: 'instance', type: 'address[2]',
       },
       {
         indexed: false, internalType: 'uint256[2]', name: 'idAndAmount', type: 'uint256[2]',
@@ -77,43 +44,8 @@ export default [
   },
   {
     inputs: [],
-    name: 'DEFAULT_ADMIN_ROLE',
-    outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
     name: 'PERCENT_DENOMINATOR',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'SIGNER_ROLE',
-    outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'TOKEN_1155',
-    outputs: [{ internalType: 'contract IERC1155', name: '', type: 'address' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'TOKEN_20',
-    outputs: [{ internalType: 'contract IERC20', name: '', type: 'address' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'TOKEN_721',
-    outputs: [{ internalType: 'contract IERC721', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
   },
@@ -134,6 +66,7 @@ export default [
   {
     inputs: [
       { internalType: 'address[2][]', name: 'fromTo', type: 'address[2][]' },
+      { internalType: 'address[2][]', name: 'instance', type: 'address[2][]' },
       { internalType: 'uint256[2][]', name: 'idAndAmount', type: 'uint256[2][]' },
       { internalType: 'uint256[]', name: 'amount', type: 'uint256[]' },
     ],
@@ -143,48 +76,15 @@ export default [
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'bytes32', name: 'role', type: 'bytes32' }],
-    name: 'getRoleAdmin',
-    outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
+    inputs: [],
+    name: 'owner',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      { internalType: 'bytes32', name: 'role', type: 'bytes32' },
-      { internalType: 'address', name: 'account', type: 'address' },
-    ],
-    name: 'grantRole',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      { internalType: 'bytes32', name: 'role', type: 'bytes32' },
-      { internalType: 'address', name: 'account', type: 'address' },
-    ],
-    name: 'hasRole',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      { internalType: 'bytes32', name: 'role', type: 'bytes32' },
-      { internalType: 'address', name: 'account', type: 'address' },
-    ],
-    name: 'renounceRole',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      { internalType: 'bytes32', name: 'role', type: 'bytes32' },
-      { internalType: 'address', name: 'account', type: 'address' },
-    ],
-    name: 'revokeRole',
+    inputs: [],
+    name: 'renounceOwnership',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -204,9 +104,16 @@ export default [
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'bytes4', name: 'interfaceId', type: 'bytes4' }],
-    name: 'supportsInterface',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    inputs: [{ internalType: 'address', name: '_signer', type: 'address' }],
+    name: 'setSigner',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'signer',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
   },
@@ -214,12 +121,20 @@ export default [
     inputs: [
       { internalType: 'uint256', name: 'orderID', type: 'uint256' },
       { internalType: 'address[2]', name: 'fromTo', type: 'address[2]' },
+      { internalType: 'address[2]', name: 'instance', type: 'address[2]' },
       { internalType: 'uint256[2]', name: 'idAndAmount', type: 'uint256[2]' },
       { internalType: 'uint256', name: 'amount', type: 'uint256' },
       { internalType: 'uint256', name: 'deadline', type: 'uint256' },
       { internalType: 'bytes', name: 'signature', type: 'bytes' },
     ],
     name: 'trade',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'newOwner', type: 'address' }],
+    name: 'transferOwnership',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',

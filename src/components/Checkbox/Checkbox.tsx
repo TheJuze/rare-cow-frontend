@@ -27,7 +27,7 @@ export const Checkbox: FC<CheckboxProps> = ({
   value,
   onChange,
   id = '',
-}): JSX.Element => (
+}) => (
   <label htmlFor={`toggle-${id}`} className={cn('checkbox', className, { disabled })}>
     <input
       id={`toggle-${id}`}

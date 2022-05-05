@@ -31,6 +31,8 @@
 @import './component-variables/scrollbar';
 @import './component-variables/create-form';
 @import './component-variables/file-uploader';
+@import './component-variables/properties';
+@import './component-variables/avatar-uploader';
 @import './component-variables/nft-page';
 
 :root {
@@ -68,6 +70,8 @@
 		$scrollbarColorsDefault,
 		$createFormColorsDefault,
 		$fileUploaderColorsDefault,
+		$propertiesColorsDefault,
+		$avatarUploaderColorsDefault,
 		$nftpageColorsDefault
 	);
 

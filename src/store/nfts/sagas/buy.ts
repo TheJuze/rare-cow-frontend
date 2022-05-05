@@ -11,11 +11,10 @@ import userSelector from 'store/user/selectors';
 
 import BigNumber from 'bignumber.js';
 
-import { contractsConfig, ContractsNames } from 'config';
-import { isMainnet } from 'config/constants';
+import { ContractsNames } from 'config';
 import { getTokenAmount } from 'utils';
 
-import { Chains, Modals } from 'types';
+import { Modals } from 'types';
 
 import { buy } from '../actions';
 import actionTypes from '../actionTypes';
@@ -25,7 +24,7 @@ import { getDetailedNftSaga } from './getDetailedNft';
 export function* buySaga({
   type,
   payload: {
-    id, amount, tokenAmount, sellerId, web3Provider,
+    id, amount, tokenAmount, sellerId, web3Provider, currency,
   },
 }: ReturnType<typeof buy>) {
   yield put(apiActions.request(type));
@@ -34,15 +33,6 @@ export function* buySaga({
   // @ts-ignore
   const address = yield select(userSelector.getProp('address'));
   try {
-    const marketpalceAddress =
-      contractsConfig.contracts[ContractsNames.marketpalce][isMainnet ? 'mainnet' : 'testnet']
-        .address[Chains.bsc];
-
-    const tokenAddress =
-      contractsConfig?.contracts[ContractsNames.token][isMainnet ? 'mainnet' : 'testnet'].address[
-        Chains.bsc
-      ];
-
     yield call(approveSaga, {
       type: actionTypes.APPROVE,
       payload: {
@@ -50,8 +40,9 @@ export function* buySaga({
         amount: getTokenAmount(
           new BigNumber(amount).times(new BigNumber(tokenAmount || 1)).toFixed(),
         ),
-        spender: marketpalceAddress,
-        tokenAddress,
+        spender: ContractsNames.marketplace,
+        approveAddress: currency.isNative ? '' : ContractsNames[currency.name],
+        currency,
       },
     });
 
@@ -85,13 +76,13 @@ export function* buySaga({
         },
       });
 
-      yield put(
-        setActiveModal({
-          activeModal: Modals.SendSuccess,
-          open: true,
-          txHash: transactionHash,
-        }),
-      );
+      // yield put(
+      //   setActiveModal({
+      //     activeModal: Modals.SendSuccess,
+      //     open: true,
+      //     txHash: transactionHash,
+      //   }),
+      // );
 
       yield put(apiActions.success(type));
     } else {

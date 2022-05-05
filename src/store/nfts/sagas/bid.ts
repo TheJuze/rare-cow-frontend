@@ -3,11 +3,8 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
 
-import { contractsConfig, ContractsNames } from 'config';
-import { isMainnet } from 'config/constants';
+import { ContractsNames } from 'config';
 import { getTokenAmount } from 'utils';
-
-import { Chains } from 'types';
 
 import { bid } from '../actions';
 import actionTypes from '../actionTypes';
@@ -23,28 +20,21 @@ export function* bidNftSaga({
   yield put(apiActions.request(type));
 
   try {
-    const marketpalceAddress =
-      contractsConfig.contracts[ContractsNames.marketpalce][isMainnet ? 'mainnet' : 'testnet']
-        .address[Chains.bsc];
-    const tokenAddress =
-      contractsConfig.contracts[ContractsNames.token][isMainnet ? 'mainnet' : 'testnet'].address[
-        Chains.bsc
-      ];
-
     yield call(approveSaga, {
       type: actionTypes.APPROVE,
       payload: {
         web3Provider,
         amount: getTokenAmount(amount),
-        spender: marketpalceAddress,
-        tokenAddress,
+        spender: ContractsNames.marketplace,
+        approveAddress: currency.isNative ? '' : ContractsNames[currency.name],
+        currency,
       },
     });
 
     yield call(baseApi.bid, {
       token_id: id,
       amount,
-      currency,
+      currency: currency.name,
     });
 
     yield call(getDetailedNftSaga, {

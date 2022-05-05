@@ -9,7 +9,7 @@ import { validateStatus } from '../../utils/validateStatus';
 import userSelector from '../user/selectors';
 
 const client: AxiosInstance = axios.create({
-  baseURL: 'https://phenom.rocknblock.io/api/v1/',
+  baseURL: 'https://rarecow.rocknblock.io/api/v1/',
   validateStatus,
 });
 

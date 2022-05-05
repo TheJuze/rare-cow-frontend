@@ -1,0 +1,54 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.collections {
+  &Item {
+    height: 57px;
+    border-bottom: var(--searchCollection-border-width) solid
+      var(--searchCollection-item-border-color);
+    @include flex(row, center, flex-start);
+    .avatar {
+      margin-right: space(12);
+    }
+    .name {
+      @include ellipsis;
+    }
+  }
+}
+
+.collection-section__wrapper {
+  margin-bottom: space(32);
+  background: var(--property-block-background);
+  border-radius: 20px;
+  padding: space(24);
+  &__title {
+    margin-bottom: space(24) !important;
+    @include flex(row, center, flex-start);
+    .selector-btn {
+      margin-right: 10px;
+    }
+  }
+  &__body {
+    padding: 0 2px;
+    opacity: 0.5;
+    pointer-events: none;
+    @include transition;
+    &.collections-active {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+  &__add {
+    margin-top: space(24);
+    .collection-section__wrapper {
+      &__add {
+        &-body {
+          &__detail {
+            margin-left: space(4);
+          }
+        }
+      }
+    }
+  }
+}

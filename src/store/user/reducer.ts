@@ -11,7 +11,7 @@ const initialState: UserState = {
   provider: '',
   displayName: '',
   collections: [],
-  chain: Chains.bsc,
+  chain: Chains.polygon,
   isWhitelisted: false,
   rate: '',
   chainType: 'testnet',
@@ -62,6 +62,9 @@ export const userReducer = createSlice({
   },
 });
 
-export const { disconnectWalletState, updateUserState } = userReducer.actions;
+export const {
+  disconnectWalletState, updateUserState, updateProvider, updateCollections,
+} =
+  userReducer.actions;
 
 export default userReducer.reducer;

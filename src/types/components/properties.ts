@@ -3,3 +3,9 @@ export type TProperty = {
   type: string;
   id: number;
 };
+
+export type TSingleProp = {
+  id: number;
+  name: string;
+  type: string;
+};

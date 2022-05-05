@@ -1,18 +1,25 @@
-import { createValidator } from 'appConstants';
+import { createValidator, standardsMap, TStandards } from 'appConstants';
 import {
-  Dropdown, FileUploader, Input, Text,
+  Checkbox, Dropdown, FileUploader, Input, Listing, Text,
 } from 'components';
 import { Field, Form, Formik } from 'formik';
-import { useShallowSelector } from 'hooks';
-import React, { VFC } from 'react';
-import { EInputStatus, ICreateForm, TInputCaption } from 'types';
+import { useSearch, useShallowSelector } from 'hooks';
+import React, { useMemo, VFC } from 'react';
+import {
+  EInputStatus, ICreateForm, TInputCaption, TSingleProp,
+} from 'types';
 import nftSelector from 'store/nfts/selectors';
+import userSelector from 'store/user/selectors';
 
+import { HighlightedText } from 'components/HighlightedText';
+import cx from 'clsx';
 import styles from './styles.module.scss';
+import { Collections, Properties } from './components';
 
 interface ICreateNFTForm {
   handleSubmit: (values: ICreateForm) => void;
   formValues: ICreateForm;
+  type: TStandards;
 }
 
 const captionGenerator = (touched: boolean, errors: string | undefined) => {
@@ -24,14 +31,24 @@ const captionGenerator = (touched: boolean, errors: string | undefined) => {
   return inputState;
 };
 
-export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues }) => {
+export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues, type }) => {
   const categories = useShallowSelector(nftSelector.getProp('categories'));
+  const collections = useShallowSelector(userSelector.getProp('collections'));
+
+  const searchValues = useSearch();
+
+  const filteredCategories = useMemo(
+    () => categories.filter((category) => category.name.includes(searchValues.searchValue)),
+    [categories, searchValues],
+  );
+
   return (
     <Formik initialValues={{ ...formValues }} onSubmit={handleSubmit} enableReinitialize>
       {({
-        errors, touched, values, handleChange, handleBlur, setFieldValue,
+        errors, touched, values, handleBlur, setFieldValue,
       }) => (
         <Form className={styles.wrapper}>
+          {console.log(values)}
           <div className={styles.uploader}>
             <Field id="media" name="media" required>
               {() => <FileUploader onUpload={(file) => setFieldValue('media', file[0])} />}
@@ -42,14 +59,14 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues })
               Information
             </Text>
             <Field id="name" name="name" required>
-              {({ form: { isSubmitting } }) => (
+              {({ field, form: { isSubmitting, handleChange: fieldChange } }) => (
                 <Input
                   name="nftName"
                   id="nftName"
-                  value={values.name}
-                  onChange={handleChange('name')}
+                  value={field.value}
+                  onChange={fieldChange('name')}
                   onBlur={handleBlur}
-                  caption={captionGenerator(touched.name, errors.name)}
+                  caption={captionGenerator(touched[field.name], errors[field.name])}
                   disabled={isSubmitting}
                   label="Name"
                   placeholder="Name"
@@ -58,15 +75,15 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues })
               )}
             </Field>
             <Field id="description" name="description" required>
-              {({ form: { isSubmitting } }) => (
+              {({ field, form: { isSubmitting, handleChange: fieldChange } }) => (
                 <>
                   <Input
                     name="nftDescription"
                     id="nftDescription"
-                    value={values.description}
-                    onChange={handleChange('description')}
+                    value={field.value}
+                    onChange={fieldChange('description')}
                     onBlur={handleBlur}
-                    caption={captionGenerator(touched.description, errors.description)}
+                    caption={captionGenerator(touched[field.name], errors[field.name])}
                     disabled={isSubmitting}
                     label="Description"
                     placeholder="Default"
@@ -74,20 +91,78 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues })
                     className={styles.fullSize}
                   />
                   <Text className={styles.counter} size="xs" weight="normal">
-                    {values.description.length} / {createValidator.description.max}
+                    {field.value.length} / {createValidator.description.max}
                   </Text>
                 </>
               )}
             </Field>
             <Field id="category" name="category" required>
-              {({ form: { isSubmitting } }) => (
+              {({ field, form: { isSubmitting } }) => (
                 <Dropdown
-                  value={{ id: values.category?.id.toString() || '0', content: values.category?.name || 'Category' }}
+                  value={field.value}
+                  placeholder="Choose category"
+                  label="Category"
                   disabled={isSubmitting}
-                  options={categories?.map((c) => ({ id: c?.id.toString(), content: c?.name }))}
+                  options={
+                    filteredCategories.length
+                      ? filteredCategories.map((c) => ({
+                        id: c.id.toString(),
+                        content: (
+                          <HighlightedText text={c.name} filter={searchValues.searchValue} />
+                        ),
+                      }))
+                      : []
+                  }
                   name="nftCategory"
                   setValue={(category) => setFieldValue('category', category)}
+                  withSearch
+                  dropPosition="absolute"
+                  variant="outlined"
+                  closeOnSelect
+                  {...searchValues}
                 />
+              )}
+            </Field>
+            <Field id="properties" name="properties">
+              {() => (
+                <Properties
+                  initProps={values.properties}
+                  setProps={(value: TSingleProp[]) => setFieldValue('properties', value)}
+                  onBlur={handleBlur('properties')}
+                  initErrors={touched.properties && errors.properties}
+                />
+              )}
+            </Field>
+            <Field id="collections" name="collections">
+              {() => (
+                <Collections
+                  initCollections={collections}
+                  setIsCollectionsAdded={(value: boolean) => setFieldValue('collections', { ...values.collections, withCollection: value })}
+                  isCollectionsAdded={values.collections.withCollection}
+                  setSelectedCollection={(value) => setFieldValue('collections', { ...values.collections, collections: value })}
+                  type={standardsMap[type].toLowerCase()}
+                />
+              )}
+            </Field>
+            <Field id="listing" name="listing">
+              {({ field }) => (
+                <div className={styles.listing}>
+                  <Checkbox
+                    value={field.value.listNow}
+                    onChange={() => setFieldValue('listing', {
+                      ...values.listing,
+                      listNow: !values.listing.listNow,
+                    })}
+                    className={styles.listingCheckbox}
+                  >
+                    <Text weight="normal" color="dark0">
+                      List for sale now
+                    </Text>
+                  </Checkbox>
+                  <div className={cx(styles.listingBody, { [styles.active]: field.value.listNow })}>
+                    <Listing />
+                  </div>
+                </div>
               )}
             </Field>
           </div>

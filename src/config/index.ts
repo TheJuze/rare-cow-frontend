@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Chains, IConnectWallet, IContracts } from 'types';
+import {
+  Chains, ChainsEnum, IConnectWallet, IContracts,
+} from 'types';
+import Web3 from 'web3';
 
 import {
   erc20Abi, erc721Abi, erc1155Abi, marketPlaceAbi, whitelistAbi,
@@ -17,8 +20,8 @@ export const chains: {
     scanner?: string;
   };
 } = {
-  'Binance-Smart-Chain': {
-    name: 'Binance-Smart-Chain',
+  [ChainsEnum['Binance-Smart-Chain']]: {
+    name: ChainsEnum['Binance-Smart-Chain'],
     chainId: isMainnet ? 56 : 97,
     provider: {
       MetaMask: { name: 'MetaMask' },
@@ -39,9 +42,29 @@ export const chains: {
     },
     scanner: isMainnet ? 'https://bscscan.com/' : 'https://testnet.bscscan.com/',
   },
+  [ChainsEnum.Polygon]: {
+    name: ChainsEnum.Polygon,
+    chainId: isMainnet ? 137 : 80001,
+    provider: {
+      MetaMask: { name: 'MetaMask' },
+      chainName: ChainsEnum.Polygon,
+      nativeCurrency: {
+        name: 'MATIC',
+        symbol: 'MATIC',
+        decimals: 18,
+      },
+      rpc: isMainnet
+        ? 'https://rpc-mainnet.maticvigil.com/'
+        : 'https://matic-mumbai.chainstacklabs.com',
+      blockExplorerUrl: isMainnet
+        ? 'https://explorer.matic.network/'
+        : 'https://mumbai.polygonscan.com/',
+    },
+    scanner: isMainnet ? 'https://explorer.matic.network/' : 'https://mumbai.polygonscan.com/',
+  },
 };
 
-export const connectWallet = (newChainName: string): IConnectWallet => {
+export const connectWallet = (newChainName: Chains): IConnectWallet => {
   const chain = chains[newChainName];
   return {
     network: {
@@ -55,8 +78,8 @@ export const connectWallet = (newChainName: string): IConnectWallet => {
 
 // eslint-disable-next-line no-shadow
 export enum ContractsNames {
-  token = 'token',
-  marketpalce = 'marketpalce',
+  USDT = 'USDT',
+  marketplace = 'marketplace',
   erc721 = 'erc721',
   erc1155 = 'erc1155',
   whitelist = 'whitelist',
@@ -72,20 +95,23 @@ export const contractsConfig: IContracts = {
       testnet: {
         address: {
           [Chains.bsc]: '0x3F79F1DEDc1596179d8fCfd62270eCCC344C6517',
+          [Chains.polygon]: '0x3F79F1DEDc1596179d8fCfd62270eCCC344C6517', // replace to polygon address
         },
         abi: whitelistAbi,
       },
       mainnet: {
         address: {
           [Chains.bsc]: '',
+          [Chains.polygon]: '',
         },
         abi: whitelistAbi,
       },
     },
-    [ContractsNames.token]: {
+    [ContractsNames.USDT]: {
       testnet: {
         address: {
           [Chains.bsc]: '0xcec38C5b1B4b869835623CFCB7F42a206589A446',
+          [Chains.polygon]: '0xcec38C5b1B4b869835623CFCB7F42a206589A446', // replace to polygon address
         },
         abi: erc20Abi,
       },
@@ -96,10 +122,11 @@ export const contractsConfig: IContracts = {
         abi: erc20Abi,
       },
     },
-    [ContractsNames.marketpalce]: {
+    [ContractsNames.marketplace]: {
       testnet: {
         address: {
           [Chains.bsc]: '0xFfa329d313d371ECC595539847a300eF231bEafB',
+          [Chains.polygon]: '0x7d65562e92C803079EaB260AB3Ef6FBcC4d1e04c',
         },
         abi: marketPlaceAbi,
       },
@@ -114,6 +141,7 @@ export const contractsConfig: IContracts = {
       testnet: {
         address: {
           [Chains.bsc]: '0xbA9669b82011ed728A87278CD6B9Daf6A8Bf11F9',
+          [Chains.polygon]: '0xC3ff779C932B6f75716c159318C02cF52cCB4056',
         },
         abi: erc721Abi,
       },
@@ -128,6 +156,7 @@ export const contractsConfig: IContracts = {
       testnet: {
         address: {
           [Chains.bsc]: '0xf58248adaDE39b1ECA2e59Ff6219642aE0Ea2Bf5',
+          [Chains.polygon]: '0x87e2F2bD5f60A8bb4eAEB24caAA280eA1d1559c0',
         },
         abi: erc1155Abi,
       },
@@ -139,4 +168,49 @@ export const contractsConfig: IContracts = {
       },
     },
   },
+};
+
+type TGetContractAddress = {
+  contractName: ContractsNames;
+  reqInfo?: 'all' | 'address' | 'abi';
+  mainnet?: boolean;
+  chain?: Chains;
+};
+
+export const getContractInfo = ({
+  contractName,
+  reqInfo = 'all',
+  mainnet = isMainnet,
+  chain = Chains.bsc,
+}: TGetContractAddress) => {
+  const {
+    abi,
+    address: { [chain]: address },
+  } = contractsConfig.contracts[contractName][mainnet ? 'mainnet' : 'testnet'];
+  return {
+    all: { abi, address },
+    address: { address },
+    abi: { abi },
+  }[reqInfo];
+};
+
+type TContractGetterProperties = {
+  web3Provider: Web3;
+  contractName: ContractsNames;
+  mainnet?: boolean;
+  chain?: Chains;
+};
+
+export const generateContract = ({
+  web3Provider,
+  contractName,
+  mainnet = isMainnet,
+  chain = Chains.bsc,
+}: TContractGetterProperties) => {
+  if (web3Provider) {
+    const { abi, address } = getContractInfo({ contractName, mainnet, chain });
+    return new web3Provider.eth.Contract(abi, address);
+  }
+  console.log('%c web3 provider is not passed, return null', 'background: #b00020; color: #ffffff');
+  return null;
 };
