@@ -168,7 +168,7 @@ const UploadAvatar: VFC<IUploadAvatar> = ({
   }, [onLoadEnd]);
 
   return (
-    <>
+    <div className={styles['upload-avatar']}>
       <section
         className={cn(styles['upload-avatar__wrapper'], className, {
           [styles['failed-load']]: failed,
@@ -207,7 +207,7 @@ const UploadAvatar: VFC<IUploadAvatar> = ({
             [styles['avatar-active']]: fileURL,
           })}
         >
-          <ImagePreview src={fileURL || ''} alt="" />
+          <ImagePreview cover="cover" src={fileURL || ''} alt="" />
         </div>
       </section>
       <div
@@ -215,9 +215,9 @@ const UploadAvatar: VFC<IUploadAvatar> = ({
           [styles['with-delete']]: fileURL,
         })}
       >
-        <Button onClick={() => onDelete()} icon={<TrashIcon />} />
+        <Button onClick={() => onDelete()} variant="text" icon={<TrashIcon />} />
       </div>
-    </>
+    </div>
   );
 };
 

@@ -2,7 +2,7 @@
 /* eslint-disable implicit-arrow-linebreak */
 import {
   Collection,
-  Create, CreateForm, Explore, Home, NftPage,
+  Create, CreateCollection, CreateForm, Explore, Home, NftPage,
 } from 'pages';
 import React, { ReactElement } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
@@ -60,7 +60,7 @@ const routesConfig = {
         },
         collection: {
           path: 'collection/:type',
-          content: <CreateForm createType="ERC1155" />,
+          content: <CreateCollection />,
           label: '{{type | capitalize}} collection',
         },
       },

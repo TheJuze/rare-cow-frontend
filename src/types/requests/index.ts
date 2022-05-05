@@ -228,6 +228,7 @@ export type SearchCollectionAction = {
 
 export type RejectAction = {
   id: number | string;
+  type: 'token' | 'collection';
   owner?: number | string;
 };
 
@@ -253,4 +254,6 @@ export type GetLikedNFTsRequest = {
 
 export type CreateCollectionAction = {
   collection: FormData;
+  web3Provider: Web3;
+  onEnd?: () => void;
 } & RequestWithNetwork;

@@ -73,6 +73,7 @@ export function* endAuctionSaga({
   } catch (err: unknown) {
     yield call(baseApi.buyReject, {
       id,
+      type: 'token',
     });
     // yield put(
     //   setActiveModal({

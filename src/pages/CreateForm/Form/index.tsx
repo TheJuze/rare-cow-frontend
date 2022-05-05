@@ -1,6 +1,6 @@
 import { createValidator, standardsMap, TStandards } from 'appConstants';
 import {
-  Checkbox, Dropdown, FileUploader, Input, Listing, Text,
+  Checkbox, Dropdown, Input, Listing, Text,
 } from 'components';
 import { Field, Form, Formik } from 'formik';
 import { useSearch, useShallowSelector } from 'hooks';
@@ -14,7 +14,7 @@ import userSelector from 'store/user/selectors';
 import { HighlightedText } from 'components/HighlightedText';
 import cx from 'clsx';
 import styles from './styles.module.scss';
-import { Collections, Properties } from './components';
+import { Collections, Properties, UploadMedia } from './components';
 
 interface ICreateNFTForm {
   handleSubmit: (values: ICreateForm) => void;
@@ -50,7 +50,7 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues, t
         <Form className={styles.wrapper}>
           <div className={styles.uploader}>
             <Field id="media" name="media" required>
-              {() => <FileUploader onUpload={(file) => setFieldValue('media', file[0])} />}
+              {() => <UploadMedia />}
             </Field>
           </div>
           <div className={styles.information}>

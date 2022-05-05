@@ -11,16 +11,24 @@
   }
 }
 
-.audio{
-    margin-top: space(20);
-    &Container{
-        @include flex(column, center, flex-start);
-    }
+.audio {
+  margin-top: space(20);
+  &Container {
+    @include flex(column, center, flex-start);
+  }
 }
 
-.video{
-    margin-top: space(20);
-    &Container{
-        @include flex(column, center, flex-start);
-    }
+.video {
+  margin-top: space(20);
+  &Container {
+    @include flex(column, center, flex-start);
+  }
+}
+
+.cover {
+  object-fit: cover;
+}
+
+.contain {
+  object-fit: contain;
 }

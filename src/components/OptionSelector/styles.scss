@@ -9,7 +9,7 @@ $radio-inner-size: calc($radio-size / 2);
   &.horizontal {
     @include flex(row, center, flex-start);
     & > *:not(:last-child) {
-      margin-right: space(12);
+      margin-right: space(24);
     }
   }
   &.vertical {

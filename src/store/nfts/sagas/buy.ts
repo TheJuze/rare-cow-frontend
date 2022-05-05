@@ -91,6 +91,7 @@ export function* buySaga({
   } catch (e: unknown) {
     yield call(baseApi.buyReject, {
       id,
+      type: 'token',
       owner: sellerId,
     });
     // if (typeof e === 'number') {
