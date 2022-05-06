@@ -6,6 +6,7 @@ import { Category } from 'types/api/Category';
 import { ContractsNames } from 'config';
 import { TCurrencies } from 'appConstants';
 import { Chains } from 'types/connect';
+import { Rewrite } from 'types';
 
 export type BodyWithToken<T = never> = {
   token?: string;
@@ -139,7 +140,7 @@ export type BuyReq = {
   tokenAmount?: string | number;
   sellerId?: number | string;
   web3Provider: Web3;
-  currency: TCurrencies,
+  currency: TCurrencies;
 };
 
 export type LikeReq = {
@@ -185,6 +186,7 @@ export type SearchNftReq = {
   owner?: string | number;
   text?: string;
   standart?: string;
+  creator?: string;
 };
 
 export type TransferTokenReq = {
@@ -211,8 +213,19 @@ export type SearchTrendingsReq = {
   category?: string | number;
 };
 
+export type GetCategoriesReq = {
+  name?: string;
+};
+
 export type SearchNftAction = {
   requestData: SearchNftReq;
+  shouldConcat?: boolean;
+};
+
+export type SearchAction = {
+  requestData: Partial<
+  Rewrite<SearchNftReq, 'type', { type: 'items' | 'collections' | 'users' | 'categories' }>
+  >;
   shouldConcat?: boolean;
 };
 
@@ -246,6 +259,12 @@ export type RequestWithNetwork = {
   network: Chains;
 };
 
+export type RequestWithCallbacks = {
+  onSuccess?: () => void;
+  onError?: () => void;
+  onEnd?: () => void;
+};
+
 export type GetLikedNFTsRequest = {
   page: number | string;
   userId: number | string;
@@ -255,5 +274,10 @@ export type GetLikedNFTsRequest = {
 export type CreateCollectionAction = {
   collection: FormData;
   web3Provider: Web3;
-  onEnd?: () => void;
-} & RequestWithNetwork;
+} & RequestWithNetwork &
+RequestWithCallbacks;
+
+export type SendTransactionAction = {
+  web3Provider: Web3;
+  data: object;
+};

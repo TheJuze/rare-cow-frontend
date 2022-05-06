@@ -17,6 +17,30 @@
   }
 }
 
+.selected{
+  &Wrapper{
+    @include flex(row, center, flex-start);
+    background: var(--searchCollection-active-collection-background);
+    padding: space(16);
+    width: 100%;
+    margin-top: space(16) !important;
+    border-radius: spacing(2);
+    .avatar{
+      margin-right: space(16) !important;
+    }
+  }
+  &Delete{
+    margin-left: auto;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    svg{
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
 .collection-section__wrapper {
   margin-bottom: space(32);
   background: var(--property-block-background);

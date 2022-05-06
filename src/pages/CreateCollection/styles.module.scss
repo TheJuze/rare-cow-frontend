@@ -13,3 +13,15 @@
     }
   }
 }
+
+@include middle-tablet{
+  .create{
+    padding-top: space(24);
+    &Header{
+      @include flex(column, center, flex-start);
+      &MintingFee{
+        margin: space(8, 0, 16) !important;
+      }
+    }
+  }
+}

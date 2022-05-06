@@ -53,3 +53,14 @@
     }
   }
 }
+
+@include middle-tablet{
+  .wrapper{
+    @include flex(column, center, flex-start);
+    .uploader{
+      padding-right: 0;
+      margin-bottom: space(36);
+      @include flex(column, center, flex-start);
+    }
+  }
+}

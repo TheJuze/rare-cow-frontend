@@ -1,5 +1,6 @@
 import { URL } from 'appConstants';
 import {
+  GetCategoriesReq,
   RequestWithNetwork,
   SearchCollectionsReq,
   SearchNftReq,
@@ -58,10 +59,11 @@ export const baseApi = {
       params,
     });
   },
-  getCategories() {
+  getCategories(params: GetCategoriesReq) {
     return ajax({
       method: 'get',
       url: URL.getCategories,
+      params,
     });
   },
   trackTransaction(data: TrackTransactionReq) {

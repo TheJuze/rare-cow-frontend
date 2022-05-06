@@ -12,10 +12,9 @@ import actionTypes from '../actionTypes';
 
 export function* createCollectionSaga({ type, payload }: ReturnType<typeof createCollection>) {
   yield put(apiActions.request(type));
-
   try {
     const { data } = yield call(baseApi.createNewCollection, payload);
-    if (data.detail) {
+    if (!data.initial_tx) {
       Object.values(data).forEach((err) => {
         toast.error(err);
       });
@@ -30,6 +29,7 @@ export function* createCollectionSaga({ type, payload }: ReturnType<typeof creat
           from: address,
         });
         if (transactionHash) {
+          payload.onSuccess?.();
           toast.success('Collection created successfully');
           yield put(apiActions.success(type));
         }
@@ -45,7 +45,7 @@ export function* createCollectionSaga({ type, payload }: ReturnType<typeof creat
     }
   } catch (err) {
     toast.error('Something went wrong');
-    console.error(err);
+    payload.onError?.();
     yield put(apiActions.error(type, err));
   }
   payload.onEnd?.();

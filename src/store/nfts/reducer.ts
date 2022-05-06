@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { NftsState } from 'types';
+import { NftsState, SearchActionPayloadType } from 'types';
 import { TokenFull } from 'types/api/TokenFull';
 import { TResponseCategories } from 'types/requests';
 
@@ -11,6 +11,11 @@ const initialState: NftsState = {
   categories: [],
   totalPages: 0,
   trending: [],
+  searchData: {
+    categories: [],
+    collections: [],
+    users: [],
+  },
 };
 
 export const nftsReducer = createSlice({
@@ -24,6 +29,10 @@ export const nftsReducer = createSlice({
     setPresearchedNfts: (state, action: PayloadAction<TokenFull[]>) => ({
       ...state,
       presearchedNfts: action.payload,
+    }),
+    setSearchValues: (state, action: PayloadAction<SearchActionPayloadType>) => ({
+      ...state,
+      searchData: { ...state.searchData, [action.payload.key]: action.payload.values },
     }),
     setCategories: (state, action: PayloadAction<TResponseCategories>) => ({
       ...state,
@@ -71,6 +80,7 @@ export const {
   clearTrending,
   clearPresearchedNfts,
   setCategories,
+  setSearchValues,
 } = nftsReducer.actions;
 
 export default nftsReducer.reducer;

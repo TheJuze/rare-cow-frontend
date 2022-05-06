@@ -17,7 +17,7 @@ import uiSelector from 'store/ui/selectors';
 import styles from './styles.module.scss';
 
 interface ICreateCollectionForm {
-  handleSubmit: (values: ICreateCollection) => void;
+  handleSubmit: (values: ICreateCollection) => Promise<unknown>;
   formValues: ICreateCollection;
 }
 
@@ -47,7 +47,10 @@ export const CreateCollectionForm: VFC<ICreateCollectionForm> = ({ handleSubmit,
           .required(),
       })}
       initialValues={{ ...formValues }}
-      onSubmit={handleSubmit}
+      onSubmit={(values, actions) => {
+        actions.setSubmitting(true);
+        handleSubmit(values).finally(() => actions.setSubmitting(false));
+      }}
       enableReinitialize
       validateOnBlur
     >
@@ -157,7 +160,9 @@ export const CreateCollectionForm: VFC<ICreateCollectionForm> = ({ handleSubmit,
                     disabled: isSubmitting,
                   }))}
                   selected={{ value: field.value, content: `${standardsMap[field.value]} NFT` }}
-                  setSelected={(val: TOption) => setFieldValue('type', val.value)}
+                  setSelected={(val: TOption) => {
+                    setFieldValue('type', val.value);
+                  }}
                   className={styles.informationType}
                 />
               )}
@@ -181,6 +186,7 @@ export const CreateCollectionForm: VFC<ICreateCollectionForm> = ({ handleSubmit,
                   className={cx(styles.fullSize, styles.regular)}
                   variant="outlined"
                   to={routes.nest.create.path}
+                  disabled={collectionCreateRequest === RequestStatus.REQUEST}
                 >
                   Cancel
                 </Button>

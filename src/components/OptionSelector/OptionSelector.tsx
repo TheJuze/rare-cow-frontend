@@ -76,7 +76,7 @@ export const OptionSelector: VFC<OptionSelectorProps> = ({
           {...opt}
           name={name}
           selected={selected.value === opt.value}
-          onClick={() => onOptionClick(opt)}
+          onClick={onOptionClick(opt)}
         />
       ))}
     </section>
