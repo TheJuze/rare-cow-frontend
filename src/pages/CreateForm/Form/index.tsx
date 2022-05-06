@@ -10,7 +10,6 @@ import {
   EInputStatus, ICreateForm, TInputCaption, TSingleProp,
 } from 'types';
 import nftSelector from 'store/nfts/selectors';
-import userSelector from 'store/user/selectors';
 
 import { HighlightedText } from 'components/HighlightedText';
 import cx from 'clsx';
@@ -34,7 +33,7 @@ const captionGenerator = (touched: boolean, errors: string | undefined) => {
 
 export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues, type }) => {
   const categories = useShallowSelector(nftSelector.getProp('categories'));
-  const collections = useShallowSelector(userSelector.getProp('collections'));
+  const { collections } = useShallowSelector(nftSelector.getProp('searchData'));
 
   const searchValues = useSearch();
 
@@ -98,7 +97,9 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues, t
             </Field>
             <Field id="category" name="category" required>
               {({ field, form: { isSubmitting } }) => {
-                const currentValueById = categories.find((cat) => cat.id.toString() === field.value?.id);
+                const currentValueById = categories.find(
+                  (cat) => cat.id.toString() === field.value?.id,
+                );
                 const currentValue = currentValueById
                   ? { id: currentValueById.id.toString(), content: currentValueById.name }
                   : null;

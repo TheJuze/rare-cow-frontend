@@ -43,14 +43,19 @@ export const useSearch = (
     setSearchValue(newSearchValue);
   }, []);
 
-  const searchFunction = useCallback((text: string) => {
-    dispatch(
-      search({
-        ...searchData,
-        requestData: { ...initialSearchData, ...searchData.data, text },
-      }),
-    );
-  }, [dispatch, searchData]);
+  const searchFunction = useCallback(
+    (text: string) => {
+      if (text) {
+        dispatch(
+          search({
+            ...searchData,
+            requestData: { ...initialSearchData, ...searchData.data, text },
+          }),
+        );
+      }
+    },
+    [dispatch, searchData],
+  );
 
   const debouncedSearch = useRef(debounce(searchFunction, delay)).current;
 
