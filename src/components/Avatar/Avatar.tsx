@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable max-len */
 import React, { VFC } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,6 +8,7 @@ import { nullAvatar } from 'assets/img';
 
 import './styles.scss';
 import { FallbackImage } from 'containers/FallbackImage/FallbackImage';
+import { createDynamicLink, routes } from 'appConstants';
 
 export interface AvatarProps {
   id: number | string;
@@ -39,16 +41,14 @@ export const Avatar: VFC<AvatarProps> = ({
   withShadow = true,
   className,
 }) => {
-  console.log(isCollection, id, avatar, size);
   return (
     <div className={cn('wrapper', className)}>
       <Link
-        to="/"
-        // to={
-        //   isCollection
-        //     ? routes.collection.link(id || '')
-        //     : routes.profile.link(id || '', 'about-me')
-        // }
+        to={
+          isCollection
+            ? createDynamicLink(routes.nest.collection.path, { id })
+            : createDynamicLink(routes.nest.profile.nest.aboutMe.path, { userId: id })
+        }
         className={cn('avatar', {
           withAnim,
           withShadow,

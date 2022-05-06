@@ -35,7 +35,9 @@ const Header: VFC<IHeaderProps> = ({ collection }) => {
         </Text>
         <Text size="xs" color="dark" tag="span">
           Created by{' '}
-          <Link to={createDynamicLink(routes.nest.profile.path, { id: collection.creator.url })}>
+          <Link
+            to={createDynamicLink(routes.nest.profile.path, { userId: collection.creator.url })}
+          >
             <Text size="xs" color="accent" tag="span">
               {collection.creator.displayName || sliceString(collection.creator.address, 6, 4)}
             </Text>

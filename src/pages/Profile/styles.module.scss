@@ -1,0 +1,6 @@
+@import 'src/styles/helpers';
+
+.profile{
+  @include container;
+  max-width: 1440px;
+}

@@ -2,7 +2,7 @@
 /* eslint-disable implicit-arrow-linebreak */
 import {
   Collection,
-  Create, CreateCollection, CreateForm, Explore, Home, NftPage,
+  Create, CreateCollection, CreateForm, Explore, Home, NftPage, Profile,
 } from 'pages';
 import React, { ReactElement } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
@@ -26,13 +26,13 @@ const routesConfig = {
   label: 'Home',
   nest: {
     profile: {
-      path: 'profile/:id',
+      path: 'profile/:userId',
       render: false,
       nest: {
         aboutMe: {
           path: 'about-me',
-          content: 'About',
-          label: 'About {{id}}',
+          content: <Profile />,
+          label: 'About {{userId}}',
         },
         edit: {
           path: 'edit',

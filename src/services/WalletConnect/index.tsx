@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
@@ -6,6 +7,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -18,9 +20,7 @@ import userSelector from 'store/user/selectors';
 import { Subscription } from 'rxjs';
 
 import { useShallowSelector } from 'hooks';
-import {
-  Chains, State, UserState, WalletProviders,
-} from 'types';
+import { Chains, State, UserState, WalletProviders } from 'types';
 import { WalletService } from 'services/WalletService';
 import { login, updateUserInfo } from 'store/user/actions';
 
@@ -115,12 +115,12 @@ const WalletConnectContext: FC = ({ children }) => {
       connect(WalletProviders.metamask, Chains.polygon);
     }
   }, [WalletProvider, address, connect]);
-
-  return (
-    <Web3Context.Provider value={{ connect, disconnect, walletService: WalletConnect.current }}>
-      {children}
-    </Web3Context.Provider>
+  const values = useMemo(
+    () => ({ connect, disconnect, walletService: WalletConnect.current }),
+    [connect, disconnect],
   );
+
+  return <Web3Context.Provider value={values}>{children}</Web3Context.Provider>;
 };
 
 const useWalletConnectorContext = () => useContext(Web3Context);

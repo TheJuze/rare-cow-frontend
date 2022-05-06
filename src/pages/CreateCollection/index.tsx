@@ -18,7 +18,6 @@ const CreateCollection: VFC = () => {
   const dispatch = useDispatch();
   const chain = useShallowSelector(userSelector.getProp('chain'));
   const { walletService } = useWalletConnectorContext();
-
   const initialValues = useMemo<ICreateCollection>(
     () => ({
       name: '',
