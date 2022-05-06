@@ -17,8 +17,10 @@ const GET_TRENDING = 'GET_TRENDING' as const;
 const TRANSFER = 'TRANSFER' as const;
 const BURN = 'BURN' as const;
 const GET_LIKED = 'GET_LIKED' as const;
+const SEND_TRANSACTION = 'SEND_TRANSACTION' as const;
+const SEARCH = 'SEARCH' as const;
 
-export default {
+const nftActionTypes = {
   GET_CATEGORIES,
   CREATE_TOKEN,
   SEARCH_NFTS,
@@ -37,5 +39,9 @@ export default {
   GET_TRENDING,
   TRANSFER,
   BURN,
+  SEND_TRANSACTION,
   GET_LIKED,
+  SEARCH,
 };
+
+export default nftActionTypes;

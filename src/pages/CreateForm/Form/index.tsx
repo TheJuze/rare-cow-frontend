@@ -1,4 +1,5 @@
-import { createValidator, standardsMap, TStandards } from 'appConstants';
+/* eslint-disable max-len */
+import { createValidator, TStandards } from 'appConstants';
 import {
   Checkbox, Dropdown, Input, Listing, Text,
 } from 'components';
@@ -38,7 +39,7 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues, t
   const searchValues = useSearch();
 
   const filteredCategories = useMemo(
-    () => categories.filter((category) => category.name.includes(searchValues.searchValue)),
+    () => categories.filter((category) => category.name.toLowerCase().includes(searchValues.searchValue.toLowerCase())),
     [categories, searchValues],
   );
 
@@ -96,31 +97,39 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues, t
               )}
             </Field>
             <Field id="category" name="category" required>
-              {({ field, form: { isSubmitting } }) => (
-                <Dropdown
-                  value={field.value}
-                  placeholder="Choose category"
-                  label="Category"
-                  disabled={isSubmitting}
-                  options={
-                    filteredCategories.length
-                      ? filteredCategories.map((c) => ({
-                        id: c.id.toString(),
-                        content: (
-                          <HighlightedText text={c.name} filter={searchValues.searchValue} />
-                        ),
-                      }))
-                      : []
-                  }
-                  name="nftCategory"
-                  setValue={(category) => setFieldValue('category', category)}
-                  withSearch
-                  dropPosition="absolute"
-                  variant="outlined"
-                  closeOnSelect
-                  {...searchValues}
-                />
-              )}
+              {({ field, form: { isSubmitting } }) => {
+                const currentValueById = categories.find((cat) => cat.id.toString() === field.value?.id);
+                const currentValue = currentValueById
+                  ? { id: currentValueById.id.toString(), content: currentValueById.name }
+                  : null;
+                return (
+                  <Dropdown
+                    value={currentValue}
+                    placeholder="Choose category"
+                    label="Category"
+                    disabled={isSubmitting}
+                    options={
+                      filteredCategories.length
+                        ? filteredCategories.map((c) => ({
+                          id: c.id.toString(),
+                          content: searchValues.searchValue ? (
+                            <HighlightedText text={c.name} filter={searchValues.searchValue} />
+                          ) : (
+                            c.name
+                          ),
+                        }))
+                        : []
+                    }
+                    name="nftCategory"
+                    setValue={(category) => setFieldValue('category', category)}
+                    withSearch
+                    dropPosition="absolute"
+                    variant="outlined"
+                    closeOnSelect
+                    {...searchValues}
+                  />
+                );
+              }}
             </Field>
             <Field id="properties" name="properties">
               {() => (
@@ -135,11 +144,11 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues, t
             <Field id="collections" name="collections">
               {() => (
                 <Collections
-                  initCollections={collections}
+                  initCollections={collections.filter((c) => !c.isDefault && c.standart === type)}
                   setIsCollectionsAdded={(value: boolean) => setFieldValue('collections', { ...values.collections, withCollection: value })}
                   isCollectionsAdded={values.collections.withCollection}
                   setSelectedCollection={(value) => setFieldValue('collections', { ...values.collections, collections: value })}
-                  type={standardsMap[type].toLowerCase()}
+                  type={type}
                 />
               )}
             </Field>

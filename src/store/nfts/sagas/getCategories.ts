@@ -6,10 +6,10 @@ import { setCategories } from '../reducer';
 import { getCategories } from '../actions';
 import actionTypes from '../actionTypes';
 
-export function* getCategoriesSaga({ type }: ReturnType<typeof getCategories>) {
+export function* getCategoriesSaga({ type, payload }: ReturnType<typeof getCategories>) {
   yield put(apiActions.request(type));
   try {
-    const { data } = yield call(baseApi.getCategories);
+    const { data } = yield call(baseApi.getCategories, payload);
     yield put(setCategories(data));
   } catch (err) {
     console.log(err);

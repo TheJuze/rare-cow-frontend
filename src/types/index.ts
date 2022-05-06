@@ -6,6 +6,11 @@ export * from './pages';
 
 export type TNullable<T> = T | null;
 export type TOptionable<T> = T | undefined;
+export type Rewrite<
+  T,
+  Keys extends string | number | symbol,
+  K = { [key: string]: unknown },
+> = Omit<T, Keys> & K;
 
 export interface IModalProps {
   className?: string;
