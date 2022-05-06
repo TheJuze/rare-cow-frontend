@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, {
   FormEvent, useCallback, useEffect, useMemo, useState, VFC,
 } from 'react';
@@ -10,9 +11,11 @@ import {
 
 import { Collection } from 'types/api/Collection';
 
-import { createDynamicLink, routes } from 'appConstants';
-import { useSearch } from 'hooks';
+import { createDynamicLink, routes, standardsMap } from 'appConstants';
+import { useSearch, useShallowSelector } from 'hooks';
 import { TrashIcon } from 'assets/icons/icons';
+import { HighlightedText } from 'components/HighlightedText';
+import userSelector from 'store/user/selectors';
 import styles from './styles.module.scss';
 
 interface ICollections {
@@ -31,16 +34,26 @@ interface ISelectedCollections {
 }
 
 const SelectedCollections: VFC<ISelectedCollections> = ({ collection, onDelete }) => (
-  <div>
+  <div className={styles.selectedWrapper}>
     <Avatar
       size={36}
       avatar={collection.avatar}
       isCollection
       id={collection.url}
       className={styles.avatar}
+      withShadow
+      withAnim={false}
     />
-    <Text>{collection.name}</Text>
-    <Button onClick={() => onDelete(collection.url)} icon={<TrashIcon />} />
+    <Text color="dark0" variant="body-2">
+      {collection.name}
+    </Text>
+    <Button
+      className={styles.selectedDelete}
+      variant="text"
+      onClick={() => onDelete(collection.url)}
+      icon={<TrashIcon />}
+      size="lg"
+    />
   </div>
 );
 
@@ -53,9 +66,11 @@ const Collections: VFC<ICollections> = ({
   isClearing,
   type,
 }) => {
+  const id = useShallowSelector(userSelector.getProp('id'));
+
   const [collections, setCollections] = useState(initCollections);
   const [selected, setSelected] = useState<Collection[]>([]);
-  const searchValues = useSearch();
+  const searchValues = useSearch('', { data: { type: 'collections', standart: type, creator: id.toString() } });
 
   useEffect(() => {
     setSelectedCollection(selected);
@@ -102,8 +117,13 @@ const Collections: VFC<ICollections> = ({
     }
   }, [collections, isCollectionsAdded, isSelected, setIsSelected]);
 
+  const filteredCollections = useMemo(
+    () => collections.filter((collection) => collection.name.toLowerCase().includes(searchValues.searchValue.toLowerCase())),
+    [collections, searchValues.searchValue],
+  );
+
   const dropdownCollections = useMemo(
-    () => collections.map((collection) => ({
+    () => filteredCollections.map((collection) => ({
       id: collection.url,
       content: (
         <div className={styles.collectionsItem}>
@@ -119,13 +139,17 @@ const Collections: VFC<ICollections> = ({
             id={collection.url}
             className={styles.avatar}
           />
-          <Text weight="normal" size="xs" className={styles.name}>
-            {collection.name}
-          </Text>
+          {searchValues.searchValue ? (
+            <HighlightedText text={collection.name} filter={searchValues.searchValue} />
+          ) : (
+            <Text weight="normal" size="xs" className={styles.name}>
+              {collection.name}
+            </Text>
+          )}
         </div>
       ),
     })),
-    [collections, isSelected, setIsSelected],
+    [filteredCollections, isSelected, searchValues.searchValue, setIsSelected],
   );
 
   return (
@@ -169,7 +193,9 @@ const Collections: VFC<ICollections> = ({
         </div>
         <Button
           className={styles['collection-section__wrapper__add']}
-          to={createDynamicLink(routes.nest.create.nest.collection.path, { type })}
+          to={createDynamicLink(routes.nest.create.nest.collection.path, {
+            type: standardsMap[type].toLowerCase(),
+          })}
           size="sm"
         >
           Create new collection

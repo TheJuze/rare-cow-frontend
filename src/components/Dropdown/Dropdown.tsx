@@ -114,10 +114,11 @@ export const Dropdown: VFC<DropdownProps> = ({
     (val: TDropdownValue) => {
       setValue(val);
       if (closeOnSelect) {
+        setSearchValue('');
         setVisible(false);
       }
     },
-    [closeOnSelect, setValue],
+    [closeOnSelect, setSearchValue, setValue],
   );
 
   const onHeadClick: MouseEventHandler<HTMLDivElement> = useCallback(

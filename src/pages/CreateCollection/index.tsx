@@ -1,9 +1,11 @@
-import { fees, standards, standardsMap } from 'appConstants';
+import {
+  fees, routes, standards, standardsMap,
+} from 'appConstants';
 import React, { useCallback, useMemo, VFC } from 'react';
 
 import { Text } from 'components';
 import { ICreateCollection } from 'types';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import userSelector from 'store/user/selectors';
 import { useShallowSelector } from 'hooks';
@@ -18,6 +20,8 @@ const CreateCollection: VFC = () => {
   const dispatch = useDispatch();
   const chain = useShallowSelector(userSelector.getProp('chain'));
   const { walletService } = useWalletConnectorContext();
+  const navigator = useNavigate();
+
   const initialValues = useMemo<ICreateCollection>(
     () => ({
       name: '',
@@ -35,7 +39,7 @@ const CreateCollection: VFC = () => {
   );
 
   const handleSubmit = useCallback(
-    (values: ICreateCollection) => {
+    async (values: ICreateCollection) => new Promise((resolve) => {
       const newCollectionForm = new FormData();
       newCollectionForm.append('standart', values.type);
       newCollectionForm.append('name', values.name);
@@ -52,10 +56,12 @@ const CreateCollection: VFC = () => {
           collection: newCollectionForm,
           network: chain,
           web3Provider: walletService.Web3(),
+          onEnd: () => resolve(null),
+          onSuccess: () => navigator(routes.nest.create.nest[type.toLowerCase()].path),
         }),
       );
-    },
-    [chain, dispatch, walletService],
+    }),
+    [chain, dispatch, navigator, type, walletService],
   );
 
   return (

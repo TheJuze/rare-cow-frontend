@@ -9,6 +9,7 @@ import getCategoriesSaga from './getCategories';
 import getDetailedNftSaga from './getDetailedNft';
 import like from './like';
 import presearchNftsSaga from './presearchNfts';
+import search from './search';
 import removeFromSale from './removeFromSale';
 import searchNftsSaga from './searchNfts';
 import searchTrendingSaga from './searchTrending';
@@ -35,4 +36,5 @@ export default function* nftSagas() {
   yield fork(endAuctionSaga);
   yield fork(burnSaga);
   yield fork(getLiked);
+  yield fork(search);
 }
