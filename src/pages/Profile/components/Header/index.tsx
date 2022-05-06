@@ -27,7 +27,6 @@ const Header: VFC<IHeaderProps> = () => {
 
   useEffect(() => {
     if (userId) {
-      setTimeout(() => )
       dispatch(getProfileById({ id: userId, web3Provider: walletService.Web3() }));
     }
   }, [dispatch, userId, walletService]);
