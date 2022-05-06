@@ -42,12 +42,6 @@ const WalletConnectContext: FC = ({ children }) => {
     provider: WalletProvider,
   } = useShallowSelector<State, UserState>(userSelector.getUser);
 
-  const disconnect = useCallback(() => {
-    dispatch(disconnectWalletState());
-    WalletConnect.current.resetConnect();
-    currentSubscriber?.unsubscribe();
-  }, [currentSubscriber, dispatch]);
-
   const subscriberSuccess = useCallback(
     (data: any) => {
       if (data.name === 'accountsChanged') {
@@ -69,15 +63,18 @@ const WalletConnectContext: FC = ({ children }) => {
     },
     [WalletConnect, dispatch],
   );
-
   const connect = useCallback(
     async (provider: WalletProviders, chain: Chains) => {
       const connected = await WalletConnect.current.initWalletConnect(provider, chain);
       if (connected) {
         try {
-          const sub = WalletConnect.current
-            .eventSubscribe()
-            .subscribe(subscriberSuccess, subscriberError);
+          if (!currentSubscriber) {
+            const sub = WalletConnect.current
+              .eventSubscribe()
+              .subscribe(subscriberSuccess, subscriberError);
+
+            setCurrentSubscriber(sub);
+          }
           const accountInfo: any = await WalletConnect.current.getAccount();
 
           if (key?.length && address === accountInfo?.address) {
@@ -91,8 +88,6 @@ const WalletConnectContext: FC = ({ children }) => {
             );
             dispatch(updateProvider({ provider: accountInfo.type }));
           }
-
-          setCurrentSubscriber(sub);
         } catch (error: any) {
           console.log(error);
           // metamask doesn't installed,
@@ -107,8 +102,14 @@ const WalletConnectContext: FC = ({ children }) => {
         }
       }
     },
-    [address, dispatch, key?.length, subscriberError, subscriberSuccess],
+    [address, currentSubscriber, dispatch, key?.length, subscriberError, subscriberSuccess],
   );
+
+  const disconnect = useCallback(() => {
+    dispatch(disconnectWalletState());
+    WalletConnect.current.resetConnect();
+    currentSubscriber?.unsubscribe();
+  }, [currentSubscriber, dispatch]);
 
   useEffect(() => {
     if (WalletProvider) {
@@ -123,6 +124,6 @@ const WalletConnectContext: FC = ({ children }) => {
   return <Web3Context.Provider value={values}>{children}</Web3Context.Provider>;
 };
 
-const useWalletConnectorContext = () => useContext(Web3Context);
+export const useWalletConnectorContext = () => useContext(Web3Context);
 
-export { WalletConnectContext, useWalletConnectorContext };
+export default WalletConnectContext;

@@ -43,25 +43,42 @@ export const Avatar: VFC<AvatarProps> = ({
 }) => {
   return (
     <div className={cn('wrapper', className)}>
-      <Link
-        to={
-          isCollection
-            ? createDynamicLink(routes.nest.collection.path, { id })
-            : createDynamicLink(routes.nest.profile.nest.aboutMe.path, { userId: id })
-        }
-        className={cn('avatar', {
-          withAnim,
-          withShadow,
-        })}
-      >
-        <FallbackImage
-          src={avatar}
-          className="avatarImg"
-          errorSrc={nullAvatar}
-          width={size}
-          height={size}
-        />
-      </Link>
+      {id ? (
+        <Link
+          to={
+            isCollection
+              ? createDynamicLink(routes.nest.collection.path, { id })
+              : createDynamicLink(routes.nest.profile.nest.aboutMe.path, { userId: id })
+          }
+          className={cn('avatar', {
+            withAnim,
+            withShadow,
+          })}
+        >
+          <FallbackImage
+            src={avatar}
+            className="avatarImg"
+            errorSrc={nullAvatar}
+            width={size}
+            height={size}
+          />
+        </Link>
+      ) : (
+        <div
+          className={cn('avatar', {
+            withAnim,
+            withShadow,
+          })}
+        >
+          <FallbackImage
+            src={avatar}
+            className="avatarImg"
+            errorSrc={nullAvatar}
+            width={size}
+            height={size}
+          />
+        </div>
+      )}
     </div>
   );
 };

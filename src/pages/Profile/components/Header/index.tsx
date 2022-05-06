@@ -17,32 +17,17 @@ import styles from './styles.module.scss';
 interface IHeaderProps {}
 
 const Header: VFC<IHeaderProps> = () => {
-  const { userId } = useParams();
   const { walletService } = useWalletConnectorContext();
+  const { userId } = useParams();
   const id = useShallowSelector(userSelector.getProp('id'));
   const { avatar, name, address, followersCount, followsCount } = useShallowSelector(
     profileSelector.getProfile,
-  );
-  console.log(
-    'avatar',
-    avatar,
-    'name',
-    name,
-    'address',
-    address,
-    'followersCount',
-    followersCount,
-    'followsCount',
-    followsCount,
-    'walletService',
-    walletService,
-    'walletService.Web3()',
-    walletService.Web3(),
   );
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (userId) {
+      setTimeout(() => )
       dispatch(getProfileById({ id: userId, web3Provider: walletService.Web3() }));
     }
   }, [dispatch, userId, walletService]);
