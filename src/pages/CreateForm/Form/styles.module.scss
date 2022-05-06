@@ -42,4 +42,17 @@
       }
     }
   }
+  .buttons {
+    @include flex(row, center, flex-start, wrap);
+    .button {
+      flex: 0 0 50%;
+      padding-bottom: space(8);
+      &:nth-child(even) {
+        padding-left: space(8);
+      }
+      &:nth-child(odd) {
+        padding-right: space(8);
+      }
+    }
+  }
 }

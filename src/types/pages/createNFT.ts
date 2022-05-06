@@ -1,4 +1,4 @@
-import { TStandards } from 'appConstants';
+import { TCurrencies, TStandards } from 'appConstants';
 import { Category } from 'types/api/Category';
 import { Collection } from 'types/api/Collection';
 import { TProperty } from 'types/components';
@@ -21,5 +21,6 @@ export interface ICreateForm {
     price: string;
     listType: number;
     timestamp: number;
+    currency: TCurrencies,
   };
 }

@@ -76,7 +76,8 @@
         @include border-like-shadow(0px);
       }
     }
-    &.active{
+
+    &.active {
       max-width: 250px;
     }
   }

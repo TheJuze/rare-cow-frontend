@@ -25,7 +25,7 @@ export function* searchSaga({
     switch (searchType) {
       case 'categories': {
         const { data } = yield call(baseApi.getCategories, { name: requestData.text });
-        const normilizedData = camelize(data.results) as Category[];
+        const normilizedData = camelize(data) as Category[];
         yield put(setSearchValues({ key: 'categories', values: normilizedData }));
         break;
       }

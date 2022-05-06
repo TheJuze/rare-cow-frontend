@@ -7,4 +7,6 @@ export const userPopoverPropsMocked: UserPopoverProps = {
   name: 'Edward',
   visible: false,
   bodyRef: null,
+  address: '',
+  disconnect: () => {},
 };

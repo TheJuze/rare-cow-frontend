@@ -14,6 +14,8 @@ import React, {
 } from 'react';
 import { readFileAsUrl } from 'utils';
 
+import styles from './styles.module.scss';
+
 interface IUploadMedia {
   onChange?: (previewFile: File | null, mediaFile: File | null) => void;
 }
@@ -150,8 +152,8 @@ const UploadMedia: VFC<IUploadMedia> = ({ onChange }) => {
 
   useEffect(() => {
     onChange?.(previewFile, mediaFile);
-  }, [mediaFile, onChange, previewFile]);
-  console.log(mediaFile, previewFile);
+  }, [mediaFile, previewFile]);
+
   return (
     <div>
       {shouldUploaderRender && (
@@ -165,15 +167,15 @@ const UploadMedia: VFC<IUploadMedia> = ({ onChange }) => {
         </div>
       )}
       {(mediaFile || previewFile) && (
-        <div>
+        <div className={styles.deleteArea}>
           {mediaFile && (
-            <div>
+            <div className={styles.delete}>
               <Button variant="text" icon={<TrashIcon />} onClick={onMediaDelete} />
               <Text>Delete all files</Text>
             </div>
           )}
           {previewFile && (
-            <div>
+            <div className={styles.delete}>
               <Button variant="text" icon={<TrashIcon />} onClick={onPreviewDelete} />
               <Text>Delete preview file</Text>
             </div>

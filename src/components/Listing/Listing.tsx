@@ -14,7 +14,7 @@ import { Button, Input, Text } from 'components';
 import { validateOnlyNumbers } from 'utils';
 import styles from './styles.module.scss';
 
-const initialListingOptions = ['Price', 'Auction', 'Auction time'] as const;
+export const initialListingOptions = ['Price', 'Auction', 'Auction time'] as const;
 const initialTimestampOptions = [43200, 86400, 172800] as const;
 
 export type ListingSubmit = {

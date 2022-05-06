@@ -48,6 +48,7 @@
       background-color: var(--userPopover-edit-background-color);
       border-radius: var(--userPopover-edit-border-radius);
       gap: 10px;
+      border: 0px solid transparent;
       &:visited {
         color: var(--userPopover-link-icon-avctive);
       }
@@ -70,6 +71,7 @@
     .headUserName {
       margin: spacing(0, 0, 0, 2);
       @include ellipsis;
+      max-width: 120px;
     }
   }
 }
