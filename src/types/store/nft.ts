@@ -3,6 +3,11 @@ import { Category, Collection, User } from 'types/api';
 import { TokenFull } from 'types/api/TokenFull';
 import { TResponseCategories } from 'types/requests';
 
+export type TFees = {
+  amount: string;
+  receiver: string;
+};
+
 export type NftsState = {
   nfts: TokenFull[];
   presearchedNfts: TokenFull[];
@@ -15,6 +20,7 @@ export type NftsState = {
     users: User[];
     categories: Category[];
   };
+  fees: TFees,
 };
 
 export type SearchActionPayloadType = {

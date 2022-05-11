@@ -12,6 +12,7 @@ import {
   BidedIcon,
   CollectionsIcon,
   CreateNFT,
+  ExitSVG,
   FavoritesIcon,
   ForSaleIcon,
   LightTheme,
@@ -92,6 +93,8 @@ export interface UserPopoverProps {
   name?: string;
   visible: boolean;
   bodyRef: any;
+  address: string;
+  disconnect: () => void;
 }
 
 export const UserPopover: VFC<UserPopoverProps> = ({
@@ -101,6 +104,8 @@ export const UserPopover: VFC<UserPopoverProps> = ({
   name,
   visible,
   bodyRef,
+  address,
+  disconnect,
 }) => {
   const [isLight, setIsLight] = useState(true);
 
@@ -112,7 +117,7 @@ export const UserPopover: VFC<UserPopoverProps> = ({
       <div className={styles.head}>
         <div className={styles.headUser}>
           <Avatar id={id} avatar={avatar} size="40" />
-          <Text className={styles.headUserName}>{name || 'User name'}</Text>
+          <Text className={styles.headUserName}>{name}</Text>
         </div>
         <Link to="/" className={styles.edit}>
           <Text variant="body-2" className={styles.editText}>
@@ -129,7 +134,7 @@ export const UserPopover: VFC<UserPopoverProps> = ({
           </div>
         ))}
       </div>
-      <Clipboard name="address" value="0xc78CD789D1483189C919A8d4dd22004CFD867Eb4" />
+      <Clipboard name="address" value={address} />
       <Dropdown
         name="create"
         setValue={() => {}}
@@ -138,7 +143,9 @@ export const UserPopover: VFC<UserPopoverProps> = ({
           content: (
             <div className={styles.dropdownHead}>
               <CreateNFT />
-              <Text weight="normal" color="metal800" align="left">Create</Text>
+              <Text weight="normal" color="metal800" align="left">
+                Create
+              </Text>
             </div>
           ),
         }}
@@ -157,6 +164,12 @@ export const UserPopover: VFC<UserPopoverProps> = ({
             </Text>
           </Link>
         ))}
+        <button onClick={disconnect} type="button" className={styles.link}>
+          <ExitSVG />
+          <Text weight="normal" color="metal800">
+            Disconnect
+          </Text>
+        </button>
       </div>
       <div className={styles.theme}>
         <Switch checked={isLight} onChange={() => handleChangeTheme(!isLight)} size="sm" />

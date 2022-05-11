@@ -1,0 +1,8 @@
+@import '/src/styles/helpers';
+
+.deleteArea{
+    @include flex(column, flex-start, flex-start);
+    .delete{
+        @include flex(row, center, flex-start);
+    }
+}

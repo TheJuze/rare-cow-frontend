@@ -26,5 +26,6 @@ export { FiltersIcon } from './components/Filters';
 export { ImageIconSVG } from './components/ImageIcon';
 export { TrashIcon } from './components/Trash';
 export { ArrowGreen } from './components/ArrowGreen';
+export { ExitSVG } from './components/Exit';
 export * from './socials';
 export * from './pages';

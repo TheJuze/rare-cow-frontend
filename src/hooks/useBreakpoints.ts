@@ -17,6 +17,10 @@ const useBreakpoints: TUseBreakpoints = (sizes) => {
     return () => window.removeEventListener('resize', onWindowResize);
   }, [onWindowResize]);
 
+  useEffect(() => {
+    onWindowResize();
+  }, []);
+
   return windowSize;
 };
 

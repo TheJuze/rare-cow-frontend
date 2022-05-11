@@ -181,7 +181,7 @@ export const getContractInfo = ({
   contractName,
   reqInfo = 'all',
   mainnet = isMainnet,
-  chain = Chains.bsc,
+  chain = Chains.polygon,
 }: TGetContractAddress) => {
   const {
     abi,
@@ -205,7 +205,7 @@ export const generateContract = ({
   web3Provider,
   contractName,
   mainnet = isMainnet,
-  chain = Chains.bsc,
+  chain = Chains.polygon,
 }: TContractGetterProperties) => {
   if (web3Provider) {
     const { abi, address } = getContractInfo({ contractName, mainnet, chain });
