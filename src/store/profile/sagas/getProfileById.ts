@@ -31,8 +31,14 @@ export function* updateProfileInfoSaga({
         token: { name: 'USDT', isNative: false },
       }),
     );
-
-    yield put(updateProfile(camelize(data)));
+    const testData = {
+      ...data,
+      email: 'rarecow@mail.com',
+      site: 'rarecow.io',
+      twitter: 'rarecow',
+      instagram: 'rarecow',
+    };
+    yield put(updateProfile(camelize(testData)));
 
     yield put(success(type));
   } catch (err) {
