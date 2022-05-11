@@ -16,6 +16,7 @@ import { useSearch, useShallowSelector } from 'hooks';
 import { TrashIcon } from 'assets/icons/icons';
 import { HighlightedText } from 'components/HighlightedText';
 import userSelector from 'store/user/selectors';
+import nftSelector from 'store/nfts/selectors';
 import styles from './styles.module.scss';
 
 interface ICollections {
@@ -67,10 +68,14 @@ const Collections: VFC<ICollections> = ({
   type,
 }) => {
   const id = useShallowSelector(userSelector.getProp('id'));
-
+  const { collections: searchedCollections } = useShallowSelector(
+    nftSelector.getProp('searchData'),
+  );
   const [collections, setCollections] = useState(initCollections);
   const [selected, setSelected] = useState<Collection[]>([]);
-  const searchValues = useSearch('', { data: { type: 'collections', standart: type, creator: id.toString() } });
+  const searchValues = useSearch('', {
+    requestData: { type: 'collections', standart: type, creator: id?.toString() },
+  });
 
   useEffect(() => {
     setSelectedCollection(selected);
@@ -118,8 +123,8 @@ const Collections: VFC<ICollections> = ({
   }, [collections, isCollectionsAdded, isSelected, setIsSelected]);
 
   const filteredCollections = useMemo(
-    () => collections.filter((collection) => collection.name.toLowerCase().includes(searchValues.searchValue.toLowerCase())),
-    [collections, searchValues.searchValue],
+    () => (searchValues.searchValue ? searchedCollections : collections),
+    [collections, searchValues.searchValue, searchedCollections],
   );
 
   const dropdownCollections = useMemo(

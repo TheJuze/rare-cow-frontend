@@ -19,6 +19,7 @@ const BURN = 'BURN' as const;
 const GET_LIKED = 'GET_LIKED' as const;
 const SEND_TRANSACTION = 'SEND_TRANSACTION' as const;
 const SEARCH = 'SEARCH' as const;
+const GET_FEE_INFO = 'GET_FEE_INFO' as const;
 
 const nftActionTypes = {
   GET_CATEGORIES,
@@ -42,6 +43,7 @@ const nftActionTypes = {
   SEND_TRANSACTION,
   GET_LIKED,
   SEARCH,
+  GET_FEE_INFO,
 };
 
 export default nftActionTypes;

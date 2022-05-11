@@ -1,6 +1,5 @@
 import Web3 from 'web3';
 
-import { Token } from 'types/api/Token';
 import { User } from 'types/api/User';
 import { Category } from 'types/api/Category';
 import { ContractsNames } from 'config';
@@ -229,10 +228,23 @@ export type SearchAction = {
   shouldConcat?: boolean;
 };
 
-export type CreateTokenRequest = {
-  token: Token;
-  web3: Web3;
+export type RequestWithCallbacks = {
+  onSuccess?: () => void;
+  onError?: () => void;
+  onEnd?: () => void;
 };
+
+export type CreateTokenRequest = {
+  token: FormData;
+  web3: Web3;
+  listingInfo: {
+    listNow: boolean;
+    price: string;
+    listType: number;
+    timestamp: number;
+    currency: TCurrencies,
+  };
+} & RequestWithCallbacks;
 
 export type SearchCollectionAction = {
   requestData: SearchCollectionsReq;
@@ -259,10 +271,8 @@ export type RequestWithNetwork = {
   network: Chains;
 };
 
-export type RequestWithCallbacks = {
-  onSuccess?: () => void;
-  onError?: () => void;
-  onEnd?: () => void;
+export type RequestWithWeb3 = {
+  web3Provider: Web3;
 };
 
 export type GetLikedNFTsRequest = {

@@ -1,7 +1,9 @@
 /* eslint-disable max-len */
 // import { UrlObject } from 'url';
 
-import React, { FC, useCallback, useMemo } from 'react';
+import React, {
+  FC, useCallback, useEffect, useMemo,
+} from 'react';
 
 import { Footer, Header } from 'containers';
 import { useWalletConnectorContext } from 'services';
@@ -18,6 +20,7 @@ import { useSmoothTopScroll } from 'hooks/useSmoothTopScroll';
 import { useDispatch } from 'react-redux';
 import { updateUserState } from 'store/user/reducer';
 import clsx from 'clsx';
+import { getFeeInfo } from 'store/nfts/actions';
 import styles from './styles.module.scss';
 
 export interface LayoutProps {
@@ -26,7 +29,7 @@ export interface LayoutProps {
 
 export const Layout: FC<LayoutProps> = ({ children }) => {
   const { pathname } = useLocation();
-  const { connect, disconnect } = useWalletConnectorContext();
+  const { connect, disconnect, walletService } = useWalletConnectorContext();
 
   const dispatch = useDispatch();
 
@@ -54,6 +57,14 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
   const handleToggleChainType = useCallback(() => {
     dispatch(updateUserState({ chainType: chainType === 'mainnet' ? 'testnet' : 'mainnet' }));
   }, [chainType, dispatch]);
+
+  const initialRequests = useCallback(() => {
+    dispatch(getFeeInfo({ web3Provider: walletService.Web3() }));
+  }, [dispatch, walletService]);
+
+  useEffect(() => {
+    initialRequests();
+  }, [initialRequests]);
 
   const firstPathAtPathname = useMemo(() => pathname.split('/')[1], [pathname]);
 

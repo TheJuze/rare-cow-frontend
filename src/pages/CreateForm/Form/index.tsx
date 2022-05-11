@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
-import { createValidator, TStandards } from 'appConstants';
+import { createValidator, routes, TStandards } from 'appConstants';
 import {
-  Checkbox, Dropdown, Input, Listing, Text,
+  Button, Checkbox, Dropdown, Input, Listing, QuantityInput, Text,
 } from 'components';
 import { Field, Form, Formik } from 'formik';
 import { useSearch, useShallowSelector } from 'hooks';
@@ -13,6 +13,7 @@ import nftSelector from 'store/nfts/selectors';
 
 import { HighlightedText } from 'components/HighlightedText';
 import cx from 'clsx';
+import userSelector from 'store/user/selectors';
 import styles from './styles.module.scss';
 import { Collections, Properties, UploadMedia } from './components';
 
@@ -32,25 +33,37 @@ const captionGenerator = (touched: boolean, errors: string | undefined) => {
 };
 
 export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues, type }) => {
-  const categories = useShallowSelector(nftSelector.getProp('categories'));
-  const { collections } = useShallowSelector(nftSelector.getProp('searchData'));
+  const { categories: searchedCategories } = useShallowSelector(nftSelector.getProp('searchData'));
+  const defaultCategories = useShallowSelector(nftSelector.getProp('categories'));
+  const collections = useShallowSelector(userSelector.getProp('collections'));
 
-  const searchValues = useSearch();
+  const searchValues = useSearch('', { requestData: { type: 'categories' } });
 
-  const filteredCategories = useMemo(
-    () => categories.filter((category) => category.name.toLowerCase().includes(searchValues.searchValue.toLowerCase())),
-    [categories, searchValues],
+  const categories = useMemo(
+    () => (searchValues.searchValue ? searchedCategories : defaultCategories),
+    [defaultCategories, searchValues.searchValue, searchedCategories],
   );
 
   return (
-    <Formik initialValues={{ ...formValues }} onSubmit={handleSubmit} enableReinitialize>
+    <Formik
+      initialValues={{ ...formValues }}
+      onSubmit={handleSubmit}
+      enableReinitialize
+      validateOnBlur
+    >
       {({
-        errors, touched, values, handleBlur, setFieldValue,
+        errors, touched, values, handleBlur, setFieldValue, handleSubmit: submitForm,
       }) => (
         <Form className={styles.wrapper}>
           <div className={styles.uploader}>
             <Field id="media" name="media" required>
-              {() => <UploadMedia />}
+              {() => (
+                <UploadMedia onChange={(previewFile, mediaFile) => {
+                  setFieldValue('media', [mediaFile]);
+                  setFieldValue('preview', [previewFile]);
+                }}
+                />
+              )}
             </Field>
           </div>
           <div className={styles.information}>
@@ -110,8 +123,8 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues, t
                     label="Category"
                     disabled={isSubmitting}
                     options={
-                      filteredCategories.length
-                        ? filteredCategories.map((c) => ({
+                      categories.length
+                        ? categories.map((c) => ({
                           id: c.id.toString(),
                           content: searchValues.searchValue ? (
                             <HighlightedText text={c.name} filter={searchValues.searchValue} />
@@ -153,6 +166,22 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues, t
                 />
               )}
             </Field>
+            {type === 'ERC1155' && (
+            <Field id="quantity" name="quantity">
+              {({ field, form: { handleChange: fieldChange } }) => (
+                <div>
+                  <Text color="dark0" className={styles.quantityTitle}>
+                    In stock
+                  </Text>
+                  <QuantityInput
+                    name="quantity"
+                    value={field.value}
+                    setValue={fieldChange('quantity')}
+                  />
+                </div>
+              )}
+            </Field>
+            )}
             <Field id="listing" name="listing">
               {({ field }) => (
                 <div className={styles.listing}>
@@ -169,11 +198,27 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({ handleSubmit, formValues, t
                     </Text>
                   </Checkbox>
                   <div className={cx(styles.listingBody, { [styles.active]: field.value.listNow })}>
-                    <Listing />
+                    <Listing itemsAmount={+values.quantity} />
                   </div>
                 </div>
               )}
             </Field>
+            <div className={styles.buttons}>
+              <div className={styles.button}>
+                <Button className={cx(styles.fullSize, styles.regular)} onClick={submitForm}>
+                  Create collection
+                </Button>
+              </div>
+              <div className={styles.button}>
+                <Button
+                  className={cx(styles.fullSize, styles.regular)}
+                  variant="outlined"
+                  to={routes.nest.create.path}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
           </div>
         </Form>
       )}
