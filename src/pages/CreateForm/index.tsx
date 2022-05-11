@@ -1,11 +1,16 @@
-import { fees, standardsMap, TStandards } from 'appConstants';
+import {
+  currencies,
+  getExtension, getFileGroup, standardsMap, TAvailableExtensions, TStandards,
+} from 'appConstants';
 import { Text } from 'components';
 import { useShallowSelector } from 'hooks';
 import React, {
   useCallback, useEffect, useMemo, VFC,
 } from 'react';
 import { useDispatch } from 'react-redux';
-import { getCategories } from 'store/nfts/actions';
+import { useWalletConnectorContext } from 'services';
+import { createToken, getCategories } from 'store/nfts/actions';
+import nftSelector from 'store/nfts/selectors';
 import { getSelfCollections } from 'store/user/actions';
 import userSelector from 'store/user/selectors';
 import { ICreateForm } from 'types';
@@ -37,6 +42,7 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
         price: '',
         listType: 0,
         timestamp: 0,
+        currency: currencies[0],
       },
     }),
     [createType],
@@ -44,10 +50,56 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
 
   const dispatch = useDispatch();
   const chain = useShallowSelector(userSelector.getProp('chain'));
+  const { amount: feeAmount, receiver: feeReceiver } = useShallowSelector(nftSelector.getProp('fees'));
+  const { walletService } = useWalletConnectorContext();
 
-  const handleSubmit = useCallback((values: ICreateForm) => {
-    console.log(values);
-  }, []);
+  const handleSubmit = useCallback(
+    async (values: ICreateForm) => new Promise((resolve) => {
+      console.log(values);
+      const newTokenForm = new FormData();
+      newTokenForm.append('name', values.name);
+      newTokenForm.append('description', values.description);
+      if (values.properties.length !== 0) {
+        newTokenForm.append(
+          'details',
+          JSON.stringify(
+            values.properties
+              .filter((p) => p.name && p.type)
+              .map((p, k) => ({
+                display_type: 'properties',
+                trait_type: `${p.name}.${k}`,
+                value: p.type,
+              })),
+          ),
+        );
+      }
+      if (values.media && values.media[0]) {
+        newTokenForm.append('media', values.media[0]);
+        newTokenForm.append(
+          'format',
+          getFileGroup(getExtension(values.media[0].name) as TAvailableExtensions) || 'image',
+        );
+      }
+      if (values.preview && values.preview[0]) {
+        newTokenForm.append('cover', values.preview[0]);
+      }
+      newTokenForm.append('total_supply', values.quantity);
+      if (values.collections && values.collections.collections[0]) {
+        newTokenForm.append('collection', String(values.collections.collections[0].url));
+      }
+      newTokenForm.append('fee_address', feeReceiver);
+      dispatch(
+        createToken({
+          token: newTokenForm,
+          web3: walletService.Web3(),
+          listingInfo: values.listing,
+          onEnd: () => resolve(null),
+          onSuccess: () => console.log(111),
+        }),
+      );
+    }),
+    [dispatch, feeReceiver, walletService],
+  );
 
   useEffect(() => {
     dispatch(getCategories({}));
@@ -65,7 +117,7 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
         </Text>
         <div className={styles.createHeaderMintingFee}>
           <Text variant="body-2" color="accent">
-            Minting fee is {fees.minting} %
+            Minting fee is {feeAmount} %
           </Text>
         </div>
       </div>

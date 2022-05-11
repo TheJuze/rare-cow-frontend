@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+import BigNumber from 'bignumber.js';
 import { generateContract, ContractsNames } from 'config';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as apiActions from 'store/api/actions';
@@ -21,11 +22,12 @@ export function* feeInfoSaga({
       contractName: ContractsNames.marketplace,
     });
 
-    const feeAmount = yield call(marketplaceContract.methods.feePercentage.call);
-    const feeReceiver = yield call(marketplaceContract.methods.feeReceiver.call);
+    const feeDenominator = yield call(marketplaceContract.methods.PERCENT_DENOMINATOR().call);
+    const feeAmount = yield call(marketplaceContract.methods.feePercentage().call);
+    const feeReceiver = yield call(marketplaceContract.methods.feeReceiver().call);
 
     yield put(setFees({
-      amount: feeAmount,
+      amount: new BigNumber(feeAmount).div(feeDenominator).toString(),
       receiver: feeReceiver,
     }));
 

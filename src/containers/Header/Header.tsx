@@ -5,7 +5,7 @@ import arrow from 'assets/chevron-down.svg';
 import cn from 'classnames';
 
 import { SearchInput, Dropdown, Avatar, UserPopover, Button } from 'components';
-import { useClickOutside, useShallowSelector } from 'hooks';
+import { useBreakpoints, useClickOutside, useShallowSelector } from 'hooks';
 import { Chains, TDropdownValue, WalletProviders } from 'types';
 import { sliceString } from 'utils';
 import { Link } from 'react-router-dom';
@@ -62,6 +62,7 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect, onConnectWallet 
   const user = useShallowSelector(userSelector.getUser);
   const headRef = useRef<HTMLButtonElement | null>(null);
   const bodyRef = useRef<HTMLDivElement | null>(null);
+  const [isMobile] = useBreakpoints([540]);
 
   const { breadcrumbs } = useBreadcrumbs();
 
@@ -114,7 +115,7 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect, onConnectWallet 
             classNameHead={s.headerDropdown}
             dropPosition="absolute"
           />
-          <div className={s.address}>{sliceString(address)}</div>
+          {address && <div className={s.address}>{sliceString(address)}</div>}
           {address.length ? (
             <div className={s.user}>
               <button
@@ -131,10 +132,20 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect, onConnectWallet 
                 />
               </button>
               <Avatar avatar={user.avatar} id={user.id} size="40" />
-              <UserPopover {...user} visible={isUserShown} bodyRef={bodyRef} />
+              <UserPopover
+                disconnect={disconnect}
+                {...user}
+                visible={isUserShown}
+                bodyRef={bodyRef}
+              />
             </div>
           ) : (
-            <Button onClick={handleChangeConnecting}>connect wallet</Button>
+            <Button
+              className={cn({ [s.mobileConnect]: isMobile })}
+              onClick={handleChangeConnecting}
+            >
+              {isMobile ? 'O' : 'Connect wallet'}
+            </Button>
           )}
         </div>
       </div>

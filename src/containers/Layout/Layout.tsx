@@ -29,7 +29,7 @@ export interface LayoutProps {
 
 export const Layout: FC<LayoutProps> = ({ children }) => {
   const { pathname } = useLocation();
-  const { connect, disconnect } = useWalletConnectorContext();
+  const { connect, disconnect, walletService } = useWalletConnectorContext();
 
   const dispatch = useDispatch();
 
@@ -59,8 +59,8 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
   }, [chainType, dispatch]);
 
   const initialRequests = useCallback(() => {
-    dispatch(getFeeInfo());
-  }, [dispatch]);
+    dispatch(getFeeInfo({ web3Provider: walletService.Web3() }));
+  }, [dispatch, walletService]);
 
   useEffect(() => {
     initialRequests();

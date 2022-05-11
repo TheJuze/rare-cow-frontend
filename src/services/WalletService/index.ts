@@ -6,8 +6,7 @@ import { IConnect, IError } from '@amfi/connect-wallet/dist/interface';
 import { chains, connectWallet as connectWalletConfig } from 'config';
 
 import { Chains, ChainsEnum, WalletProviders } from 'types';
-
-import Web3 from 'Web3';
+import Web3 from 'web3';
 
 export class WalletService {
   public connectWallet: ConnectWallet;
