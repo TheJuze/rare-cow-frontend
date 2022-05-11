@@ -3,15 +3,19 @@
 import { ConnectWallet } from '@amfi/connect-wallet';
 import { IConnect, IError } from '@amfi/connect-wallet/dist/interface';
 
-import { connectWallet as connectWalletConfig } from 'config';
+import { chains, connectWallet as connectWalletConfig } from 'config';
 
-import { Chains, WalletProviders } from 'types';
+import { Chains, ChainsEnum, WalletProviders } from 'types';
+
+import Web3 from 'Web3';
 
 export class WalletService {
   public connectWallet: ConnectWallet;
 
   constructor() {
-    this.connectWallet = new ConnectWallet();
+    this.connectWallet = new ConnectWallet(
+      new Web3(chains[ChainsEnum.Polygon].provider.rpc).currentProvider,
+    );
   }
 
   public async initWalletConnect(

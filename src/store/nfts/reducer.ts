@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { NftsState, SearchActionPayloadType } from 'types';
+import { NftsState, SearchActionPayloadType, TFees } from 'types';
 import { TokenFull } from 'types/api/TokenFull';
 import { TResponseCategories } from 'types/requests';
 
@@ -15,6 +15,10 @@ const initialState: NftsState = {
     categories: [],
     collections: [],
     users: [],
+  },
+  fees: {
+    amount: '',
+    receiver: '',
   },
 };
 
@@ -50,6 +54,10 @@ export const nftsReducer = createSlice({
       ...state,
       trending: action.payload,
     }),
+    setFees: (state, action: PayloadAction<TFees>) => ({
+      ...state,
+      fees: action.payload,
+    }),
     clearDetailedNft: (state) => ({
       ...state,
       detailedNft: null,
@@ -81,6 +89,7 @@ export const {
   clearPresearchedNfts,
   setCategories,
   setSearchValues,
+  setFees,
 } = nftsReducer.actions;
 
 export default nftsReducer.reducer;

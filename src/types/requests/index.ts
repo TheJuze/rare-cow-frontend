@@ -265,6 +265,10 @@ export type RequestWithCallbacks = {
   onEnd?: () => void;
 };
 
+export type RequestWithWeb3 = {
+  web3Provider: Web3;
+};
+
 export type GetLikedNFTsRequest = {
   page: number | string;
   userId: number | string;
