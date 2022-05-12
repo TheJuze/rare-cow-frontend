@@ -27,3 +27,5 @@ export * from './TabBar';
 export * from './Selector';
 export * from './OptionSelector';
 export * from './AvatarUploader';
+export * from './CollectionCard';
+export * from './CollectionsList';

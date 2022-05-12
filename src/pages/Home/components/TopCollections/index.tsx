@@ -10,14 +10,12 @@ import React, { FC, useMemo } from 'react';
 // import collectionsSelector from 'store/collections/selectors';
 // import userSelector from 'store/user/selectors';
 
-import BigNumber from 'bignumber.js';
 import cx from 'classnames';
 
-import { Text } from 'components';
+import { Text, CollectionsList } from 'components';
 
 import { usdt } from 'assets/img';
 import collectionAvatar from 'assets/img/collectionAvatar.png';
-import { CollectionCard } from './components';
 
 // import { useShallowSelector } from 'hooks';
 
@@ -27,7 +25,7 @@ type Props = {
   className?: string;
 };
 
-const collections = [
+export const collections = [
   {
     collection: {
       url: 26,
@@ -211,10 +209,7 @@ const TopCollections: FC<Props> = ({ className }) => {
   // const dispatch = useDispatch();
   // const collections = useShallowSelector(collectionsSelector.getProp('topCollections'));
 
-  const withoutDefault = useMemo(
-    () => collections.filter((c: any) => !c.collection.isDefault),
-    [],
-  );
+  const withoutDefault = useMemo(() => collections.filter((c: any) => !c.collection.isDefault), []);
 
   // const handleFetchTopCollections = useCallback(() => {
   //   dispatch(
@@ -248,35 +243,10 @@ const TopCollections: FC<Props> = ({ className }) => {
       </Text>
       {withoutDefault.length ? (
         <div className={styles.collections}>
-          <ol
-            className={styles.collectionsWrapper}
-            style={{
-              gridTemplateColumns: `repeat(${
-                collections.length > 3 ? 3 : collections.length
-              }, 1fr)`,
-            }}
-          >
-            {withoutDefault.map((collection: any, index: number) => (
-              <CollectionCard
-                key={index}
-                avatar={collection.collection?.avatar || ''}
-                id={collection.collection?.url || 0}
-                index={index + 1}
-                name={collection.collection?.name || ''}
-                currency={collection.currency.image}
-                price={
-                  new BigNumber(collection?.floorPrice || '0').isEqualTo(0)
-                    ? '< 0.01'
-                    : new BigNumber(collection?.floorPrice).toString() || 0
-                }
-              />
-            ))}
-          </ol>
+          <CollectionsList collections={withoutDefault} columns={3} />
         </div>
       ) : (
-        <Text className={styles.noItems}>
-          There are no collections
-        </Text>
+        <Text className={styles.noItems}>There are no collections</Text>
       )}
     </div>
   );
