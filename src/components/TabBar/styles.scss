@@ -60,3 +60,18 @@
     }
   }
 }
+.tab-bar__wrapper::-webkit-scrollbar {
+  width: 8px;  
+  height: 8px;
+}
+.tab-bar__wrapper::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-default-background-color);
+  border: var(--scrollbar-border-width) solid var(--scrollbar-default-border-color);
+  box-sizing: border-box;
+  border-radius: var(--scrollbar-border-radius);
+  width: 8px;  
+  height: 8px;
+}
+.tab-bar__wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}

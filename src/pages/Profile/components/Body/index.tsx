@@ -4,16 +4,29 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useMemo, useState, VFC } from 'react';
-import { ArtCard, Button, FilterChips, SearchCollection, Text } from 'components';
+import { ArtCard, Button, FilterChips, SearchCollection, TabBar, Text } from 'components';
 
 import { nfts } from 'components/ArtCard/ArtCard.mock';
-import { Link } from 'react-router-dom';
-import { FiltersIcon } from 'assets/icons/icons';
-import { useFilters } from 'hooks';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import {
+  AboutMeIcon,
+  BidedGrayIcon,
+  CollectionsIcon,
+  FavoritesIcon,
+  FiltersIcon,
+  ForSaleIcon,
+  OwnedIcon,
+  SoldIcon,
+} from 'assets/icons/icons';
+import { useBreakpoints, useFilters } from 'hooks';
 import { Filters } from 'containers/Filters/Filters';
+import { createDynamicLink, routes } from 'appConstants';
+import { TBarOption } from 'types';
 import styles from './styles.module.scss';
 
-interface IBodyProps {}
+interface IBodyProps {
+  userId: string;
+}
 
 export const collectionsMock = [
   {
@@ -265,7 +278,51 @@ export const collectionsMock = [
   },
 ];
 
-const Body: VFC<IBodyProps> = () => {
+const Body: VFC<IBodyProps> = ({ userId }) => {
+  const tabs = useMemo<TBarOption[]>(
+    () => [
+      {
+        value: '/about-me',
+        name: 'About me',
+        icon: <AboutMeIcon className="tab-bar__wrapper__body-tab-icon" />,
+      },
+      {
+        value: '/owned',
+        name: 'Owned',
+        icon: <OwnedIcon />,
+      },
+      {
+        value: '/for-sale',
+        name: 'For sale',
+        icon: <ForSaleIcon />,
+      },
+      {
+        value: '/bided',
+        name: 'Bided',
+        icon: <BidedGrayIcon />,
+      },
+      {
+        value: '/favorites',
+        name: 'Favorites',
+        icon: <FavoritesIcon />,
+      },
+      {
+        value: '/collections',
+        name: 'Collections',
+        icon: <CollectionsIcon />,
+      },
+      {
+        value: '/sold',
+        name: 'Sold',
+        icon: <SoldIcon />,
+      },
+    ],
+    [],
+  );
+  const { pathname } = useLocation();
+  const [isMobile] = useBreakpoints([541]);
+  const navigate = useNavigate();
+  const activeTab = useMemo(() => pathname.slice(pathname.lastIndexOf('/')), [pathname]);
   const [isShowFilters, setIsShowFilters] = useState(false);
   const [isShowChips, setIsShowChips] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState({
@@ -351,40 +408,50 @@ const Body: VFC<IBodyProps> = () => {
     });
   }, [handleClearFilters]);
 
+  const handleTabChange = useCallback(
+    (tabName: string) => {
+      navigate(`${createDynamicLink(routes.nest.profile.path, { userId })}${tabName}`);
+    },
+    [navigate, userId],
+  );
+
   const minSize = 264;
   return (
     <div className={styles.body}>
       <div className={styles.bodyTop}>
-        <Button
-          size="sm"
-          variant="filled"
-          startAdornment={<FiltersIcon />}
-          className={styles.filters}
-          onClick={() => setIsShowFilters(true)}
-        >
-          <Text color="metal700">Filters</Text>
-        </Button>
+        {!isMobile && (
+          <Button
+            size="sm"
+            variant="filled"
+            startAdornment={<FiltersIcon />}
+            className={styles.filters}
+            onClick={() => setIsShowFilters(true)}
+          >
+            <Text color="metal700">Filters</Text>
+          </Button>
+        )}
         <SearchCollection
           collections={collectionsMock}
           className={styles.collections}
           activeCollections={filters.collections}
           handleClickCollection={handleCollectionChange}
         />
+
+        {isShowChips && isAppliedFilters && (
+          <div className={styles.total}>
+            <Text color="metal800" align="left" className={styles.totalText}>
+              Total({nfts.length})
+            </Text>
+            <FilterChips
+              className={styles.chips}
+              filters={appliedFilters}
+              handleChangeFilter={handlDeleteChips}
+              handleClearFilters={handleClearChips}
+              isAppliedFilters={isAppliedFilters}
+            />
+          </div>
+        )}
       </div>
-      {isShowChips && isAppliedFilters && (
-        <div className={styles.total}>
-          <Text color="metal800" align="left" className={styles.totalText}>
-            Total({nfts.length})
-          </Text>
-          <FilterChips
-            className={styles.chips}
-            filters={appliedFilters}
-            handleChangeFilter={handlDeleteChips}
-            handleClearFilters={handleClearChips}
-            isAppliedFilters={isAppliedFilters}
-          />
-        </div>
-      )}
       <div className={styles.bodyContent}>
         <Filters
           filters={filters}
@@ -392,7 +459,27 @@ const Body: VFC<IBodyProps> = () => {
           handleChangeFilter={handleChangeFilter}
           onClose={onApply}
           handleClearFilters={handleClearChips}
+          isButtonOny
+          isWithCollections={false}
         />
+        <TabBar
+          rootPath={routes.nest.profile.path}
+          options={tabs}
+          align={isMobile ? 'horizontal' : 'vertical'}
+          activeTab={activeTab}
+          onChange={handleTabChange}
+        />
+        {isMobile && (
+          <Button
+            size="sm"
+            variant="filled"
+            startAdornment={<FiltersIcon />}
+            className={styles.filters}
+            onClick={() => setIsShowFilters(true)}
+          >
+            <Text color="metal700">Filters</Text>
+          </Button>
+        )}
         <div
           className={styles.bodyResults}
           style={{

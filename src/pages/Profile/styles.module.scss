@@ -85,8 +85,15 @@
 @include large-tablet {
   .profile {
     .header {
+      flex-direction: column;
+      align-items: center;
       .info {
-        margin-left: space(32);
+        margin-left: 0;
+        width: 100%;
+        @include flex(column, center, flex-start);
+      }
+      .edit{
+        min-width: 182px;
       }
     }
   }

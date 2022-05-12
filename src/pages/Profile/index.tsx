@@ -96,7 +96,7 @@ const Profile: VFC = () => {
             </div>
           </div>
         </div>
-        <Body />
+        <Body userId={userId} />
 
         {hasSocials && (
           <div className={styles.socials}>
@@ -239,7 +239,7 @@ const Profile: VFC = () => {
           )}
         </div>
       </div>
-      <Body />
+      <Body userId={userId} />
     </div>
   );
 };

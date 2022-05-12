@@ -31,6 +31,8 @@ export function* updateProfileInfoSaga({
         token: { name: 'USDT', isNative: false },
       }),
     );
+
+    // TODO: delete this mock
     const testData = {
       ...data,
       email: 'rarecow@mail.com',

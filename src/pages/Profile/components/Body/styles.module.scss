@@ -4,14 +4,18 @@
 
 .body {
   @include flex(column, center, center);
+
+  .filters {
+    background-color: var(--filters-button-background-color);
+  }
   &Top {
-    @include flex(row, center, flex-start);
+    @include flex(column, flex-start, flex-start);
     width: 100%;
     .filters {
-      background-color: var(--filters-button-background-color);
-      display: none;
+      margin-top: space(38);
+      margin-left: 190px;
     }
-    .collections{
+    .collections {
       display: none;
     }
   }
@@ -20,6 +24,11 @@
     grid-template-columns: 190px 1fr;
     margin-top: space(36) !important;
     width: 100%;
+    .filters {
+      margin-top: space(24);
+      margin-bottom: space(24);
+      align-self: flex-start;
+    }
   }
   .bodyFilters {
     padding-right: space(24);
@@ -93,18 +102,34 @@
       width: 100%;
     }
   }
-  .total{
+  .total {
     @include flex(row, center, flex-start);
     margin-top: space(16);
     width: 100%;
-    &Text{
+    margin-left: 190px;
+    &Text {
       font-size: 20px;
       line-height: 32px;
       margin-right: space(24);
     }
   }
-  .chips{
+  .chips {
     width: 100%;
+  }
+}
+@include large-tablet {
+  .body {
+    &Top {
+      .filters {
+        margin-left: 142px;
+      }
+    }
+    .total {
+      margin-left: 142px;
+    }
+    .bodyContent {
+      grid-template-columns: 142px 1fr;
+    }
   }
 }
 @include middle-tablet {
@@ -123,10 +148,8 @@
         display: flex;
         margin-right: space(16);
       }
-      .collections{
-        display: block;
-        width: 100%;
-      }
+    }
+    .bodyFilters {
     }
     &Content {
       @include flex(column, center, center);
@@ -152,10 +175,10 @@
         }
       }
     }
-    .total{
+    .total {
       flex-direction: column;
       align-items: flex-start;
-      &Text{
+      &Text {
         margin-right: 0;
         margin-bottom: space(8);
       }

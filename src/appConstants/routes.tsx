@@ -34,6 +34,36 @@ const routesConfig = {
           content: <Profile />,
           label: 'About {{userId}}',
         },
+        owned: {
+          path: 'owned',
+          content: <Profile />,
+          label: 'Owned by {{userId}}',
+        },
+        forSale: {
+          path: 'for-sale',
+          content: <Profile />,
+          label: 'For sale by {{userId}}',
+        },
+        bided: {
+          path: 'bided',
+          content: <Profile />,
+          label: 'Bided by {{userId}}',
+        },
+        favorites: {
+          path: 'favorites',
+          content: <Profile />,
+          label: 'Favorites of {{userId}}',
+        },
+        collections: {
+          path: 'collections',
+          content: <Profile />,
+          label: 'Collections of {{userId}}',
+        },
+        sold: {
+          path: 'sold',
+          content: <Profile />,
+          label: 'Sold by {{userId}}',
+        },
         edit: {
           path: 'edit',
           content: 'Edit',
