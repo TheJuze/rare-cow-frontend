@@ -15,6 +15,9 @@
       margin-top: space(38);
       margin-left: 190px;
     }
+    .total{
+      margin-left: 190px;
+    }
     .collections {
       display: none;
     }
@@ -106,7 +109,6 @@
     @include flex(row, center, flex-start);
     margin-top: space(16);
     width: 100%;
-    margin-left: 190px;
     &Text {
       font-size: 20px;
       line-height: 32px;
@@ -123,9 +125,9 @@
       .filters {
         margin-left: 142px;
       }
-    }
-    .total {
-      margin-left: 142px;
+      .total {
+        margin-left: 142px;
+      }
     }
     .bodyContent {
       grid-template-columns: 142px 1fr;

@@ -480,6 +480,20 @@ const Body: VFC<IBodyProps> = ({ userId }) => {
             <Text color="metal700">Filters</Text>
           </Button>
         )}
+        {isShowChips && isAppliedFilters && (
+          <div className={styles.total}>
+            <Text color="metal800" align="left" className={styles.totalText}>
+              Total({nfts.length})
+            </Text>
+            <FilterChips
+              className={styles.chips}
+              filters={appliedFilters}
+              handleChangeFilter={handlDeleteChips}
+              handleClearFilters={handleClearChips}
+              isAppliedFilters={isAppliedFilters}
+            />
+          </div>
+        )}
         <div
           className={styles.bodyResults}
           style={{
