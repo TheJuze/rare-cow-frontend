@@ -32,6 +32,15 @@
       margin-bottom: space(24);
       align-self: flex-start;
     }
+    .bio{
+      margin-top: space(19);
+      &Title{
+        font-size: 20px;
+        line-height: 34px;
+        font-weight: 500;
+        margin-bottom: space(16);
+      }
+    }
   }
   .bodyFilters {
     padding-right: space(24);

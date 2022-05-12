@@ -30,8 +30,18 @@ const Profile: VFC = () => {
   const { walletService } = useWalletConnectorContext();
   const { userId } = useParams();
   const id = useShallowSelector(userSelector.getProp('id'));
-  const { avatar, name, address, followersCount, followsCount, email, site, instagram, twitter } =
-    useShallowSelector(profileSelector.getProfile);
+  const {
+    avatar,
+    name,
+    address,
+    followersCount,
+    followsCount,
+    email,
+    site,
+    instagram,
+    twitter,
+    bio,
+  } = useShallowSelector(profileSelector.getProfile);
   const dispatch = useDispatch();
   const isUser = useMemo(() => String(id) === String(userId), [id, userId]);
   const hasSocials = useMemo(
@@ -96,7 +106,7 @@ const Profile: VFC = () => {
             </div>
           </div>
         </div>
-        <Body userId={userId} />
+        <Body userId={userId} bio={bio} />
 
         {hasSocials && (
           <div className={styles.socials}>
@@ -239,7 +249,7 @@ const Profile: VFC = () => {
           )}
         </div>
       </div>
-      <Body userId={userId} />
+      <Body userId={userId} bio={bio} />
     </div>
   );
 };

@@ -31,8 +31,8 @@ export const TabBar: VFC<TabBarProps> = ({
   activeTab,
   onChange,
 }) => (
-  <section className={cn('tab-bar__wrapper', className)}>
-    <nav className={cn('tab-bar__wrapper__body', align)}>
+  <section className={cn('tab-bar__wrapper', className, align)}>
+    <nav className={cn('tab-bar__wrapper__body')}>
       {options.map((opt) => (opt.redirect ? (
         <NavLink
           key={opt.value}
