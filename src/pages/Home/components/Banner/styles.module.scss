@@ -13,7 +13,7 @@
   }
   .logo {
     width: 100%;
-    margin-top: -150px;
+    max-width: 513px;
   }
   .bannerBtns {
     margin-top: space(42);
@@ -38,7 +38,7 @@
     max-width: 420px;
   }
 }
-@include default-screen {
+@include large-tablet {
   .banner{
     margin-top: space(48) !important;
   }
@@ -66,8 +66,8 @@
       line-height: 20px;
     }
     .logo {
-      margin-top: 0;
-      margin-right: 0;
+      margin-top: space(16);
+      max-width: 328px;
     }
     .bannerBtns {
       flex-direction: column;
