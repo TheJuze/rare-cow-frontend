@@ -23,7 +23,7 @@ export const AudioPreview: VFC<TAudioPreview> = ({
   cover = 'cover',
 }) => (
   <div className={cn(s.audioContainer, className)}>
-    <ImagePreview src={previewSrc} alt={alt} title={title} cover={cover} />
+    {previewSrc && <ImagePreview src={previewSrc} alt={alt} title={title} cover={cover} />}
     <audio className={s.audio} controls>
       <source src={mediaSrc} />
       <track kind="captions" />
