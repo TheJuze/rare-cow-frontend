@@ -18,6 +18,7 @@ export type TRoutes = {
   label?: string | ReactElement;
   nest?: TNestRoute;
   guards?: TGuards[];
+  inMainTree?: boolean;
 };
 
 const routesConfig = {
@@ -26,43 +27,51 @@ const routesConfig = {
   label: 'Home',
   nest: {
     profile: {
-      path: 'profile/:userId',
-      render: false,
+      path: 'profile/:userId/*',
+      content: <Profile />,
+      label: 'Profile',
       nest: {
         aboutMe: {
           path: 'about-me',
           content: <Profile />,
           label: 'About {{userId}}',
+          inMainTree: false,
         },
         owned: {
           path: 'owned',
           content: <Profile />,
           label: 'Owned by {{userId}}',
+          inMainTree: false,
         },
         forSale: {
           path: 'for-sale',
           content: <Profile />,
           label: 'For sale by {{userId}}',
+          inMainTree: false,
         },
         bided: {
           path: 'bided',
           content: <Profile />,
           label: 'Bided by {{userId}}',
+          inMainTree: false,
         },
         favorites: {
           path: 'favorites',
           content: <Profile />,
           label: 'Favorites of {{userId}}',
+          inMainTree: false,
         },
         collections: {
           path: 'collections',
           content: <Profile />,
           label: 'Collections of {{userId}}',
+          inMainTree: false,
         },
         sold: {
           path: 'sold',
           content: <Profile />,
           label: 'Sold by {{userId}}',
+          inMainTree: false,
         },
         edit: {
           path: 'edit',
@@ -121,10 +130,12 @@ class RouteWorker<T extends object> {
       for (let i = 0; i < nest.length; i += 1) {
         const currentPathObject = nest[i];
         const currentPath = currentPathObject.path;
-        const fullPath = `${parentPaths.join('/')}/${currentPath}`.replace(
+        const joinedPath = parentPaths.join('/');
+        const fullPath = `${joinedPath.endsWith('/*') ? joinedPath.slice(0, -2) : joinedPath}/${currentPath}`.replace(
           new RegExp(/\/+(?=\/)/g),
           '',
         );
+        console.log('fullPath', fullPath);
         Object.defineProperty(currentPathObject, 'path', {
           get: () => fullPath,
         });
@@ -141,12 +152,12 @@ class RouteWorker<T extends object> {
 }
 
 const normalizePath = (path: string) =>
-  `${path.startsWith('/') ? '' : '/'}${path}${path.endsWith('/') ? '' : '/'}`;
+  `${path.startsWith('/') ? '' : '/'}${path}${path.endsWith('/') || path.endsWith('*') ? '' : '/'}`;
 
 export const { routes } = new RouteWorker<typeof routesConfig>({ ...routesConfig });
 
 export const createDynamicLink = (path: string, values: TDynamicValues) => {
-  let normalPath = path;
+  let normalPath = path.replaceAll('/*', '');
   if (values) {
     Object.entries(values).forEach(([pathKey, pathValue]) => {
       normalPath = normalPath.replace(`:${pathKey}`, pathValue.toString());
@@ -185,7 +196,7 @@ const recursiveRoutesCollector = (nest: TRoutes[]) => {
   for (let i = 0; i < nest.length; i += 1) {
     const subPath = nest[i];
     const newPath = subPath.path;
-    resultRoute.push(...(subPath.render !== false ? [{ ...subPath, path: newPath }] : []));
+    resultRoute.push(...(subPath.render !== false && subPath.inMainTree !== false ? [{ ...subPath, path: newPath }] : []));
     if (subPath.nest) {
       resultRoute.push([
         ...Object.entries(subPath.nest)

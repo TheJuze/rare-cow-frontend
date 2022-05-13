@@ -4,10 +4,10 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useMemo, useState, VFC } from 'react';
-import { ArtCard, Button, FilterChips, TabBar, Text } from 'components';
+import { Button, CollectionsList, FilterChips, TabBar, Text } from 'components';
 
 import { nfts } from 'components/ArtCard/ArtCard.mock';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import {
   AboutMeIcon,
   BidedGrayIcon,
@@ -22,11 +22,13 @@ import { useBreakpoints, useFilters } from 'hooks';
 import { Filters } from 'containers/Filters/Filters';
 import { createDynamicLink, routes } from 'appConstants';
 import { TBarOption } from 'types';
+import { collections } from 'pages/Home/components/TopCollections';
 import styles from './styles.module.scss';
+import Nfts from '../Nfts';
 
 interface IBodyProps {
   userId: string;
-  bio?: string
+  bio?: string;
 }
 
 const Body: VFC<IBodyProps> = ({ userId, bio }) => {
@@ -74,7 +76,10 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
   const [isMobile] = useBreakpoints([541]);
   const navigate = useNavigate();
   const activeTab = useMemo(() => pathname.slice(pathname.lastIndexOf('/')), [pathname]);
-  const isAboutMe = useMemo(() => activeTab === '/about-me', [activeTab]);
+  const isHideFiltersButton = useMemo(
+    () => activeTab === '/about-me' || activeTab === '/collections',
+    [activeTab],
+  );
   const [isShowFilters, setIsShowFilters] = useState(false);
   const [isShowChips, setIsShowChips] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState({
@@ -146,16 +151,16 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
 
   const handleTabChange = useCallback(
     (tabName: string) => {
+      handleClearChips();
       navigate(`${createDynamicLink(routes.nest.profile.path, { userId })}${tabName}`);
     },
-    [navigate, userId],
+    [handleClearChips, navigate, userId],
   );
 
-  const minSize = 264;
   return (
     <div className={styles.body}>
       <div className={styles.bodyTop}>
-        {!isMobile && !isAboutMe && (
+        {!isMobile && !isHideFiltersButton && (
           <Button
             size="sm"
             variant="filled"
@@ -167,7 +172,7 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
           </Button>
         )}
 
-        {isShowChips && isAppliedFilters && (
+        {!isMobile && isShowChips && isAppliedFilters && (
           <div className={styles.total}>
             <Text color="metal800" align="left" className={styles.totalText}>
               Total({nfts.length})
@@ -199,87 +204,92 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
           activeTab={activeTab}
           onChange={handleTabChange}
         />
-        {isAboutMe ? (
-          <div className={styles.bio}>
-            <Text className={styles.bioTitle} color="dark">Profile Information</Text>
-            <Text variant="body-2" color="dark">{bio || 'There is no bio on this profile yet'}</Text>
-          </div>
-        ) : (
-          <>
-            {isMobile && (
-              <Button
-                size="sm"
-                variant="filled"
-                startAdornment={<FiltersIcon />}
-                className={styles.filters}
-                onClick={() => setIsShowFilters(true)}
-              >
-                <Text color="metal700">Filters</Text>
-              </Button>
-            )}
-            {isShowChips && isAppliedFilters && (
-              <div className={styles.total}>
-                <Text color="metal800" align="left" className={styles.totalText}>
-                  Total({nfts.length})
+        <Routes>
+          <Route
+            path="about-me"
+            element={
+              <div className={styles.bio}>
+                <Text className={styles.bioTitle} color="dark">
+                  Profile Information
                 </Text>
-                <FilterChips
-                  className={styles.chips}
-                  filters={appliedFilters}
-                  handleChangeFilter={handlDeleteChips}
-                  handleClearFilters={handleClearChips}
-                  isAppliedFilters={isAppliedFilters}
-                />
+                <Text variant="body-2" color="dark">
+                  {bio || 'There is no bio on this profile yet'}
+                </Text>
               </div>
-            )}
-            <div
-              className={styles.bodyResults}
-              style={{
-                gridTemplateColumns:
-                  nfts.length !== 0 ? `repeat(auto-fill,minmax(${minSize}px,1fr))` : '1fr',
-              }}
-            >
-              {nfts.map((nft) => {
-                const {
-                  id,
-                  name,
-                  price,
-                  highestBid,
-                  minimalBid,
-                  media,
-                  currency,
-                  creator,
-                  isAucSelling,
-                  standart,
-                  likeCount,
-                  isLiked,
-                  available,
-                  endAuction,
-                } = nft;
-                return (
-                  <Link key={id} to="/" className={styles.card}>
-                    <ArtCard
-                      id={id || 0}
-                      inStock={available}
-                      name={name}
-                      price={price || highestBid?.amount || minimalBid}
-                      media={media || ''}
-                      currency={currency?.image || ''}
-                      authorName={creator?.name || ''}
-                      authorAvatar={creator?.avatar || ''}
-                      authorId={creator?.url || '0'}
-                      isAuction={isAucSelling || Boolean(endAuction)}
-                      likeCount={likeCount}
-                      isLiked={isLiked}
-                      standart={standart}
-                      endAuction={endAuction}
-                      className={styles.card}
-                    />
-                  </Link>
-                );
-              })}
-            </div>
-          </>
-        )}
+            }
+          />
+          <Route
+            path="owned"
+            element={
+              <Nfts
+                setIsShowFilters={setIsShowFilters}
+                isShowChips={isShowChips}
+                isAppliedFilters={isAppliedFilters}
+                appliedFilters={appliedFilters}
+                handlDeleteChips={handlDeleteChips}
+                handleClearChips={handleClearChips}
+                nfts={nfts}
+              />
+            }
+          />
+          <Route
+            path="for-sale"
+            element={
+              <Nfts
+                setIsShowFilters={setIsShowFilters}
+                isShowChips={isShowChips}
+                isAppliedFilters={isAppliedFilters}
+                appliedFilters={appliedFilters}
+                handlDeleteChips={handlDeleteChips}
+                handleClearChips={handleClearChips}
+                nfts={nfts}
+              />
+            }
+          />
+          <Route
+            path="bided"
+            element={
+              <Nfts
+                setIsShowFilters={setIsShowFilters}
+                isShowChips={isShowChips}
+                isAppliedFilters={isAppliedFilters}
+                appliedFilters={appliedFilters}
+                handlDeleteChips={handlDeleteChips}
+                handleClearChips={handleClearChips}
+                nfts={nfts}
+              />
+            }
+          />
+          <Route
+            path="favorites"
+            element={
+              <Nfts
+                setIsShowFilters={setIsShowFilters}
+                isShowChips={isShowChips}
+                isAppliedFilters={isAppliedFilters}
+                appliedFilters={appliedFilters}
+                handlDeleteChips={handlDeleteChips}
+                handleClearChips={handleClearChips}
+                nfts={nfts}
+              />
+            }
+          />
+          <Route path="collections" element={<CollectionsList collections={collections} />} />
+          <Route
+            path="sold"
+            element={
+              <Nfts
+                setIsShowFilters={setIsShowFilters}
+                isShowChips={isShowChips}
+                isAppliedFilters={isAppliedFilters}
+                appliedFilters={appliedFilters}
+                handlDeleteChips={handlDeleteChips}
+                handleClearChips={handleClearChips}
+                nfts={nfts}
+              />
+            }
+          />
+        </Routes>
       </div>
     </div>
   );

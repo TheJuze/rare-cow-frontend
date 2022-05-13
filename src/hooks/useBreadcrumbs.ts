@@ -95,7 +95,7 @@ const modifyLabels = (label: string, values: { [key: string]: string }) => {
   if (values) {
     Object.entries(values).forEach(([field, fieldValue]) => {
       let newFieldValue = fieldValue;
-      if (modifyLabel.includes('|')) {
+      if (modifyLabel?.includes('|')) {
         const splittedByPipes = modifyLabel
           .slice(modifyLabel.indexOf('{{'), modifyLabel.indexOf('}}'))
           .split('|')
@@ -103,7 +103,6 @@ const modifyLabels = (label: string, values: { [key: string]: string }) => {
           .map((pipe) => pipe.trim());
         splittedByPipes.forEach((formatter) => {
           const pipe = new RegExp(`\\|( *)${formatter}`, 'i');
-          console.log(pipe);
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           if (textFormatters.includes(formatter as any)) {
             newFieldValue = textFormatterMap[formatter](newFieldValue);
@@ -111,7 +110,7 @@ const modifyLabels = (label: string, values: { [key: string]: string }) => {
           modifyLabel = modifyLabel.replace(pipe, '');
         });
       }
-      modifyLabel = modifyLabel.replace(new RegExp(`{{( *)${field}( *)}}`), newFieldValue);
+      modifyLabel = modifyLabel?.replace(new RegExp(`{{( *)${field}( *)}}`), newFieldValue);
     });
   }
   return modifyLabel;
