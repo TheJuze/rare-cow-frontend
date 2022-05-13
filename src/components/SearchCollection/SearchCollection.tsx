@@ -25,6 +25,7 @@ export const SearchCollection: VFC<SearchCollectionProps> = ({
   handleClickCollection,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
 
   const headRef = useRef<any>(null);
   const bodyRef = useRef<HTMLDivElement | null>(null);
@@ -32,6 +33,9 @@ export const SearchCollection: VFC<SearchCollectionProps> = ({
     setIsMenuOpen(false);
   }, []);
   useClickOutside(bodyRef, handleHideCollections, headRef);
+  const handleChangeSearch = useCallback((value: string) => {
+    setSearchValue(value);
+  }, []);
   return (
     <div className={cn(styles.searchCollection, className)}>
       <div
@@ -47,10 +51,10 @@ export const SearchCollection: VFC<SearchCollectionProps> = ({
 
       <div className={cn(styles.body, { [styles.open]: isMenuOpen })} ref={bodyRef}>
         <SearchInput
-          searchValue=""
+          searchValue={searchValue}
           isSearchResultsLoading={false}
           presearchedNfts={[]}
-          onSearchValueChange={() => {}}
+          onSearchValueChange={(e) => handleChangeSearch(e.currentTarget.value)}
           placeholder="Search..."
           className={styles.search}
         />
