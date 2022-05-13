@@ -5,9 +5,12 @@ import {
 import Web3 from 'web3';
 
 import {
-  erc20Abi, erc721Abi, erc1155Abi, marketPlaceAbi, whitelistAbi,
+  erc20Abi, erc721Abi,
+  erc1155Abi, marketPlaceAbi, whitelistAbi, erc721InstanceAbi, erc1155InstanceAbi,
 } from './abi';
 import { isMainnet } from './constants';
+
+export const MATIC_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
 
 export const chains: {
   [key: string]: {
@@ -82,6 +85,8 @@ export enum ContractsNames {
   marketplace = 'marketplace',
   erc721 = 'erc721',
   erc1155 = 'erc1155',
+  erc721Instance = 'erc721Instance',
+  erc1155Instance = 'erc1155Instance',
   whitelist = 'whitelist',
 }
 
@@ -152,6 +157,21 @@ export const contractsConfig: IContracts = {
         abi: erc721Abi,
       },
     },
+    [ContractsNames.erc721Instance]: {
+      testnet: {
+        address: {
+          [Chains.bsc]: '',
+          [Chains.polygon]: '',
+        },
+        abi: erc721InstanceAbi,
+      },
+      mainnet: {
+        address: {
+          [Chains.bsc]: '',
+        },
+        abi: erc721InstanceAbi,
+      },
+    },
     [ContractsNames.erc1155]: {
       testnet: {
         address: {
@@ -167,6 +187,21 @@ export const contractsConfig: IContracts = {
         abi: erc1155Abi,
       },
     },
+    [ContractsNames.erc1155Instance]: {
+      testnet: {
+        address: {
+          [Chains.bsc]: '',
+          [Chains.polygon]: '',
+        },
+        abi: erc1155InstanceAbi,
+      },
+      mainnet: {
+        address: {
+          [Chains.bsc]: '',
+        },
+        abi: erc1155InstanceAbi,
+      },
+    },
   },
 };
 
@@ -175,6 +210,10 @@ type TGetContractAddress = {
   reqInfo?: 'all' | 'address' | 'abi';
   mainnet?: boolean;
   chain?: Chains;
+};
+
+export const currencyToContractMap = {
+  USDT: ContractsNames.USDT,
 };
 
 export const getContractInfo = ({
@@ -199,6 +238,7 @@ type TContractGetterProperties = {
   contractName: ContractsNames;
   mainnet?: boolean;
   chain?: Chains;
+  specificAddress?: string;
 };
 
 export const generateContract = ({
@@ -206,10 +246,11 @@ export const generateContract = ({
   contractName,
   mainnet = isMainnet,
   chain = Chains.polygon,
+  specificAddress,
 }: TContractGetterProperties) => {
   if (web3Provider) {
     const { abi, address } = getContractInfo({ contractName, mainnet, chain });
-    return new web3Provider.eth.Contract(abi, address);
+    return new web3Provider.eth.Contract(abi, specificAddress || address);
   }
   console.log('%c web3 provider is not passed, return null', 'background: #b00020; color: #ffffff');
   return null;

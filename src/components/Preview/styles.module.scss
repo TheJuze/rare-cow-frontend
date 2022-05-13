@@ -32,3 +32,11 @@
 .contain {
   object-fit: contain;
 }
+
+.switcher{
+  @include flex(row, center, flex-start);
+  margin-bottom: space(4) !important;
+  .switchText{
+    margin-left: space(12);
+  }
+}

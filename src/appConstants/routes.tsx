@@ -33,6 +33,7 @@ const routesConfig = {
           path: 'about-me',
           content: 'About',
           label: 'About {{id}}',
+          inMainTree: false,
         },
         edit: {
           path: 'edit',

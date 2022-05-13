@@ -177,6 +177,7 @@ export const Dropdown: VFC<DropdownProps> = ({
           tabIndex={0}
           role="button"
           className={cn(classNameHead, 'dropdown-content-head', variant, { disabled })}
+          id={name}
           onClick={onHeadClick}
         >
           <div className={cn('dropdown-head-selection', { placeholder: placeholder && !value })}>
@@ -189,7 +190,7 @@ export const Dropdown: VFC<DropdownProps> = ({
           </span>
         </div>
         {error && (
-          <Text color="error" className="error">
+          <Text size="s" color="error" className="error">
             {error}
           </Text>
         )}
@@ -201,7 +202,7 @@ export const Dropdown: VFC<DropdownProps> = ({
           {withSearch && (
             <Input
               value={searchValue}
-              name={`search_value_of_${name}`}
+              name={name}
               startAdornment={<SearchIcon />}
               placeholder="Search..."
               size={variant === 'transparent' ? 'sm' : 'md'}

@@ -113,22 +113,13 @@ const Collections: VFC<ICollections> = ({
     setSelected([]);
   }, [isCollectionsAdded]);
 
-  useEffect(() => {
-    const defaultCollection = collections.find((c) => c.isDefault);
-    if (defaultCollection) {
-      if (!isCollectionsAdded && !isSelected(defaultCollection.url || '')) {
-        setIsSelected(defaultCollection);
-      }
-    }
-  }, [collections, isCollectionsAdded, isSelected, setIsSelected]);
-
   const filteredCollections = useMemo(
     () => (searchValues.searchValue ? searchedCollections : collections),
     [collections, searchValues.searchValue, searchedCollections],
   );
 
   const dropdownCollections = useMemo(
-    () => filteredCollections.map((collection) => ({
+    () => filteredCollections.filter((c) => !c.isDefault && c.standart === type).map((collection) => ({
       id: collection.url,
       content: (
         <div className={styles.collectionsItem}>
@@ -154,7 +145,7 @@ const Collections: VFC<ICollections> = ({
         </div>
       ),
     })),
-    [filteredCollections, isSelected, searchValues.searchValue, setIsSelected],
+    [filteredCollections, isSelected, searchValues.searchValue, setIsSelected, type],
   );
 
   return (
@@ -189,7 +180,7 @@ const Collections: VFC<ICollections> = ({
           {...searchValues}
         />
         <div>
-          {selected.map((selectedCollection) => (
+          {selected.filter((c) => !c.isDefault).map((selectedCollection) => (
             <SelectedCollections
               collection={selectedCollection}
               onDelete={() => setIsSelected(selectedCollection)}

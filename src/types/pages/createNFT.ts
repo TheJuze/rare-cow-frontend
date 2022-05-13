@@ -9,7 +9,7 @@ export interface ICreateForm {
   description: string;
   category: Category | null;
   properties: TProperty[];
-  collections: {
+  collection: {
     withCollection: boolean;
     collections: Collection | null;
   };
@@ -19,7 +19,7 @@ export interface ICreateForm {
   listing: {
     listNow: boolean;
     price: string;
-    listType: number;
+    listType: string;
     timestamp: number;
     currency: TCurrencies,
   };

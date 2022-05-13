@@ -24,6 +24,7 @@ export function* setOnAuctionSaga({
     minimalBid,
     auctionDuration,
     web3Provider,
+    collectionAddress,
   },
 }: ReturnType<typeof setOnAuction>) {
   yield put(apiActions.request(type));
@@ -53,6 +54,7 @@ export function* setOnAuctionSaga({
         isSingle,
         web3Provider,
         currency,
+        collectionAddress,
       },
     });
 

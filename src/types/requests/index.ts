@@ -54,6 +54,7 @@ export type ApproveNftReq = {
   isSingle: boolean;
   web3Provider: Web3;
   currency: TCurrencies;
+  collectionAddress: string;
 };
 
 export type SetOnAuctionReq = {
@@ -78,6 +79,7 @@ export type SetOnAuctionPreReq = {
   auctionDuration?: number;
   endAuction?: number;
   web3Provider: Web3;
+  collectionAddress: string;
 };
 
 export type SetOnSaleReq = {
@@ -90,6 +92,7 @@ export type SetOnSaleReq = {
 export type SetOnSalePreReq = {
   id: number | string;
   internalId: number | string;
+  collectionAddress: string;
   price: number | string;
   isSingle: boolean;
   currency?: TCurrencies;
@@ -240,7 +243,7 @@ export type CreateTokenRequest = {
   listingInfo: {
     listNow: boolean;
     price: string;
-    listType: number;
+    listType: string;
     timestamp: number;
     currency: TCurrencies,
   };

@@ -34,6 +34,12 @@
   }
 }
 
+@include middle-tablet{
+  .fileUploader{
+    height: 342px;
+  }
+}
+
 @keyframes shake-icon {
   0% {
     transform: translateY(0);

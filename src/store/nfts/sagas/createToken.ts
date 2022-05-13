@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { initialListingOptions } from 'components';
 import { toast } from 'react-toastify';
 
 import {
@@ -11,9 +10,9 @@ import { setActiveModal } from 'store/modals/reducer';
 import userSelector from 'store/user/selectors';
 
 import { Modals } from 'types';
-import { Token } from 'types/api';
+import { getTokenAmount } from 'utils';
 
-import { createToken, setOnAuction, setOnSale } from '../actions';
+import { createToken } from '../actions';
 import actionTypes from '../actionTypes';
 
 export function* createTokenSaga({
@@ -32,7 +31,27 @@ export function* createTokenSaga({
   yield put(apiActions.request(type));
 
   try {
-    const { data } = yield call(baseApi.createNewToken, token as unknown as Token);
+    const {
+      listType, price, listNow, timestamp, currency,
+    } = listingInfo;
+    const now = parseInt(String(Date.now() / 1000), 10);
+    if(listNow) {
+      token.append('selling', String(true));
+      token.append('currency', currency.name);
+      if(listType === 'Price') {
+        token.append('price', getTokenAmount(price));
+      }
+      if(listType === 'Auction' || listType === 'Auction time') {
+        token.append('minimal_bid', getTokenAmount(price));
+        if(listType === 'Auction time') {
+          token.append('start_auction', String(now));
+          token.append('end_auction', String(now + timestamp));
+        }
+      }
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data } = yield call(baseApi.createNewToken, token as any);
 
     const address = yield select(userSelector.getProp('address'));
     const { initial_tx, token: createdToken } = data;
@@ -42,86 +61,32 @@ export function* createTokenSaga({
           ...initial_tx,
           from: address,
         });
-        if (listingInfo.listNow && createdToken) {
-          try {
-            switch (initialListingOptions[listingInfo.listType]) {
-              case 'Price': {
-                yield call(setOnSale, {
-                  id: createdToken.id,
-                  internalId: createdToken.id,
-                  price: listingInfo.price,
-                  isSingle: createdToken.standart === 'ERC721',
-                  amount: createdToken.total_supply,
-                  web3Provider: web3,
-                  currency: listingInfo.currency,
-                });
-                break;
-              }
-              case 'Auction': {
-                yield call(setOnAuction, {
-                  id: createdToken.id,
-                  internalId: createdToken.id,
-                  minimalBid: listingInfo.price,
-                  isSingle: createdToken.standart === 'ERC721',
-                  web3Provider: web3,
-                  auctionDuration: null,
-                  currency: listingInfo.currency,
-                });
-                break;
-              }
-              case 'Auction time': {
-                yield call(setOnAuction, {
-                  id: createdToken.id,
-                  internalId: createdToken.id,
-                  minimalBid: listingInfo.price,
-                  isSingle: createdToken.standart === 'ERC721',
-                  web3Provider: web3,
-                  auctionDuration: listingInfo.timestamp,
-                  currency: listingInfo.currency,
-                });
-                break;
-              }
-              default: {
-                break;
-              }
-            }
-            yield put(
-              setActiveModal({
-                activeModal: Modals.SendSuccess,
-                open: true,
-                txHash: transactionHash,
-              }),
-            );
-            yield put(apiActions.success(type));
-          } catch (e) {
-            throw new Error(e);
-          }
-        } else {
-          yield put(
-            setActiveModal({
-              activeModal: Modals.SendSuccess,
-              open: true,
-              txHash: transactionHash,
-            }),
-          );
-          yield put(apiActions.success(type));
-        }
-      } catch (e: unknown) {
+        yield put(
+          setActiveModal({
+            activeModal: Modals.SendSuccess,
+            open: true,
+            txHash: transactionHash,
+          }),
+        );
+        yield put(apiActions.success(type));
+      } catch (e) {
         yield call(baseApi.mintReject, {
           id: createdToken.id,
           type: 'token',
           owner: createdToken.creator.url,
         });
-        // yield put(
-        //   setActiveModal({
-        //     activeModal: e.code === 4001 ? Modals.SendRejected : Modals.SendError,
-        //     open: true,
-        //     txHash: '',
-        //   }),
-        // );
-
-        yield put(apiActions.error(type, e));
+        throw new Error(e);
       }
+
+      // yield put(
+      //   setActiveModal({
+      //     activeModal: e.code === 4001 ? Modals.SendRejected : Modals.SendError,
+      //     open: true,
+      //     txHash: '',
+      //   }),
+      // );
+
+      yield put(apiActions.error(type));
     } else {
       toast.error('Something went wrong');
       yield put(apiActions.error(type));

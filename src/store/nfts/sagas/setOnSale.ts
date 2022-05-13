@@ -17,7 +17,7 @@ import { getDetailedNftSaga } from './getDetailedNft';
 export function* setOnSaleSaga({
   type,
   payload: {
-    id, internalId, currency, isSingle, price, amount, web3Provider,
+    id, internalId, currency, isSingle, price, amount, web3Provider, collectionAddress,
   },
 }: ReturnType<typeof setOnSale>) {
   yield put(apiActions.request(type));
@@ -36,6 +36,7 @@ export function* setOnSaleSaga({
         isSingle,
         web3Provider,
         currency,
+        collectionAddress,
       },
     });
 
