@@ -1,13 +1,15 @@
 import {
   currencies,
-  getExtension, getFileGroup, standardsMap, TAvailableExtensions, TStandards,
+  getExtension, getFileGroup, routes, standardsMap, TAvailableExtensions, TStandards,
 } from 'appConstants';
 import { Text } from 'components';
+import { currencyToContractMap, getContractInfo, MATIC_ADDRESS } from 'config';
 import { useShallowSelector } from 'hooks';
 import React, {
   useCallback, useEffect, useMemo, VFC,
 } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useWalletConnectorContext } from 'services';
 import { createToken, getCategories } from 'store/nfts/actions';
 import nftSelector from 'store/nfts/selectors';
@@ -23,6 +25,8 @@ interface ICreatePage {
 }
 
 const CreatePage: VFC<ICreatePage> = ({ createType }) => {
+  const collections = useShallowSelector(userSelector.getProp('collections'));
+
   const initialValues = useMemo<ICreateForm>(
     () => ({
       name: '',
@@ -30,7 +34,7 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
       description: '',
       category: null,
       properties: [],
-      collections: {
+      collection: {
         withCollection: false,
         collections: null,
       },
@@ -40,7 +44,7 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
       listing: {
         listNow: false,
         price: '',
-        listType: 0,
+        listType: 'Price',
         timestamp: 0,
         currency: currencies[0],
       },
@@ -49,13 +53,14 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
   );
 
   const dispatch = useDispatch();
+  const navigator = useNavigate();
+
   const chain = useShallowSelector(userSelector.getProp('chain'));
-  const { amount: feeAmount, receiver: feeReceiver } = useShallowSelector(nftSelector.getProp('fees'));
+  const { amount: feeAmount } = useShallowSelector(nftSelector.getProp('fees'));
   const { walletService } = useWalletConnectorContext();
 
   const handleSubmit = useCallback(
     async (values: ICreateForm) => new Promise((resolve) => {
-      console.log(values);
       const newTokenForm = new FormData();
       newTokenForm.append('name', values.name);
       newTokenForm.append('description', values.description);
@@ -84,21 +89,27 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
         newTokenForm.append('cover', values.preview[0]);
       }
       newTokenForm.append('total_supply', values.quantity);
-      if (values.collections && values.collections.collections[0]) {
-        newTokenForm.append('collection', String(values.collections.collections[0].url));
+      const defaultCollection = collections.find((collection) => collection.isDefault &&
+      collection.standart === createType);
+      const selectedCollection = values.collection.collections?.[0];
+      newTokenForm.append('collection', selectedCollection ? selectedCollection.url : defaultCollection.url);
+      if(values.listing.listNow) {
+        const { currency } = values.listing;
+        const feeAddress = currency.isNative ? MATIC_ADDRESS : getContractInfo({ contractName: currencyToContractMap[currency.name], reqInfo: 'address' }).address;
+        newTokenForm.append('fee_address', feeAddress);
       }
-      newTokenForm.append('fee_address', feeReceiver);
+      console.log(values);
       dispatch(
         createToken({
           token: newTokenForm,
           web3: walletService.Web3(),
           listingInfo: values.listing,
           onEnd: () => resolve(null),
-          onSuccess: () => console.log(111),
+          onSuccess: () => navigator(routes.path),
         }),
       );
     }),
-    [dispatch, feeReceiver, walletService],
+    [collections, createType, dispatch, navigator, walletService],
   );
 
   useEffect(() => {
@@ -122,7 +133,12 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
         </div>
       </div>
       <div>
-        <CreateNFTForm type={createType} formValues={initialValues} handleSubmit={handleSubmit} />
+        <CreateNFTForm
+          type={createType}
+          collections={collections}
+          formValues={initialValues}
+          handleSubmit={handleSubmit}
+        />
       </div>
     </section>
   );

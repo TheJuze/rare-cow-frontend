@@ -124,8 +124,6 @@ export const Listing: VFC<ListingProps> = ({
     }
   }, [
     listType.value,
-    onError,
-    onSubmit,
     price,
     selectedCurrency,
     selectedTimestamp.value,

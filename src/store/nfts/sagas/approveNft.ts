@@ -15,7 +15,7 @@ import actionTypes from '../actionTypes';
 
 export function* approveNftSaga({
   type,
-  payload: { isSingle, web3Provider },
+  payload: { isSingle, web3Provider, collectionAddress },
 }: ReturnType<typeof approveNft>) {
   yield put(apiActions.request(type));
 
@@ -28,7 +28,8 @@ export function* approveNftSaga({
 
     const nftContract = yield generateContract({
       web3Provider,
-      contractName: isSingle ? ContractsNames.erc721 : ContractsNames.erc1155,
+      contractName: isSingle ? ContractsNames.erc721Instance : ContractsNames.erc1155Instance,
+      specificAddress: collectionAddress,
     });
 
     const isApproved = yield call(

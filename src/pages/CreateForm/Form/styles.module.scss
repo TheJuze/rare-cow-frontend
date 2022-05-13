@@ -5,6 +5,19 @@
   width: 100%;
 }
 
+.descriptionArea{
+  margin-top: space(24) !important;
+}
+
+.propertiesArea,
+.categorySelector{
+  margin-top: space(32) !important;
+}
+
+.quantityArea{
+  margin-bottom: space(24) !important;
+}
+
 .wrapper {
   @include flex(row, flex-start, flex-start);
   .uploader,
@@ -53,6 +66,21 @@
       &:nth-child(odd) {
         padding-right: space(8);
       }
+    }
+  }
+}
+
+@include middle-tablet{
+  .wrapper{
+    @include flex(column, flex-start, flex-start);
+    .uploader,
+    .information{
+      width: 100%;
+      max-width: auto;
+    }
+    .uploader{
+      padding-right: 0;
+      margin-bottom: space(24) !important;
     }
   }
 }

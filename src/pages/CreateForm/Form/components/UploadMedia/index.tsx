@@ -166,23 +166,23 @@ const UploadMedia: VFC<IUploadMedia> = ({ onChange }) => {
           />
         </div>
       )}
+      {previewComponent && <div>{previewComponent}</div>}
       {(mediaFile || previewFile) && (
         <div className={styles.deleteArea}>
           {mediaFile && (
             <div className={styles.delete}>
               <Button variant="text" icon={<TrashIcon />} onClick={onMediaDelete} />
-              <Text>Delete all files</Text>
+              <Text size="s">Delete all files</Text>
             </div>
           )}
           {previewFile && (
             <div className={styles.delete}>
               <Button variant="text" icon={<TrashIcon />} onClick={onPreviewDelete} />
-              <Text>Delete preview file</Text>
+              <Text size="s">Delete preview file</Text>
             </div>
           )}
         </div>
       )}
-      {previewComponent && <div>{previewComponent}</div>}
     </div>
   );
 };

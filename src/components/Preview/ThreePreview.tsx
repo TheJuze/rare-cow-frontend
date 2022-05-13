@@ -35,13 +35,12 @@ export const ThreePreview: VFC<TThreePreview> = ({
   return (
     <div className={cn(s.threeContainer, className)}>
       {withSwitch && previewSrc && mediaSrc && (
-        <div>
-          <Text>NFT</Text>
-          <Switch checked={switchState} onChange={onSwitchClickHandler} />
-          <Text>Preview</Text>
+        <div className={s.switcher}>
+          <Switch size="sm" checked={switchState} onChange={onSwitchClickHandler} />
+          <Text className={s.switchText} size="s">Preview</Text>
         </div>
       )}
-      {withSwitch && switchState ? (
+      {withSwitch && switchState && previewSrc ? (
         <ImagePreview src={previewSrc} alt={alt} title={title} cover={cover} />
       ) : (
         <model-viewer
