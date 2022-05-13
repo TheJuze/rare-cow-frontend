@@ -7,7 +7,7 @@ type IProviderOrWithValue<T = any> = React.ComponentType<T> | [React.ComponentTy
 const combineProviders = (providers: Array<IProviderOrWithValue>) => {
   return ({ children }: React.PropsWithChildren<{ value?: any[] }>) => {
     return providers.reduce<React.ReactElement<React.ProviderProps<any>>>(
-      (tree, ProviderOrWithValue) => {
+      (tree, ProviderOrWithValue : any) => {
         if (Array.isArray(ProviderOrWithValue)) {
           const [Provider, value] = ProviderOrWithValue;
           return <Provider {...value}>{tree}</Provider>;
