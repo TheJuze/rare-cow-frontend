@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import React, {
+  ChangeEvent,
   KeyboardEventHandler,
-  SyntheticEvent,
   useCallback,
   useRef,
   useState,
@@ -24,7 +24,7 @@ export interface SearchInputProps {
   searchValue: string;
   isSearchResultsLoading: boolean;
   presearchedNfts: TokenFastSearch[];
-  onSearchValueChange: (e: SyntheticEvent) => void;
+  onSearchValueChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onClearSearch?: () => void;
   onSearch?: () => void;
   className?: string;
@@ -37,7 +37,7 @@ export interface SearchInputProps {
  * @param {string} searchValue - search value
  * @param {boolean} isSearchResultsLoading - set the loader if the results are loading
  * @param {TokenFastSearch[]} presearchedNfts - list of components which will be displayed before user starts to type
- * @param {(e: SyntheticEvent) => void} onSearchValueChange - handler which change the search result value
+ * @param {(e: ChangeEvent) => void} onSearchValueChange - handler which change the search result value
  * @param {string} [placeholder = undefined] - input placeholder
  * @param {() => void} [onClearSearch = undefined] - function which will be called when the clear button has been clicked
  * @param {() => void} [onSearch = undefined] - function which well be called when 'ENTER' key has been clicked

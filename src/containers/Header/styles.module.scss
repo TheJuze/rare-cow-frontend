@@ -22,7 +22,9 @@
   }
   .headerInput {
     height: 44px;
-    width: 250px;
+    &.fullWidth {
+      width: 250px;
+    }
   }
   .headerDropdown {
     height: 44px;

@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { Breadcrumbs } from 'components/Breadcrumbs';
 import { useBreadcrumbs } from 'hooks/useBreadcrumbs';
 import userSelector from 'store/user/selectors';
+import wallet from 'assets/wallet.svg';
 import s from './styles.module.scss';
 
 const dropdownOptions: TDropdownValue[] = [
@@ -58,11 +59,12 @@ export interface HeaderProps {
 export const Header: VFC<HeaderProps> = ({ address, disconnect, onConnectWallet }) => {
   const [isUserShown, setIsUserShown] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
 
   const user = useShallowSelector(userSelector.getUser);
   const headRef = useRef<HTMLButtonElement | null>(null);
   const bodyRef = useRef<HTMLDivElement | null>(null);
-  const [isMobile] = useBreakpoints([540]);
+  const [isMobile] = useBreakpoints([767]);
 
   const { breadcrumbs } = useBreadcrumbs();
 
@@ -96,11 +98,11 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect, onConnectWallet 
             <img src={logo} alt="logo" />
           </Link>
           <SearchInput
-            searchValue=""
+            searchValue={searchValue}
             isSearchResultsLoading={false}
             presearchedNfts={[]}
-            onSearchValueChange={() => {}}
-            classNameInput={s.headerInput}
+            onSearchValueChange={(e) => setSearchValue(e.currentTarget.value)}
+            classNameInput={cn(s.headerInput, { [s.fullWidth]: address })}
             sendIsSearchActive={handleSearchActive}
             placeholder="NFT Name, ID"
           />
@@ -144,7 +146,7 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect, onConnectWallet 
               className={cn({ [s.mobileConnect]: isMobile })}
               onClick={handleChangeConnecting}
             >
-              {isMobile ? 'O' : 'Connect wallet'}
+              {isMobile ? <img src={wallet} alt="wallet" /> : 'Connect wallet'}
             </Button>
           )}
         </div>
