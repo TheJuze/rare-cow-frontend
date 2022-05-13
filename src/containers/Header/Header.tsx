@@ -13,6 +13,7 @@ import { Breadcrumbs } from 'components/Breadcrumbs';
 import { useBreadcrumbs } from 'hooks/useBreadcrumbs';
 import userSelector from 'store/user/selectors';
 import wallet from 'assets/wallet.svg';
+import connect from 'assets/connect.svg';
 import s from './styles.module.scss';
 
 const dropdownOptions: TDropdownValue[] = [
@@ -102,7 +103,7 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect, onConnectWallet 
             isSearchResultsLoading={false}
             presearchedNfts={[]}
             onSearchValueChange={(e) => setSearchValue(e.currentTarget.value)}
-            classNameInput={cn(s.headerInput, { [s.fullWidth]: address })}
+            classNameInput={s.headerInput}
             sendIsSearchActive={handleSearchActive}
             placeholder="NFT Name, ID"
           />
@@ -143,10 +144,11 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect, onConnectWallet 
             </div>
           ) : (
             <Button
-              className={cn({ [s.mobileConnect]: isMobile })}
+              className={cn(s.connect, { [s.mobileConnect]: isMobile })}
               onClick={handleChangeConnecting}
             >
-              {isMobile ? <img src={wallet} alt="wallet" /> : 'Connect wallet'}
+              <img src={wallet} alt="wallet" />
+              <img src={connect} alt="connect" className={s.connectIcon} />
             </Button>
           )}
         </div>
