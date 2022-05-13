@@ -200,7 +200,7 @@ const Profile: VFC = () => {
                 Edit profile
               </Button>
             ) : (
-              <Button>Follow</Button>
+              <Button className={styles.edit}>Follow</Button>
             )}
           </div>
           {hasSocials && (

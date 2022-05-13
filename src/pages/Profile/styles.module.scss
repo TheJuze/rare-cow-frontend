@@ -17,6 +17,7 @@
 
     .following {
       @include flex(row, flex-start, flex-start);
+      margin-bottom: space(16);
       .followers,
       .follows {
         height: 32px;
@@ -42,7 +43,6 @@
 
     .balances {
       @include flex(row, flex-start, flex-start);
-      margin-top: space(16);
       margin-bottom: space(24);
       .balanceItem {
         @include flex(row, center, flex-start);
