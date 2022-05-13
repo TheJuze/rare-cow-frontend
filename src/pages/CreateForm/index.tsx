@@ -3,7 +3,7 @@ import {
   getExtension, getFileGroup, routes, standardsMap, TAvailableExtensions, TStandards,
 } from 'appConstants';
 import { Text } from 'components';
-import { currencyToContractMap, getContractInfo, MATIC_ADDRESS } from 'config';
+import { MATIC_ADDRESS } from 'config';
 import { useShallowSelector } from 'hooks';
 import React, {
   useCallback, useEffect, useMemo, VFC,
@@ -93,12 +93,7 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
       collection.standart === createType);
       const selectedCollection = values.collection.collections?.[0];
       newTokenForm.append('collection', selectedCollection ? selectedCollection.url : defaultCollection.url);
-      if(values.listing.listNow) {
-        const { currency } = values.listing;
-        const feeAddress = currency.isNative ? MATIC_ADDRESS : getContractInfo({ contractName: currencyToContractMap[currency.name], reqInfo: 'address' }).address;
-        newTokenForm.append('fee_address', feeAddress);
-      }
-      console.log(values);
+      newTokenForm.append('fee_address', MATIC_ADDRESS);
       dispatch(
         createToken({
           token: newTokenForm,
