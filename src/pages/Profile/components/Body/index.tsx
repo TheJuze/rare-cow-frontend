@@ -164,11 +164,11 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
           <Button
             size="sm"
             variant="filled"
-            startAdornment={<FiltersIcon />}
+            startAdornment={<FiltersIcon className={styles.filtersIcon} />}
             className={styles.filters}
             onClick={() => setIsShowFilters(true)}
           >
-            <Text color="metal700">Filters</Text>
+            <Text color="metal700" className={styles.filtersText}>Filters</Text>
           </Button>
         )}
 

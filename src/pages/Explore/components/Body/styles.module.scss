@@ -10,8 +10,24 @@
     .filters {
       background-color: var(--filters-button-background-color);
       display: none;
+      .filtersIcon {
+        color: #384252;
+        @include transition;
+      }
+      &:hover,
+      &:active,
+      &:focus {
+        .filtersText {
+          color: var(--button-filled-default-color);
+          @include transition;
+        }
+        .filtersIcon {
+          color: var(--button-filled-default-color);
+          @include transition;
+        }
+      }
     }
-    .collections{
+    .collections {
       display: none;
     }
   }
@@ -93,17 +109,17 @@
       width: 100%;
     }
   }
-  .total{
+  .total {
     @include flex(row, center, flex-start);
     margin-top: space(16);
     width: 100%;
-    &Text{
+    &Text {
       font-size: 20px;
       line-height: 32px;
       margin-right: space(24);
     }
   }
-  .chips{
+  .chips {
     width: 100%;
   }
 }
@@ -123,7 +139,7 @@
         display: flex;
         margin-right: space(16);
       }
-      .collections{
+      .collections {
         display: block;
         width: 100%;
       }
@@ -152,10 +168,10 @@
         }
       }
     }
-    .total{
+    .total {
       flex-direction: column;
       align-items: flex-start;
-      &Text{
+      &Text {
         margin-right: 0;
         margin-bottom: space(8);
       }

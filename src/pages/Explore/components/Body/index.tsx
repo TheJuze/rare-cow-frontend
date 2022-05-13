@@ -358,11 +358,11 @@ const Body: VFC<IBodyProps> = () => {
         <Button
           size="sm"
           variant="filled"
-          startAdornment={<FiltersIcon />}
+          startAdornment={<FiltersIcon className={styles.filtersIcon} />}
           className={styles.filters}
           onClick={() => setIsShowFilters(true)}
         >
-          <Text color="metal700">Filters</Text>
+          <Text color="metal700" className={styles.filtersText}>Filters</Text>
         </Button>
         <SearchCollection
           collections={collectionsMock}
