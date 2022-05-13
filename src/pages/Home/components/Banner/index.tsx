@@ -2,7 +2,6 @@
 /* eslint-disable arrow-body-style */
 import { FC } from 'react';
 import logo from 'assets/img/logo.png';
-import logoSmall from 'assets/img/logoSmall.png';
 
 import { Button, Text } from 'components';
 
@@ -33,7 +32,7 @@ const Banner: FC = () => {
             RareCow will provide all the tools to create, sell and showcase your creations. Earn
             significant income through a fully digital ecosystem.
           </Text>
-          {!isDefaultScreen && <img src={logoSmall} alt="logo" className={styles.logo} />}
+          {!isDefaultScreen && <img src={logo} alt="logo" className={styles.logo} />}
           <div className={styles.bannerBtns}>
             <Button className={styles.btn} to={routes.nest.explore.path}>
               Explore

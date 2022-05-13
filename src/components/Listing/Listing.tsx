@@ -55,7 +55,7 @@ export const Listing: VFC<ListingProps> = ({
     () =>
       listType.value === 'Price'
         ? availableCurrencies
-        : availableCurrencies.filter((curr) => curr.isNative),
+        : availableCurrencies.filter((curr) => !curr.isNative),
     [availableCurrencies, listType.value],
   );
   const onListTypeOptionClickHandler = useCallback((val: TOption) => {

@@ -6,7 +6,7 @@
   @include container;
   max-width: 1440px;
   &Container {
-    padding: space(24, 0);
+    padding: space(24, 0, 32, 0);
     @include flex(row, center, space-between);
   }
   &Left,
@@ -27,6 +27,17 @@
   .headerDropdown {
     height: 44px;
     width: 160px;
+  }
+  .connect{
+    background-color: $metal-50;
+    position: relative;
+    width: 44px;
+    &Icon{
+      position: absolute;
+      top: 100%;
+      right: 22px;
+      transform: translate(5px, 10px);
+    }
   }
 }
 .user {

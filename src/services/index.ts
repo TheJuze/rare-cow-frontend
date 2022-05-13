@@ -1,2 +1,3 @@
 export * from './WalletService';
-export * from './WalletConnect';
+export { default as WalletConnectContext } from './WalletConnect';
+export { useWalletConnectorContext } from './WalletConnect';

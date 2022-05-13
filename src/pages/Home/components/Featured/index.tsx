@@ -43,10 +43,10 @@ const Trending: FC<Props> = ({ className }) => {
     if (widthValue > 1200) {
       return 4;
     }
-    if (widthValue > 1050) {
+    if (widthValue > 950) {
       return 3;
     }
-    if (widthValue > 850) {
+    if (widthValue > 650) {
       return 2;
     }
     return 1;

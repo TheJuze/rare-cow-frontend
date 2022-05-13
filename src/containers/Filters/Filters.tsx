@@ -1,3 +1,4 @@
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -30,6 +31,7 @@ export interface FiltersProps {
   handleChangeFilter: any;
   handleClearFilters: any;
   isWithCollections?: boolean;
+  isButtonOny?: boolean;
 }
 
 export const rates = [
@@ -54,12 +56,14 @@ export const Filters: VFC<FiltersProps> = ({
   handleChangeFilter,
   handleClearFilters,
   isWithCollections = true,
+  isButtonOny = false,
 }) => {
   const [minValue, setMinValue] = useState('');
   const [maxValue, setMaxValue] = useState('');
   const { ERC721, ERC1155, isAuction, currency, collections, price, date, likes } = filters;
   const isApplyDisabled = useMemo(
-    () => minValue && maxValue && !new BigNumber(minValue).isLessThanOrEqualTo(new BigNumber(maxValue)),
+    () =>
+      minValue && maxValue && !new BigNumber(minValue).isLessThanOrEqualTo(new BigNumber(maxValue)),
     [maxValue, minValue],
   );
 
@@ -316,7 +320,13 @@ export const Filters: VFC<FiltersProps> = ({
     },
   ];
   return (
-    <div className={cn(styles.filters, { [styles.active]: isShowFilters })}>
+    <div
+      className={cn(
+        styles.filters,
+        { [styles.active]: isShowFilters },
+        { [styles.buttonOnly]: isButtonOny },
+      )}
+    >
       {isWithCollections && (
         <SearchCollection
           collections={collectionsMock}

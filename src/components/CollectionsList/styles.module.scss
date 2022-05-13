@@ -1,0 +1,16 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.collectionsList {
+  display: grid;
+  grid-column-gap: 24px;
+  grid-row-gap: 24px;
+  grid-auto-flow: row;
+  padding: 0;
+
+  @include default-screen {
+    @include flex(row, center, center);
+    flex-direction: column;
+  }
+}

@@ -2,7 +2,14 @@
 /* eslint-disable implicit-arrow-linebreak */
 import {
   Collection,
-  Create, CreateCollection, CreateForm, Explore, Home, NftPage,
+  Create,
+  CreateCollection,
+  CreateForm,
+  Explore,
+  Following,
+  Home,
+  NftPage,
+  Profile,
 } from 'pages';
 import React, { ReactElement } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
@@ -18,6 +25,7 @@ export type TRoutes = {
   label?: string | ReactElement;
   nest?: TNestRoute;
   guards?: TGuards[];
+  inMainTree?: boolean;
 };
 
 const routesConfig = {
@@ -26,13 +34,50 @@ const routesConfig = {
   label: 'Home',
   nest: {
     profile: {
-      path: 'profile/:id',
-      render: false,
+      path: 'profile/:userId/*',
+      content: <Profile />,
+      label: 'Profile',
       nest: {
         aboutMe: {
           path: 'about-me',
-          content: 'About',
-          label: 'About {{id}}',
+          content: <Profile />,
+          label: 'About {{userId}}',
+          inMainTree: false,
+        },
+        owned: {
+          path: 'owned',
+          content: <Profile />,
+          label: 'Owned by {{userId}}',
+          inMainTree: false,
+        },
+        forSale: {
+          path: 'for-sale',
+          content: <Profile />,
+          label: 'For sale by {{userId}}',
+          inMainTree: false,
+        },
+        bided: {
+          path: 'bided',
+          content: <Profile />,
+          label: 'Bided by {{userId}}',
+          inMainTree: false,
+        },
+        favorites: {
+          path: 'favorites',
+          content: <Profile />,
+          label: 'Favorites of {{userId}}',
+          inMainTree: false,
+        },
+        collections: {
+          path: 'collections',
+          content: <Profile />,
+          label: 'Collections of {{userId}}',
+          inMainTree: false,
+        },
+        sold: {
+          path: 'sold',
+          content: <Profile />,
+          label: 'Sold by {{userId}}',
           inMainTree: false,
         },
         edit: {
@@ -42,6 +87,16 @@ const routesConfig = {
           guards: ['is-me'],
         },
       },
+    },
+    followers: {
+      path: 'followers/:userId',
+      content: <Following />,
+      label: 'Followers of {{userId}}',
+    },
+    following: {
+      path: 'following/:userId',
+      content: <Following />,
+      label: 'Followings of {{userId}}',
     },
     create: {
       path: 'create',
@@ -92,10 +147,10 @@ class RouteWorker<T extends object> {
       for (let i = 0; i < nest.length; i += 1) {
         const currentPathObject = nest[i];
         const currentPath = currentPathObject.path;
-        const fullPath = `${parentPaths.join('/')}/${currentPath}`.replace(
-          new RegExp(/\/+(?=\/)/g),
-          '',
-        );
+        const joinedPath = parentPaths.join('/');
+        const fullPath = `${
+          joinedPath.endsWith('/*') ? joinedPath.slice(0, -2) : joinedPath
+        }/${currentPath}`.replace(new RegExp(/\/+(?=\/)/g), '');
         Object.defineProperty(currentPathObject, 'path', {
           get: () => fullPath,
         });
@@ -112,12 +167,12 @@ class RouteWorker<T extends object> {
 }
 
 const normalizePath = (path: string) =>
-  `${path.startsWith('/') ? '' : '/'}${path}${path.endsWith('/') ? '' : '/'}`;
+  `${path.startsWith('/') ? '' : '/'}${path}${path.endsWith('/') || path.endsWith('*') ? '' : '/'}`;
 
 export const { routes } = new RouteWorker<typeof routesConfig>({ ...routesConfig });
 
 export const createDynamicLink = (path: string, values: TDynamicValues) => {
-  let normalPath = path;
+  let normalPath = path.replaceAll('/*', '');
   if (values) {
     Object.entries(values).forEach(([pathKey, pathValue]) => {
       normalPath = normalPath.replace(`:${pathKey}`, pathValue.toString());
@@ -134,11 +189,9 @@ const getOutletRoute = (nest: TRoutes[]) => {
         <Route
           key={subPath.path}
           path={subPath.path}
-          element={(
-            <>
-              {subPath.content} <Outlet />
-            </>
-          )}
+          element={
+            <>{subPath.content} <Outlet /></>
+          }
         >
           {Object.entries(subPath.nest)
             .map(([, data]) => data)
@@ -156,7 +209,11 @@ const recursiveRoutesCollector = (nest: TRoutes[]) => {
   for (let i = 0; i < nest.length; i += 1) {
     const subPath = nest[i];
     const newPath = subPath.path;
-    resultRoute.push(...(subPath.render !== false ? [{ ...subPath, path: newPath }] : []));
+    resultRoute.push(
+      ...(subPath.render !== false && subPath.inMainTree !== false
+        ? [{ ...subPath, path: newPath }]
+        : []),
+    );
     if (subPath.nest) {
       resultRoute.push([
         ...Object.entries(subPath.nest)
