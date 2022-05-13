@@ -21,6 +21,7 @@ import {
   TwitterOutlinedIcon,
 } from 'assets/icons/icons';
 import { useBreakpoints } from 'hooks';
+import { createDynamicLink, routes } from 'appConstants';
 import { Body } from './components';
 
 import styles from './styles.module.scss';
@@ -72,12 +73,23 @@ const Profile: VFC = () => {
                 </Text>
               )}
               <div className={styles.following}>
-                <Button to="/" className={styles.followers} variant="outlined" size="sm">
+                <Button
+                  to={createDynamicLink(routes.nest.followers.path, { userId: id })}
+                  className={styles.followers}
+                  variant="outlined"
+                  size="sm"
+                  disabled={!followersCount}
+                >
                   <Text size="xs" weight="medium" color="accent">
                     {followersCount || 0} followers
                   </Text>
                 </Button>
-                <Button to="/" className={styles.follows} variant="outlined">
+                <Button
+                  to={createDynamicLink(routes.nest.following.path, { userId: id })}
+                  className={styles.follows}
+                  variant="outlined"
+                  disabled={!followsCount}
+                >
                   <Text size="xs" weight="medium" color="yellow500">
                     {followsCount || 0} following
                   </Text>
@@ -171,12 +183,23 @@ const Profile: VFC = () => {
               </Text>
             )}
             <div className={styles.following}>
-              <Button to="/" className={styles.followers} variant="outlined" size="sm">
+              <Button
+                to={createDynamicLink(routes.nest.followers.path, { userId: id })}
+                className={styles.followers}
+                variant="outlined"
+                size="sm"
+                disabled={!followersCount}
+              >
                 <Text size="xs" weight="medium" color="accent">
                   {followersCount || 0} followers
                 </Text>
               </Button>
-              <Button to="/" className={styles.follows} variant="outlined">
+              <Button
+                to={createDynamicLink(routes.nest.following.path, { userId: id })}
+                className={styles.follows}
+                variant="outlined"
+                disabled={!followsCount}
+              >
                 <Text size="xs" weight="medium" color="yellow500">
                   {followsCount || 0} following
                 </Text>

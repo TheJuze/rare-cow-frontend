@@ -40,6 +40,30 @@ export function* updateProfileInfoSaga({
       twitter: 'rarecow',
       instagram: 'rarecow',
       bio: 'I’am from Indianapolis, IN, USA. I create all my art physically using lasers, glass, mirrors and water - then capture them digitally with my phone. I record raw vids, and I also make laser vid edits synched to music. I make most of my lasers, and i do all this in my walk-in closet. Feel free to hit me up with any questions!',
+      followers: [
+        { url: 7, displayName: 'Follower Name' },
+        { url: 7, displayName: 'Follower Name' },
+        { url: 7, displayName: 'Follower Name' },
+        { url: 7, displayName: 'Follower Name' },
+        { url: 7, displayName: 'Follower Name' },
+        { url: 7, displayName: 'Follower Name' },
+        { url: 7, displayName: 'Follower Name' },
+        { url: 7, displayName: 'Follower Name' },
+      ],
+      followersCount: 7,
+      follows: [
+        { url: 7, displayName: 'Following Name' },
+        { url: 7, displayName: 'Following Name' },
+        { url: 7, displayName: 'Following Name' },
+        { url: 7, displayName: 'Following Name' },
+        { url: 7, displayName: 'Following Name' },
+        { url: 7, displayName: 'Following Name' },
+        { url: 7, displayName: 'Following Name' },
+        { url: 7, displayName: 'Following Name' },
+        { url: 7, displayName: 'Following Name' },
+        { url: 7, displayName: 'Following Name' },
+      ],
+      followsCount: 9,
     };
     yield put(updateProfile(camelize(testData)));
 
