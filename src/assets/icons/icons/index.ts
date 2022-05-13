@@ -5,6 +5,7 @@ export { Burn } from './components/Burn';
 export { ArrowDown } from './components/ArrowDown';
 export { AboutMe as AboutMeIcon } from './components/AboutMe';
 export { Bided as BidedIcon } from './components/Bided';
+export { BidedGray as BidedGrayIcon } from './components/BidedGray';
 export { Collections as CollectionsIcon } from './components/Collections';
 export { Favorites as FavoritesIcon } from './components/Favorites';
 export { ForSale as ForSaleIcon } from './components/ForSale';

@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
@@ -6,6 +7,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -18,9 +20,7 @@ import userSelector from 'store/user/selectors';
 import { Subscription } from 'rxjs';
 
 import { useShallowSelector } from 'hooks';
-import {
-  Chains, State, UserState, WalletProviders,
-} from 'types';
+import { Chains, State, UserState, WalletProviders } from 'types';
 import { WalletService } from 'services/WalletService';
 import { login, updateUserInfo } from 'store/user/actions';
 
@@ -41,12 +41,6 @@ const WalletConnectContext: FC = ({ children }) => {
     key,
     provider: WalletProvider,
   } = useShallowSelector<State, UserState>(userSelector.getUser);
-
-  const disconnect = useCallback(() => {
-    dispatch(disconnectWalletState());
-    WalletConnect.current.resetConnect();
-    currentSubscriber?.unsubscribe();
-  }, [currentSubscriber, dispatch]);
 
   const subscriberSuccess = useCallback(
     (data: any) => {
@@ -69,15 +63,18 @@ const WalletConnectContext: FC = ({ children }) => {
     },
     [WalletConnect, dispatch],
   );
-
   const connect = useCallback(
     async (provider: WalletProviders, chain: Chains) => {
       const connected = await WalletConnect.current.initWalletConnect(provider, chain);
       if (connected) {
         try {
-          const sub = WalletConnect.current
-            .eventSubscribe()
-            .subscribe(subscriberSuccess, subscriberError);
+          if (!currentSubscriber) {
+            const sub = WalletConnect.current
+              .eventSubscribe()
+              .subscribe(subscriberSuccess, subscriberError);
+
+            setCurrentSubscriber(sub);
+          }
           const accountInfo: any = await WalletConnect.current.getAccount();
 
           if (key?.length && address === accountInfo?.address) {
@@ -91,8 +88,6 @@ const WalletConnectContext: FC = ({ children }) => {
             );
             dispatch(updateProvider({ provider: accountInfo.type }));
           }
-
-          setCurrentSubscriber(sub);
         } catch (error: any) {
           console.log(error);
           // metamask doesn't installed,
@@ -107,22 +102,28 @@ const WalletConnectContext: FC = ({ children }) => {
         }
       }
     },
-    [address, dispatch, key?.length, subscriberError, subscriberSuccess],
+    [address, currentSubscriber, dispatch, key?.length, subscriberError, subscriberSuccess],
   );
+
+  const disconnect = useCallback(() => {
+    dispatch(disconnectWalletState());
+    WalletConnect.current.resetConnect();
+    currentSubscriber?.unsubscribe();
+  }, [currentSubscriber, dispatch]);
 
   useEffect(() => {
     if (WalletProvider) {
       connect(WalletProviders.metamask, Chains.polygon);
     }
   }, [WalletProvider, address, connect]);
-
-  return (
-    <Web3Context.Provider value={{ connect, disconnect, walletService: WalletConnect.current }}>
-      {children}
-    </Web3Context.Provider>
+  const values = useMemo(
+    () => ({ connect, disconnect, walletService: WalletConnect.current }),
+    [connect, disconnect],
   );
+
+  return <Web3Context.Provider value={values}>{children}</Web3Context.Provider>;
 };
 
-const useWalletConnectorContext = () => useContext(Web3Context);
+export const useWalletConnectorContext = () => useContext(Web3Context);
 
-export { WalletConnectContext, useWalletConnectorContext };
+export default WalletConnectContext;

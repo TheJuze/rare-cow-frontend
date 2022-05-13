@@ -65,8 +65,37 @@
       width: 100%;
     }
   }
-  .collections{
+  .collections {
     margin-bottom: space(24);
+  }
+
+  &.buttonOnly {
+    position: fixed;
+    padding: 0;
+    opacity: 0;
+    top: 100%;
+    transform: scale(1);
+    height: 100%;
+    &.active {
+      opacity: 1;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 400px;
+      min-height: 500px;
+      width: fit-content;
+      height: fit-content;
+      background-color: var(--filters-default-background-color);
+      padding: 16px 24px 24px;
+      z-index: 100;
+      border-radius: 14px;
+      .cross {
+        display: block;
+        cursor: pointer;
+      }
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
   }
 }
 .filters::-webkit-scrollbar {
@@ -105,8 +134,19 @@
       }
       overflow-y: auto;
     }
-    .collections{
+    .collections {
       display: none;
+    }
+    &.buttonOnly{
+      &.active{
+        top: 0;
+        left: 0;
+        width: 100%;
+        min-width: 100%;
+        min-height: 100%;
+        transform: none;
+        border-radius: 0;
+      }
     }
   }
 }

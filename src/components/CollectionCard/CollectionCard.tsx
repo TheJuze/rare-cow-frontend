@@ -1,5 +1,5 @@
 /* eslint-disable arrow-body-style */
-import React, { FC } from 'react';
+import React, { VFC } from 'react';
 
 import cx from 'classnames';
 
@@ -7,7 +7,7 @@ import { Avatar, Text } from 'components';
 
 import styles from './styles.module.scss';
 
-interface IProps {
+export interface CollectionCardProps {
   index?: number;
   avatar: string;
   id: number | string;
@@ -18,7 +18,7 @@ interface IProps {
   className?: string;
 }
 
-const CollectionCard: FC<IProps> = ({
+export const CollectionCard: VFC<CollectionCardProps> = ({
   index,
   avatar,
   id,
@@ -49,9 +49,7 @@ const CollectionCard: FC<IProps> = ({
               {price}
             </Text>
           </Text>
-        ) : (
-          null
-        )}
+        ) : null}
       </div>
       {profitIncrease && (
         <div className={styles.profitIncreaseWrapper}>
@@ -63,4 +61,3 @@ const CollectionCard: FC<IProps> = ({
     </li>
   );
 };
-export default CollectionCard;

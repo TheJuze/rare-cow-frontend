@@ -27,7 +27,7 @@ import { TDropdownValue } from 'types/components/dropdown';
 import { Switch } from 'components/Switch';
 import styles from './styles.module.scss';
 
-const balances = [
+export const balances = [
   {
     value: 213.12,
     icon: usdt,
