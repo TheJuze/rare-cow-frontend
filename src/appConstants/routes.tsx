@@ -2,7 +2,14 @@
 /* eslint-disable implicit-arrow-linebreak */
 import {
   Collection,
-  Create, CreateCollection, CreateForm, Explore, Home, NftPage, Profile,
+  Create,
+  CreateCollection,
+  CreateForm,
+  Explore,
+  Following,
+  Home,
+  NftPage,
+  Profile,
 } from 'pages';
 import React, { ReactElement } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
@@ -81,6 +88,16 @@ const routesConfig = {
         },
       },
     },
+    followers: {
+      path: 'followers/:userId',
+      content: <Following />,
+      label: 'Followers of {{userId}}',
+    },
+    following: {
+      path: 'following/:userId',
+      content: <Following />,
+      label: 'Followings of {{userId}}',
+    },
     create: {
       path: 'create',
       content: <Create />,
@@ -131,11 +148,9 @@ class RouteWorker<T extends object> {
         const currentPathObject = nest[i];
         const currentPath = currentPathObject.path;
         const joinedPath = parentPaths.join('/');
-        const fullPath = `${joinedPath.endsWith('/*') ? joinedPath.slice(0, -2) : joinedPath}/${currentPath}`.replace(
-          new RegExp(/\/+(?=\/)/g),
-          '',
-        );
-        console.log('fullPath', fullPath);
+        const fullPath = `${
+          joinedPath.endsWith('/*') ? joinedPath.slice(0, -2) : joinedPath
+        }/${currentPath}`.replace(new RegExp(/\/+(?=\/)/g), '');
         Object.defineProperty(currentPathObject, 'path', {
           get: () => fullPath,
         });
@@ -174,11 +189,9 @@ const getOutletRoute = (nest: TRoutes[]) => {
         <Route
           key={subPath.path}
           path={subPath.path}
-          element={(
-            <>
-              {subPath.content} <Outlet />
-            </>
-          )}
+          element={
+            <>{subPath.content} <Outlet /></>
+          }
         >
           {Object.entries(subPath.nest)
             .map(([, data]) => data)
@@ -196,7 +209,11 @@ const recursiveRoutesCollector = (nest: TRoutes[]) => {
   for (let i = 0; i < nest.length; i += 1) {
     const subPath = nest[i];
     const newPath = subPath.path;
-    resultRoute.push(...(subPath.render !== false && subPath.inMainTree !== false ? [{ ...subPath, path: newPath }] : []));
+    resultRoute.push(
+      ...(subPath.render !== false && subPath.inMainTree !== false
+        ? [{ ...subPath, path: newPath }]
+        : []),
+    );
     if (subPath.nest) {
       resultRoute.push([
         ...Object.entries(subPath.nest)

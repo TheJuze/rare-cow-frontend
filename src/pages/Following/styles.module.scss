@@ -1,0 +1,30 @@
+@import 'src/styles/helpers';
+
+.following {
+  @include container;
+  margin-top: space(43) !important;
+  margin-bottom: space(80) !important;
+  .followingList {
+    margin-top: space(43);
+    display: grid;
+    grid-column-gap: 24px;
+    grid-row-gap: 24px;
+    grid-auto-flow: row;
+    padding: 0;
+    @include middle-tablet {
+      @include flex(row, center, center);
+      flex-direction: column;
+    }
+  }
+  .follower {
+    background-color: $metal-200;
+    border-radius: 14px;
+    padding: space(15, 24);
+    @include flex(row, center, flex-start);
+    max-width: 340px;
+    width: 100%;
+    &Name{
+      margin-left: space(12);
+    }
+  }
+}
