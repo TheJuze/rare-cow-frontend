@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable max-len */
 /* eslint-disable implicit-arrow-linebreak */
 import {
@@ -9,6 +10,7 @@ import {
   Following,
   Home,
   NftPage,
+  NotFound,
   Profile,
 } from 'pages';
 import React, { ReactElement } from 'react';
@@ -33,6 +35,11 @@ const routesConfig = {
   content: <Home />,
   label: 'Home',
   nest: {
+    404: {
+      path: '*',
+      content: <NotFound />,
+      label: 'Not found',
+    },
     profile: {
       path: 'profile/:userId/*',
       content: <Profile />,
@@ -190,7 +197,9 @@ const getOutletRoute = (nest: TRoutes[]) => {
           key={subPath.path}
           path={subPath.path}
           element={
-            <>{subPath.content} <Outlet /></>
+            <>
+              {subPath.content} <Outlet />
+            </>
           }
         >
           {Object.entries(subPath.nest)
