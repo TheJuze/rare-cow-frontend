@@ -7,3 +7,4 @@ export { default as CreateCollection } from './CreateCollection';
 export { default as Collection } from './Collection';
 export { default as Profile } from './Profile';
 export { default as Following } from './Following';
+export { default as NotFound } from './NotFound';

@@ -1,0 +1,33 @@
+@import 'src/styles/helpers';
+
+.notFound {
+  @include container;
+  margin-top: space(43) !important;
+  margin-bottom: space(80) !important;
+  @include flex(column, center, flex-start);
+  .title {
+    font-size: 250px;
+    line-height: 100%;
+    margin-bottom: space(24);
+  }
+  .subtitle {
+    font-size: 25px;
+    line-height: 37.51px;
+    margin-bottom: space(11);
+  }
+  .text {
+    max-width: 320px;
+  }
+  .button{
+    margin-top: space(49);
+    width: 180px;
+  }
+}
+
+@include middle-tablet {
+  .notFound {
+    .title {
+      font-size: 125px;
+    }
+  }
+}

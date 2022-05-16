@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable max-len */
 /* eslint-disable implicit-arrow-linebreak */
 import {
@@ -9,6 +10,7 @@ import {
   Following,
   Home,
   NftPage,
+  NotFound,
   Profile,
 } from 'pages';
 import React, { ReactElement } from 'react';
@@ -136,6 +138,11 @@ const routesConfig = {
       content: <Collection />,
       label: 'Collection',
     },
+    notFound: {
+      path: '*',
+      content: <NotFound />,
+      label: 'Not found',
+    },
   },
 };
 class RouteWorker<T extends object> {
@@ -190,7 +197,9 @@ const getOutletRoute = (nest: TRoutes[]) => {
           key={subPath.path}
           path={subPath.path}
           element={
-            <>{subPath.content} <Outlet /></>
+            <>
+              {subPath.content} <Outlet />
+            </>
           }
         >
           {Object.entries(subPath.nest)
