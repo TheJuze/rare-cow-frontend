@@ -35,11 +35,6 @@ const routesConfig = {
   content: <Home />,
   label: 'Home',
   nest: {
-    404: {
-      path: '*',
-      content: <NotFound />,
-      label: 'Not found',
-    },
     profile: {
       path: 'profile/:userId/*',
       content: <Profile />,
@@ -142,6 +137,11 @@ const routesConfig = {
       path: 'collection/:id',
       content: <Collection />,
       label: 'Collection',
+    },
+    notFound: {
+      path: '*',
+      content: <NotFound />,
+      label: 'Not found',
     },
   },
 };
