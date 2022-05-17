@@ -114,7 +114,7 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({
                       caption={captionGenerator(touched.description, errors.description)}
                       disabled={isSubmitting}
                       label="Description"
-                      placeholder="Default"
+                      placeholder="Input text"
                       component="textarea"
                       className={cx(styles.fullSize, styles.descriptionArea)}
                     />
