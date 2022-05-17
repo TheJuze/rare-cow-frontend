@@ -50,11 +50,11 @@ const CopyButton: VFC<CopyButtonProps> = ({ className, value }) => {
 };
 
 const Clipboard: VFC<InputProps> = (props) => {
-  const { value } = props;
+  const { value, className } = props;
   return (
     <Input
       {...props}
-      className={styles.input}
+      className={cn(styles.input, className)}
       classNameBody={styles.inputBody}
       endAdornment={<CopyButton value={value} />}
     />

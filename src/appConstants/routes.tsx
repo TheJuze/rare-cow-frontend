@@ -5,6 +5,7 @@ import {
   Create,
   CreateCollection,
   CreateForm,
+  EditProfile,
   Explore,
   Following,
   Home,
@@ -82,7 +83,7 @@ const routesConfig = {
         },
         edit: {
           path: 'edit',
-          content: 'Edit',
+          content: <EditProfile />,
           label: 'Edit',
           guards: ['is-me'],
         },
@@ -175,7 +176,7 @@ export const createDynamicLink = (path: string, values: TDynamicValues) => {
   let normalPath = path.replaceAll('/*', '');
   if (values) {
     Object.entries(values).forEach(([pathKey, pathValue]) => {
-      normalPath = normalPath.replace(`:${pathKey}`, pathValue.toString());
+      normalPath = normalPath.replace(`:${pathKey}`, pathValue?.toString());
     });
   }
   return normalPath;

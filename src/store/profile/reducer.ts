@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ProfileState } from 'types';
+import { ProfileState, TBalance } from 'types';
 
 const initialState: ProfileState = {
   address: undefined,
@@ -23,7 +23,10 @@ const initialState: ProfileState = {
   twitter: undefined,
   url: undefined,
   email: undefined,
-  balance: '0',
+  balance: {
+    USDT: '0',
+    MATIC: '0',
+  },
   collections: [],
 };
 
@@ -35,8 +38,12 @@ export const profileReducer = createSlice({
       ...state,
       ...action.payload,
     }),
+    updateProfileBalance: (state, action: PayloadAction<Partial<TBalance>>) => ({
+      ...state,
+      balance: { ...state.balance, ...action.payload },
+    }),
   },
 });
 
-export const { updateProfile } = profileReducer.actions;
+export const { updateProfile, updateProfileBalance } = profileReducer.actions;
 export default profileReducer.reducer;

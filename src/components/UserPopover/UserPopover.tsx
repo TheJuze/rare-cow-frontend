@@ -20,7 +20,7 @@ import {
   PenIcon,
   SoldIcon,
 } from 'assets/icons/icons';
-import { usdt } from 'assets/img';
+import { matic, usdt } from 'assets/img';
 import Clipboard from 'components/Clipboard/Clipboard';
 import { Dropdown } from 'components/Dropdown';
 import { TDropdownValue } from 'types/components/dropdown';
@@ -34,7 +34,7 @@ export const balances = [
   },
   {
     value: 23.34,
-    icon: usdt,
+    icon: matic,
   },
 ];
 

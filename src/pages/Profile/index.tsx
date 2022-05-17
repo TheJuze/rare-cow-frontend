@@ -1,7 +1,7 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable arrow-body-style */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { balances, Button, Text } from 'components';
+import { Avatar, Button, Text } from 'components';
 import Clipboard from 'components/Clipboard/Clipboard';
 import useShallowSelector from 'hooks/useShallowSelector';
 import React, { useEffect, useMemo, VFC } from 'react';
@@ -21,7 +21,7 @@ import {
   TwitterOutlinedIcon,
 } from 'assets/icons/icons';
 import { useBreakpoints } from 'hooks';
-import { createDynamicLink, routes } from 'appConstants';
+import { createDynamicLink, currenciesIconsMap, routes } from 'appConstants';
 import { Body } from './components';
 
 import styles from './styles.module.scss';
@@ -30,7 +30,10 @@ const Profile: VFC = () => {
   const [isMobile] = useBreakpoints([767]);
   const { walletService } = useWalletConnectorContext();
   const { userId } = useParams();
+  const isUser = useShallowSelector(userSelector.getProp('isUser'));
   const id = useShallowSelector(userSelector.getProp('id'));
+  const balance = useShallowSelector(userSelector.getProp('balance'));
+
   const {
     avatar,
     name,
@@ -44,11 +47,15 @@ const Profile: VFC = () => {
     bio,
   } = useShallowSelector(profileSelector.getProfile);
   const dispatch = useDispatch();
-  const isUser = useMemo(() => String(id) === String(userId), [id, userId]);
   const hasSocials = useMemo(
     () => Boolean(email || site || instagram || twitter),
     [email, instagram, site, twitter],
   );
+
+  const mappedBalance = useMemo(() => Object.entries(balance).map(([token, value]) => ({
+    value,
+    icon: currenciesIconsMap[token],
+  })), [balance]);
 
   useEffect(() => {
     if (userId) {
@@ -60,7 +67,7 @@ const Profile: VFC = () => {
     return (
       <div className={styles.profile}>
         <div className={styles.header}>
-          <img src={avatar || nullAvatar} alt="avatar" className={styles.avatar} />
+          <Avatar size={112} id={userId} avatar={avatar || nullAvatar} />
           <div className={styles.right}>
             <div className={styles.info}>
               {name ? (
@@ -97,11 +104,11 @@ const Profile: VFC = () => {
               </div>
               {isUser ? (
                 <div className={styles.balances}>
-                  {balances.map((balance) => (
+                  {mappedBalance.map(({ icon, value }) => (
                     <div className={styles.balanceItem}>
-                      <img src={balance.icon} alt="" className={styles.balanceItemIcon} />
+                      <img src={icon} alt="" className={styles.balanceItemIcon} />
                       <Text weight="medium" color="dark" className={styles.balanceText}>
-                        {balance.value}
+                        {value}
                       </Text>
                     </div>
                   ))}
@@ -109,7 +116,12 @@ const Profile: VFC = () => {
               ) : null}
               {address ? <Clipboard name={address} value={address} /> : null}
               {isUser ? (
-                <Button to="/" className={styles.edit}>
+                <Button
+                  to={
+                  createDynamicLink(routes.nest.profile.nest.edit.path, { userId })
+                  }
+                  className={styles.edit}
+                >
                   Edit profile
                 </Button>
               ) : (
@@ -148,7 +160,7 @@ const Profile: VFC = () => {
                   <TwitterOutlinedIcon />
                 </div>
                 <Text variant="body-2" color="base900">
-                  @{twitter}
+                  {twitter}
                 </Text>
               </div>
             ) : null}
@@ -158,7 +170,7 @@ const Profile: VFC = () => {
                   <InstagramOutlinedIcon />
                 </div>
                 <Text variant="body-2" color="base900">
-                  @{instagram}
+                  {instagram}
                 </Text>
               </div>
             ) : null}
@@ -170,7 +182,7 @@ const Profile: VFC = () => {
   return (
     <div className={styles.profile}>
       <div className={styles.header}>
-        <img src={avatar || nullAvatar} alt="avatar" className={styles.avatar} />
+        <Avatar size={112} id={userId} avatar={avatar || nullAvatar} />
         <div className={styles.right}>
           <div className={styles.info}>
             {name ? (
@@ -207,11 +219,11 @@ const Profile: VFC = () => {
             </div>
             {isUser ? (
               <div className={styles.balances}>
-                {balances.map((balance) => (
+                {mappedBalance.map(({ icon, value }) => (
                   <div className={styles.balanceItem}>
-                    <img src={balance.icon} alt="" className={styles.balanceItemIcon} />
+                    <img src={icon} alt="" className={styles.balanceItemIcon} />
                     <Text weight="medium" color="dark" className={styles.balanceText}>
-                      {balance.value}
+                      {value}
                     </Text>
                   </div>
                 ))}
@@ -219,7 +231,12 @@ const Profile: VFC = () => {
             ) : null}
             {address ? <Clipboard name={address} value={address} /> : null}
             {isUser ? (
-              <Button to="/" className={styles.edit}>
+              <Button
+                to={
+                createDynamicLink(routes.nest.profile.nest.edit.path, { userId })
+              }
+                className={styles.edit}
+              >
                 Edit profile
               </Button>
             ) : (
@@ -254,7 +271,7 @@ const Profile: VFC = () => {
                     <TwitterOutlinedIcon />
                   </div>
                   <Text variant="body-2" color="base900">
-                    @{twitter}
+                    {twitter}
                   </Text>
                 </div>
               ) : null}
@@ -264,7 +281,7 @@ const Profile: VFC = () => {
                     <InstagramOutlinedIcon />
                   </div>
                   <Text variant="body-2" color="base900">
-                    @{instagram}
+                    {instagram}
                   </Text>
                 </div>
               ) : null}

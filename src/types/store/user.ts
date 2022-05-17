@@ -1,19 +1,25 @@
+import { TAppliedCurrencies } from 'appConstants/currency';
 import { Collection } from 'types/api/Collection';
 import { Chains, IChainType } from 'types/connect';
+
+export type TBalance = {
+  [key in TAppliedCurrencies]: string;
+};
 
 export type UserState = {
   id: number | null;
   avatar: string;
   address: string;
-  balance: string | number;
+  balance: TBalance;
   key: string;
   provider: string;
   chain: Chains;
   displayName: string;
   collections: Collection[];
-  isWhitelisted: boolean,
-  rate: string,
-  chainType: IChainType
+  isWhitelisted: boolean;
+  rate: string;
+  chainType: IChainType;
+  isUser: boolean;
 };
 
 export type LoginReq = {
