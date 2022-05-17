@@ -51,7 +51,7 @@ const Create: VFC = () => {
   return (
     <div className={styles.wrapper}>
       <Text className={styles.title} variant="subtitle-1" color="dark0">
-        Create Nft
+        Create NFT
       </Text>
       <div className={styles.body}>
         {createOptions.map((card) => (
