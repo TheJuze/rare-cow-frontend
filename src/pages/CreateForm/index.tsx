@@ -122,7 +122,7 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
           {standardsMap[createType]} NFT
         </Text>
         <div className={styles.createHeaderMintingFee}>
-          <Text variant="body-2" color="accent">
+          <Text variant="body-2" color="accent" weight="semiBold">
             Minting fee is {feeAmount} %
           </Text>
         </div>

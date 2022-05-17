@@ -7,7 +7,7 @@ import {
 } from 'components';
 import { Field, Form, Formik } from 'formik';
 import { useSearch, useShallowSelector } from 'hooks';
-import React, { useMemo, VFC } from 'react';
+import React, { useMemo, useRef, VFC } from 'react';
 import {
   EInputStatus, ICreateForm, TInputCaption, TSingleProp,
 } from 'types';
@@ -39,6 +39,7 @@ const captionGenerator = (touched: boolean, errors: string | undefined) => {
 export const CreateNFTForm: VFC<ICreateNFTForm> = ({
   handleSubmit, formValues, type, collections,
 }) => {
+  const descriptionRef = useRef(null);
   const { categories: searchedCategories } = useShallowSelector(nftSelector.getProp('searchData'));
   const defaultCategories = useShallowSelector(nftSelector.getProp('categories'));
 
@@ -114,9 +115,10 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({
                       caption={captionGenerator(touched.description, errors.description)}
                       disabled={isSubmitting}
                       label="Description"
-                      placeholder="Default"
+                      placeholder="Input text"
                       component="textarea"
                       className={cx(styles.fullSize, styles.descriptionArea)}
+                      inputRef={descriptionRef}
                     />
                     <Text className={styles.counter} size="xs" weight="normal">
                       {field.value.length} / {createValidator.description.max}

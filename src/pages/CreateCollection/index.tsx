@@ -1,5 +1,5 @@
 import {
-  fees, routes, standards, standardsMap,
+  routes, standards, standardsMap,
 } from 'appConstants';
 import React, { useCallback, useMemo, VFC } from 'react';
 
@@ -11,6 +11,7 @@ import userSelector from 'store/user/selectors';
 import { useShallowSelector } from 'hooks';
 import { createCollection } from 'store/collections/actions';
 import { useWalletConnectorContext } from 'services';
+import nftSelector from 'store/nfts/selectors';
 import { CreateCollectionForm } from './Form';
 import styles from './styles.module.scss';
 
@@ -19,6 +20,7 @@ const CreateCollection: VFC = () => {
 
   const dispatch = useDispatch();
   const chain = useShallowSelector(userSelector.getProp('chain'));
+  const { amount: feeAmount } = useShallowSelector(nftSelector.getProp('fees'));
   const { walletService } = useWalletConnectorContext();
   const navigator = useNavigate();
 
@@ -57,11 +59,13 @@ const CreateCollection: VFC = () => {
           network: chain,
           web3Provider: walletService.Web3(),
           onEnd: () => resolve(null),
-          onSuccess: () => navigator(routes.nest.create.nest[type.toLowerCase()].path),
+          onSuccess: () => navigator(routes.nest.create
+            .nest[standardsMap[values.type].toLowerCase()]
+            .path),
         }),
       );
     }),
-    [chain, dispatch, navigator, type, walletService],
+    [chain, dispatch, navigator, walletService],
   );
 
   return (
@@ -71,8 +75,8 @@ const CreateCollection: VFC = () => {
           Create a collection
         </Text>
         <div className={styles.createHeaderMintingFee}>
-          <Text variant="body-2" color="accent">
-            Minting fee is {fees.minting} %
+          <Text variant="body-2" color="accent" weight="semiBold">
+            Minting fee is {feeAmount} %
           </Text>
         </div>
         <div>
