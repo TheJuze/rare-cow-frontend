@@ -42,7 +42,7 @@ export const Avatar: VFC<AvatarProps> = ({
   className,
 }) => {
   return (
-    <div className={cn('wrapper', className)}>
+    <div className={cn('avatar-wrapper', className)}>
       {id ? (
         <Link
           to={

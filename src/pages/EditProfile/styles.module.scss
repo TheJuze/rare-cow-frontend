@@ -1,0 +1,122 @@
+@import '/src/styles/helpers.scss';
+.edit-profile__wrapper {
+  @include container;
+  padding-bottom: 136px;
+  &__title {
+    margin: space(43, 0, 47) !important;
+    @include transition;
+  }
+  &__selector {
+    width: 100%;
+    &-body {
+      margin-bottom: 110px;
+      @include flex;
+    }
+  }
+  &__socials {
+    margin: 60px 0 18px;
+  }
+  &__avatar {
+    margin-bottom: 50px;
+    position: relative;
+    @include flex;
+    &-info{
+        margin-left: space(30) !important;
+        max-width: 325px;
+        @include flex(column, flex-start, space-evenly);
+    }
+  }
+  &__logo {
+    &-title {
+      margin: 12px 0;
+    }
+    &-subtitle {
+      margin-bottom: 40px;
+      line-height: 24px;
+    }
+  }
+  &__body{
+      margin-top: space(43) !important;
+      @include flex(row, flex-start, flex-start);
+      &-block{
+        flex: 0 0 45%;
+        &__content{
+            margin-right: space(30) !important;
+            max-width: 360px;
+        }
+      }
+  }
+  &__name {
+    width: 100%;
+  }
+  &__description {
+    width: 100%;
+    div{
+        min-height: 120px;
+        textarea{
+            min-height: 110px;
+        }
+    }
+  }
+  .btns-section {
+    margin-top: space(30) !important;
+    max-width: 360px;
+    @include flex(row, center, flex-start, wrap);
+    .button {
+        flex: 0 0 50%;
+        padding-bottom: space(8);
+        &:nth-child(even) {
+          padding-left: space(8);
+        }
+        &:nth-child(odd) {
+          padding-right: space(8);
+        }
+      }
+    button {
+        width: 100%;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.site-block {
+  margin-bottom: space(16) !important;
+}
+
+@include large-mobile {
+  .edit-profile__wrapper {
+    padding: 0 20px 58px;
+    &__title {
+      transform: scale(0);
+      height: auto;
+      max-height: 0;
+      margin: space(16, 0, 0) !important;
+    }
+    &__avatar{
+        @include flex(column, center, flex-start);
+        &-info{
+            margin: space(16, 0, 0) !important;
+            max-width: 90%;
+            @include flex(column, center, space-evenly);
+            p{
+                text-align: center;
+            }
+        }
+    }
+    &__body{
+        margin-top: space(8) !important;
+        @include flex(column, center, flex-start);
+        &-block{
+            width: 100%;
+            flex: 0 0 100%;
+            &__content{
+                margin-right: space(0) !important;
+                max-width: 100%;
+            }
+        }
+    }
+    .btns-section{
+        max-width: 100%;
+    }
+  }
+}

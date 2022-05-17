@@ -8,7 +8,7 @@ import { camelize } from 'utils/camelize';
 import { currencies } from 'appConstants';
 import { getTokenBalance, updateUserInfo } from '../actions';
 import actionTypes from '../actionTypes';
-import { disconnectWalletState, updateUserState } from '../reducer';
+import { disconnectWalletState, setIsUser, updateUserState } from '../reducer';
 
 export function* updateUserInfoSaga({
   type,
@@ -16,10 +16,9 @@ export function* updateUserInfoSaga({
 }: ReturnType<typeof updateUserInfo>) {
   yield put(request(type));
   try {
-    console.log('fetching user');
     const { data } = yield call(baseApi.getSelfInfo);
     yield put(getTokenBalance({ web3Provider, address: data.address, token: currencies[0] }));
-
+    yield put(setIsUser(+data.id));
     yield put(updateUserState(camelize(data)));
 
     yield put(success(type));

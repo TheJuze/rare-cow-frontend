@@ -21,15 +21,15 @@
   &.withShadow {
     padding: spacing(2);
     margin: spacing(-2);
-    // .avatar {
-    //   &Img {
-    //     @include shadow-3;
-    //   }
-    // }
+    .avatar {
+      &Img {
+        @include shadow-0;
+      }
+    }
   }
 }
 
-.wrapper{
+.avatar-wrapper{
   @include flex(row, center, center);
 }
 

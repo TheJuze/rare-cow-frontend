@@ -1,8 +1,9 @@
 import { Collection } from 'types/api/Collection';
 import { User } from 'types/api/User';
+import { TBalance } from './user';
 
 export type AdditionalUserInfo = {
-  balance: string;
+  balance: TBalance;
   collections: Collection[];
 };
 

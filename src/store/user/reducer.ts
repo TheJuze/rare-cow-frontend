@@ -1,12 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Chains, UserState } from 'types';
+import { Chains, TBalance, UserState } from 'types';
 
 const initialState: UserState = {
   id: null,
   avatar: '',
   address: '',
-  balance: 0,
+  balance: {
+    MATIC: '0',
+    USDT: '0',
+  },
   key: '',
   provider: '',
   displayName: '',
@@ -15,6 +18,7 @@ const initialState: UserState = {
   isWhitelisted: false,
   rate: '',
   chainType: 'testnet',
+  isUser: false,
 };
 
 export const userReducer = createSlice({
@@ -28,6 +32,10 @@ export const userReducer = createSlice({
     updateWallet: (state, action: PayloadAction<Partial<UserState>>) => ({
       ...state,
       ...action.payload,
+    }),
+    updateBalance: (state, action: PayloadAction<Partial<TBalance>>) => ({
+      ...state,
+      balance: { ...state.balance, ...action.payload },
     }),
     updateProvider: (state, action: PayloadAction<Partial<UserState>>) => ({
       ...state,
@@ -53,6 +61,10 @@ export const userReducer = createSlice({
       ...state,
       ...action.payload,
     }),
+    setIsUser: (state, action: PayloadAction<number>) => ({
+      ...state,
+      isUser: state.id === action.payload,
+    }),
     disconnectWalletState: () => {
       localStorage.removeItem('rare-cow-wallet-connect');
       return {
@@ -64,6 +76,7 @@ export const userReducer = createSlice({
 
 export const {
   disconnectWalletState, updateUserState, updateProvider, updateCollections,
+  updateBalance, setIsUser,
 } =
   userReducer.actions;
 
