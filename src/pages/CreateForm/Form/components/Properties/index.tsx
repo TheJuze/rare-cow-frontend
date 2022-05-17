@@ -1,6 +1,6 @@
-import React, {
-  useCallback, useEffect, useRef, useState, FocusEvent, VFC,
-} from 'react';
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable object-curly-newline */
+import React, { useCallback, useEffect, useRef, useState, FocusEvent, VFC } from 'react';
 
 import cn from 'classnames';
 
@@ -116,6 +116,49 @@ const Properties: VFC<IProperties> = ({
     }
   }, [isClearing]);
 
+  const checkPropsValid = useCallback((props: TSingleProp[]) => {
+    const res: PropError[] = [];
+    props.forEach((p) => p.type.trim().toLowerCase());
+    props.forEach((p) => {
+      const err: PropError = { id: null, type: '', name: '' };
+      if (!p.name.length) {
+        err.id = p.id;
+        err.name = 'Field is required';
+      } else if (p.name.length < 2) {
+        err.id = p.id;
+        err.name = 'Too short';
+      } else if (p.name.length > 20) {
+        err.id = p.id;
+        err.name = 'Too long';
+      }
+      if (!p.type.length) {
+        err.id = p.id;
+        err.type = 'Field is required';
+      } else if (p.type.length < 2) {
+        err.id = p.id;
+        err.type = 'Too short';
+      } else if (p.type.length > 20) {
+        err.id = p.id;
+        err.type = 'Too long';
+      }
+      const sameProp = props.find(
+        (np) =>
+          np.name === p.name &&
+          np.type.toLowerCase().trim() === p.type.toLowerCase().trim() &&
+          np.id !== p.id,
+      );
+
+      if (sameProp) {
+        err.id = sameProp.id;
+        err.type = 'Type should be unique';
+      }
+      if (err.id !== null) {
+        res.push(err);
+      }
+    });
+    return res;
+  }, []);
+
   const setProp = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (fieldName: keyof TSingleProp, fieldValue: any, id: number) => {
@@ -139,36 +182,6 @@ const Properties: VFC<IProperties> = ({
     [properties, setProps],
   );
 
-  const checkPropsValid = useCallback((props: TSingleProp[]) => {
-    const res: PropError[] = [];
-    props.forEach((p) => p.type.trim().toLowerCase());
-    props.forEach((p) => {
-      const err: PropError = { id: null, type: '', name: '' };
-      if (!p.name.length) {
-        err.id = p.id;
-        err.name = 'Field is required';
-      }
-      if (!p.type.length) {
-        err.id = p.id;
-        err.type = 'Field is required';
-      }
-      const sameProp = props.find(
-        (np) => np.name === p.name &&
-          np.type.toLowerCase().trim() === p.type.toLowerCase().trim() &&
-          np.id !== p.id,
-      );
-
-      if (sameProp) {
-        err.id = sameProp.id;
-        err.type = 'Type should be unique';
-      }
-      if (err.id !== null) {
-        res.push(err);
-      }
-    });
-    return res;
-  }, []);
-
   useEffect(() => {
     if (initErrors) setErrors(checkPropsValid(properties));
   }, [properties, initErrors, checkPropsValid]);
@@ -190,6 +203,14 @@ const Properties: VFC<IProperties> = ({
       setErrors(validation);
     }
   }, [checkPropsValid, properties]);
+
+  const handleBlur = useCallback(
+    (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setErrors(checkPropsValid(properties));
+      onBlur?.(event);
+    },
+    [checkPropsValid, onBlur, properties],
+  );
 
   useEffect(() => {
     parentRef.current.scrollTo({
@@ -218,7 +239,7 @@ const Properties: VFC<IProperties> = ({
             {...p}
             onDeleteClick={() => onDelete(p.id)}
             setField={setProp}
-            onBlur={onBlur}
+            onBlur={handleBlur}
           />
         ))}
         <div key="bottomRef" ref={bottomRef} style={{ height: 0, opacity: 0 }} />

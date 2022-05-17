@@ -45,6 +45,7 @@ export const CreateCollectionForm: VFC<ICreateCollectionForm> = ({ handleSubmit,
           .min(createValidator.symbol.min, 'Too Short!')
           .max(createValidator.symbol.max, 'Too Long!')
           .required(),
+        description: Yup.string().max(500, 'Too long!'),
       })}
       initialValues={{ ...formValues }}
       onSubmit={(values, actions) => {

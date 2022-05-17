@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 /* eslint-disable max-len */
 import React, {
   VFC,
@@ -10,6 +11,8 @@ import React, {
   MutableRefObject,
   KeyboardEventHandler,
   MouseEventHandler,
+  RefObject,
+  useEffect,
 } from 'react';
 import cn from 'clsx';
 import { Text } from 'components';
@@ -40,6 +43,7 @@ export interface InputProps {
   onClick?: MouseEventHandler<HTMLDivElement>;
   required?: boolean;
   inputRef?: MutableRefObject<HTMLElement>;
+  bodyRef?: RefObject<HTMLDivElement>;
 }
 
 /**
@@ -69,6 +73,7 @@ export interface InputProps {
  * @param {MouseEventHandler<HTMLDivElement>} [onClick] - on click event handler
  * @param {boolean} [required] - set the required styles
  * @param { MutableRefObject<HTMLElement>} [inputRef] - the reference on the input
+ * @param { RefObject<HTMLElement>} [bodyRef] - the reference on the body
  */
 export const Input: VFC<InputProps> = ({
   id,
@@ -94,8 +99,11 @@ export const Input: VFC<InputProps> = ({
   onClick = () => {},
   required,
   inputRef,
+  bodyRef,
 }) => {
   const [inFocus, setInFocus] = useState(false);
+  const [bodyHeight, setBodyHeight] = useState<number | string>('auto');
+  const [textAreaHeight, setTextAreaHeight] = useState<number | string>('auto');
 
   const onFocusHandler = useCallback(
     (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -112,6 +120,19 @@ export const Input: VFC<InputProps> = ({
     },
     [onBlur],
   );
+
+  const onInputChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setTextAreaHeight('auto');
+      onChange?.(event);
+    },
+    [onChange],
+  );
+
+  useEffect(() => {
+    setTextAreaHeight(inputRef?.current?.scrollHeight);
+    setBodyHeight(inputRef?.current?.scrollHeight);
+  }, [value]);
 
   return (
     <div
@@ -131,7 +152,20 @@ export const Input: VFC<InputProps> = ({
           </Text>
         )}
         <div
-          className={cn(classNameBody, 'input-body', { 'textarea-body': component === 'textarea' }, { required })}
+          className={cn(
+            classNameBody,
+            'input-body',
+            { 'textarea-body': component === 'textarea' },
+            { required },
+          )}
+          ref={bodyRef}
+          style={
+            bodyRef && component === 'textarea'
+              ? {
+                  minHeight: bodyHeight,
+                }
+              : null
+          }
         >
           {startAdornment && component !== 'textarea' && (
             <span className="input-startAdornment">{startAdornment}</span>
@@ -145,11 +179,20 @@ export const Input: VFC<InputProps> = ({
             placeholder,
             autoComplete,
             disabled,
-            className: cn(component, { bigRightPadding: isCorrect, withoutEndAdornment: !startAdornment || !endAdornment }),
+            className: cn(component, {
+              bigRightPadding: isCorrect,
+              withoutEndAdornment: !startAdornment || !endAdornment,
+            }),
             ref: inputRef,
-            onChange,
+            onChange: onInputChange,
             onFocus: onFocusHandler,
             onBlur: onBlurHandler,
+            style:
+              inputRef && component === 'textarea'
+                ? {
+                    height: textAreaHeight,
+                  }
+                : null,
           })}
           {endAdornment && component !== 'textarea' && (
             <span className="input-endAdornment">{endAdornment}</span>

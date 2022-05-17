@@ -75,7 +75,7 @@ const CreateCollection: VFC = () => {
           Create a collection
         </Text>
         <div className={styles.createHeaderMintingFee}>
-          <Text variant="body-2" color="accent">
+          <Text variant="body-2" color="accent" weight="semiBold">
             Minting fee is {feeAmount} %
           </Text>
         </div>
