@@ -21,13 +21,13 @@ export function* createTokenSaga({
     token, web3, listingInfo, onEnd,
   },
 }: ReturnType<typeof createToken>) {
-  // yield put(
-  //   setActiveModal({
-  //     activeModal: Modals.SendPending,
-  //     open: true,
-  //     txHash: '',
-  //   }),
-  // );
+  yield put(
+    setActiveModal({
+      activeModal: Modals.SendPending,
+      open: true,
+      txHash: '',
+    }),
+  );
   yield put(apiActions.request(type));
 
   try {
@@ -75,16 +75,15 @@ export function* createTokenSaga({
           type: 'token',
           owner: createdToken.creator.url,
         });
-        throw new Error(e);
+        yield put(
+          setActiveModal({
+            activeModal: e.code === 4001 ? Modals.SendRejected : Modals.SendError,
+            open: true,
+            txHash: '',
+          }),
+        );
+        // throw new Error(e);
       }
-
-      // yield put(
-      //   setActiveModal({
-      //     activeModal: e.code === 4001 ? Modals.SendRejected : Modals.SendError,
-      //     open: true,
-      //     txHash: '',
-      //   }),
-      // );
 
       yield put(apiActions.error(type));
     } else {
@@ -93,6 +92,13 @@ export function* createTokenSaga({
     }
   } catch (err) {
     toast.error('Something went wrong');
+    yield put(
+      setActiveModal({
+        activeModal: err.code === 4001 ? Modals.SendRejected : Modals.SendError,
+        open: true,
+        txHash: '',
+      }),
+    );
     yield put(apiActions.error(type, err));
     console.log(err);
   }

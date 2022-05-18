@@ -30,3 +30,5 @@ export * from './AvatarUploader';
 export * from './CollectionCard';
 export * from './CollectionsList';
 export * from './AvatarUploader';
+export * from './Modal';
+export * from './Modals';

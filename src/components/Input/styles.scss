@@ -273,6 +273,7 @@
         flex: 0 0 100%;
         max-width: 100%;
         resize: vertical;
+        padding-right: space(12);
         &::-webkit-resizer {
           border: none;
           content: '';

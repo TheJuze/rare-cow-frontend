@@ -80,3 +80,10 @@
     opacity: 0;
   }
 }
+@include middle-mobile {
+  .title {
+    .titleText {
+      font-size: 24px;
+    }
+  }
+}

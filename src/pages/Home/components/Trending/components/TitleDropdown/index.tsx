@@ -7,17 +7,13 @@ import cn from 'classnames';
 import { Text } from 'components';
 import { ChevronDown } from 'assets/icons/icons';
 
+import { Category } from 'types/api';
 import styles from './styles.module.scss';
 
-type OptionType = {
-  id: number;
-  name: string;
-};
-
 interface IProps {
-  options: OptionType[];
-  value: OptionType;
-  setValue: (value: OptionType) => void;
+  options: Category[];
+  value: Category;
+  setValue: (value: Category) => void;
   className?: string;
 }
 
@@ -28,7 +24,7 @@ const TitleDropdown: FC<IProps> = ({
   const handleClose = () => {
     setIsOpen(false);
   };
-  const handleOptionClick = (option: OptionType) => {
+  const handleOptionClick = (option: Category) => {
     setValue(option);
     setIsOpen(false);
   };

@@ -7,7 +7,7 @@ import { Text } from 'components/Typography';
 import styles from './styles.module.scss';
 
 export interface SearchItemProps {
-  name: string;
+  name?: string;
   filter: string;
   media?: string;
   disabled?: boolean;

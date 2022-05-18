@@ -113,7 +113,7 @@ const modifyLabels = (label: string, values: { [key: string]: string }) => {
       modifyLabel = modifyLabel?.replace(new RegExp(`{{( *)${field}( *)}}`), newFieldValue);
     });
   }
-  return modifyLabel;
+  return modifyLabel?.replaceAll('%20', ' ');
 };
 
 export const useBreadcrumbs = () => {

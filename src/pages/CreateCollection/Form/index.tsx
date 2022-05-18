@@ -4,7 +4,7 @@ import {
 } from 'components';
 import UploadAvatar from 'components/AvatarUploader/AvatarUploader';
 import { Field, Form, Formik } from 'formik';
-import React, { VFC } from 'react';
+import React, { useCallback, VFC } from 'react';
 import {
   EInputStatus, ICreateCollection, RequestStatus, TInputCaption, TOption,
 } from 'types';
@@ -14,6 +14,8 @@ import cx from 'clsx';
 import actionTypes from 'store/collections/actionTypes';
 import { useShallowSelector } from 'hooks';
 import uiSelector from 'store/ui/selectors';
+import { useDispatch } from 'react-redux';
+import { setModalProps } from 'store/modals/reducer';
 import styles from './styles.module.scss';
 
 interface ICreateCollectionForm {
@@ -34,6 +36,24 @@ export const CreateCollectionForm: VFC<ICreateCollectionForm> = ({ handleSubmit,
   const { [actionTypes.CREATE_COLLECTION]: collectionCreateRequest } = useShallowSelector(
     uiSelector.getUI,
   );
+  const dispatch = useDispatch();
+
+  const handleSubmitAction = useCallback((values, actions) => {
+    actions.setSubmitting(true);
+    handleSubmit(values).finally(() => actions.setSubmitting(false));
+  }, [handleSubmit]);
+
+  const onSubmitClick = useCallback((values, actions) => {
+    dispatch(
+      setModalProps({
+        onSendAgain: () => handleSubmitAction(values, actions),
+        onApprove: () => handleSubmitAction(values, actions),
+        withSteps: false,
+        subtitleText: 'In progress',
+      }),
+    );
+    handleSubmitAction(values, actions);
+  }, [dispatch, handleSubmitAction]);
   return (
     <Formik
       validationSchema={Yup.object().shape({
@@ -48,10 +68,7 @@ export const CreateCollectionForm: VFC<ICreateCollectionForm> = ({ handleSubmit,
         description: Yup.string().max(500, 'Too long!'),
       })}
       initialValues={{ ...formValues }}
-      onSubmit={(values, actions) => {
-        actions.setSubmitting(true);
-        handleSubmit(values).finally(() => actions.setSubmitting(false));
-      }}
+      onSubmit={(values, actions) => onSubmitClick(values, actions)}
       enableReinitialize
       validateOnBlur
     >
