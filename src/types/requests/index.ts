@@ -108,10 +108,13 @@ export type CreateNewPoolReq = {
 
 export type TResponseCategories = Category[];
 
+export type TActionSetter = 'user' | 'profile';
+
 export type GetTokenBalanceReq = {
   web3Provider: Web3;
   address: string;
   token: TCurrencies;
+  setter?: TActionSetter;
 };
 
 export type LoginReq = {
