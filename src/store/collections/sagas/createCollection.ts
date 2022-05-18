@@ -5,12 +5,21 @@ import {
 } from 'redux-saga/effects';
 import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
+import { setActiveModal } from 'store/modals/reducer';
 import userSelector from 'store/user/selectors';
+import { Modals } from 'types';
 
 import { createCollection } from '../actions';
 import actionTypes from '../actionTypes';
 
 export function* createCollectionSaga({ type, payload }: ReturnType<typeof createCollection>) {
+  yield put(
+    setActiveModal({
+      activeModal: Modals.SendPending,
+      open: true,
+      txHash: '',
+    }),
+  );
   yield put(apiActions.request(type));
   try {
     const { data } = yield call(baseApi.createNewCollection, payload);
@@ -18,6 +27,14 @@ export function* createCollectionSaga({ type, payload }: ReturnType<typeof creat
       Object.values(data).forEach((err) => {
         toast.error(err);
       });
+
+      yield put(
+        setActiveModal({
+          activeModal: Modals.none,
+          open: false,
+          txHash: '',
+        }),
+      );
       yield put(apiActions.error(type));
     } else {
       const address = yield select(userSelector.getProp('address'));
@@ -31,6 +48,14 @@ export function* createCollectionSaga({ type, payload }: ReturnType<typeof creat
         if (transactionHash) {
           payload.onSuccess?.();
           toast.success('Collection created successfully');
+
+          yield put(
+            setActiveModal({
+              activeModal: Modals.SendSuccess,
+              open: true,
+              txHash: transactionHash,
+            }),
+          );
           yield put(apiActions.success(type));
         }
       } catch (err) {
@@ -40,10 +65,23 @@ export function* createCollectionSaga({ type, payload }: ReturnType<typeof creat
           type: 'collection',
           owner: id,
         });
-        throw new Error(err);
+        yield put(
+          setActiveModal({
+            activeModal: err.code === 4001 ? Modals.SendRejected : Modals.SendError,
+            open: true,
+            txHash: '',
+          }),
+        );
       }
     }
   } catch (err) {
+    yield put(
+      setActiveModal({
+        activeModal: err.code === 4001 ? Modals.SendRejected : Modals.SendError,
+        open: true,
+        txHash: '',
+      }),
+    );
     toast.error('Something went wrong');
     payload.onError?.();
     yield put(apiActions.error(type, err));

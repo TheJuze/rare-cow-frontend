@@ -7,7 +7,9 @@ import {
 } from 'components';
 import { Field, Form, Formik } from 'formik';
 import { useSearch, useShallowSelector } from 'hooks';
-import React, { useMemo, useRef, VFC } from 'react';
+import React, {
+  useCallback, useMemo, useRef, VFC,
+} from 'react';
 import {
   EInputStatus, ICreateForm, TInputCaption, TSingleProp,
 } from 'types';
@@ -16,6 +18,8 @@ import nftSelector from 'store/nfts/selectors';
 import { HighlightedText } from 'components/HighlightedText';
 import cx from 'clsx';
 import { Collection } from 'types/api';
+import { useDispatch } from 'react-redux';
+import { setModalProps } from 'store/modals/reducer';
 import styles from './styles.module.scss';
 import { Collections, Properties, UploadMedia } from './components';
 import { validationSchema } from './form.helpers';
@@ -39,6 +43,7 @@ const captionGenerator = (touched: boolean, errors: string | undefined) => {
 export const CreateNFTForm: VFC<ICreateNFTForm> = ({
   handleSubmit, formValues, type, collections,
 }) => {
+  const dispatch = useDispatch();
   const descriptionRef = useRef(null);
   const { categories: searchedCategories } = useShallowSelector(nftSelector.getProp('searchData'));
   const defaultCategories = useShallowSelector(nftSelector.getProp('categories'));
@@ -50,10 +55,26 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({
     [defaultCategories, searchValues.searchValue, searchedCategories],
   );
 
+  const onSubmitClick = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (vals: any) => {
+      dispatch(
+        setModalProps({
+          onSendAgain: () => handleSubmit(vals),
+          onApprove: () => handleSubmit(vals),
+          withSteps: false,
+          subtitleText: 'In progress',
+        }),
+      );
+      handleSubmit(vals);
+    },
+    [dispatch, handleSubmit],
+  );
+
   return (
     <Formik
       initialValues={{ ...formValues }}
-      onSubmit={handleSubmit}
+      onSubmit={(values) => onSubmitClick(values)}
       validationSchema={validationSchema}
       enableReinitialize
       validateOnBlur

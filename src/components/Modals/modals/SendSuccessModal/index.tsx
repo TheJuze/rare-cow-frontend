@@ -24,7 +24,7 @@ const SendSuccessModal: VFC<ISendSuccessModal> = ({ visible, onClose, withSteps 
   const title = (
     <Text align="center" className={styles.title} weight="bold">
       {withSteps && 'STEP 2/2 '}
-      <Text tag="span" color="accent">
+      <Text tag="span" className={styles.title} color="accent" weight="bold">
         SEND
       </Text>
     </Text>
@@ -33,7 +33,7 @@ const SendSuccessModal: VFC<ISendSuccessModal> = ({ visible, onClose, withSteps 
   return (
     <Modal visible={visible} onClose={onClose} title={title} maxWidth={628}>
       <div className={styles.icon}>
-        <Success />
+        <Success className={styles.success} />
       </div>
       <Text weight="semiBold" align="center" className={styles.subtitle}>
         Sent
@@ -42,7 +42,11 @@ const SendSuccessModal: VFC<ISendSuccessModal> = ({ visible, onClose, withSteps 
         It takes some time for transaction to get confirmed.
       </Text>
       {activeModal.txHash ? (
-        <Clipboard name="txHash" className={styles.clipboard} value={`${chains[chain].scanner}tx/${activeModal.txHash}`} />
+        <Clipboard
+          name="txHash"
+          className={styles.clipboard}
+          value={`${chains[chain].scanner}tx/${activeModal.txHash}`}
+        />
       ) : (
         <></>
       )}

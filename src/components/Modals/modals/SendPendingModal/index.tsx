@@ -20,7 +20,7 @@ const SendPendingModal: VFC<ISendPendingModal> = ({
   const title = (
     <Text className={styles.title} align="center" weight="bold">
       {withSteps && 'STEP 2/2 '}
-      <Text tag="span" color="accent">
+      <Text tag="span" className={styles.title} color="accent" weight="bold">
         SEND
       </Text>
     </Text>

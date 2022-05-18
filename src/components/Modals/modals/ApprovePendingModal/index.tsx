@@ -14,7 +14,7 @@ const ApprovePendingModal: VFC<IApprovePendingModal> = ({ visible, onClose, with
   const title = (
     <Text className={styles.title} align="center" weight="bold">
       {withSteps && 'STEP 1/2 '}
-      <Text tag="span" color="accent">
+      <Text tag="span" className={styles.title} color="accent" weight="bold">
         APPROVE
       </Text>
     </Text>

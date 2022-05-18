@@ -6,6 +6,11 @@
   @include flex(row, center, center);
 }
 
+.title {
+  font-size: 20px;
+  line-height: 34px;
+}
+
 .subtitle {
   margin-bottom: 20px;
 }
