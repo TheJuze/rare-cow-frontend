@@ -23,7 +23,12 @@
     &-info{
         margin-left: space(30) !important;
         max-width: 325px;
+        opacity: 0;
         @include flex(column, flex-start, space-evenly);
+        @include transition;
+        &.show-extensions{
+            opacity: 1;
+        }
     }
   }
   &__logo {
@@ -43,6 +48,9 @@
         &__content{
             margin-right: space(30) !important;
             max-width: 360px;
+            &.without-right-space{
+                margin-right: space(0) !important;
+            }
         }
       }
   }
@@ -97,9 +105,14 @@
         &-info{
             margin: space(16, 0, 0) !important;
             max-width: 90%;
+            height: 0;
+            overflow: hidden;
             @include flex(column, center, space-evenly);
             p{
                 text-align: center;
+            }
+            &.show-extensions{
+                height: 120px;
             }
         }
     }
