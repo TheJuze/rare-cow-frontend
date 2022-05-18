@@ -1,42 +1,78 @@
-/* eslint-disable max-len */
-import React, { FC, ReactNode, useMemo } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import OutsideClickHandler from 'react-outside-click-handler';
 
-import clsx from 'clsx';
-import { omit } from 'lodash';
-import DialogWrap, { DialogProps } from 'rc-dialog';
-import s from './styles.module.scss';
+import cn from 'classnames';
 
-export interface ModalProps extends DialogProps {
-  customTitle?: string | ReactNode;
-  size?: 'sm' | 'md' | 'lg';
-  open: boolean;
+import { Text } from 'components';
+
+import { CloseIcon } from 'assets/icons';
+
+import styles from './styles.module.scss';
+
+export interface ModalProps {
+  outerClassName?: string;
+  containerClassName?: string;
+  visible: boolean;
   onClose: () => void;
-  className?: string;
+  title: string | JSX.Element,
+  maxWidth?: number,
 }
 
-/**
- * @param {boolean} open - set the state of the modal
- * @param {() => void} onClose - the callback which bee called when the modal should be closed or on the outer space click has been made
- * @param {string | ReactNode} [customTitle] - set the title of the modal
- * @param {string} [className] - the wrapper class name
- */
-export const Modal: FC<ModalProps> = (props) => {
-  const {
-    customTitle = ' ', open, children, onClose,
-  } = props;
-
-  const jsxTitle = useMemo(
-    () => (typeof customTitle === 'string' ? (
-      <div className={clsx(s.title, 'l')}>{customTitle}</div>
-    ) : (
-      customTitle
-    )),
-    [customTitle],
+export const Modal: React.FC<ModalProps> = ({
+  outerClassName,
+  containerClassName,
+  visible,
+  onClose,
+  children,
+  title,
+  maxWidth,
+}) => {
+  const escFunction = useCallback(
+    (e) => {
+      if (e.keyCode === 27) {
+        onClose();
+      }
+    },
+    [onClose],
   );
-  return (
-    <DialogWrap open={open} onClose={onClose} {...omit({ ...props }, 'customTitle')}>
-      <div className={s.modalTitle}>{customTitle && jsxTitle}</div>
-      {children}
-    </DialogWrap>
+
+  useEffect(() => {
+    document.addEventListener('keydown', escFunction, false);
+    return () => {
+      document.removeEventListener('keydown', escFunction, false);
+    };
+  }, [escFunction]);
+
+  const disableBodyScroll = useCallback(() => {
+    document.body.style.overflow = 'hidden';
+  }, []);
+  const enableBodyScroll = useCallback(() => {
+    document.body.style.overflow = 'unset';
+  }, []);
+  useEffect(() => {
+    if (visible) {
+      disableBodyScroll();
+    }
+    return () => enableBodyScroll();
+  }, [disableBodyScroll, enableBodyScroll, visible]);
+
+  return createPortal(
+    visible && (
+      <div className={styles.modal}>
+        <div className={cn(styles.outer, outerClassName)} style={{ maxWidth }}>
+          <OutsideClickHandler onOutsideClick={onClose}>
+            <div className={cn(styles.container, containerClassName)}>
+              {title ? <Text className={styles.title}>{title}</Text> : null}
+              {children}
+              <button type="button" className={styles.close} onClick={onClose}>
+                <img src={CloseIcon} width={16} height={16} alt="close" />
+              </button>
+            </div>
+          </OutsideClickHandler>
+        </div>
+      </div>
+    ),
+    document.body,
   );
 };

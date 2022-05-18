@@ -42,8 +42,6 @@ const SelectedCollections: VFC<ISelectedCollections> = ({ collection, onDelete }
       isCollection
       id={collection.url}
       className={styles.avatar}
-      withShadow
-      withAnim={false}
     />
     <Text color="dark0" variant="body-2">
       {collection.name}

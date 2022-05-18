@@ -12,7 +12,6 @@ import {
   RequestStatus, State, UserState, WalletProviders,
 } from 'types';
 import userSelector from 'store/user/selectors';
-// import { NotificationModal } from 'containers/NotificationModal';
 import uiSelector from 'store/ui/selectors';
 import { useLocation } from 'react-router-dom';
 import actionTypesUser from 'store/user/actionTypes';
