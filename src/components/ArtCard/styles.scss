@@ -31,6 +31,9 @@
     @include flex(row, center, center);
 
   }
+  &-image{
+    width: 100%;
+  }
   &-imageWrapper{
     overflow: hidden;
     flex: 0 1 80%;
