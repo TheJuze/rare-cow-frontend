@@ -89,7 +89,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             />
           )}
         />
-        <div className={styles['edit-profile__wrapper__avatar-info']}>
+        <div className={cn(styles['edit-profile__wrapper__avatar-info'], { [styles['show-extensions']]: !values.avatarURL })}>
           <Text
             className={styles['edit-profile__wrapper__logo-title']}
             size="s"
@@ -167,93 +167,95 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
           </div>
         </div>
         <div className={styles['edit-profile__wrapper__body-block']}>
-          <Field
-            name="email"
-            required
-            render={() => (
-              <Input
-                name="socials.email"
-                value={values.socials.email}
-                label="Contact email"
-                placeholder="Input email"
-                onBlur={handleBlur}
-                onChange={(e) => setFieldValue('socials.email', e.currentTarget.value)}
-                className={cn(styles['edit-profile__wrapper__name'], styles['site-block'])}
-                caption={captionGenerator(touched?.socials?.email, errors.socials?.email)}
-              />
-            )}
-          />
-          <Field
-            name="site"
-            required
-            render={() => (
-              <Input
-                name="socials.site"
-                value={values.socials.site}
-                label="Website"
-                placeholder="Input website"
-                onBlur={handleBlur}
-                onChange={(e) => setFieldValue('socials.site', e.currentTarget.value)}
-                className={cn(styles['edit-profile__wrapper__name'], styles['site-block'])}
-                caption={captionGenerator(touched?.socials?.site, errors.socials?.site)}
-              />
-            )}
-          />
-          <Field
-            name="instagram"
-            required
-            render={() => (
-              <Input
-                name="socials.instagram"
-                value={values.socials.instagram}
-                label="Instagram Username"
-                placeholder="@username"
-                onBlur={handleBlur}
-                onChange={(e) => setFieldValue('socials.instagram', e.currentTarget.value)}
-                className={cn(styles['edit-profile__wrapper__name'], styles['site-block'])}
-                caption={captionGenerator(touched?.socials?.instagram, errors.socials?.instagram)}
-              />
-            )}
-          />
-          <Field
-            name="twitter"
-            required
-            render={() => (
-              <Input
-                name="socials.twitter"
-                value={values.socials.twitter}
-                label="Twitter Username"
-                placeholder="@username"
-                onBlur={handleBlur}
-                onChange={(e) => setFieldValue('socials.twitter', e.currentTarget.value)}
-                className={cn(styles['edit-profile__wrapper__name'], styles['site-block'])}
-                caption={captionGenerator(touched?.socials?.instagram, errors.socials?.instagram)}
-              />
-            )}
-          />
-          {isMobile && (
-          <>
+          <div className={cn(styles['edit-profile__wrapper__body-block__content'], styles['without-right-space'])}>
             <Field
-              name="description"
+              name="email"
+              required
               render={() => (
                 <Input
-                  name="description"
-                  value={values.description}
-                  label="Bio"
-                  placeholder="Input description"
-                  onChange={(e) => setter('description')(e.currentTarget.value)}
-                  component="textarea"
+                  name="socials.email"
+                  value={values.socials.email}
+                  label="Contact email"
+                  placeholder="Input email"
                   onBlur={handleBlur}
-                  className={cn(styles['edit-profile__wrapper__description'], styles['site-block'])}
-                  caption={captionGenerator(touched.description, errors.description)}
+                  onChange={(e) => setFieldValue('socials.email', e.currentTarget.value)}
+                  className={cn(styles['edit-profile__wrapper__name'], styles['site-block'])}
+                  caption={captionGenerator(touched?.socials?.email, errors.socials?.email)}
                 />
               )}
             />
-            <Text className={styles.counter} size="xs" weight="normal">
-              {values.description.length} / {createValidator.description.max}
-            </Text>
-          </>
-          )}
+            <Field
+              name="site"
+              required
+              render={() => (
+                <Input
+                  name="socials.site"
+                  value={values.socials.site}
+                  label="Website"
+                  placeholder="Input website"
+                  onBlur={handleBlur}
+                  onChange={(e) => setFieldValue('socials.site', e.currentTarget.value)}
+                  className={cn(styles['edit-profile__wrapper__name'], styles['site-block'])}
+                  caption={captionGenerator(touched?.socials?.site, errors.socials?.site)}
+                />
+              )}
+            />
+            <Field
+              name="instagram"
+              required
+              render={() => (
+                <Input
+                  name="socials.instagram"
+                  value={values.socials.instagram}
+                  label="Instagram Username"
+                  placeholder="@username"
+                  onBlur={handleBlur}
+                  onChange={(e) => setFieldValue('socials.instagram', e.currentTarget.value)}
+                  className={cn(styles['edit-profile__wrapper__name'], styles['site-block'])}
+                  caption={captionGenerator(touched?.socials?.instagram, errors.socials?.instagram)}
+                />
+              )}
+            />
+            <Field
+              name="twitter"
+              required
+              render={() => (
+                <Input
+                  name="socials.twitter"
+                  value={values.socials.twitter}
+                  label="Twitter Username"
+                  placeholder="@username"
+                  onBlur={handleBlur}
+                  onChange={(e) => setFieldValue('socials.twitter', e.currentTarget.value)}
+                  className={cn(styles['edit-profile__wrapper__name'], styles['site-block'])}
+                  caption={captionGenerator(touched?.socials?.instagram, errors.socials?.instagram)}
+                />
+              )}
+            />
+            {isMobile && (
+            <>
+              <Field
+                name="description"
+                render={() => (
+                  <Input
+                    name="description"
+                    value={values.description}
+                    label="Bio"
+                    placeholder="Input description"
+                    onChange={(e) => setter('description')(e.currentTarget.value)}
+                    component="textarea"
+                    onBlur={handleBlur}
+                    className={cn(styles['edit-profile__wrapper__description'], styles['site-block'])}
+                    caption={captionGenerator(touched.description, errors.description)}
+                  />
+                )}
+              />
+              <Text className={styles.counter} size="xs" weight="normal">
+                {values.description.length} / {createValidator.description.max}
+              </Text>
+            </>
+            )}
+          </div>
         </div>
       </div>
       <div className={styles['btns-section']}>
