@@ -27,7 +27,7 @@ export const maxSize: TMaxSize = {
 };
 
 export const maxAvatarSize: TMaxSize = {
-  size: 30,
+  size: 5,
   unit: 'Mb',
 };
 

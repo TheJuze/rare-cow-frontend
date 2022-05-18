@@ -8,7 +8,7 @@ import cn from 'classnames';
 import { Button, ImagePreview, Text } from 'components';
 import { byteSize } from 'utils';
 
-import { imagesFormats, maxSize, TMaxSize } from 'appConstants';
+import { imagesFormats, maxAvatarSize, TMaxSize } from 'appConstants';
 
 import { ImageIconSVG, TrashIcon } from 'assets/icons/icons';
 import styles from './styles.module.scss';
@@ -40,7 +40,7 @@ const UploadAvatar: VFC<IUploadAvatar> = ({
   onLoadEnd,
   onLoadError,
   extensions = imagesFormats,
-  reqMaxSize = maxSize,
+  reqMaxSize = maxAvatarSize,
   className,
   onBlur,
 }) => {
