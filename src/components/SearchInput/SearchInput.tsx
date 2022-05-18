@@ -144,7 +144,7 @@ export const SearchInput: VFC<SearchInputProps> = ({
         >
           {presearchedNfts.map((searchItem) => (
             <SearchItem
-              key={searchItem.id}
+              id={searchItem.id}
               filter={searchValue}
               onClick={handleNavigate(searchItem.id)}
               allMatches={allMatches}

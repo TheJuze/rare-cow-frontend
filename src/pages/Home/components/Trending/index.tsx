@@ -27,20 +27,10 @@ import 'swiper/swiper.scss';
 import 'swiper/swiper-bundle.css';
 import styles from './styles.module.scss';
 
-interface Tag {
-  id?: number;
-  name?: string;
-}
-interface Category {
-  id?: number;
-  image: string;
-  name?: string;
-  tags: Tag[];
-}
-
 type Props = {
   className?: string;
 };
+
 const Trending: FC<Props> = ({ className }) => {
   const categories = useShallowSelector(nftsSelector.getProp('categories'));
   const nfts = useShallowSelector(nftsSelector.getProp('trending'));
@@ -104,11 +94,8 @@ const Trending: FC<Props> = ({ className }) => {
               value={title}
               setValue={setTitle}
               options={[
-                { name: CategoryName.allCategories, id: 0 },
-                ...categories.map((category: Category) => ({
-                  id: category.id || 0,
-                  name: category.name || '',
-                })),
+                { name: CategoryName.allCategories, id: 0, image: '', banner: '' },
+                ...categories,
               ]}
             />
           )}
