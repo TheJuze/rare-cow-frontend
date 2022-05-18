@@ -2,10 +2,16 @@
 export enum Modals {
   ApprovePending = 'ApprovePending',
   ApproveRejected = 'ApproveRejected',
+  ApproveError = 'ApproveError',
   SendPending = 'SendPending',
   SendRejected = 'SendRejected',
   SendSuccess = 'SendSuccess',
-  init = '',
+  SendError = 'SendError',
+  Transfer = 'Transfer',
+  ChooseSeller = 'ChooseSeller',
+  ChooseQuantity = 'ChooseQuantity',
+  Burn = 'Burn',
+  none = 'none',
 }
 
 export interface ModalState {
@@ -13,7 +19,12 @@ export interface ModalState {
   txHash: string;
   open: boolean;
 }
+export interface ModalProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
+}
 
 export type ModalsInitialState = {
   modalState: ModalState;
+  modalProps: ModalProps;
 };

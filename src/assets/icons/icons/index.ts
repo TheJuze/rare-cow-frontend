@@ -23,6 +23,8 @@ export { CreateNFT } from './components/CreateNFT';
 export { LightTheme } from './components/LightTheme';
 export { Promo } from './components/Promo';
 export { Dots } from './components/Dots';
+export { Error } from './components/Error';
+export { Success } from './components/Success';
 export { FiltersIcon } from './components/Filters';
 export { ImageIconSVG } from './components/ImageIcon';
 export { TrashIcon } from './components/Trash';

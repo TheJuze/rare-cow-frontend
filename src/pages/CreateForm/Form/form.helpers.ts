@@ -3,7 +3,7 @@ import {
 } from 'yup';
 
 export const validationSchema = object().shape({
-  name: string().min(3, 'Too short name').max(20, 'Too long name').required('This field is required'),
+  name: string().min(2, 'Too short name').max(20, 'Too long name').required('This field is required'),
   description: string().max(500, 'Too long description'),
   properties: lazy((value) => {
     if(value.length) {

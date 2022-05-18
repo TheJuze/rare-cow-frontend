@@ -37,7 +37,7 @@ export const Avatar: VFC<AvatarProps> = ({
   id,
   isCollection = false,
   size = 24,
-  withAnim = true,
+  withAnim = false,
   withShadow = false,
   className,
 }) => {
