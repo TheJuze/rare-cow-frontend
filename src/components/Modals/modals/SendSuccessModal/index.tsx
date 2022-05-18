@@ -22,7 +22,7 @@ const SendSuccessModal: VFC<ISendSuccessModal> = ({ visible, onClose, withSteps 
   const activeModal = useShallowSelector(modalsSelector.getProp('modalState'));
   const chain = useShallowSelector(userSelector.getProp('chain'));
   const title = (
-    <Text align="center" className={styles.title} weight="bold">
+    <Text align="center" className={styles.title} weight="bold" color="dark">
       {withSteps && 'STEP 2/2 '}
       <Text tag="span" className={styles.title} color="accent" weight="bold">
         SEND
@@ -35,10 +35,10 @@ const SendSuccessModal: VFC<ISendSuccessModal> = ({ visible, onClose, withSteps 
       <div className={styles.icon}>
         <Success className={styles.success} />
       </div>
-      <Text weight="semiBold" align="center" className={styles.subtitle}>
+      <Text weight="semiBold" align="center" color="dark" className={styles.subtitle}>
         Sent
       </Text>
-      <Text align="center" className={styles.text}>
+      <Text align="center" color="dark" className={styles.text}>
         It takes some time for transaction to get confirmed.
       </Text>
       {activeModal.txHash ? (
