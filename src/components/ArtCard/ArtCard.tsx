@@ -21,7 +21,7 @@ export interface ArtCardProps {
   currency: string;
   price: string | number;
   id: string | number;
-  endAuction: number;
+  endAuction: string | number;
   authorId: string | number;
   authorAvatar: string;
   authorName: string;
@@ -53,7 +53,7 @@ export const ArtCard: VFC<ArtCardProps> = ({
   const wrapRef = useRef<HTMLAnchorElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const offset = 2.5;
-  const timeLeft = useTimeLeft(endAuction * 1000);
+  const timeLeft = useTimeLeft(Number(endAuction) * 1000);
   const onMouseOver = useCallback(() => {
     if (wrapRef.current && imgRef.current) {
       const div = wrapRef.current;

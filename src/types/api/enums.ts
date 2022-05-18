@@ -29,3 +29,11 @@ export enum State {
     Expired = "Expired"
 } 
  
+export enum Method {
+    Transfer = "Transfer",
+    Buy = "Buy",
+    Mint = "Mint",
+    Burn = "Burn",
+    Listing = "Listing"
+} 
+ 

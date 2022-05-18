@@ -6,7 +6,8 @@ import logo from 'assets/img/logo.png';
 import { Button, Text } from 'components';
 
 import { useBreakpoints } from 'hooks';
-import { routes } from 'appConstants';
+import { createDynamicLink, routes } from 'appConstants';
+import { CategoryName } from 'types';
 import styles from './styles.module.scss';
 
 const Banner: FC = () => {
@@ -34,7 +35,12 @@ const Banner: FC = () => {
           </Text>
           {!isDefaultScreen && <img src={logo} alt="logo" className={styles.logo} />}
           <div className={styles.bannerBtns}>
-            <Button className={styles.btn} to={routes.nest.explore.path}>
+            <Button
+              className={styles.btn}
+              to={createDynamicLink(routes.nest.explore.path, {
+                categoryName: CategoryName.allCategories,
+              })}
+            >
               Explore
             </Button>
             <Button variant="outlined" className={styles.btn} to={routes.nest.create.path}>
