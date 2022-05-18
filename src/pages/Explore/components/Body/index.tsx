@@ -3,17 +3,30 @@
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useCallback, useMemo, useState, VFC } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState, VFC } from 'react';
 import { ArtCard, Button, FilterChips, SearchCollection, Text } from 'components';
 
-import { nfts } from 'components/ArtCard/ArtCard.mock';
 import { Link } from 'react-router-dom';
 import { FiltersIcon } from 'assets/icons/icons';
-import { useFilters } from 'hooks';
+import { useFilters, useShallowSelector } from 'hooks';
 import { Filters } from 'containers/Filters/Filters';
+import collectionsSelector from 'store/collections/selectors';
+import { useDispatch } from 'react-redux';
+import { searchCollections } from 'store/collections/actions';
+import { clearCollections } from 'store/collections/reducer';
+import { Category } from 'types/api';
+import nftSelector from 'store/nfts/selectors';
+import { SearchNftReq } from 'types/requests';
+import { searchNfts } from 'store/nfts/actions';
+import { debounce } from 'lodash';
+import { DEBOUNCE_DELAY_100 } from 'appConstants';
+import { clearNfts } from 'store/nfts/reducer';
+import { TNullable } from 'types';
 import styles from './styles.module.scss';
 
-interface IBodyProps {}
+interface IBodyProps {
+  category: Category;
+}
 
 export const collectionsMock = [
   {
@@ -265,7 +278,12 @@ export const collectionsMock = [
   },
 ];
 
-const Body: VFC<IBodyProps> = () => {
+const Body: VFC<IBodyProps> = ({ category }) => {
+  const pageChangeScrollAnchor = useRef<TNullable<HTMLDivElement>>(null);
+  const dispatch = useDispatch();
+  const collections = useShallowSelector(collectionsSelector.getProp('collections'));
+  const nftCards = useShallowSelector(nftSelector.getProp('nfts'));
+  const [currentPage, setCurrentPage] = useState(1);
   const [isShowFilters, setIsShowFilters] = useState(false);
   const [isShowChips, setIsShowChips] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState({
@@ -307,6 +325,72 @@ const Body: VFC<IBodyProps> = () => {
       appliedFilters.minPrice,
       appliedFilters.price,
     ],
+  );
+
+  const handleSearchCollections = useCallback(
+    (page: number) => {
+      const requestData: any = { type: 'collections', page };
+      dispatch(searchCollections({ requestData }));
+    },
+    [dispatch],
+  );
+
+  useEffect(() => {
+    handleSearchCollections(1);
+  }, [handleSearchCollections]);
+
+  useEffect(
+    () => () => {
+      dispatch(clearCollections());
+    },
+    [dispatch],
+  );
+
+  const handleSearchNfts = useCallback(
+    (filtersData: any, page: number, shouldConcat?: boolean) => {
+      const requestData: SearchNftReq = {
+        type: 'items',
+        categories: category?.id,
+        page,
+        collections: filtersData?.collections?.join(','),
+        standart: filtersData?.standart?.join(','),
+        max_price: filtersData?.maxPrice,
+        min_price: filtersData?.minPrice,
+        on_auc_sale: filtersData?.isAuction || undefined,
+      };
+      dispatch(searchNfts({ requestData, shouldConcat }));
+    },
+    [category?.id, dispatch],
+  );
+
+  const debouncedHandleSearchNfts = useRef(debounce(handleSearchNfts, DEBOUNCE_DELAY_100)).current;
+
+  const handleLoadMore = useCallback(
+    (page: number, shouldConcat = false) => {
+      handleSearchNfts(filters, page, shouldConcat);
+    },
+    [filters, handleSearchNfts],
+  );
+
+  const isInitRender = useRef(true);
+
+  useEffect(() => {
+    debouncedHandleSearchNfts(filters, 1);
+    setCurrentPage(1);
+  }, [debouncedHandleSearchNfts, filters]);
+
+  useEffect(() => {
+    if (pageChangeScrollAnchor && pageChangeScrollAnchor.current && !isInitRender.current) {
+      pageChangeScrollAnchor.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    isInitRender.current = false;
+  }, []);
+
+  useEffect(
+    () => () => {
+      dispatch(clearNfts());
+    },
+    [dispatch],
   );
 
   const handleCollectionChange = useCallback(
@@ -351,6 +435,14 @@ const Body: VFC<IBodyProps> = () => {
     });
   }, [handleClearFilters]);
 
+  const onLoadMoreClick = useCallback(
+    (p: number) => {
+      setCurrentPage(p);
+      handleLoadMore(p, true);
+    },
+    [handleLoadMore],
+  );
+
   const minSize = 264;
   return (
     <div className={styles.body}>
@@ -362,10 +454,12 @@ const Body: VFC<IBodyProps> = () => {
           className={styles.filters}
           onClick={() => setIsShowFilters(true)}
         >
-          <Text color="metal700" className={styles.filtersText}>Filters</Text>
+          <Text color="metal700" className={styles.filtersText}>
+            Filters
+          </Text>
         </Button>
         <SearchCollection
-          collections={collectionsMock}
+          collections={collections}
           className={styles.collections}
           activeCollections={filters.collections}
           handleClickCollection={handleCollectionChange}
@@ -374,7 +468,7 @@ const Body: VFC<IBodyProps> = () => {
       {isShowChips && isAppliedFilters && (
         <div className={styles.total}>
           <Text color="metal800" align="left" className={styles.totalText}>
-            Total({nfts.length})
+            Total({nftCards.length})
           </Text>
           <FilterChips
             className={styles.chips}
@@ -393,52 +487,58 @@ const Body: VFC<IBodyProps> = () => {
           onClose={onApply}
           handleClearFilters={handleClearChips}
         />
-        <div
-          className={styles.bodyResults}
-          style={{
-            gridTemplateColumns:
-              nfts.length !== 0 ? `repeat(auto-fill,minmax(${minSize}px,1fr))` : '1fr',
-          }}
-        >
-          {nfts.map((nft) => {
-            const {
-              id,
-              name,
-              price,
-              highestBid,
-              minimalBid,
-              media,
-              currency,
-              creator,
-              isAucSelling,
-              standart,
-              likeCount,
-              isLiked,
-              available,
-              endAuction,
-            } = nft;
-            return (
-              <Link key={id} to="/" className={styles.card}>
-                <ArtCard
-                  id={id || 0}
-                  inStock={available}
-                  name={name}
-                  price={price || highestBid?.amount || minimalBid}
-                  media={media || ''}
-                  currency={currency?.image || ''}
-                  authorName={creator?.name || ''}
-                  authorAvatar={creator?.avatar || ''}
-                  authorId={creator?.url || '0'}
-                  isAuction={isAucSelling || Boolean(endAuction)}
-                  likeCount={likeCount}
-                  isLiked={isLiked}
-                  standart={standart}
-                  endAuction={endAuction}
-                  className={styles.card}
-                />
-              </Link>
-            );
-          })}
+        <div className={styles.bodyResultsWrapper}>
+          <div
+            className={styles.bodyResults}
+            style={{
+              gridTemplateColumns:
+                nftCards.length !== 0 ? `repeat(auto-fill,minmax(${minSize}px,1fr))` : '1fr',
+            }}
+          >
+            {nftCards.map((nft) => {
+              const {
+                id,
+                name,
+                price,
+                highestBid,
+                media,
+                currency,
+                creator,
+                isAucSelling,
+                standart,
+                likeCount,
+                isLiked,
+                available,
+                endAuction,
+              } = nft;
+              return (
+                <Link key={id} to="/" className={styles.card}>
+                  <ArtCard
+                    id={id || 0}
+                    inStock={available}
+                    name={name}
+                    price={price || highestBid?.amount}
+                    media={media || ''}
+                    currency={currency?.image || ''}
+                    authorName={creator?.name || ''}
+                    authorAvatar={creator?.avatar || ''}
+                    authorId={creator?.url || '0'}
+                    isAuction={isAucSelling || Boolean(endAuction)}
+                    likeCount={likeCount}
+                    isLiked={isLiked}
+                    standart={standart}
+                    endAuction={endAuction}
+                    className={styles.card}
+                  />
+                </Link>
+              );
+            })}
+          </div>
+          <Button className={styles.load} onClick={() => onLoadMoreClick(currentPage + 1)} variant="outlined">
+            <Text className={styles.loadText} color="accent">
+              Load more
+            </Text>
+          </Button>
         </div>
       </div>
     </div>

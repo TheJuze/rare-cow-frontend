@@ -9,8 +9,10 @@ import { Tag } from "./Tag";
 
 
 export interface Category {
-    id: number;
+    banner: string;
+    description?: string;
+    id?: number;
     image: string;
-    name: string;
-    tags: Tag[];
+    name?: string;
+    tags?: Tag[];
 }

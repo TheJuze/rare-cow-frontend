@@ -23,9 +23,11 @@ export enum WalletProviders {
 }
 
 export enum CategoryName {
-  rooms = 'Rooms',
-  area = 'Area',
-  skins = 'Skins',
-  buildings = 'Buildings',
-  allCategories = 'All categories',
+  movie = 'Movie',
+  picture = 'Picture',
+  music = 'Music',
+  art = 'Art',
+  photo = 'Photo',
+  anime = 'Anime Illustration',
+  allCategories = 'All Categories',
 }

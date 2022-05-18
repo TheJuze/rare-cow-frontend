@@ -125,9 +125,9 @@ const routesConfig = {
       },
     },
     explore: {
-      path: 'explore',
+      path: 'explore/:categoryName',
       content: <Explore />,
-      label: 'Explore',
+      label: 'Explore {{categoryName}}',
     },
     nft: {
       path: 'nft/:id',

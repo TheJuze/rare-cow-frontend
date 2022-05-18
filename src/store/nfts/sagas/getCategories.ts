@@ -11,6 +11,8 @@ export function* getCategoriesSaga({ type, payload }: ReturnType<typeof getCateg
   try {
     const { data } = yield call(baseApi.getCategories, payload);
     yield put(setCategories(data));
+
+    yield put(apiActions.success(type));
   } catch (err) {
     console.log(err);
     yield put(apiActions.error(type, err));
