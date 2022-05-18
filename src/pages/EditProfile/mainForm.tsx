@@ -228,7 +228,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
                   onBlur={handleBlur}
                   onChange={(e) => setFieldValue('socials.twitter', e.currentTarget.value)}
                   className={cn(styles['edit-profile__wrapper__name'], styles['site-block'])}
-                  caption={captionGenerator(touched?.socials?.instagram, errors.socials?.instagram)}
+                  caption={captionGenerator(touched?.socials?.twitter, errors.socials?.twitter)}
                 />
               )}
             />

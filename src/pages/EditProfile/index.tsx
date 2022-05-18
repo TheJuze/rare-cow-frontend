@@ -82,12 +82,12 @@ const CreateFormContainer: VFC = () => {
     mapPropsToValues: () => properties,
     validationSchema: Yup.object().shape({
       name: Yup.string()
-        .min(editProfileValidator.name.min, 'Too short!')
-        .max(editProfileValidator.name.max, 'Too long!'),
+        .test('min', `Must be more than ${editProfileValidator.name.min} characters`, (val) => val.length >= editProfileValidator.name.min)
+        .test('min', `Must be less than ${editProfileValidator.name.max} characters`, (val) => val.length <= editProfileValidator.name.max),
       address: Yup.string().min(editProfileValidator.address.min),
       description: Yup.string()
-        .min(editProfileValidator.description.min, 'Too short!')
-        .max(editProfileValidator.description.max, 'Too long!'),
+        .test('min', `Must be more than ${editProfileValidator.description.min} characters`, (val) => val.length >= editProfileValidator.description.min)
+        .test('min', `Must be less than ${editProfileValidator.description.max} characters`, (val) => val.length <= editProfileValidator.description.max),
       socials: Yup.object().shape({
         email: Yup.string()
           .test('email', 'email is not valid', (e) => e ? editProfileValidator.socials.email.reg.test(e) : true)

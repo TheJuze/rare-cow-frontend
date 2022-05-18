@@ -4,10 +4,9 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { VFC } from 'react';
-import { ArtCard, Button, FilterChips, Text } from 'components';
+import { ArtCard, FilterChips, Text } from 'components';
 
 import { Link } from 'react-router-dom';
-import { FiltersIcon } from 'assets/icons/icons';
 import { useBreakpoints } from 'hooks';
 import styles from './styles.module.scss';
 
@@ -16,17 +15,16 @@ interface INftsProps {
   isShowChips: boolean;
   isAppliedFilters: boolean;
   appliedFilters: any;
-  handlDeleteChips: any;
+  handleDeleteChips: any;
   handleClearChips: any;
   nfts: any;
 }
 
 const Nfts: VFC<INftsProps> = ({
-  setIsShowFilters,
   isShowChips,
   isAppliedFilters,
   appliedFilters,
-  handlDeleteChips,
+  handleDeleteChips,
   handleClearChips,
   nfts,
 }) => {
@@ -36,17 +34,6 @@ const Nfts: VFC<INftsProps> = ({
 
   return (
     <div className={styles.nfts}>
-      {isMobile && (
-        <Button
-          size="sm"
-          variant="filled"
-          startAdornment={<FiltersIcon />}
-          className={styles.filters}
-          onClick={() => setIsShowFilters(true)}
-        >
-          <Text color="metal700">Filters</Text>
-        </Button>
-      )}
       {isMobile && isShowChips && isAppliedFilters && (
         <div className={styles.total}>
           <Text color="metal800" align="left" className={styles.totalText}>
@@ -55,7 +42,7 @@ const Nfts: VFC<INftsProps> = ({
           <FilterChips
             className={styles.chips}
             filters={appliedFilters}
-            handleChangeFilter={handlDeleteChips}
+            handleChangeFilter={handleDeleteChips}
             handleClearFilters={handleClearChips}
             isAppliedFilters={isAppliedFilters}
           />

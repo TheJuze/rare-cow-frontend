@@ -144,13 +144,12 @@ const Properties: VFC<IProperties> = ({
       const sameProp = props.find(
         (np) =>
           np.name === p.name &&
-          np.type.toLowerCase().trim() === p.type.toLowerCase().trim() &&
           np.id !== p.id,
       );
 
       if (sameProp) {
         err.id = sameProp.id;
-        err.type = 'Type should be unique';
+        err.name = 'Name should be unique';
       }
       if (err.id !== null) {
         res.push(err);

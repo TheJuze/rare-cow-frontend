@@ -17,5 +17,9 @@
 @include middle-tablet{
   .create{
     padding-top: space(4);
+    @include flex(column, center, flex-start);
+    &Header{
+      @include flex(column, center, flex-start);
+    }
   }
 }

@@ -50,6 +50,7 @@ export const chains: {
     chainId: isMainnet ? 137 : 80001,
     provider: {
       MetaMask: { name: 'MetaMask' },
+      WalletConnect: { name: 'WalletConnect' },
       chainName: ChainsEnum.Polygon,
       nativeCurrency: {
         name: 'MATIC',
