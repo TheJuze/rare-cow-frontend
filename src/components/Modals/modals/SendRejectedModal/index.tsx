@@ -22,7 +22,7 @@ const SendRejectedModal: VFC<ISendRejectedModal> = ({
   const title = (
     <Text align="center" className={styles.title} weight="bold">
       {withSteps && 'STEP 2/2 '}
-      <Text tag="span" color="accent">
+      <Text tag="span" className={styles.title} color="accent" weight="bold">
         SEND
       </Text>
     </Text>
@@ -31,7 +31,7 @@ const SendRejectedModal: VFC<ISendRejectedModal> = ({
   return (
     <Modal visible={visible} onClose={onClose} title={title} maxWidth={628}>
       <div className={styles.icon}>
-        <Error />
+        <Error className={styles.error} />
       </div>
       <Text tag="h5" weight="semiBold" align="center" className={styles.subtitle}>
         You rejected Send transaction in Metamask. Press Send again to start over or close this

@@ -1,9 +1,20 @@
+@import 'assets/styles/variables';
+@import 'assets/styles/mixins';
 @import 'src/styles/helpers.scss';
 
 .icon {
   margin-top: 36px;
   margin-bottom: 24px;
   @include flex(row, center, center);
+}
+
+.title {
+  font-size: 20px;
+  line-height: 34px;
+}
+
+.error{
+  color: $accent;
 }
 
 .subtitle {

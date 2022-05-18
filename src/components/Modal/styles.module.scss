@@ -65,6 +65,9 @@
 
   width: var(--close-size);
   height: var(--close-size);
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 
   img {
     width: calc(var(--close-size) / 2);
