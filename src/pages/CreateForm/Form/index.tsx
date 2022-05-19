@@ -63,7 +63,7 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({
           onSendAgain: () => handleSubmit(vals),
           onApprove: () => handleSubmit(vals),
           withSteps: false,
-          subtitleText: 'In progress',
+          subtitleText: 'Please press "Send" button in Metamask extension',
         }),
       );
       handleSubmit(vals);

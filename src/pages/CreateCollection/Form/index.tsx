@@ -49,7 +49,7 @@ export const CreateCollectionForm: VFC<ICreateCollectionForm> = ({ handleSubmit,
         onSendAgain: () => handleSubmitAction(values, actions),
         onApprove: () => handleSubmitAction(values, actions),
         withSteps: false,
-        subtitleText: 'In progress',
+        subtitleText: 'Please press "Send" button in Metamask extension',
       }),
     );
     handleSubmitAction(values, actions);
