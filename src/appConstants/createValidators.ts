@@ -28,7 +28,7 @@ interface IEditProfileValidator {
 }
 
 export const editProfileValidator: IEditProfileValidator = {
-  name: { min: 1, max: 50 },
+  name: { min: 2, max: 50 },
   address: { min: 42 },
   description: { min: 0, max: 500 },
   socials: {
