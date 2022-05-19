@@ -1,5 +1,5 @@
 /* eslint-disable object-curly-newline */
-import React, { useCallback, useRef, useState, VFC } from 'react';
+import React, { useCallback, useMemo, useRef, useState, VFC } from 'react';
 import logo from 'assets/icons/logo.svg';
 import arrow from 'assets/chevron-down.svg';
 import cn from 'classnames';
@@ -19,106 +19,6 @@ import { setActiveModal } from 'store/modals/reducer';
 import { createDynamicLink, routes } from 'appConstants';
 import s from './styles.module.scss';
 
-const dropdownOptions: TDropdownValue[] = [
-  {
-    id: 'all_categories',
-    content: (
-      <Link
-        to={createDynamicLink(routes.nest.explore.path, {
-          categoryName: CategoryName.allCategories,
-        })}
-      >
-        <Text variant="body-2" color="metal800">
-          All categories
-        </Text>
-      </Link>
-    ),
-  },
-  {
-    id: 'anime',
-    content: (
-      <Link
-        to={createDynamicLink(routes.nest.explore.path, {
-          categoryName: CategoryName.anime,
-        })}
-      >
-        <Text variant="body-2" color="metal800">
-          Anime illustration
-        </Text>
-      </Link>
-    ),
-  },
-  {
-    id: 'photo',
-    content: (
-      <Link
-        to={createDynamicLink(routes.nest.explore.path, {
-          categoryName: CategoryName.photo,
-        })}
-      >
-        <Text variant="body-2" color="metal800">
-          Photo
-        </Text>
-      </Link>
-    ),
-  },
-  {
-    id: 'art',
-    content: (
-      <Link
-        to={createDynamicLink(routes.nest.explore.path, {
-          categoryName: CategoryName.art,
-        })}
-      >
-        <Text variant="body-2" color="metal800">
-          Art
-        </Text>
-      </Link>
-    ),
-  },
-  {
-    id: 'music',
-    content: (
-      <Link
-        to={createDynamicLink(routes.nest.explore.path, {
-          categoryName: CategoryName.music,
-        })}
-      >
-        <Text variant="body-2" color="metal800">
-          Music
-        </Text>
-      </Link>
-    ),
-  },
-  {
-    id: 'picture',
-    content: (
-      <Link
-        to={createDynamicLink(routes.nest.explore.path, {
-          categoryName: CategoryName.picture,
-        })}
-      >
-        <Text variant="body-2" color="metal800">
-          Picture
-        </Text>
-      </Link>
-    ),
-  },
-  {
-    id: 'movie',
-    content: (
-      <Link
-        to={createDynamicLink(routes.nest.explore.path, {
-          categoryName: CategoryName.movie,
-        })}
-      >
-        <Text variant="body-2" color="metal800">
-          Movie
-        </Text>
-      </Link>
-    ),
-  },
-];
 export interface HeaderProps {
   address: string;
   disconnect: () => void;
@@ -134,6 +34,109 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect }) => {
   const [isUserShown, setIsUserShown] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const dropdownOptions: TDropdownValue[] = useMemo(
+    () => [
+      {
+        id: 'all_categories',
+        content: (
+          <Link
+            to={createDynamicLink(routes.nest.explore.path, {
+              categoryName: CategoryName.allCategories,
+            })}
+          >
+            <Text variant="body-2" color="metal800">
+              All categories
+            </Text>
+          </Link>
+        ),
+      },
+      {
+        id: 'anime',
+        content: (
+          <Link
+            to={createDynamicLink(routes.nest.explore.path, {
+              categoryName: CategoryName.anime,
+            })}
+          >
+            <Text variant="body-2" color="metal800">
+              Anime illustration
+            </Text>
+          </Link>
+        ),
+      },
+      {
+        id: 'photo',
+        content: (
+          <Link
+            to={createDynamicLink(routes.nest.explore.path, {
+              categoryName: CategoryName.photo,
+            })}
+          >
+            <Text variant="body-2" color="metal800">
+              Photo
+            </Text>
+          </Link>
+        ),
+      },
+      {
+        id: 'art',
+        content: (
+          <Link
+            to={createDynamicLink(routes.nest.explore.path, {
+              categoryName: CategoryName.art,
+            })}
+          >
+            <Text variant="body-2" color="metal800">
+              Art
+            </Text>
+          </Link>
+        ),
+      },
+      {
+        id: 'music',
+        content: (
+          <Link
+            to={createDynamicLink(routes.nest.explore.path, {
+              categoryName: CategoryName.music,
+            })}
+          >
+            <Text variant="body-2" color="metal800">
+              Music
+            </Text>
+          </Link>
+        ),
+      },
+      {
+        id: 'picture',
+        content: (
+          <Link
+            to={createDynamicLink(routes.nest.explore.path, {
+              categoryName: CategoryName.picture,
+            })}
+          >
+            <Text variant="body-2" color="metal800">
+              Picture
+            </Text>
+          </Link>
+        ),
+      },
+      {
+        id: 'movie',
+        content: (
+          <Link
+            to={createDynamicLink(routes.nest.explore.path, {
+              categoryName: CategoryName.movie,
+            })}
+          >
+            <Text variant="body-2" color="metal800">
+              Movie
+            </Text>
+          </Link>
+        ),
+      },
+    ],
+    [],
+  );
 
   const user = useShallowSelector(userSelector.getUser);
   const headRef = useRef<HTMLButtonElement | null>(null);
@@ -145,11 +148,13 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect }) => {
 
   const handleChangeConnecting = useCallback(() => {
     if (!address.length) {
-      dispatch(setActiveModal({
-        activeModal: Modals.ConnectWallet,
-        txHash: '',
-        open: true,
-      }));
+      dispatch(
+        setActiveModal({
+          activeModal: Modals.ConnectWallet,
+          txHash: '',
+          open: true,
+        }),
+      );
     } else {
       disconnect();
     }
