@@ -8,7 +8,7 @@ interface ICreateValidator {
 }
 
 export const createValidator: ICreateValidator = {
-  name: { min: 2, max: 50 },
+  name: { min: 2, max: 20 },
   description: { min: 0, max: 500 },
   properties: { name: 1, type: 1, max: 20 },
   symbol: { min: 2, max: 6 },

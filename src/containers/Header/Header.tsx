@@ -211,6 +211,7 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect, onConnectWallet 
                 {...user}
                 visible={isUserShown}
                 bodyRef={bodyRef}
+                onClose={handleHideUser}
               />
             </div>
           ) : (

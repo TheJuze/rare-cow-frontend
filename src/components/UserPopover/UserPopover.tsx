@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable object-curly-newline */
 /* eslint-disable arrow-body-style */
-import React, { useCallback, useMemo, useState, VFC } from 'react';
+import React, { useCallback, useEffect, useMemo, useState, VFC } from 'react';
 
 import cn from 'clsx';
 
 import { Avatar } from 'components/Avatar';
 import { Text } from 'components/Typography';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   BidedIcon,
   CollectionsIcon,
@@ -71,6 +71,7 @@ export interface UserPopoverProps {
   bodyRef: any;
   address: string;
   disconnect: () => void;
+  onClose: () => void;
 }
 
 export const UserPopover: VFC<UserPopoverProps> = ({
@@ -82,7 +83,9 @@ export const UserPopover: VFC<UserPopoverProps> = ({
   bodyRef,
   address,
   disconnect,
+  onClose,
 }) => {
+  const { pathname } = useLocation();
   const [isLight, setIsLight] = useState(true);
   const balance = useShallowSelector(userSelector.getProp('balance'));
   const mappedBalance = useMemo(
@@ -132,6 +135,10 @@ export const UserPopover: VFC<UserPopoverProps> = ({
   const handleChangeTheme = useCallback((value: boolean) => {
     setIsLight(value);
   }, []);
+
+  useEffect(() => {
+    onClose();
+  }, [onClose, pathname]);
   return (
     <div ref={bodyRef} className={cn(styles.userPopover, className, { [styles.visible]: visible })}>
       <div className={styles.head}>
@@ -139,7 +146,10 @@ export const UserPopover: VFC<UserPopoverProps> = ({
           <Avatar id={id} avatar={avatar} size="40" />
           <Text className={styles.headUserName}>{name}</Text>
         </div>
-        <Link to="/" className={styles.edit}>
+        <Link
+          to={createDynamicLink(routes.nest.profile.nest.edit.path, { userId: id })}
+          className={styles.edit}
+        >
           <Text variant="body-2" className={styles.editText}>
             Edit
           </Text>

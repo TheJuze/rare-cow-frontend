@@ -117,6 +117,7 @@ const CreateFormContainer: VFC = () => {
       dispatch(editProfileInfo(newProfileForm as EditProfile));
     },
     validateOnChange: true,
+    validateOnBlur: true,
     displayName: 'edit-profile',
   })(MainForm);
   // @ts-ignore
