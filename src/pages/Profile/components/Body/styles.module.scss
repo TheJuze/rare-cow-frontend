@@ -43,6 +43,9 @@
     grid-template-columns: 190px 1fr;
     margin-top: space(36) !important;
     width: 100%;
+    &Info{
+      width: 100%;
+    }
     .filterButton{
       margin-bottom: space(20);
     }
@@ -62,6 +65,9 @@
         line-height: 34px;
         font-weight: 500;
         margin-bottom: space(16);
+      }
+      &Info{
+        overflow-wrap: break-word;
       }
     }
   }
