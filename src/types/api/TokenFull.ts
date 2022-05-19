@@ -16,6 +16,7 @@ import { Tag } from "./Tag";
 
 
 export interface TokenFull {
+    is_timed_auc_selling: boolean;
     animation?: string;
     available?: number;
     bids?: Bid[];

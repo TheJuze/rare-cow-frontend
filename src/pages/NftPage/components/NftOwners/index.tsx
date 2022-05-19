@@ -68,6 +68,7 @@ const NftOwners: FC<Props> = ({ owners, properties, history }) => {
                   <Text variant="body-2" color="dark" weight="semiBold">
                     {owner.display_name}
                   </Text>
+                  {owner.isSelling && (
                   <Text size="xs" color="metal400" tag="span">
                     {owner.quantity}/{owner.owned_tokens_count} on sale for{' '}
                     <Text size="xs" color="accent" weight="semiBold" tag="span">
@@ -75,6 +76,7 @@ const NftOwners: FC<Props> = ({ owners, properties, history }) => {
                     </Text>{' '}
                     each
                   </Text>
+                  )}
                 </div>
               </div>
               <Button size="sm">Buy</Button>
