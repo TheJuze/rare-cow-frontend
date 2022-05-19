@@ -49,6 +49,7 @@
       border-radius: var(--userPopover-edit-border-radius);
       gap: 10px;
       border: 0px solid transparent;
+      cursor: pointer;
       &:visited {
         color: var(--userPopover-link-icon-avctive);
       }

@@ -24,7 +24,8 @@ const ConnectWalletModal:VFC<IConnectWalletModal> = ({ visible, onClose }) => {
   const { connect } = useWalletConnectorContext();
   const handleConnect = useCallback((connector: WalletProviders) => {
     connect(connector, Chains.polygon);
-  }, [connect]);
+    onClose();
+  }, [connect, onClose]);
   return(
     <Modal visible={visible} onClose={onClose} title="">
       <Text color="dark" align="left" className={styles.title}>Connect a Wallet</Text>
