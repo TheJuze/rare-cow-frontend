@@ -12,6 +12,7 @@ export enum Modals {
   ChooseQuantity = 'ChooseQuantity',
   Burn = 'Burn',
   none = 'none',
+  ConnectWallet = 'ConnectWallet',
 }
 
 export interface ModalState {

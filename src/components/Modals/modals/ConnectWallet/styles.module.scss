@@ -1,0 +1,40 @@
+@import '/src/styles/helpers';
+
+.title{
+    font-size: 20px;
+    line-height: 34px;
+    margin: -8px 0 6px;
+}
+
+.subtitle{
+    color: var(--createModal-subtitle-color);
+    margin-bottom: space(32);
+}
+
+.btn{
+    width: 100%;
+    appearance: none;
+    background: transparent;
+    border-radius: 12px;
+    min-height: 76px;
+    @include flex(row, center, center);
+    @include transition;
+    cursor: pointer;
+    &:not(:last-child){
+        margin-bottom: space(14);
+    }
+}
+
+.MetaMask{
+    border: var(--createModal-metaMask-border);
+    &:hover{
+        background: var(--createModal-metaMask-hover-background);
+    }
+}
+
+.WalletConnect{
+    border: var(--createModal-walletConnect-border);
+    &:hover{
+        background: var(--createModal-walletConnect-hover-background);
+    }
+}
