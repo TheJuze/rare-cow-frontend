@@ -34,7 +34,7 @@ export const editProfileValidator: IEditProfileValidator = {
   socials: {
     email: {
       reg: new RegExp(
-        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+        /^[^@]+@\w+(\.\w+)+\w$/,
       ),
     },
     site: {
