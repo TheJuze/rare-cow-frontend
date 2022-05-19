@@ -20,7 +20,7 @@ import {
 import { useBreakpoints, useFilters } from 'hooks';
 import { createDynamicLink, routes } from 'appConstants';
 import { TBarOption } from 'types';
-import { collections } from 'pages/Home/components/TopCollections';
+import { collectionsMock } from 'pages/Home/components/TopCollections';
 import cn from 'clsx';
 import styles from './styles.module.scss';
 import Nfts from '../Nfts';
@@ -263,7 +263,7 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
                 />
             }
             />
-            <Route path="collections" element={<CollectionsList collections={collections} />} />
+            <Route path="collections" element={<CollectionsList collections={collectionsMock} />} />
             <Route
               path="sold"
               element={

@@ -4,9 +4,9 @@ import logo from 'assets/icons/logo.svg';
 import arrow from 'assets/chevron-down.svg';
 import cn from 'classnames';
 
-import { SearchInput, Dropdown, Avatar, UserPopover, Button } from 'components';
+import { SearchInput, Dropdown, Avatar, UserPopover, Button, Text } from 'components';
 import { useBreakpoints, useClickOutside, useShallowSelector } from 'hooks';
-import { Modals, TDropdownValue } from 'types';
+import { CategoryName, TDropdownValue, Modals } from 'types';
 import { sliceString } from 'utils';
 import { Link } from 'react-router-dom';
 import { Breadcrumbs } from 'components/Breadcrumbs';
@@ -16,36 +16,107 @@ import wallet from 'assets/wallet.svg';
 import connect from 'assets/connect.svg';
 import { useDispatch } from 'react-redux';
 import { setActiveModal } from 'store/modals/reducer';
+import { createDynamicLink, routes } from 'appConstants';
 import s from './styles.module.scss';
 
 const dropdownOptions: TDropdownValue[] = [
   {
     id: 'all_categories',
-    content: <Link to="/">All categories</Link>,
+    content: (
+      <Link
+        to={createDynamicLink(routes.nest.explore.path, {
+          categoryName: CategoryName.allCategories,
+        })}
+      >
+        <Text variant="body-2" color="metal800">
+          All categories
+        </Text>
+      </Link>
+    ),
   },
   {
     id: 'anime',
-    content: <Link to="/">Anime illustration</Link>,
+    content: (
+      <Link
+        to={createDynamicLink(routes.nest.explore.path, {
+          categoryName: CategoryName.anime,
+        })}
+      >
+        <Text variant="body-2" color="metal800">
+          Anime illustration
+        </Text>
+      </Link>
+    ),
   },
   {
     id: 'photo',
-    content: <Link to="/">Photo</Link>,
+    content: (
+      <Link
+        to={createDynamicLink(routes.nest.explore.path, {
+          categoryName: CategoryName.photo,
+        })}
+      >
+        <Text variant="body-2" color="metal800">
+          Photo
+        </Text>
+      </Link>
+    ),
   },
   {
     id: 'art',
-    content: <Link to="/">Art</Link>,
+    content: (
+      <Link
+        to={createDynamicLink(routes.nest.explore.path, {
+          categoryName: CategoryName.art,
+        })}
+      >
+        <Text variant="body-2" color="metal800">
+          Art
+        </Text>
+      </Link>
+    ),
   },
   {
     id: 'music',
-    content: <Link to="/">Music</Link>,
+    content: (
+      <Link
+        to={createDynamicLink(routes.nest.explore.path, {
+          categoryName: CategoryName.music,
+        })}
+      >
+        <Text variant="body-2" color="metal800">
+          Music
+        </Text>
+      </Link>
+    ),
   },
   {
     id: 'picture',
-    content: <Link to="/">Picture</Link>,
+    content: (
+      <Link
+        to={createDynamicLink(routes.nest.explore.path, {
+          categoryName: CategoryName.picture,
+        })}
+      >
+        <Text variant="body-2" color="metal800">
+          Picture
+        </Text>
+      </Link>
+    ),
   },
   {
     id: 'movie',
-    content: <Link to="/">Movie</Link>,
+    content: (
+      <Link
+        to={createDynamicLink(routes.nest.explore.path, {
+          categoryName: CategoryName.movie,
+        })}
+      >
+        <Text variant="body-2" color="metal800">
+          Movie
+        </Text>
+      </Link>
+    ),
   },
 ];
 export interface HeaderProps {

@@ -89,7 +89,7 @@ const Trending: FC<Props> = ({ className }) => {
           align="center"
         >
           Trending in
-          {categories?.length && (
+          {categories?.length ? (
             <TitleDropdown
               value={title}
               setValue={setTitle}
@@ -98,7 +98,7 @@ const Trending: FC<Props> = ({ className }) => {
                 ...categories,
               ]}
             />
-          )}
+          ) : ' All Categories'}
         </Text>
         {nfts.length ? (
           <div className={cx(styles.drops, { [styles.row]: nfts.length <= 3 })}>

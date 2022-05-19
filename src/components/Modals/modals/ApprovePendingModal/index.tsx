@@ -12,7 +12,7 @@ type IApprovePendingModal = {
 
 const ApprovePendingModal: VFC<IApprovePendingModal> = ({ visible, onClose, withSteps = true }) => {
   const title = (
-    <Text className={styles.title} align="center" weight="bold">
+    <Text className={styles.title} align="center" weight="bold" color="dark">
       {withSteps && 'STEP 1/2 '}
       <Text tag="span" className={styles.title} color="accent" weight="bold">
         APPROVE
@@ -25,7 +25,7 @@ const ApprovePendingModal: VFC<IApprovePendingModal> = ({ visible, onClose, with
       <div className={styles.icon}>
         <Loader />
       </div>
-      <Text weight="semiBold" align="center" className={styles.subtitle}>
+      <Text weight="semiBold" align="center" color="dark" className={styles.subtitle}>
         Please press &quot;Approve&quot; button in metamask extension
       </Text>
     </Modal>

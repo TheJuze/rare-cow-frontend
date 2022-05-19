@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable object-curly-newline */
 /* eslint-disable arrow-body-style */
-import React, { useCallback, useState, VFC } from 'react';
+import React, { useCallback, useMemo, useState, VFC } from 'react';
 
 import cn from 'clsx';
 
@@ -20,67 +20,43 @@ import {
   PenIcon,
   SoldIcon,
 } from 'assets/icons/icons';
-import { matic, usdt } from 'assets/img';
 import Clipboard from 'components/Clipboard/Clipboard';
 import { Dropdown } from 'components/Dropdown';
 import { TDropdownValue } from 'types/components/dropdown';
 import { Switch } from 'components/Switch';
+import { createDynamicLink, currenciesIconsMap, routes } from 'appConstants';
+import { useShallowSelector } from 'hooks';
+import userSelector from 'store/user/selectors';
 import styles from './styles.module.scss';
-
-export const balances = [
-  {
-    value: 213.12,
-    icon: usdt,
-  },
-  {
-    value: 23.34,
-    icon: matic,
-  },
-];
-
-const dropdownOptions: TDropdownValue[] = [
-  {
-    id: 'single',
-    content: <Link to="/">Single NFT</Link>,
-  },
-  {
-    id: 'multiple',
-    content: <Link to="/">Multiple NFT</Link>,
-  },
-  {
-    id: 'collection',
-    content: <Link to="/">Collection</Link>,
-  },
-];
 
 const links = [
   {
-    value: '/owned',
+    value: 'owned',
     name: 'Owned',
     icon: <OwnedIcon />,
   },
   {
-    value: '/for-sale',
+    value: 'forSale',
     name: 'For sale',
     icon: <ForSaleIcon />,
   },
   {
-    value: '/bided',
+    value: 'bided',
     name: 'Bided',
     icon: <BidedIcon />,
   },
   {
-    value: '/favorites',
+    value: 'favorites',
     name: 'Favorites',
     icon: <FavoritesIcon />,
   },
   {
-    value: '/collections',
+    value: 'collections',
     name: 'Collections',
     icon: <CollectionsIcon />,
   },
   {
-    value: '/sold',
+    value: 'sold',
     name: 'Sold',
     icon: <SoldIcon />,
   },
@@ -108,6 +84,50 @@ export const UserPopover: VFC<UserPopoverProps> = ({
   disconnect,
 }) => {
   const [isLight, setIsLight] = useState(true);
+  const balance = useShallowSelector(userSelector.getProp('balance'));
+  const mappedBalance = useMemo(
+    () => Object.entries(balance).map(([token, value]) => ({
+      value,
+      icon: currenciesIconsMap[token],
+    })),
+    [balance],
+  );
+
+  const dropdownOptions: TDropdownValue[] = useMemo(
+    () => [
+      {
+        id: 'single',
+        content: (
+          <Link to={createDynamicLink(routes.nest.create.nest.single.path, {})}>
+            <Text variant="body-2" color="metal800">
+              Single NFT
+            </Text>
+          </Link>
+        ),
+      },
+      {
+        id: 'multiple',
+        content: (
+          <Link to={createDynamicLink(routes.nest.create.nest.multiple.path, {})}>
+            <Text variant="body-2" color="metal800">
+              Multiple NFT
+            </Text>
+          </Link>
+        ),
+      },
+      {
+        id: 'collection',
+        content: (
+          <Link to={createDynamicLink(routes.nest.create.nest.collection.path, { type: 'single' })}>
+            <Text variant="body-2" color="metal800">
+              Collection
+            </Text>
+          </Link>
+        ),
+      },
+    ],
+    [],
+  );
 
   const handleChangeTheme = useCallback((value: boolean) => {
     setIsLight(value);
@@ -127,10 +147,10 @@ export const UserPopover: VFC<UserPopoverProps> = ({
         </Link>
       </div>
       <div className={styles.balance}>
-        {balances.map((balance) => (
+        {mappedBalance.map(({ icon, value }) => (
           <div className={styles.balanceItem}>
-            <img src={balance.icon} alt="" className={styles.balanceItemIcon} />
-            <Text size="xs">{balance.value}</Text>
+            <img src={icon} alt="" className={styles.balanceItemIcon} />
+            <Text size="xs">{value}</Text>
           </div>
         ))}
       </div>
@@ -157,7 +177,10 @@ export const UserPopover: VFC<UserPopoverProps> = ({
       />
       <div className={styles.links}>
         {links.map((link) => (
-          <Link to={link.value} className={styles.link}>
+          <Link
+            to={createDynamicLink(routes.nest.profile.nest[link.value]?.path, { userId: id })}
+            className={styles.link}
+          >
             {link.icon}
             <Text weight="normal" color="metal800">
               {link.name}
