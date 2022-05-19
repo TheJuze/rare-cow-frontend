@@ -18,7 +18,7 @@ const SendPendingModal: VFC<ISendPendingModal> = ({
   subtitleText = 'Please press "Send" button in MetaMask extension',
 }) => {
   const title = (
-    <Text className={styles.title} align="center" weight="bold">
+    <Text className={styles.title} align="center" weight="bold" color="dark">
       {withSteps && 'STEP 2/2 '}
       <Text tag="span" className={styles.title} color="accent" weight="bold">
         SEND
@@ -38,7 +38,7 @@ const SendPendingModal: VFC<ISendPendingModal> = ({
         <Loader />
       </div>
       {subtitleText && (
-        <Text tag="h4" weight="semiBold" align="center" className={styles.subtitle}>
+        <Text tag="h4" weight="semiBold" align="center" color="dark" className={styles.subtitle}>
           {subtitleText}
         </Text>
       )}
