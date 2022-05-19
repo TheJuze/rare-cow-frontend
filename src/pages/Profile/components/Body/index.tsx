@@ -17,7 +17,7 @@ import {
   OwnedIcon,
   SoldIcon,
 } from 'assets/icons/icons';
-import { useBreakpoints, useFilters } from 'hooks';
+import { initialFiltersState, useBreakpoints, useFilters } from 'hooks';
 import { createDynamicLink, routes } from 'appConstants';
 import { TBarOption } from 'types';
 import { collectionsMock } from 'pages/Home/components/TopCollections';
@@ -83,44 +83,21 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
   const [isShowFilters, setIsShowFilters] = useState(false);
   const [isShowChips, setIsShowChips] = useState(false);
 
-  const [appliedFilters, setAppliedFilters] = useState({
-    ERC721: false,
-    ERC1155: false,
-    isAuction: false,
-    currency: [],
-    price: '',
-    date: '',
-    likes: '',
-    minPrice: '',
-    maxPrice: '',
-  });
+  const [appliedFilters, setAppliedFilters] = useState(initialFiltersState);
 
   const { filters, handleChangeFilter, handleClearFilters } = useFilters();
 
   const isAppliedFilters = useMemo(
     () =>
       Boolean(
-        appliedFilters.ERC721 ||
-          appliedFilters.ERC1155 ||
+        appliedFilters.standart.length ||
           appliedFilters.isAuction ||
           appliedFilters.currency.length ||
-          appliedFilters.price ||
-          appliedFilters.date ||
-          appliedFilters.likes ||
+          appliedFilters.orderBy ||
           appliedFilters.minPrice ||
           appliedFilters.maxPrice,
       ),
-    [
-      appliedFilters.ERC1155,
-      appliedFilters.ERC721,
-      appliedFilters.currency.length,
-      appliedFilters.date,
-      appliedFilters.isAuction,
-      appliedFilters.likes,
-      appliedFilters.maxPrice,
-      appliedFilters.minPrice,
-      appliedFilters.price,
-    ],
+    [appliedFilters.currency.length, appliedFilters.isAuction, appliedFilters.maxPrice, appliedFilters.minPrice, appliedFilters.orderBy, appliedFilters.standart],
   );
 
   const onApply = useCallback(() => {
@@ -139,17 +116,7 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
 
   const handleClearChips = useCallback(() => {
     handleClearFilters();
-    setAppliedFilters({
-      ERC721: false,
-      ERC1155: false,
-      isAuction: false,
-      currency: [],
-      price: '',
-      date: '',
-      likes: '',
-      minPrice: '',
-      maxPrice: '',
-    });
+    setAppliedFilters(initialFiltersState);
   }, [handleClearFilters]);
 
   const handleTabChange = useCallback(

@@ -29,14 +29,11 @@ export const FilterChips: VFC<FilterChipsProps> = ({
   isAppliedFilters,
 }) => {
   const {
-    ERC721,
-    ERC1155,
+    standart,
     isAuction,
     currency,
     collections,
-    price,
-    date,
-    likes,
+    orderBy,
     minPrice,
     maxPrice,
   } = filters;
@@ -47,6 +44,21 @@ export const FilterChips: VFC<FilterChipsProps> = ({
       currency.length ? currency.map((currentCurrency) => currentCurrency) : 'Any currency'
     }`;
   }, [minPrice, maxPrice, currency]);
+  const isOrderByDesc = useMemo(() => orderBy.startsWith('-'), [orderBy]);
+  const getOrderByLabel = (order: string) => {
+    switch (order) {
+      case 'price':
+      case '-price':
+        return 'Price';
+
+      case 'likes':
+      case '-likes':
+        return 'Likes';
+
+      default:
+        return 'Date';
+    }
+  };
   return (
     <div className={cn(styles.filterChips, className)}>
       {collections.length ? (
@@ -69,9 +81,20 @@ export const FilterChips: VFC<FilterChipsProps> = ({
       ) : (
         null
       )}
-      {ERC721 && <Chips label="Single NFT" onClose={() => handleChangeFilter('ERC721', false)} />}
-      {ERC1155 && (
-        <Chips label="Multiple NFT" onClose={() => handleChangeFilter('ERC1155', false)} />
+      {standart.length ? (
+        standart.map((currentStandart) => (
+          <Chips
+            label={currentStandart === 'ERC721' ? 'Single NFT' : 'Multiple NFT'}
+            onClose={() =>
+              handleChangeFilter(
+                'standart',
+                standart.filter((deletedStandart) => deletedStandart !== currentStandart),
+              )
+            }
+          />
+        ))
+      ) : (
+        null
       )}
       {currency.length ? (
         currency.map((currentCurrency) => (
@@ -88,49 +111,19 @@ export const FilterChips: VFC<FilterChipsProps> = ({
       ) : (
         null
       )}
-      {date && (
+      {orderBy && (
         <Chips
           label={
             <div className={styles.label}>
-              Date
-              {date === 'asc' ? (
-                <img src={arrowUp} alt="arrowUp" />
-              ) : (
+              {getOrderByLabel(orderBy)}
+              {isOrderByDesc ? (
                 <img src={arrowDown} alt="arrowDown" />
+              ) : (
+                <img src={arrowUp} alt="arrowUp" />
               )}
             </div>
           }
-          onClose={() => handleChangeFilter('date', '')}
-        />
-      )}
-      {likes && (
-        <Chips
-          label={
-            <div className={styles.label}>
-              Likes
-              {likes === 'asc' ? (
-                <img src={arrowUp} alt="arrowUp" />
-              ) : (
-                <img src={arrowDown} alt="arrowDown" />
-              )}
-            </div>
-          }
-          onClose={() => handleChangeFilter('likes', '')}
-        />
-      )}
-      {price && (
-        <Chips
-          label={
-            <div className={styles.label}>
-              Price
-              {price === 'asc' ? (
-                <img src={arrowUp} alt="arrowUp" />
-              ) : (
-                <img src={arrowDown} alt="arrowDown" />
-              )}
-            </div>
-          }
-          onClose={() => handleChangeFilter('price', '')}
+          onClose={() => handleChangeFilter('orderBy', '')}
         />
       )}
       {minMaxLabel && (
