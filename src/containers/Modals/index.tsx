@@ -5,6 +5,7 @@ import modalSelector from 'store/modals/selectors';
 import {
   ApprovePendingModal,
   ApproveRejectedModal,
+  ConnectWalletModal,
   SendPendingModal,
   SendRejectedModal,
   SendSuccessModal,
@@ -56,6 +57,10 @@ const ModalsComponent: VFC = () => {
         visible={modalType === Modals.SendRejected}
         onClose={() => closeModals()}
         onSendAgain={'onSendAgain' in modalProps ? modalProps.onSendAgain : undefined}
+      />
+      <ConnectWalletModal
+        visible={modalType === Modals.ConnectWallet}
+        onClose={() => closeModals()}
       />
     </>
   );

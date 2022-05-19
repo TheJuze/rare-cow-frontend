@@ -18,6 +18,7 @@ import UploadAvatar from 'components/AvatarUploader/AvatarUploader';
 import profileActionTypes from 'store/profile/actionsTypes';
 import Clipboard from 'components/Clipboard/Clipboard';
 import userSelector from 'store/user/selectors';
+import { toast } from 'react-toastify';
 import { EditProfileFields, IEditProfile } from '.';
 
 import styles from './styles.module.scss';
@@ -86,6 +87,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
                 setFieldValue('avatarFile', f);
                 setFieldValue('avatarURL', fURL);
               }}
+              onLoadError={() => { toast.error(`File is too large. Max size is ${maxAvatarSize.size} ${maxAvatarSize.unit}`); }}
             />
           )}
         />
@@ -228,7 +230,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
                   onBlur={handleBlur}
                   onChange={(e) => setFieldValue('socials.twitter', e.currentTarget.value)}
                   className={cn(styles['edit-profile__wrapper__name'], styles['site-block'])}
-                  caption={captionGenerator(touched?.socials?.instagram, errors.socials?.instagram)}
+                  caption={captionGenerator(touched?.socials?.twitter, errors.socials?.twitter)}
                 />
               )}
             />

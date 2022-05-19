@@ -20,6 +20,7 @@ export interface IModalProps {
 
 export enum WalletProviders {
   metamask = 'MetaMask',
+  walletConnect = 'WalletConnect',
 }
 
 export enum CategoryName {

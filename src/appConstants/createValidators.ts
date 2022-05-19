@@ -38,7 +38,7 @@ export const editProfileValidator: IEditProfileValidator = {
       ),
     },
     site: {
-      reg: new RegExp(/^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$/i),
+      reg: new RegExp(/^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]+$/i),
     },
     twitter: {
       reg: new RegExp(

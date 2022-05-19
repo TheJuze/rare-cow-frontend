@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable object-curly-newline */
-import React, { useCallback, useMemo, useState, VFC } from 'react';
+import React, { RefObject, useCallback, useMemo, useState, VFC } from 'react';
 import cn from 'classnames';
 import arrowDown from 'assets/img/icons/arrowDown.svg';
 import arrowUp from 'assets/img/icons/arrowUp.svg';
@@ -32,6 +32,8 @@ export interface FiltersProps {
   handleClearFilters: any;
   isWithCollections?: boolean;
   isButtonOny?: boolean;
+  className?: string;
+  bodyRef?: RefObject<HTMLDivElement>;
 }
 
 export const rates = [
@@ -57,6 +59,8 @@ export const Filters: VFC<FiltersProps> = ({
   handleClearFilters,
   isWithCollections = true,
   isButtonOny = false,
+  className,
+  bodyRef,
 }) => {
   const [minValue, setMinValue] = useState('');
   const [maxValue, setMaxValue] = useState('');
@@ -323,9 +327,11 @@ export const Filters: VFC<FiltersProps> = ({
     <div
       className={cn(
         styles.filters,
+        className,
         { [styles.active]: isShowFilters },
         { [styles.buttonOnly]: isButtonOny },
       )}
+      ref={bodyRef}
     >
       {isWithCollections && (
         <SearchCollection

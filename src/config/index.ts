@@ -50,6 +50,20 @@ export const chains: {
     chainId: isMainnet ? 137 : 80001,
     provider: {
       MetaMask: { name: 'MetaMask' },
+      WalletConnect: {
+        name: 'WalletConnect',
+        useProvider: 'rpc',
+        provider: {
+          rpc: {
+            rpc: {
+              [isMainnet ? 137 : 80001]: isMainnet
+                ? 'https://rpc-mainnet.maticvigil.com/'
+                : 'https://matic-mumbai.chainstacklabs.com',
+            },
+            chainId: isMainnet ? 137 : 80001,
+          },
+        },
+      },
       chainName: ChainsEnum.Polygon,
       nativeCurrency: {
         name: 'MATIC',

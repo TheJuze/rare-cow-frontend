@@ -43,6 +43,12 @@
     grid-template-columns: 190px 1fr;
     margin-top: space(36) !important;
     width: 100%;
+    .filterButton{
+      margin-bottom: space(20);
+    }
+    .desktopTabs{
+      margin-top: space(38);
+    }
     .filters {
       margin-top: space(24);
       margin-bottom: space(24);

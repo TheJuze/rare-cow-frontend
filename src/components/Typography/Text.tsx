@@ -33,7 +33,7 @@ type Props = {
   className?: string;
   style?: CSSProperties;
   size?: Size;
-  color?: Color;
+  color?: Color | 'inherit-color';
   align?: Align;
   weight?: Weight;
 };

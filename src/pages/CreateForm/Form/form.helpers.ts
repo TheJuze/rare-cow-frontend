@@ -13,8 +13,8 @@ export const validationSchema = object().shape({
           name: string().required(),
           type: string().required(),
         }),
-      ).test('unique', 'all types must be unique', (val) => {
-        const setFields = new Set(val?.map((v) => `${v.name}${v.type?.trim().toLowerCase()}`));
+      ).test('unique', 'all names must be unique', (val) => {
+        const setFields = new Set(val?.map((v) => `${v.name}`));
         return setFields.size === val?.length;
       });
     }

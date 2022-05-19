@@ -43,7 +43,7 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
   );
 
   const handleConnectWallet = useCallback(
-    async (provider = WalletProviders.metamask, newChain) => {
+    async (provider = WalletProviders.walletConnect, newChain) => {
       connect(provider, newChain);
     },
     [connect],

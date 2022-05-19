@@ -1,0 +1,10 @@
+@import 'src/styles/variables';
+
+$connectModalColorsDefault: (
+  'createModal-subtitle-color': #8F8F8F,
+  'createModal-metaMask-border': 1px solid #FF4B23,
+  'createModal-walletConnect-border': 1px solid #5697F5,
+
+  'createModal-metaMask-hover-background': rgba(255, 75, 35, 0.3),
+  'createModal-walletConnect-hover-background': rgba(86, 151, 245, 0.3),
+);

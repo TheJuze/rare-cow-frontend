@@ -6,7 +6,7 @@ import cn from 'classnames';
 
 import { SearchInput, Dropdown, Avatar, UserPopover, Button, Text } from 'components';
 import { useBreakpoints, useClickOutside, useShallowSelector } from 'hooks';
-import { CategoryName, Chains, TDropdownValue, WalletProviders } from 'types';
+import { CategoryName, TDropdownValue, Modals } from 'types';
 import { sliceString } from 'utils';
 import { Link } from 'react-router-dom';
 import { Breadcrumbs } from 'components/Breadcrumbs';
@@ -14,6 +14,8 @@ import { useBreadcrumbs } from 'hooks/useBreadcrumbs';
 import userSelector from 'store/user/selectors';
 import wallet from 'assets/wallet.svg';
 import connect from 'assets/connect.svg';
+import { useDispatch } from 'react-redux';
+import { setActiveModal } from 'store/modals/reducer';
 import { createDynamicLink, routes } from 'appConstants';
 import s from './styles.module.scss';
 
@@ -128,7 +130,7 @@ export interface HeaderProps {
   chainType: 'testnet' | 'mainnet';
 }
 
-export const Header: VFC<HeaderProps> = ({ address, disconnect, onConnectWallet }) => {
+export const Header: VFC<HeaderProps> = ({ address, disconnect }) => {
   const [isUserShown, setIsUserShown] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -139,14 +141,19 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect, onConnectWallet 
   const [isMobile] = useBreakpoints([767]);
 
   const { breadcrumbs } = useBreadcrumbs();
+  const dispatch = useDispatch();
 
   const handleChangeConnecting = useCallback(() => {
     if (!address.length) {
-      onConnectWallet(WalletProviders.metamask, Chains.polygon);
+      dispatch(setActiveModal({
+        activeModal: Modals.ConnectWallet,
+        txHash: '',
+        open: true,
+      }));
     } else {
       disconnect();
     }
-  }, [address.length, disconnect, onConnectWallet]);
+  }, [address.length, disconnect, dispatch]);
 
   const handleShowUser = useCallback(() => {
     setIsUserShown(true);
