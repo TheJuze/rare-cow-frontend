@@ -1,6 +1,6 @@
 import { URL } from 'appConstants';
 import { LoginReq } from 'types';
-import { EditProfile, RequestWithNetwork } from 'types/requests';
+import { RequestWithNetwork, TEditableProfileField } from 'types/requests';
 
 import ajax from './ajax';
 
@@ -37,7 +37,7 @@ export default {
       params: { network },
     });
   },
-  editProfile(newParams: EditProfile) {
+  editProfile(newParams: TEditableProfileField) {
     return ajax({
       method: 'patch',
       url: URL.editProfile,
