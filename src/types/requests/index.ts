@@ -268,10 +268,12 @@ export type GetProfileByIdRequest = {
   web3Provider: Web3;
 };
 
-export type EditProfile = Pick<
+export type TEditableProfileField = Pick<
 User,
 'avatar' | 'bio' | 'displayName' | 'twitter' | 'facebook' | 'instagram' | 'site'
 >;
+
+export type EditProfile = {web3Provider: Web3, editData: TEditableProfileField};
 
 export type RequestWithNetwork = {
   network: Chains;

@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { error, request, success } from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
+import { updateUserInfo } from 'store/user/actions';
 
 import { editProfileInfo } from '../actions';
 import profileActionTypes from '../actionsTypes';
@@ -11,13 +12,14 @@ import profileActionTypes from '../actionsTypes';
 export function* editProfileInfoSaga({ type, payload }: ReturnType<typeof editProfileInfo>) {
   yield put(request(type));
   try {
-    const { data } = yield call(baseApi.editProfile, payload);
+    const { data } = yield call(baseApi.editProfile, payload.editData);
     if (data.display_name && data.display_name === 'this display_name is occupied') {
       toast.error('Error, this name is occupied');
       yield put(error(type, 'display_name Error'));
       return;
     }
     toast.success('Profile edit successfully');
+    yield put(updateUserInfo({ web3Provider: payload.web3Provider }));
     yield put(success(type));
   } catch (err) {
     toast.error(`Error ${err}`);

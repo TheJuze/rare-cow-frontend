@@ -34,6 +34,7 @@ const CreateFormContainer: VFC = () => {
   const {
     [profileActionTypes.EDIT_PROFILE_INFO]: editingProfile,
   } = useShallowSelector(uiSelector.getUI);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { walletService } = useWalletConnectorContext();
@@ -113,7 +114,9 @@ const CreateFormContainer: VFC = () => {
       newProfileForm.append('twitter', values.socials.twitter);
       newProfileForm.append('instagram', values.socials.instagram);
       newProfileForm.append('email', values.socials.email);
-      dispatch(editProfileInfo(newProfileForm as EditProfile));
+      dispatch(editProfileInfo(
+        { web3Provider: walletService.Web3(), editData: newProfileForm } as EditProfile,
+      ));
     },
     validateOnChange: true,
     displayName: 'edit-profile',
