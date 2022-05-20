@@ -1,13 +1,13 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable arrow-body-style */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Avatar, Button, Text } from 'components';
+import { Avatar, Button, FollowButton, Text } from 'components';
 import Clipboard from 'components/Clipboard/Clipboard';
 import useShallowSelector from 'hooks/useShallowSelector';
-import React, { useEffect, useMemo, VFC } from 'react';
+import React, { ReactText, useCallback, useEffect, useMemo, VFC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getProfileById } from 'store/profile/actions';
+import { follow, getProfileById, unfollow } from 'store/profile/actions';
 import profileSelector from 'store/profile/selectors';
 import userSelector from 'store/user/selectors';
 import { useWalletConnectorContext } from 'services';
@@ -22,6 +22,9 @@ import {
 } from 'assets/icons/icons';
 import { useBreakpoints } from 'hooks';
 import { createDynamicLink, currenciesIconsMap, routes } from 'appConstants';
+import uiSelector from 'store/ui/selectors';
+import profileActionTypes from 'store/profile/actionsTypes';
+import { RequestStatus } from 'types';
 import { Body } from './components';
 
 import styles from './styles.module.scss';
@@ -30,10 +33,13 @@ const Profile: VFC = () => {
   const [isMobile] = useBreakpoints([767]);
   const { walletService } = useWalletConnectorContext();
   const { userId } = useParams();
-  const isUser = useShallowSelector(userSelector.getProp('isUser'));
   const id = useShallowSelector(userSelector.getProp('id'));
+  const isUser = useMemo(() => String(userId) === String(id), [id, userId]);
   const balance = useShallowSelector(userSelector.getProp('balance'));
-
+  const {
+    [profileActionTypes.FOLLOW]: followRequestStatus,
+    [profileActionTypes.UNFOLLOW]: unfollowRequestStatus,
+  } = useShallowSelector(uiSelector.getUI);
   const {
     avatar,
     name,
@@ -45,6 +51,7 @@ const Profile: VFC = () => {
     instagram,
     twitter,
     bio,
+    isFollowing,
   } = useShallowSelector(profileSelector.getProfile);
   const dispatch = useDispatch();
   const hasSocials = useMemo(
@@ -52,10 +59,34 @@ const Profile: VFC = () => {
     [email, instagram, site, twitter],
   );
 
-  const mappedBalance = useMemo(() => Object.entries(balance).map(([token, value]) => ({
-    value,
-    icon: currenciesIconsMap[token],
-  })), [balance]);
+  const mappedBalance = useMemo(
+    () => Object.entries(balance).map(([token, value]) => ({
+      value,
+      icon: currenciesIconsMap[token],
+    })),
+    [balance],
+  );
+
+  const handleFollowUser = useCallback(
+    (userIdToFollow: ReactText) => {
+      dispatch(follow({ id: userIdToFollow }));
+    },
+    [dispatch],
+  );
+
+  const handleUnfollowUser = useCallback(
+    (userIdToUnfollow: ReactText) => {
+      dispatch(unfollow({ id: userIdToUnfollow }));
+    },
+    [dispatch],
+  );
+
+  const isFollowingInProcess = useMemo(
+    () => [followRequestStatus, unfollowRequestStatus].includes(
+      RequestStatus.REQUEST,
+    ),
+    [followRequestStatus, unfollowRequestStatus],
+  );
 
   useEffect(() => {
     if (userId) {
@@ -81,7 +112,7 @@ const Profile: VFC = () => {
               )}
               <div className={styles.following}>
                 <Button
-                  to={createDynamicLink(routes.nest.followers.path, { userId: id })}
+                  to={createDynamicLink(routes.nest.followers.path, { userId })}
                   className={styles.followers}
                   variant="outlined"
                   size="sm"
@@ -92,7 +123,7 @@ const Profile: VFC = () => {
                   </Text>
                 </Button>
                 <Button
-                  to={createDynamicLink(routes.nest.following.path, { userId: id })}
+                  to={createDynamicLink(routes.nest.following.path, { userId })}
                   className={styles.follows}
                   variant="outlined"
                   disabled={!followsCount}
@@ -117,15 +148,19 @@ const Profile: VFC = () => {
               {address ? <Clipboard name={address} value={address} /> : null}
               {isUser ? (
                 <Button
-                  to={
-                  createDynamicLink(routes.nest.profile.nest.edit.path, { userId })
-                  }
+                  to={createDynamicLink(routes.nest.profile.nest.edit.path, { userId })}
                   className={styles.edit}
                 >
                   Edit profile
                 </Button>
               ) : (
-                <Button>Follow</Button>
+                <FollowButton
+                  disabled={isFollowingInProcess}
+                  onClick={() => (isFollowing ?
+                    handleUnfollowUser(userId) : handleFollowUser(userId))}
+                  isFollowing={isFollowing}
+                  className={styles.edit}
+                />
               )}
             </div>
           </div>
@@ -196,7 +231,7 @@ const Profile: VFC = () => {
             )}
             <div className={styles.following}>
               <Button
-                to={createDynamicLink(routes.nest.followers.path, { userId: id })}
+                to={createDynamicLink(routes.nest.followers.path, { userId })}
                 className={styles.followers}
                 variant="outlined"
                 size="sm"
@@ -207,7 +242,7 @@ const Profile: VFC = () => {
                 </Text>
               </Button>
               <Button
-                to={createDynamicLink(routes.nest.following.path, { userId: id })}
+                to={createDynamicLink(routes.nest.following.path, { userId })}
                 className={styles.follows}
                 variant="outlined"
                 disabled={!followsCount}
@@ -232,15 +267,19 @@ const Profile: VFC = () => {
             {address ? <Clipboard name={address} value={address} /> : null}
             {isUser ? (
               <Button
-                to={
-                createDynamicLink(routes.nest.profile.nest.edit.path, { userId })
-              }
+                to={createDynamicLink(routes.nest.profile.nest.edit.path, { userId })}
                 className={styles.edit}
               >
                 Edit profile
               </Button>
             ) : (
-              <Button className={styles.edit}>Follow</Button>
+              <FollowButton
+                disabled={isFollowingInProcess}
+                onClick={() => (isFollowing ?
+                  handleUnfollowUser(userId) : handleFollowUser(userId))}
+                isFollowing={isFollowing}
+                className={styles.edit}
+              />
             )}
           </div>
           {hasSocials && (
