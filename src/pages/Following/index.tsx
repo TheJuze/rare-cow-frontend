@@ -55,7 +55,7 @@ const Following: VFC<IFollowingProps> = () => {
             <div className={styles.follower}>
               <Avatar avatar={follower.avatar || nullAvatar} id={follower.url} size={56} />
               <Text variant="body-1" color="dark" className={styles.followerName}>
-                {follower.displayName}
+                {follower.name}
               </Text>
             </div>
           ))}

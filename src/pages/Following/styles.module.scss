@@ -25,6 +25,7 @@
     width: 100%;
     &Name{
       margin-left: space(12);
+      @include ellipsis;
     }
   }
 }
