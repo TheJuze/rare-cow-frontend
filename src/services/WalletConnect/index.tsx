@@ -112,10 +112,10 @@ const WalletConnectContext: FC = ({ children }) => {
   }, [currentSubscriber, dispatch]);
 
   useEffect(() => {
-    if (WalletProvider) {
+    if (WalletProvider && connect) {
       connect(WalletProviders.metamask, Chains.polygon);
     }
-  }, [WalletProvider, address, connect]);
+  }, []);
   const values = useMemo(
     () => ({ connect, disconnect, walletService: WalletConnect.current }),
     [connect, disconnect],
