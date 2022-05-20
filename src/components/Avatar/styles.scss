@@ -13,20 +13,20 @@
     border: var(--avatar-border-width) solid var(--avatar-default-border-color);
     @include transition;
   }
-  &.withAnim {
-    &:hover {
-      transform: translateY(var(--avatar-animation-transform));
-    }
-  }
-  &.withShadow {
-    padding: spacing(2);
-    margin: spacing(-2);
-    .avatar {
-      &Img {
-        @include shadow-0;
-      }
-    }
-  }
+  // &.withAnim {
+  //   &:hover {
+  //     transform: translateY(var(--avatar-animation-transform));
+  //   }
+  // }
+  // &.withShadow {
+  //   padding: spacing(2);
+  //   margin: spacing(-2);
+  //   .avatar {
+  //     &Img {
+  //       @include shadow-0;
+  //     }
+  //   }
+  // }
 }
 
 .avatar-wrapper{
