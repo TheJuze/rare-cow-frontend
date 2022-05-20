@@ -7,7 +7,7 @@ import { Text } from 'components/Typography';
 import './styles.scss';
 import { Link } from 'react-router-dom';
 import { Loader } from 'components/Loader';
-import { sliceString } from 'utils';
+import { formatDigits, sliceString } from 'utils';
 import { BidedIcon, Promo } from 'assets/icons/icons';
 import { useTimeLeft } from 'hooks';
 import { Avatar } from 'components/Avatar';
@@ -117,7 +117,7 @@ export const ArtCard: VFC<ArtCardProps> = ({
             <div className="artCard-info__line-price">
               {isAuction && <BidedIcon />}
               <img src={currency} alt="currency" className="artCard-info__line-price-currency" />
-              <Text variant="body-2" color="accent">{price}</Text>
+              <Text variant="body-2" color="accent">{formatDigits(+price)}</Text>
             </div>
           ) : (
             null

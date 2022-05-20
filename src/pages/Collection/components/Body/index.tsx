@@ -9,7 +9,7 @@ import { ArtCard, Button, FilterChips, Text } from 'components';
 import { nfts } from 'components/ArtCard/ArtCard.mock';
 import { Link } from 'react-router-dom';
 import { FiltersIcon } from 'assets/icons/icons';
-import { useFilters } from 'hooks';
+import { initialFiltersState, useFilters } from 'hooks';
 import { Filters } from 'containers/Filters/Filters';
 import styles from './styles.module.scss';
 
@@ -18,42 +18,19 @@ interface IBodyProps {}
 const Body: VFC<IBodyProps> = () => {
   const [isShowFilters, setIsShowFilters] = useState(false);
   const [isShowChips, setIsShowChips] = useState(false);
-  const [appliedFilters, setAppliedFilters] = useState({
-    ERC721: false,
-    ERC1155: false,
-    isAuction: false,
-    currency: [],
-    price: '',
-    date: '',
-    likes: '',
-    minPrice: '',
-    maxPrice: '',
-  });
+  const [appliedFilters, setAppliedFilters] = useState(initialFiltersState);
   const { filters, handleChangeFilter, handleClearFilters } = useFilters();
   const isAppliedFilters = useMemo(
     () =>
       Boolean(
-        appliedFilters.ERC721 ||
-          appliedFilters.ERC1155 ||
+        appliedFilters.standart.length ||
           appliedFilters.isAuction ||
           appliedFilters.currency.length ||
-          appliedFilters.price ||
-          appliedFilters.date ||
-          appliedFilters.likes ||
+          appliedFilters.orderBy ||
           appliedFilters.minPrice ||
           appliedFilters.maxPrice,
       ),
-    [
-      appliedFilters.ERC1155,
-      appliedFilters.ERC721,
-      appliedFilters.currency.length,
-      appliedFilters.date,
-      appliedFilters.isAuction,
-      appliedFilters.likes,
-      appliedFilters.maxPrice,
-      appliedFilters.minPrice,
-      appliedFilters.price,
-    ],
+    [appliedFilters.currency.length, appliedFilters.isAuction, appliedFilters.maxPrice, appliedFilters.minPrice, appliedFilters.orderBy, appliedFilters.standart.length],
   );
 
   const onApply = useCallback(() => {
@@ -72,17 +49,7 @@ const Body: VFC<IBodyProps> = () => {
 
   const handleClearChips = useCallback(() => {
     handleClearFilters();
-    setAppliedFilters({
-      ERC721: false,
-      ERC1155: false,
-      isAuction: false,
-      currency: [],
-      price: '',
-      date: '',
-      likes: '',
-      minPrice: '',
-      maxPrice: '',
-    });
+    setAppliedFilters(initialFiltersState);
   }, [handleClearFilters]);
 
   const minSize = 264;

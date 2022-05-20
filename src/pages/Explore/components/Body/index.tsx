@@ -8,7 +8,7 @@ import { ArtCard, Button, FilterChips, SearchCollection, Text } from 'components
 
 import { Link } from 'react-router-dom';
 import { FiltersIcon } from 'assets/icons/icons';
-import { useFilters, useShallowSelector } from 'hooks';
+import { initialFiltersState, useFilters, useShallowSelector } from 'hooks';
 import { Filters } from 'containers/Filters/Filters';
 import collectionsSelector from 'store/collections/selectors';
 import { useDispatch } from 'react-redux';
@@ -286,44 +286,27 @@ const Body: VFC<IBodyProps> = ({ category }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isShowFilters, setIsShowFilters] = useState(false);
   const [isShowChips, setIsShowChips] = useState(false);
-  const [appliedFilters, setAppliedFilters] = useState({
-    ERC721: false,
-    ERC1155: false,
-    isAuction: false,
-    currency: [],
-    collections: [],
-    price: '',
-    date: '',
-    likes: '',
-    minPrice: '',
-    maxPrice: '',
-  });
+  const [appliedFilters, setAppliedFilters] = useState(initialFiltersState);
   const { filters, handleChangeFilter, handleClearFilters } = useFilters();
   const isAppliedFilters = useMemo(
     () =>
       Boolean(
-        appliedFilters.ERC721 ||
-          appliedFilters.ERC1155 ||
+        appliedFilters.standart.length ||
           appliedFilters.isAuction ||
           appliedFilters.currency.length ||
           appliedFilters.collections.length ||
-          appliedFilters.price ||
-          appliedFilters.date ||
-          appliedFilters.likes ||
+          appliedFilters.orderBy ||
           appliedFilters.minPrice ||
           appliedFilters.maxPrice,
       ),
     [
-      appliedFilters.ERC1155,
-      appliedFilters.ERC721,
+      appliedFilters.standart.length,
       appliedFilters.collections.length,
       appliedFilters.currency.length,
-      appliedFilters.date,
       appliedFilters.isAuction,
-      appliedFilters.likes,
       appliedFilters.maxPrice,
       appliedFilters.minPrice,
-      appliedFilters.price,
+      appliedFilters.orderBy,
     ],
   );
 
@@ -357,6 +340,7 @@ const Body: VFC<IBodyProps> = ({ category }) => {
         max_price: filtersData?.maxPrice,
         min_price: filtersData?.minPrice,
         on_auc_sale: filtersData?.isAuction || undefined,
+        order_by: filtersData?.orderBy || undefined,
       };
       dispatch(searchNfts({ requestData, shouldConcat }));
     },
@@ -367,17 +351,17 @@ const Body: VFC<IBodyProps> = ({ category }) => {
 
   const handleLoadMore = useCallback(
     (page: number, shouldConcat = false) => {
-      handleSearchNfts(filters, page, shouldConcat);
+      handleSearchNfts(appliedFilters, page, shouldConcat);
     },
-    [filters, handleSearchNfts],
+    [appliedFilters, handleSearchNfts],
   );
 
   const isInitRender = useRef(true);
 
   useEffect(() => {
-    debouncedHandleSearchNfts(filters, 1);
+    debouncedHandleSearchNfts(appliedFilters, 1);
     setCurrentPage(1);
-  }, [debouncedHandleSearchNfts, filters]);
+  }, [debouncedHandleSearchNfts, appliedFilters]);
 
   useEffect(() => {
     if (pageChangeScrollAnchor && pageChangeScrollAnchor.current && !isInitRender.current) {
@@ -421,18 +405,7 @@ const Body: VFC<IBodyProps> = ({ category }) => {
 
   const handleClearChips = useCallback(() => {
     handleClearFilters();
-    setAppliedFilters({
-      ERC721: false,
-      ERC1155: false,
-      isAuction: false,
-      currency: [],
-      collections: [],
-      price: '',
-      date: '',
-      likes: '',
-      minPrice: '',
-      maxPrice: '',
-    });
+    setAppliedFilters(initialFiltersState);
   }, [handleClearFilters]);
 
   const onLoadMoreClick = useCallback(
