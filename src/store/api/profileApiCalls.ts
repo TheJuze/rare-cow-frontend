@@ -1,4 +1,5 @@
 import { URL } from 'appConstants';
+import { ReactText } from 'react';
 import { LoginReq } from 'types';
 import { RequestWithNetwork, TEditableProfileField } from 'types/requests';
 
@@ -42,6 +43,20 @@ export default {
       method: 'patch',
       url: URL.editProfile,
       data: newParams,
+    });
+  },
+  follow(userIdToFollow: ReactText) {
+    return ajax({
+      method: 'post',
+      url: URL.follow,
+      data: { id: userIdToFollow },
+    });
+  },
+  unfollow(userIdToUnfollow: ReactText) {
+    return ajax({
+      method: 'post',
+      url: URL.unfollow,
+      data: { id: userIdToUnfollow },
     });
   },
 };

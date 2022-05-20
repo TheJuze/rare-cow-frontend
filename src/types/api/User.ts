@@ -24,6 +24,7 @@ export interface User {
     followsCount?: number;
     id?: number;
     instagram?: string;
+    isFollowing?: boolean;
     isVerificated?: boolean;
     name?: string;
     site?: string;

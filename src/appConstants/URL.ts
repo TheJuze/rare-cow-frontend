@@ -5,6 +5,8 @@ const accountURLs = {
   getSelfCollection: '/account/self/collections/',
   like: '/account/self/like/',
   editProfile: '/account/self/',
+  follow: 'account/self/follow/',
+  unfollow: 'account/self/unfollow/',
   trendingCollections: '/store/trending_collections/',
   trendingTokens: '/store/trending_tokens/',
   getProfileInfo: (id: string | number) => `/account/${id}/`,

@@ -130,6 +130,10 @@ export type GetDetailedNftReq = {
   id: number | string;
 };
 
+export type RequestWithId = {
+  id: number | string;
+};
+
 export type GetSingleCollectionReq = {
   id: number | string;
   network: string;
