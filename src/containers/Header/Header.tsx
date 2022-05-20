@@ -223,6 +223,7 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect }) => {
                 {...user}
                 visible={isUserShown}
                 bodyRef={bodyRef}
+                onClose={handleHideUser}
               />
             </div>
           ) : (

@@ -154,7 +154,7 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
           onChange={handleTabChange}
           className={cn({ [styles.desktopTabs]: !isMobile && !isHideFiltersButton })}
         />
-        <div>
+        <div className={styles.bodyContentInfo}>
           {!isHideFiltersButton && (
           <div className={styles.filterButton}>
             <FilterButton isShowFilters={isShowFilters} setIsShowFilters={setIsShowFilters} filters={filters} onApply={onApply} handleChangeFilter={handleChangeFilter} handleClearChips={handleClearChips} />
@@ -168,7 +168,7 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
                   <Text className={styles.bioTitle} color="dark">
                     Profile Information
                   </Text>
-                  <Text variant="body-2" color="dark">
+                  <Text className={styles.bioInfo} variant="body-2" color="dark">
                     {bio || 'There is no bio on this profile yet'}
                   </Text>
                 </div>
