@@ -45,6 +45,7 @@ const routesConfig = {
       content: <Profile />,
       label: 'Profile',
       outlet: true,
+      render: false,
       nest: {
         aboutMe: {
           path: 'about-me',
@@ -78,7 +79,7 @@ const routesConfig = {
         },
         sold: {
           path: 'sold',
-          content: <div />,
+          content: (values) => <Nfts {...values} />,
           label: 'Sold',
         },
         edit: {
@@ -218,10 +219,10 @@ const recursiveRoutesCollector = (nest: TRoutes[], parentOutlet?: boolean) => {
     const subPath = nest[i];
     const newPath = subPath.path;
     resultRoute.push(
-      ...(subPath.render !== false &&
-      (subPath.outlet == null ? !hasOutlets : subPath.outlet !== hasOutlets)
-        ? [{ ...subPath, path: newPath }]
-        : []),
+      ...(
+        (subPath.outlet == null ? !hasOutlets : subPath.outlet !== hasOutlets)
+          ? [{ ...subPath, path: newPath }]
+          : []),
     );
     if (subPath.nest) {
       hasOutlets = subPath.outlet;
