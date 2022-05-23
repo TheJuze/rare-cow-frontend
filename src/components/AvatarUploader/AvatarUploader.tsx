@@ -109,7 +109,7 @@ const UploadAvatar: VFC<IUploadAvatar> = ({
         inputRef.current.value = '';
       }
     },
-    [onLoadEnd, onLoadError, onLoadStarts, readFileAsUrl, reqMaxSize],
+    [extensions, onLoadEnd, onLoadError, onLoadStarts, readFileAsUrl, reqMaxSize],
   );
 
   useEffect(() => {
