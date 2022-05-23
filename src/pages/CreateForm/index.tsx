@@ -63,6 +63,7 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
     async (values: ICreateForm) => new Promise((resolve) => {
       const newTokenForm = new FormData();
       newTokenForm.append('name', values.name);
+      newTokenForm.append('tags', String(values.category.id));
       newTokenForm.append('description', values.description);
       if (values.properties.length !== 0) {
         newTokenForm.append(

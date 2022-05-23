@@ -7,6 +7,7 @@ export * from './numberFormatter';
 export * from './useWindowSize';
 export * from './validateOnlyNumbers';
 export * from './readFileAsUrl';
+export * from './getFilterForActiveTab';
 export { default as combineProviders } from './combineProviders';
 export { default as sliceString } from './sliceString';
 export { default as byteSize } from './byteSize';
