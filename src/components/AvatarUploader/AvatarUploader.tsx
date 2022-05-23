@@ -8,7 +8,9 @@ import cn from 'classnames';
 import { Button, ImagePreview, Text } from 'components';
 import { byteSize } from 'utils';
 
-import { imagesFormats, maxAvatarSize, TMaxSize } from 'appConstants';
+import {
+  getExtension, imagesFormats, maxAvatarSize, TMaxSize,
+} from 'appConstants';
 
 import { ImageIconSVG, TrashIcon } from 'assets/icons/icons';
 import styles from './styles.module.scss';
@@ -75,9 +77,18 @@ const UploadAvatar: VFC<IUploadAvatar> = ({
       onStart();
       if (nF) {
         if (nF.size <= byteSize(reqMaxSize)) {
-          const nfURL = await readFileAsUrl(nF);
-          setFailed(false);
-          onEnd(nfURL, nF);
+          const format = getExtension(nF.name) as any;
+          if (extensions.includes(format)) {
+            const nfURL = await readFileAsUrl(nF);
+            setFailed(false);
+            onEnd(nfURL, nF);
+          } else {
+            onError({
+              msg: `format of file is ${format}. Required are ${extensions.join(', ')}`,
+              type: ErrorList.noneType,
+            });
+            setFailed(true);
+          }
         } else {
           onError({
             msg: `size of file is ${nF.size} bits. Required ${byteSize(reqMaxSize)} bits!`,
