@@ -11,6 +11,7 @@ import React, {
   useCallback, useMemo, useRef, VFC,
 } from 'react';
 import {
+  CategoryName,
   EInputStatus, ICreateForm, TInputCaption, TSingleProp,
 } from 'types';
 import nftSelector from 'store/nfts/selectors';
@@ -46,7 +47,7 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({
   const dispatch = useDispatch();
   const descriptionRef = useRef(null);
   const { categories: searchedCategories } = useShallowSelector(nftSelector.getProp('searchData'));
-  const defaultCategories = useShallowSelector(nftSelector.getProp('categories'));
+  const defaultCategories = useShallowSelector(nftSelector.getProp('categories')).filter((cat) => cat.name !== CategoryName.allCategories);
 
   const searchValues = useSearch('', { requestData: { type: 'categories' } });
 

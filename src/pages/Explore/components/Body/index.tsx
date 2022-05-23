@@ -21,7 +21,6 @@ import { searchNfts } from 'store/nfts/actions';
 import { debounce } from 'lodash';
 import { DEBOUNCE_DELAY_100 } from 'appConstants';
 import { clearNfts } from 'store/nfts/reducer';
-import { TNullable } from 'types';
 import styles from './styles.module.scss';
 
 interface IBodyProps {
@@ -279,7 +278,6 @@ export const collectionsMock = [
 ];
 
 const Body: VFC<IBodyProps> = ({ category }) => {
-  const pageChangeScrollAnchor = useRef<TNullable<HTMLDivElement>>(null);
   const dispatch = useDispatch();
   const collections = useShallowSelector(collectionsSelector.getProp('collections'));
   const nftCards = useShallowSelector(nftSelector.getProp('nfts'));
@@ -330,10 +328,10 @@ const Body: VFC<IBodyProps> = ({ category }) => {
   );
 
   const handleSearchNfts = useCallback(
-    (filtersData: any, page: number, shouldConcat?: boolean) => {
+    (filtersData: any, tags: number, page: number, shouldConcat?: boolean) => {
       const requestData: SearchNftReq = {
         type: 'items',
-        categories: category?.id,
+        tags,
         page,
         collections: filtersData?.collections?.join(','),
         standart: filtersData?.standart?.join(','),
@@ -344,7 +342,7 @@ const Body: VFC<IBodyProps> = ({ category }) => {
       };
       dispatch(searchNfts({ requestData, shouldConcat }));
     },
-    [category?.id, dispatch],
+    [dispatch],
   );
 
   const debouncedHandleSearchNfts = useRef(debounce(handleSearchNfts, DEBOUNCE_DELAY_100)).current;
@@ -356,19 +354,10 @@ const Body: VFC<IBodyProps> = ({ category }) => {
     [appliedFilters, handleSearchNfts],
   );
 
-  const isInitRender = useRef(true);
-
   useEffect(() => {
-    debouncedHandleSearchNfts(appliedFilters, 1);
+    debouncedHandleSearchNfts(appliedFilters, category?.id, 1);
     setCurrentPage(1);
-  }, [debouncedHandleSearchNfts, appliedFilters]);
-
-  useEffect(() => {
-    if (pageChangeScrollAnchor && pageChangeScrollAnchor.current && !isInitRender.current) {
-      pageChangeScrollAnchor.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    isInitRender.current = false;
-  }, []);
+  }, [debouncedHandleSearchNfts, appliedFilters, category?.id]);
 
   useEffect(
     () => () => {

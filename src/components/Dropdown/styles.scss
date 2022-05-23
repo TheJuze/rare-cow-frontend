@@ -3,11 +3,26 @@
 @import 'src/styles/helpers';
 
 .dropdown {
-  &-label{
+  &-label {
     margin-bottom: space(8) !important;
   }
   &-content {
     position: relative;
+    .dropdown-content-head {
+      
+      outline: none;
+      -webkit-touch-callout: none; /* iOS Safari */
+      &:focus-visible,
+      &:focus,
+      &:active,
+      &:focus-within,
+      &:target,
+      &:hover,
+      &:visited {
+        outline: none;
+        -webkit-touch-callout: none; /* iOS Safari */
+      }
+    }
     &.active {
       .dropdown-content {
         &-head {
@@ -298,8 +313,20 @@
 .head {
   .dropdown-content-head {
     // box-shadow: none;
-    &:focus {
+
+    outline: none;
+    -webkit-touch-callout: none; /* iOS Safari */
+    &:focus-visible,
+    &:focus,
+    &:active,
+    &:focus-within,
+    &:target,
+    &:hover,
+    &:visited {
       box-shadow: none;
+
+      outline: none;
+      -webkit-touch-callout: none; /* iOS Safari */
     }
   }
   &.active {
@@ -307,6 +334,18 @@
       &.dropdown-content-head {
         border-radius: 8px 8px 0 0;
         box-shadow: none;
+        &:focus-visible,
+    &:focus,
+    &:active,
+    &:focus-within,
+    &:target,
+    &:hover,
+    &:visited {
+      box-shadow: none;
+
+      outline: none;
+      -webkit-touch-callout: none; /* iOS Safari */
+    }
       }
       &.dropdown-content-body {
         padding: space(0, 30, 16, 20);
