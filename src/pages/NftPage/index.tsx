@@ -1,26 +1,69 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable arrow-body-style */
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 
-import { useBreakpoints, useShallowSelector } from 'hooks';
+import { useBreakpoints, useGetUserAccessForNft, useShallowSelector } from 'hooks';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getDetailedNft } from 'store/nfts/actions';
 import nftSelector from 'store/nfts/selectors';
-import styles from './styles.module.scss';
+import { TAudioPreview } from 'components/Preview/AudioPreview';
+import { TImagePreview } from 'components/Preview/ImagePreview';
+import { TVideoPreview } from 'components/Preview/VideoPreview';
+import { TThreePreview } from 'components/Preview/ThreePreview';
+import { getPreviewer } from 'components';
+import { clearDetailedNft } from 'store/nfts/reducer';
+import userSelector from 'store/user/selectors';
 import { NftCreators, NftInfo, NftOwners, NftPayment } from './components';
+import styles from './styles.module.scss';
 
 const NftPage: FC = () => {
   const [isMobile] = useBreakpoints([767]);
   const { id } = useParams();
   const dispatch = useDispatch();
   const nft = useShallowSelector(nftSelector.getProp('detailedNft'));
+  const userId = useShallowSelector(userSelector.getProp('id'));
 
   useEffect(() => {
     dispatch(getDetailedNft({ id }));
+    return () => {
+      dispatch(clearDetailedNft());
+    };
   }, [id, dispatch]);
 
-  if(!nft) {
+  const previewerProps = useMemo(() => {
+    const audio: TAudioPreview = {
+      previewSrc: nft?.media,
+      mediaSrc: nft?.animation,
+    };
+    const image: TImagePreview = {
+      src: nft?.media,
+    };
+    const video: TVideoPreview = {
+      previewSrc: nft?.media,
+      mediaSrc: nft?.animation,
+    };
+    const threeD: TThreePreview = {
+      previewSrc: nft?.media,
+      mediaSrc: nft?.animation,
+      withSwitch: false,
+    };
+
+    return {
+      audio,
+      image,
+      video,
+      threeD,
+    };
+  }, [nft]);
+
+  const { previewComponent } = useMemo(() => {
+    return getPreviewer(previewerProps, nft?.format);
+  }, [nft?.format, previewerProps]);
+
+  const { isOwner } = useGetUserAccessForNft(nft, userId);
+
+  if (!nft) {
     return null;
   }
 
@@ -33,17 +76,11 @@ const NftPage: FC = () => {
           description={nft.description}
           likeCount={nft.likeCount}
           isLiked={nft.isLiked}
+          isOwner={isOwner}
         />
-        <div className={styles.nftImage}>
-          <img src={nft.media} alt="nft" />
-        </div>
+        <div className={styles.nftImage}>{previewComponent}</div>
         <NftPayment
-          endAuction={+nft.endAuction}
-          price={nft.price}
-          usdPrice={nft.usdPrice}
-          isAucSelling={nft.isAucSelling}
-          isTimedAucSelling={nft.isTimedAucSelling}
-          highestBid={nft.highestBid}
+          detailedNFT={nft}
         />
         <NftCreators
           creatorAvatar={nft.creator.avatar}
@@ -53,16 +90,19 @@ const NftPage: FC = () => {
           collectionId={String(nft.collection.url)}
           collectionName={nft.collection.name}
         />
-        <NftOwners owners={nft.owners} properties={nft.properties} history={nft.history} />
+        <NftOwners
+          userId={String(userId)}
+          owners={nft.owners}
+          properties={nft.properties}
+          history={nft.history}
+        />
       </div>
     );
   }
 
   return (
     <div className={styles.nftWrapper}>
-      <div className={styles.nftImage}>
-        <img src={nft.media} alt="nft" />
-      </div>
+      <div className={styles.nftImage}>{previewComponent}</div>
       <div className={styles.nftBlock}>
         <NftInfo
           name={nft.name}
@@ -70,14 +110,10 @@ const NftPage: FC = () => {
           description={nft.description}
           likeCount={nft.likeCount}
           isLiked={nft.isLiked}
+          isOwner={isOwner}
         />
         <NftPayment
-          endAuction={+nft.endAuction}
-          price={nft.price}
-          usdPrice={nft.usdPrice}
-          isAucSelling={nft.isAucSelling}
-          isTimedAucSelling={nft.isTimedAucSelling}
-          highestBid={nft.highestBid}
+          detailedNFT={nft}
         />
         <NftCreators
           creatorAvatar={nft.creator.avatar}
@@ -87,7 +123,12 @@ const NftPage: FC = () => {
           collectionId={String(nft.collection.url)}
           collectionName={nft.collection.name}
         />
-        <NftOwners owners={nft.owners} properties={nft.properties} history={nft.history} />
+        <NftOwners
+          userId={String(userId)}
+          owners={nft.owners}
+          properties={nft.properties}
+          history={nft.history}
+        />
       </div>
     </div>
   );

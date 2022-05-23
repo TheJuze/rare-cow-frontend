@@ -12,6 +12,7 @@ import { currencies, currenciesIconsMap, TCurrencies } from 'appConstants';
 import { CheckboxButton } from 'components/CheckboxButton';
 import { Button, Input, Text } from 'components';
 import { validateOnlyNumbers } from 'utils';
+import { QuantityInput } from 'components/QuantityInput';
 import styles from './styles.module.scss';
 
 export const initialListingOptions = ['Price', 'Auction', 'Auction time'] as const;
@@ -22,6 +23,7 @@ export type ListingSubmit = {
   currency: TCurrencies;
   timestamp: typeof initialTimestampOptions[number];
   price: string;
+  amount?: string;
 };
 
 export interface ListingProps {
@@ -32,6 +34,7 @@ export interface ListingProps {
   onSubmit?: (values: ListingSubmit) => void;
   onError?: () => void;
   buttonText?: string;
+  withAmount?: boolean;
 }
 
 const secondToHours = (seconds: number) => seconds / (60 * 60);
@@ -44,6 +47,7 @@ export const Listing: VFC<ListingProps> = ({
   onSubmit,
   onError,
   buttonText = '',
+  withAmount,
 }) => {
   const listingOptions = useMemo(
     () => initialListingOptions.map<TOption>((opt) => ({ value: opt, content: opt })),
@@ -103,6 +107,12 @@ export const Listing: VFC<ListingProps> = ({
     }
   }, [listType.value]);
 
+  const [amount, setAmount] = useState(String(itemsAmount));
+
+  const handleChangeAmount = useCallback((newAmount: string) => {
+    setAmount(newAmount);
+  }, []);
+
   const validateData = useCallback(() => {
     if (validateOnlyNumbers(price)) {
       return true;
@@ -122,6 +132,7 @@ export const Listing: VFC<ListingProps> = ({
     } else {
       onError?.();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     listType.value,
     price,
@@ -180,6 +191,7 @@ export const Listing: VFC<ListingProps> = ({
           </div>
         ))}
       </div>
+      { withAmount && <div className={styles.quantity}><QuantityInput name="amount" label="Quantity" minAmount={1} value={amount} setValue={handleChangeAmount} /></div> }
       <div className={styles.listingBottom}>
         <Input
           name="price"
@@ -192,13 +204,13 @@ export const Listing: VFC<ListingProps> = ({
             status: EInputStatus.COMMON,
             caption: (
               <Text color="light3" size="xs">
-                $ {itemsAmount * (parseFloat(price) || 0)}
+                $ {+amount * (parseFloat(price) || 0)}
               </Text>
             ),
           }}
         />
         {buttonText && (
-          <Button onClick={onSubmitButtonClick} size="sm" className={styles.listingBottomButton}>
+          <Button disabled={parseFloat(price) <= 0 || Number.isNaN(parseFloat(price))} onClick={onSubmitButtonClick} size="sm" className={styles.listingBottomButton}>
             {buttonText}
           </Button>
         )}

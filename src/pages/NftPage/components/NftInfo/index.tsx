@@ -5,6 +5,7 @@ import { LikeButton, Text } from 'components';
 
 import { Dots } from 'assets/icons/icons';
 import { sliceString } from 'utils';
+import { BurnButton } from 'components/BurnButton';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -13,8 +14,9 @@ type Props = {
   description: string;
   likeCount: number;
   isLiked: boolean;
+  isOwner: boolean;
 };
-const NftInfo: FC<Props> = ({ name, id, description, likeCount, isLiked }) => {
+const NftInfo: FC<Props> = ({ name, id, description, likeCount, isLiked, isOwner }) => {
   const [isDescriptionOpened, setIsDescriptionOpened] = useState(false);
   const isShowDots = useMemo(
     () => description.length > 120 && !isDescriptionOpened,
@@ -29,7 +31,12 @@ const NftInfo: FC<Props> = ({ name, id, description, likeCount, isLiked }) => {
         <Text variant="subtitle-1" color="dark">
           {name}
         </Text>
-        <LikeButton likesCount={likeCount} isLiked={isLiked} />
+        <div className={styles.actionButtons}>
+          {isOwner && <div className={styles.actionItem}><BurnButton onBurn={() => console.log('burn')} /></div>}
+          <div className={styles.actionItem}>
+            <LikeButton likesCount={likeCount} isLiked={isLiked} />
+          </div>
+        </div>
       </div>
       <Text variant="body-2" color="metal800">
         Id: {id}

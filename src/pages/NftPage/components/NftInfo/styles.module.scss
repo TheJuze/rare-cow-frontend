@@ -6,6 +6,15 @@
   width: 100%;
   &Top {
     @include flex(row, center, space-between);
+    .actionButtons{
+      margin-left: auto;
+      @include flex(row, center, space-between);
+      .actionItem{
+        &:not(:last-child){
+          margin-right: space(4);
+        }
+      }
+    }
   }
   .nftInfoDescription {
     position: relative;

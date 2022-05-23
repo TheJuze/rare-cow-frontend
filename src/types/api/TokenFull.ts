@@ -13,6 +13,7 @@ import { TokenHistory } from "./TokenHistory";
 import { Network } from "./Network";
 import { Ownership } from "./Ownership";
 import { Tag } from "./Tag";
+import { Property } from "./Property";
 
 
 export interface TokenFull {
@@ -45,7 +46,7 @@ export interface TokenFull {
     owners: Ownership[];
     price?: string;
     promotionInfo?: string;
-    properties?: string;
+    properties?: Property[];
     rankings: any;
     sellers?: Ownership[];
     standart?: string;

@@ -22,3 +22,5 @@ export * from './User';
 export * from './UserFollow';
 export * from './UserSlim';
 export * from './enums';
+export * from './Rates';
+export * from './Property';

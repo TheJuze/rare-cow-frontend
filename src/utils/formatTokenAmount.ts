@@ -26,7 +26,10 @@ export const getTokenAmount = (
   return displayValue.toString(10);
 };
 
-export const getTokenAmountDisplay = (balance: string | number, decimals = 18): string => {
+export const getTokenAmountDisplay = (
+  balance: string | number, decimals = 18, round = 5,
+)
+: string => {
   if (balance === '') {
     return '0';
   }
@@ -35,7 +38,8 @@ export const getTokenAmountDisplay = (balance: string | number, decimals = 18): 
     balance.toString();
   }
 
-  const displayValue = new BigNumber(balance).dividedBy(new BigNumber(10).pow(decimals));
+  const displayValue = new BigNumber(balance).dividedBy(new BigNumber(10)
+    .pow(decimals)).decimalPlaces(round);
 
   return parseFloat(displayValue.toFixed(4)).toString();
 };

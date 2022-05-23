@@ -26,7 +26,7 @@ const NftCreators: FC<Props> = ({
       <div className={styles.creator}>
         <Text size="xs">Created by</Text>
         <div className={styles.creatorWrapper}>
-          <Avatar size={40} avatar={creatorAvatar} id={creatorId} />
+          <Avatar size={40} avatar={creatorAvatar} id={creatorId} withShadow />
           <Text variant="body-2" color="dark" weight="semiBold" className={styles.creatorText}>
             {creatorName}
           </Text>
@@ -35,7 +35,7 @@ const NftCreators: FC<Props> = ({
       <div className={styles.collection}>
         <Text size="xs">Collection</Text>
         <div className={styles.collectionWrapper}>
-          <Avatar size={40} avatar={collectionAvatar} id={collectionId} isCollection />
+          <Avatar size={40} avatar={collectionAvatar} id={collectionId} isCollection withShadow />
           <Text variant="body-2" color="dark" weight="semiBold" className={styles.collectionText}>
             {collectionName}
           </Text>
