@@ -19,7 +19,7 @@ import {
 import { Nfts } from 'pages/Profile/components';
 import Bio from 'pages/Profile/components/Bio';
 import React, { ReactElement } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useOutletContext } from 'react-router-dom';
 import { TGuards } from 'types';
 
 export type TDynamicValues = { [key: string]: string | number };
@@ -48,10 +48,7 @@ const routesConfig = {
       nest: {
         aboutMe: {
           path: 'about-me',
-          content: (values) => {
-            console.log('values', values);
-            return <Bio {...values} />;
-          },
+          content: (values) => <Bio {...values} />,
           label: 'About',
         },
         owned: {
@@ -81,7 +78,7 @@ const routesConfig = {
         },
         sold: {
           path: 'sold',
-          content: (values) => <Nfts {...values} />,
+          content: <div />,
           label: 'Sold',
         },
         edit: {
@@ -191,19 +188,25 @@ export const createDynamicLink = (path: string, values: TDynamicValues) => {
   return normalPath;
 };
 
+const OutletProvider = ({ children }) => {
+  const contextProps = useOutletContext();
+
+  return typeof children === 'function' ? children(contextProps) : children;
+};
+
 const getOutletRoute = (nest: TRoutes[]) => {
   for (let i = 0; i < nest.length; i += 1) {
     const subPath = nest[i];
     if (subPath.nest) {
       return (
-        <Route key={subPath.path} path={subPath.path} element={<>{subPath.content}</>}>
+        <Route key={subPath.path} path={subPath.path} element={subPath.content}>
           {Object.entries(subPath.nest)
             .map(([, data]) => ({ ...data, path: data.path.replaceAll(subPath.path, '').slice(1) }))
             .map((child) => getOutletRoute([child]))}
         </Route>
       );
     }
-    return <Route key={subPath.path} path={subPath.path} element={subPath.content} />;
+    return <Route key={subPath.path} path={subPath.path} element={<OutletProvider>{subPath.content}</OutletProvider>} />;
   }
   return null;
 };
@@ -255,4 +258,3 @@ export const generateOutletRoutes = () => (
   <Routes>{getOutletRoute([{ ...routesConfig }] as any)}</Routes>
 );
 export const generateRoutes = () => <Routes>{getRoute()}</Routes>;
-console.log('generate', generateRoutes());
