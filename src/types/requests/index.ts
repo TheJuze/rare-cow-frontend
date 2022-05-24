@@ -196,6 +196,7 @@ export type SearchNftReq = {
   text?: string;
   standart?: string;
   creator?: string;
+  currency?: string;
 };
 
 export type TransferTokenReq = {

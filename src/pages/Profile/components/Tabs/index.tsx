@@ -16,6 +16,7 @@ interface ITabsProps {
   handleDeleteChips: (key: string, value: string) => void;
   handleClearChips: () => void;
   nfts: TokenFull[];
+  totalPages: number;
   onLoadMoreClick: (page: number) => void;
   currentPage: number;
   collections: Collection[];
@@ -29,6 +30,7 @@ const Tabs: VFC<ITabsProps> = ({
   handleDeleteChips,
   handleClearChips,
   nfts,
+  totalPages,
   onLoadMoreClick,
   currentPage,
   collections,
@@ -59,6 +61,7 @@ const Tabs: VFC<ITabsProps> = ({
             handleDeleteChips={handleDeleteChips}
             handleClearChips={handleClearChips}
             nfts={nfts}
+            totalPages={totalPages}
             onLoadMoreClick={onLoadMoreClick}
             currentPage={currentPage}
           />
@@ -75,6 +78,7 @@ const Tabs: VFC<ITabsProps> = ({
             handleDeleteChips={handleDeleteChips}
             handleClearChips={handleClearChips}
             nfts={nfts}
+            totalPages={totalPages}
             onLoadMoreClick={onLoadMoreClick}
             currentPage={currentPage}
           />
@@ -91,6 +95,7 @@ const Tabs: VFC<ITabsProps> = ({
             handleDeleteChips={handleDeleteChips}
             handleClearChips={handleClearChips}
             nfts={nfts}
+            totalPages={totalPages}
             onLoadMoreClick={onLoadMoreClick}
             currentPage={currentPage}
           />
@@ -107,6 +112,7 @@ const Tabs: VFC<ITabsProps> = ({
             handleDeleteChips={handleDeleteChips}
             handleClearChips={handleClearChips}
             nfts={nfts}
+            totalPages={totalPages}
             onLoadMoreClick={onLoadMoreClick}
             currentPage={currentPage}
           />
@@ -124,6 +130,7 @@ const Tabs: VFC<ITabsProps> = ({
             handleDeleteChips={handleDeleteChips}
             handleClearChips={handleClearChips}
             nfts={nfts}
+            totalPages={totalPages}
             onLoadMoreClick={onLoadMoreClick}
             currentPage={currentPage}
           />

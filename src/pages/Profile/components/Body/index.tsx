@@ -83,6 +83,7 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
   const nfts = useShallowSelector(nftSelector.getProp('nfts'));
+  const totalPages = useShallowSelector(nftSelector.getProp('totalPages'));
   const collections = useShallowSelector(collectionsSelector.getProp('collections'));
   const { pathname } = useLocation();
   const [isMobile] = useBreakpoints([541]);
@@ -158,6 +159,7 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
         type: 'items',
         page,
         collections: filtersData?.collections?.join(','),
+        currency: filtersData?.currency?.join(','),
         standart: filtersData?.standart?.join(','),
         max_price: filtersData?.maxPrice,
         min_price: filtersData?.minPrice,
@@ -254,6 +256,7 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
             handleDeleteChips={handleDeleteChips}
             handleClearChips={handleClearChips}
             nfts={nfts}
+            totalPages={totalPages}
             onLoadMoreClick={onLoadMoreClick}
             currentPage={currentPage}
             collections={collections}
