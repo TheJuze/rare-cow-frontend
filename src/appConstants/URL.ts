@@ -16,7 +16,7 @@ const storeURLs = {
   getTrendingNfts: 'store/trending/',
   presearchNfts: 'store/presearch/',
   searchNfts: 'store/search/',
-  getCategories: '/store/categories/',
+  getCategories: '/store/tags/',
   createNewToken: '/store/create_token/',
   createNewCollection: '/store/create_collection/',
   buy: 'store/buy/',
