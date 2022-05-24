@@ -37,7 +37,7 @@
     flex: 0 1 80%;
     width: 100%;
     height: 100%;
-    border-radius: 20px 20px 0 0;
+    border-radius: 20px;
     min-height: 143px;
     @include flex(row, flex-start, center);
     @include transition;
