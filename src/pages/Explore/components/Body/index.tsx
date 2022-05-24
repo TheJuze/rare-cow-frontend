@@ -4,7 +4,7 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useEffect, useMemo, useRef, useState, VFC } from 'react';
-import { ArtCard, Button, FilterChips, SearchCollection, Text } from 'components';
+import { ArtCard, ArtCardSkeleton, Button, FilterChips, SearchCollection, Text } from 'components';
 
 import { Link } from 'react-router-dom';
 import { FiltersIcon } from 'assets/icons/icons';
@@ -21,6 +21,9 @@ import { searchNfts } from 'store/nfts/actions';
 import { debounce } from 'lodash';
 import { DEBOUNCE_DELAY_100 } from 'appConstants';
 import { clearNfts } from 'store/nfts/reducer';
+import actionTypes from 'store/nfts/actionTypes';
+import uiSelector from 'store/ui/selectors';
+import { RequestStatus } from 'types';
 import styles from './styles.module.scss';
 
 interface IBodyProps {
@@ -286,6 +289,12 @@ const Body: VFC<IBodyProps> = ({ category }) => {
   const [isShowChips, setIsShowChips] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState(initialFiltersState);
   const { filters, handleChangeFilter, handleClearFilters } = useFilters();
+  const { [actionTypes.SEARCH_NFTS]: getNftsRequestStatus } = useShallowSelector(uiSelector.getUI);
+
+  const isNftsLoading = useMemo(
+    () => getNftsRequestStatus === RequestStatus.REQUEST,
+    [getNftsRequestStatus],
+  );
   const isAppliedFilters = useMemo(
     () =>
       Boolean(
@@ -454,7 +463,9 @@ const Body: VFC<IBodyProps> = ({ category }) => {
             className={styles.bodyResults}
             style={{
               gridTemplateColumns:
-                nftCards.length !== 0 ? `repeat(auto-fill,minmax(${minSize}px,1fr))` : '1fr',
+                nftCards.length !== 0 || isNftsLoading
+                  ? `repeat(auto-fill,minmax(${minSize}px,1fr))`
+                  : '1fr',
             }}
           >
             {nftCards.map((nft) => {
@@ -495,12 +506,20 @@ const Body: VFC<IBodyProps> = ({ category }) => {
                 </Link>
               );
             })}
+            {isNftsLoading &&
+              Array.from(Array(8).keys()).map((element) => <ArtCardSkeleton key={element} />)}
           </div>
-          <Button className={styles.load} onClick={() => onLoadMoreClick(currentPage + 1)} variant="outlined">
-            <Text className={styles.loadText} color="accent">
-              Load more
-            </Text>
-          </Button>
+          {!isNftsLoading && (
+            <Button
+              className={styles.load}
+              onClick={() => onLoadMoreClick(currentPage + 1)}
+              variant="outlined"
+            >
+              <Text className={styles.loadText} color="accent">
+                Load more
+              </Text>
+            </Button>
+          )}
         </div>
       </div>
     </div>
