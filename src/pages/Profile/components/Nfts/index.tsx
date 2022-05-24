@@ -4,7 +4,7 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { VFC } from 'react';
-import { ArtCard, FilterChips, Text } from 'components';
+import { ArtCard, Button, FilterChips, Text } from 'components';
 
 import { Link } from 'react-router-dom';
 import { useBreakpoints } from 'hooks';
@@ -18,6 +18,8 @@ interface INftsProps {
   handleDeleteChips: any;
   handleClearChips: any;
   nfts: any;
+  onLoadMoreClick: (value: number) => void;
+  currentPage: number;
 }
 
 const Nfts: VFC<INftsProps> = ({
@@ -27,6 +29,8 @@ const Nfts: VFC<INftsProps> = ({
   handleDeleteChips,
   handleClearChips,
   nfts,
+  onLoadMoreClick,
+  currentPage,
 }) => {
   const [isMobile] = useBreakpoints([541]);
 
@@ -95,6 +99,15 @@ const Nfts: VFC<INftsProps> = ({
           );
         })}
       </div>
+      <Button
+        className={styles.load}
+        onClick={() => onLoadMoreClick(currentPage + 1)}
+        variant="outlined"
+      >
+        <Text className={styles.loadText} color="accent">
+          Load more
+        </Text>
+      </Button>
     </div>
   );
 };

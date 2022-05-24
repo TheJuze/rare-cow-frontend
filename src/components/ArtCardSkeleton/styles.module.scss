@@ -1,0 +1,7 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.skeleton { 
+  border-radius: 30px !important;
+}

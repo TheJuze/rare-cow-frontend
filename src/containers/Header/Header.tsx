@@ -31,6 +31,13 @@ export interface HeaderProps {
 }
 
 export const Header: VFC<HeaderProps> = ({ address, disconnect }) => {
+  const { breadcrumbs, dynamicValues } = useBreadcrumbs();
+  const exploreValue = useMemo(
+    () => (dynamicValues[0]?.categoryName
+      ? { id: '0', content: dynamicValues[0]?.categoryName.replaceAll('%20', ' ') }
+      : { id: '0', content: 'Explore' }),
+    [dynamicValues],
+  );
   const [isUserShown, setIsUserShown] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -142,8 +149,6 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect }) => {
   const headRef = useRef<HTMLButtonElement | null>(null);
   const bodyRef = useRef<HTMLDivElement | null>(null);
   const [isMobile] = useBreakpoints([767]);
-
-  const { breadcrumbs } = useBreadcrumbs();
   const dispatch = useDispatch();
 
   const handleChangeConnecting = useCallback(() => {
@@ -194,12 +199,13 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect }) => {
         <div className={s.headerRight}>
           <Dropdown
             name="Explore"
-            value={{ id: '0', content: 'Explore' }}
+            value={exploreValue}
             setValue={() => {}}
             options={dropdownOptions}
             variant="outlined"
             classNameHead={s.headerDropdown}
             dropPosition="absolute"
+            closeOnSelect
           />
           {address && <div className={s.address}>{sliceString(address)}</div>}
           {address.length ? (
@@ -223,6 +229,7 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect }) => {
                 {...user}
                 visible={isUserShown}
                 bodyRef={bodyRef}
+                onClose={handleHideUser}
               />
             </div>
           ) : (

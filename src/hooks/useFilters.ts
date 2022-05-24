@@ -3,37 +3,28 @@ import { useCallback, useState } from 'react';
 
 export type SortDirection = 'asc' | 'desc';
 
-export const useFilters = () => {
-  const [filters, setFilters] = useState({
-    ERC721: false,
-    ERC1155: false,
-    isAuction: false,
-    currency: [],
-    collections: [],
-    price: '',
-    date: '',
-    likes: '',
-    minPrice: '',
-    maxPrice: '',
-  });
+export const initialFiltersState = {
+  standart: [],
+  isAuction: false,
+  currency: [],
+  collections: [],
+  orderBy: '',
+  minPrice: '',
+  maxPrice: '',
+};
 
-  const handleChangeFilter = useCallback((key, value) => {
-    setFilters({ ...filters, [key]: value });
-  }, [filters]);
+export const useFilters = () => {
+  const [filters, setFilters] = useState(initialFiltersState);
+
+  const handleChangeFilter = useCallback(
+    (key, value) => {
+      setFilters({ ...filters, [key]: value });
+    },
+    [filters],
+  );
 
   const handleClearFilters = useCallback(() => {
-    setFilters({
-      ERC721: false,
-      ERC1155: false,
-      isAuction: false,
-      currency: [],
-      collections: [],
-      price: '',
-      date: '',
-      likes: '',
-      minPrice: '',
-      maxPrice: '',
-    });
+    setFilters(initialFiltersState);
   }, []);
 
   return {

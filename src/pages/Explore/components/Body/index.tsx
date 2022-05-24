@@ -4,11 +4,11 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useEffect, useMemo, useRef, useState, VFC } from 'react';
-import { ArtCard, Button, FilterChips, SearchCollection, Text } from 'components';
+import { ArtCard, ArtCardSkeleton, Button, FilterChips, SearchCollection, Text } from 'components';
 
 import { Link } from 'react-router-dom';
 import { FiltersIcon } from 'assets/icons/icons';
-import { useFilters, useShallowSelector } from 'hooks';
+import { initialFiltersState, useFilters, useShallowSelector } from 'hooks';
 import { Filters } from 'containers/Filters/Filters';
 import collectionsSelector from 'store/collections/selectors';
 import { useDispatch } from 'react-redux';
@@ -21,7 +21,9 @@ import { searchNfts } from 'store/nfts/actions';
 import { debounce } from 'lodash';
 import { DEBOUNCE_DELAY_100 } from 'appConstants';
 import { clearNfts } from 'store/nfts/reducer';
-import { TNullable } from 'types';
+import actionTypes from 'store/nfts/actionTypes';
+import uiSelector from 'store/ui/selectors';
+import { RequestStatus } from 'types';
 import styles from './styles.module.scss';
 
 interface IBodyProps {
@@ -279,51 +281,39 @@ export const collectionsMock = [
 ];
 
 const Body: VFC<IBodyProps> = ({ category }) => {
-  const pageChangeScrollAnchor = useRef<TNullable<HTMLDivElement>>(null);
   const dispatch = useDispatch();
   const collections = useShallowSelector(collectionsSelector.getProp('collections'));
   const nftCards = useShallowSelector(nftSelector.getProp('nfts'));
   const [currentPage, setCurrentPage] = useState(1);
   const [isShowFilters, setIsShowFilters] = useState(false);
   const [isShowChips, setIsShowChips] = useState(false);
-  const [appliedFilters, setAppliedFilters] = useState({
-    ERC721: false,
-    ERC1155: false,
-    isAuction: false,
-    currency: [],
-    collections: [],
-    price: '',
-    date: '',
-    likes: '',
-    minPrice: '',
-    maxPrice: '',
-  });
+  const [appliedFilters, setAppliedFilters] = useState(initialFiltersState);
   const { filters, handleChangeFilter, handleClearFilters } = useFilters();
+  const { [actionTypes.SEARCH_NFTS]: getNftsRequestStatus } = useShallowSelector(uiSelector.getUI);
+
+  const isNftsLoading = useMemo(
+    () => getNftsRequestStatus === RequestStatus.REQUEST,
+    [getNftsRequestStatus],
+  );
   const isAppliedFilters = useMemo(
     () =>
       Boolean(
-        appliedFilters.ERC721 ||
-          appliedFilters.ERC1155 ||
+        appliedFilters.standart.length ||
           appliedFilters.isAuction ||
           appliedFilters.currency.length ||
           appliedFilters.collections.length ||
-          appliedFilters.price ||
-          appliedFilters.date ||
-          appliedFilters.likes ||
+          appliedFilters.orderBy ||
           appliedFilters.minPrice ||
           appliedFilters.maxPrice,
       ),
     [
-      appliedFilters.ERC1155,
-      appliedFilters.ERC721,
+      appliedFilters.standart.length,
       appliedFilters.collections.length,
       appliedFilters.currency.length,
-      appliedFilters.date,
       appliedFilters.isAuction,
-      appliedFilters.likes,
       appliedFilters.maxPrice,
       appliedFilters.minPrice,
-      appliedFilters.price,
+      appliedFilters.orderBy,
     ],
   );
 
@@ -347,44 +337,36 @@ const Body: VFC<IBodyProps> = ({ category }) => {
   );
 
   const handleSearchNfts = useCallback(
-    (filtersData: any, page: number, shouldConcat?: boolean) => {
+    (filtersData: any, tags: number, page: number, shouldConcat?: boolean) => {
       const requestData: SearchNftReq = {
         type: 'items',
-        categories: category?.id,
+        tags,
         page,
         collections: filtersData?.collections?.join(','),
         standart: filtersData?.standart?.join(','),
         max_price: filtersData?.maxPrice,
         min_price: filtersData?.minPrice,
         on_auc_sale: filtersData?.isAuction || undefined,
+        order_by: filtersData?.orderBy || undefined,
       };
       dispatch(searchNfts({ requestData, shouldConcat }));
     },
-    [category?.id, dispatch],
+    [dispatch],
   );
 
   const debouncedHandleSearchNfts = useRef(debounce(handleSearchNfts, DEBOUNCE_DELAY_100)).current;
 
   const handleLoadMore = useCallback(
     (page: number, shouldConcat = false) => {
-      handleSearchNfts(filters, page, shouldConcat);
+      handleSearchNfts(appliedFilters, page, shouldConcat);
     },
-    [filters, handleSearchNfts],
+    [appliedFilters, handleSearchNfts],
   );
 
-  const isInitRender = useRef(true);
-
   useEffect(() => {
-    debouncedHandleSearchNfts(filters, 1);
+    debouncedHandleSearchNfts(appliedFilters, category?.id, 1);
     setCurrentPage(1);
-  }, [debouncedHandleSearchNfts, filters]);
-
-  useEffect(() => {
-    if (pageChangeScrollAnchor && pageChangeScrollAnchor.current && !isInitRender.current) {
-      pageChangeScrollAnchor.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    isInitRender.current = false;
-  }, []);
+  }, [debouncedHandleSearchNfts, appliedFilters, category?.id]);
 
   useEffect(
     () => () => {
@@ -421,18 +403,7 @@ const Body: VFC<IBodyProps> = ({ category }) => {
 
   const handleClearChips = useCallback(() => {
     handleClearFilters();
-    setAppliedFilters({
-      ERC721: false,
-      ERC1155: false,
-      isAuction: false,
-      currency: [],
-      collections: [],
-      price: '',
-      date: '',
-      likes: '',
-      minPrice: '',
-      maxPrice: '',
-    });
+    setAppliedFilters(initialFiltersState);
   }, [handleClearFilters]);
 
   const onLoadMoreClick = useCallback(
@@ -492,7 +463,9 @@ const Body: VFC<IBodyProps> = ({ category }) => {
             className={styles.bodyResults}
             style={{
               gridTemplateColumns:
-                nftCards.length !== 0 ? `repeat(auto-fill,minmax(${minSize}px,1fr))` : '1fr',
+                nftCards.length !== 0 || isNftsLoading
+                  ? `repeat(auto-fill,minmax(${minSize}px,1fr))`
+                  : '1fr',
             }}
           >
             {nftCards.map((nft) => {
@@ -533,12 +506,20 @@ const Body: VFC<IBodyProps> = ({ category }) => {
                 </Link>
               );
             })}
+            {isNftsLoading &&
+              Array.from(Array(8).keys()).map((element) => <ArtCardSkeleton key={element} />)}
           </div>
-          <Button className={styles.load} onClick={() => onLoadMoreClick(currentPage + 1)} variant="outlined">
-            <Text className={styles.loadText} color="accent">
-              Load more
-            </Text>
-          </Button>
+          {!isNftsLoading && (
+            <Button
+              className={styles.load}
+              onClick={() => onLoadMoreClick(currentPage + 1)}
+              variant="outlined"
+            >
+              <Text className={styles.loadText} color="accent">
+                Load more
+              </Text>
+            </Button>
+          )}
         </div>
       </div>
     </div>

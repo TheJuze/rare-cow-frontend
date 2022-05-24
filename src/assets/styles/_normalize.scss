@@ -1,8 +1,10 @@
 * {
   font-family: Inter, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
-iframe{
+iframe {
   display: none;
 }
 
@@ -57,6 +59,10 @@ div[id='root'] {
 
   button {
     box-sizing: border-box;
+    &:focus,
+    &:active {
+      outline: none;
+    }
   }
 
   .flexCenter {
@@ -67,9 +73,19 @@ div[id='root'] {
 }
 * {
   font-family: Inter, sans-serif;
+  
+  outline: none;
+  -webkit-touch-callout: none; /* iOS Safari */
 
-  &:focus-visible {
+  &:focus-visible,
+  &:focus,
+  &:active,
+  &:focus-within,
+  &:target,
+  &:hover,
+  &:visited {
     outline: none;
+    -webkit-touch-callout: none; /* iOS Safari */
   }
 }
 body {

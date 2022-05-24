@@ -69,6 +69,8 @@
       @include flex(row, center, center);
         &-currency{
           margin: spacing(0, 1, 0, 1);
+          width: 20px;
+          height: 20px;
         }
       }
     }

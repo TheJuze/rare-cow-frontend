@@ -3,11 +3,10 @@
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useCallback, useMemo, useState, VFC } from 'react';
-import { CollectionsList, FilterChips, TabBar, Text } from 'components';
+import React, { useCallback, useEffect, useMemo, useRef, useState, VFC } from 'react';
+import { FilterChips, TabBar, Text } from 'components';
 
-import { nfts } from 'components/ArtCard/ArtCard.mock';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   AboutMeIcon,
   BidedGrayIcon,
@@ -17,14 +16,23 @@ import {
   OwnedIcon,
   SoldIcon,
 } from 'assets/icons/icons';
-import { useBreakpoints, useFilters } from 'hooks';
-import { createDynamicLink, routes } from 'appConstants';
+import { initialFiltersState, useBreakpoints, useFilters, useShallowSelector } from 'hooks';
+import { createDynamicLink, DEBOUNCE_DELAY_100, routes } from 'appConstants';
 import { TBarOption } from 'types';
-import { collectionsMock } from 'pages/Home/components/TopCollections';
 import cn from 'clsx';
-import styles from './styles.module.scss';
-import Nfts from '../Nfts';
+import nftSelector from 'store/nfts/selectors';
+import collectionsSelector from 'store/collections/selectors';
+import { useDispatch } from 'react-redux';
+import { getFilterForActiveTab } from 'utils';
+import { debounce } from 'lodash';
+import { clearNfts } from 'store/nfts/reducer';
+import { searchNfts } from 'store/nfts/actions';
+import { SearchNftReq } from 'types/requests';
+import { clearCollections } from 'store/collections/reducer';
+import { searchCollections } from 'store/collections/actions';
 import { FilterButton } from '../FIlterButton';
+import styles from './styles.module.scss';
+import Tabs from '../Tabs';
 
 interface IBodyProps {
   userId: string;
@@ -72,6 +80,10 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
     ],
     [],
   );
+  const [currentPage, setCurrentPage] = useState(1);
+  const dispatch = useDispatch();
+  const nfts = useShallowSelector(nftSelector.getProp('nfts'));
+  const collections = useShallowSelector(collectionsSelector.getProp('collections'));
   const { pathname } = useLocation();
   const [isMobile] = useBreakpoints([541]);
   const navigate = useNavigate();
@@ -83,43 +95,27 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
   const [isShowFilters, setIsShowFilters] = useState(false);
   const [isShowChips, setIsShowChips] = useState(false);
 
-  const [appliedFilters, setAppliedFilters] = useState({
-    ERC721: false,
-    ERC1155: false,
-    isAuction: false,
-    currency: [],
-    price: '',
-    date: '',
-    likes: '',
-    minPrice: '',
-    maxPrice: '',
-  });
+  const [appliedFilters, setAppliedFilters] = useState(initialFiltersState);
 
   const { filters, handleChangeFilter, handleClearFilters } = useFilters();
 
   const isAppliedFilters = useMemo(
     () =>
       Boolean(
-        appliedFilters.ERC721 ||
-          appliedFilters.ERC1155 ||
+        appliedFilters.standart.length ||
           appliedFilters.isAuction ||
           appliedFilters.currency.length ||
-          appliedFilters.price ||
-          appliedFilters.date ||
-          appliedFilters.likes ||
+          appliedFilters.orderBy ||
           appliedFilters.minPrice ||
           appliedFilters.maxPrice,
       ),
     [
-      appliedFilters.ERC1155,
-      appliedFilters.ERC721,
       appliedFilters.currency.length,
-      appliedFilters.date,
       appliedFilters.isAuction,
-      appliedFilters.likes,
       appliedFilters.maxPrice,
       appliedFilters.minPrice,
-      appliedFilters.price,
+      appliedFilters.orderBy,
+      appliedFilters.standart,
     ],
   );
 
@@ -139,17 +135,7 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
 
   const handleClearChips = useCallback(() => {
     handleClearFilters();
-    setAppliedFilters({
-      ERC721: false,
-      ERC1155: false,
-      isAuction: false,
-      currency: [],
-      price: '',
-      date: '',
-      likes: '',
-      minPrice: '',
-      maxPrice: '',
-    });
+    setAppliedFilters(initialFiltersState);
   }, [handleClearFilters]);
 
   const handleTabChange = useCallback(
@@ -158,6 +144,65 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
       navigate(`${createDynamicLink(routes.nest.profile.path, { userId })}${tabName}`);
     },
     [handleClearChips, navigate, userId],
+  );
+
+  const handleSearchNfts = useCallback(
+    (filtersData: any, page: number, activeTabForSearch: string, shouldConcat?: boolean) => {
+      if (!activeTabForSearch) return;
+      if (activeTabForSearch === '/collections') {
+        const requestData: any = { type: 'collections', page, owner: userId };
+        dispatch(searchCollections({ requestData }));
+        return;
+      }
+      const requestData: SearchNftReq = {
+        type: 'items',
+        page,
+        collections: filtersData?.collections?.join(','),
+        standart: filtersData?.standart?.join(','),
+        max_price: filtersData?.maxPrice,
+        min_price: filtersData?.minPrice,
+        on_auc_sale: filtersData?.isAuction || undefined,
+        order_by: filtersData?.orderBy || undefined,
+        ...getFilterForActiveTab(activeTabForSearch.replaceAll('/', ''), userId),
+      };
+      dispatch(searchNfts({ requestData, shouldConcat }));
+    },
+    [dispatch, userId],
+  );
+
+  const debouncedHandleSearchNfts = useRef(debounce(handleSearchNfts, DEBOUNCE_DELAY_100)).current;
+
+  const handleLoadMore = useCallback(
+    (page: number, shouldConcat = false) => {
+      handleSearchNfts(appliedFilters, page, activeTab, shouldConcat);
+    },
+    [activeTab, appliedFilters, handleSearchNfts],
+  );
+
+  const onLoadMoreClick = useCallback(
+    (p: number) => {
+      setCurrentPage(p);
+      handleLoadMore(p, true);
+    },
+    [handleLoadMore],
+  );
+
+  useEffect(
+    () => () => {
+      dispatch(clearCollections());
+    },
+    [dispatch],
+  );
+  useEffect(() => {
+    debouncedHandleSearchNfts(appliedFilters, 1, activeTab);
+    setCurrentPage(1);
+  }, [debouncedHandleSearchNfts, appliedFilters, activeTab]);
+
+  useEffect(
+    () => () => {
+      dispatch(clearNfts());
+    },
+    [dispatch],
   );
 
   return (
@@ -187,100 +232,33 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
           onChange={handleTabChange}
           className={cn({ [styles.desktopTabs]: !isMobile && !isHideFiltersButton })}
         />
-        <div>
+        <div className={styles.bodyContentInfo}>
           {!isHideFiltersButton && (
-          <div className={styles.filterButton}>
-            <FilterButton isShowFilters={isShowFilters} setIsShowFilters={setIsShowFilters} filters={filters} onApply={onApply} handleChangeFilter={handleChangeFilter} handleClearChips={handleClearChips} />
-          </div>
+            <div className={styles.filterButton}>
+              <FilterButton
+                isShowFilters={isShowFilters}
+                setIsShowFilters={setIsShowFilters}
+                filters={filters}
+                onApply={onApply}
+                handleChangeFilter={handleChangeFilter}
+                handleClearChips={handleClearChips}
+              />
+            </div>
           )}
-          <Routes>
-            <Route
-              path="about-me"
-              element={
-                <div className={styles.bio}>
-                  <Text className={styles.bioTitle} color="dark">
-                    Profile Information
-                  </Text>
-                  <Text variant="body-2" color="dark">
-                    {bio || 'There is no bio on this profile yet'}
-                  </Text>
-                </div>
-            }
-            />
-            <Route
-              path="owned"
-              element={
-                <Nfts
-                  setIsShowFilters={setIsShowFilters}
-                  isShowChips={isShowChips}
-                  isAppliedFilters={isAppliedFilters}
-                  appliedFilters={appliedFilters}
-                  handleDeleteChips={handleDeleteChips}
-                  handleClearChips={handleClearChips}
-                  nfts={nfts}
-                />
-            }
-            />
-            <Route
-              path="for-sale"
-              element={
-                <Nfts
-                  setIsShowFilters={setIsShowFilters}
-                  isShowChips={isShowChips}
-                  isAppliedFilters={isAppliedFilters}
-                  appliedFilters={appliedFilters}
-                  handleDeleteChips={handleDeleteChips}
-                  handleClearChips={handleClearChips}
-                  nfts={nfts}
-                />
-            }
-            />
-            <Route
-              path="bided"
-              element={
-                <Nfts
-                  setIsShowFilters={setIsShowFilters}
-                  isShowChips={isShowChips}
-                  isAppliedFilters={isAppliedFilters}
-                  appliedFilters={appliedFilters}
-                  handleDeleteChips={handleDeleteChips}
-                  handleClearChips={handleClearChips}
-                  nfts={nfts}
-                />
-            }
-            />
-            <Route
-              path="favorites"
-              element={
-                <Nfts
-                  setIsShowFilters={setIsShowFilters}
-                  isShowChips={isShowChips}
-                  isAppliedFilters={isAppliedFilters}
-                  appliedFilters={appliedFilters}
-                  handleDeleteChips={handleDeleteChips}
-                  handleClearChips={handleClearChips}
-                  nfts={nfts}
-                />
-            }
-            />
-            <Route path="collections" element={<CollectionsList collections={collectionsMock} />} />
-            <Route
-              path="sold"
-              element={
-                <Nfts
-                  setIsShowFilters={setIsShowFilters}
-                  isShowChips={isShowChips}
-                  isAppliedFilters={isAppliedFilters}
-                  appliedFilters={appliedFilters}
-                  handleDeleteChips={handleDeleteChips}
-                  handleClearChips={handleClearChips}
-                  nfts={nfts}
-                />
-            }
-            />
-          </Routes>
+          <Tabs
+            bio={bio}
+            setIsShowFilters={setIsShowFilters}
+            isShowChips={isShowChips}
+            isAppliedFilters={isAppliedFilters}
+            appliedFilters={appliedFilters}
+            handleDeleteChips={handleDeleteChips}
+            handleClearChips={handleClearChips}
+            nfts={nfts}
+            onLoadMoreClick={onLoadMoreClick}
+            currentPage={currentPage}
+            collections={collections}
+          />
         </div>
-
       </div>
     </div>
   );

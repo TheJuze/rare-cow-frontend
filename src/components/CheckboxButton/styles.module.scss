@@ -16,5 +16,28 @@
   &.active {
     background: var(--checkboxButton-active-background-color);
     background: var(--checkboxButton-active-border-color);
+
+    outline: none;
+    -webkit-touch-callout: none; /* iOS Safari */
+    &:focus-visible,
+    &:focus,
+    &:active,
+    &:focus-within,
+    &:target,
+    &:hover,
+    &:visited {
+      outline: none;
+      -webkit-touch-callout: none; /* iOS Safari */
+    }
+  }
+  &:focus-visible,
+  &:focus,
+  &:active,
+  &:focus-within,
+  &:target,
+  &:hover,
+  &:visited {
+    outline: none;
+    -webkit-touch-callout: none; /* iOS Safari */
   }
 }

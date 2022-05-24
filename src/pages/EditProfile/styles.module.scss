@@ -104,7 +104,7 @@
         @include flex(column, center, flex-start);
         &-info{
             margin: space(16, 0, 0) !important;
-            max-width: 90%;
+            max-width: 100%;
             height: 0;
             overflow: hidden;
             @include flex(column, center, space-evenly);
@@ -112,7 +112,7 @@
                 text-align: center;
             }
             &.show-extensions{
-                height: 120px;
+                height: 130px;
             }
         }
     }

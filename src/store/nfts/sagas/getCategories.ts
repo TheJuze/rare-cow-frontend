@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
+import banner from 'assets/img/exploreBanner.png';
 import { setCategories } from '../reducer';
 
 import { getCategories } from '../actions';
@@ -10,7 +11,13 @@ export function* getCategoriesSaga({ type, payload }: ReturnType<typeof getCateg
   yield put(apiActions.request(type));
   try {
     const { data } = yield call(baseApi.getCategories, payload);
-    yield put(setCategories(data));
+    yield put(setCategories([...data, {
+      banner,
+      name: 'All Categories',
+      description:
+        'All Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+      image: '',
+    }]));
 
     yield put(apiActions.success(type));
   } catch (err) {

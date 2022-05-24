@@ -87,7 +87,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
                 setFieldValue('avatarFile', f);
                 setFieldValue('avatarURL', fURL);
               }}
-              onLoadError={() => { toast.error(`File is too large. Max size is ${maxAvatarSize.size} ${maxAvatarSize.unit}`); }}
+              onLoadError={({ msg }) => { toast.error(msg); }}
             />
           )}
         />

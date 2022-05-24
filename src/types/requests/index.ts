@@ -130,6 +130,10 @@ export type GetDetailedNftReq = {
   id: number | string;
 };
 
+export type RequestWithId = {
+  id: number | string;
+};
+
 export type GetSingleCollectionReq = {
   id: number | string;
   network: string;
@@ -184,7 +188,7 @@ export type SearchNftReq = {
   max_price?: string | number;
   min_price?: string | number;
   on_sale?: boolean;
-  on_any_sale?: string | number;
+  on_any_sale?: boolean;
   sold_by?: string | number;
   bids_by?: string | number;
   liked_by?: string | number;
@@ -268,10 +272,12 @@ export type GetProfileByIdRequest = {
   web3Provider: Web3;
 };
 
-export type EditProfile = Pick<
+export type TEditableProfileField = Pick<
 User,
 'avatar' | 'bio' | 'displayName' | 'twitter' | 'facebook' | 'instagram' | 'site'
 >;
+
+export type EditProfile = {web3Provider: Web3, editData: TEditableProfileField};
 
 export type RequestWithNetwork = {
   network: Chains;

@@ -8,7 +8,7 @@ interface ICreateValidator {
 }
 
 export const createValidator: ICreateValidator = {
-  name: { min: 2, max: 50 },
+  name: { min: 2, max: 20 },
   description: { min: 0, max: 500 },
   properties: { name: 1, type: 1, max: 20 },
   symbol: { min: 2, max: 6 },
@@ -28,13 +28,13 @@ interface IEditProfileValidator {
 }
 
 export const editProfileValidator: IEditProfileValidator = {
-  name: { min: 1, max: 50 },
+  name: { min: 2, max: 50 },
   address: { min: 42 },
   description: { min: 0, max: 500 },
   socials: {
     email: {
       reg: new RegExp(
-        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+        /^[^@]+@\w+(\.\w+)+\w$/,
       ),
     },
     site: {
@@ -42,12 +42,12 @@ export const editProfileValidator: IEditProfileValidator = {
     },
     twitter: {
       reg: new RegExp(
-        /(?:^|[^\w])(?:@)([A-Za-z0-9_](?:(?:[A-Za-z0-9_]|(?:\.(?!\.))){0,28}(?:[A-Za-z0-9_]))?)/,
+        /^@{1}(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/i,
       ),
     },
     instagram: {
       reg: new RegExp(
-        /(?:^|[^\w])(?:@)([A-Za-z0-9_](?:(?:[A-Za-z0-9_]|(?:\.(?!\.))){0,28}(?:[A-Za-z0-9_]))?)/,
+        /^@{1}(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/i,
       ),
     },
   },

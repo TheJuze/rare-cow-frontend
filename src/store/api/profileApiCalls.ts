@@ -1,6 +1,7 @@
 import { URL } from 'appConstants';
+import { ReactText } from 'react';
 import { LoginReq } from 'types';
-import { EditProfile, RequestWithNetwork } from 'types/requests';
+import { RequestWithNetwork, TEditableProfileField } from 'types/requests';
 
 import ajax from './ajax';
 
@@ -37,11 +38,25 @@ export default {
       params: { network },
     });
   },
-  editProfile(newParams: EditProfile) {
+  editProfile(newParams: TEditableProfileField) {
     return ajax({
       method: 'patch',
       url: URL.editProfile,
       data: newParams,
+    });
+  },
+  follow(userIdToFollow: ReactText) {
+    return ajax({
+      method: 'post',
+      url: URL.follow,
+      data: { id: userIdToFollow },
+    });
+  },
+  unfollow(userIdToUnfollow: ReactText) {
+    return ajax({
+      method: 'post',
+      url: URL.unfollow,
+      data: { id: userIdToUnfollow },
     });
   },
 };

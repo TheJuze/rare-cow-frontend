@@ -8,7 +8,6 @@ import cn from 'classnames';
 import arrowDown from 'assets/img/icons/arrowDown.svg';
 import arrowUp from 'assets/img/icons/arrowUp.svg';
 import { matic, usdt } from 'assets/img';
-import { SortDirection } from 'hooks';
 import { validateOnlyNumbers } from 'utils';
 import {
   Button,
@@ -64,7 +63,7 @@ export const Filters: VFC<FiltersProps> = ({
 }) => {
   const [minValue, setMinValue] = useState('');
   const [maxValue, setMaxValue] = useState('');
-  const { ERC721, ERC1155, isAuction, currency, collections, price, date, likes } = filters;
+  const { standart, isAuction, currency, collections, orderBy } = filters;
   const isApplyDisabled = useMemo(
     () =>
       minValue && maxValue && !new BigNumber(minValue).isLessThanOrEqualTo(new BigNumber(maxValue)),
@@ -83,40 +82,28 @@ export const Filters: VFC<FiltersProps> = ({
     [currency, handleChangeFilter],
   );
 
-  const handleChangePriceDirection = useCallback(
-    (direction: SortDirection) => {
-      if (direction === price) {
-        handleChangeFilter('price', '');
-        return;
-      }
-
-      handleChangeFilter('price', direction);
+  const handleChangeStandartValue = useCallback(
+    (newStandart) => {
+      handleChangeFilter(
+        'standart',
+        standart.includes(newStandart)
+          ? standart.filter((currentStandart) => currentStandart !== newStandart)
+          : [...standart, newStandart],
+      );
     },
-    [handleChangeFilter, price],
+    [standart, handleChangeFilter],
   );
 
-  const handleChangeLikesDirection = useCallback(
-    (direction: SortDirection) => {
-      if (direction === likes) {
-        handleChangeFilter('likes', '');
+  const handleChangeDirection = useCallback(
+    (direction: string) => {
+      if (direction === orderBy) {
+        handleChangeFilter('orderBy', '');
         return;
       }
 
-      handleChangeFilter('likes', direction);
+      handleChangeFilter('orderBy', direction);
     },
-    [handleChangeFilter, likes],
-  );
-
-  const handleChangeDateDirection = useCallback(
-    (direction: SortDirection) => {
-      if (direction === date) {
-        handleChangeFilter('date', '');
-        return;
-      }
-
-      handleChangeFilter('date', direction);
-    },
-    [date, handleChangeFilter],
+    [handleChangeFilter, orderBy],
   );
 
   const handleMinValueChange = useCallback(
@@ -187,8 +174,8 @@ export const Filters: VFC<FiltersProps> = ({
       id: '0',
       content: (
         <CheckboxButton
-          isChecked={date === 'asc'}
-          onChange={() => handleChangeDateDirection('asc')}
+          isChecked={orderBy === 'created_at'}
+          onChange={() => handleChangeDirection('created_at')}
           content={
             <div className={styles.currency}>
               <Text variant="body-2" color="light1">
@@ -204,8 +191,8 @@ export const Filters: VFC<FiltersProps> = ({
       id: '1',
       content: (
         <CheckboxButton
-          isChecked={date === 'desc'}
-          onChange={() => handleChangeDateDirection('desc')}
+          isChecked={orderBy === '-created_at'}
+          onChange={() => handleChangeDirection('-created_at')}
           content={
             <div className={styles.currency}>
               <Text variant="body-2" color="light1">
@@ -223,8 +210,8 @@ export const Filters: VFC<FiltersProps> = ({
       id: '0',
       content: (
         <CheckboxButton
-          isChecked={likes === 'asc'}
-          onChange={() => handleChangeLikesDirection('asc')}
+          isChecked={orderBy === 'likes'}
+          onChange={() => handleChangeDirection('likes')}
           content={
             <div className={styles.currency}>
               <Text variant="body-2" color="light1">
@@ -240,8 +227,8 @@ export const Filters: VFC<FiltersProps> = ({
       id: '1',
       content: (
         <CheckboxButton
-          isChecked={likes === 'desc'}
-          onChange={() => handleChangeLikesDirection('desc')}
+          isChecked={orderBy === '-likes'}
+          onChange={() => handleChangeDirection('-likes')}
           content={
             <div className={styles.currency}>
               <Text variant="body-2" color="light1">
@@ -260,8 +247,8 @@ export const Filters: VFC<FiltersProps> = ({
       content: (
         <div className={styles.price}>
           <CheckboxButton
-            isChecked={price === 'asc'}
-            onChange={() => handleChangePriceDirection('asc')}
+            isChecked={orderBy === 'price'}
+            onChange={() => handleChangeDirection('price')}
             content={
               <div className={styles.currency}>
                 <Text variant="body-2" color="light1">
@@ -272,8 +259,8 @@ export const Filters: VFC<FiltersProps> = ({
             }
           />
           <CheckboxButton
-            isChecked={price === 'desc'}
-            onChange={() => handleChangePriceDirection('desc')}
+            isChecked={orderBy === '-price'}
+            onChange={() => handleChangeDirection('-price')}
             content={
               <div className={styles.currency}>
                 <Text variant="body-2" color="light1">
@@ -351,8 +338,8 @@ export const Filters: VFC<FiltersProps> = ({
       </div>
       <div className={styles.standarts}>
         <CheckboxButton
-          isChecked={ERC721}
-          onChange={() => handleChangeFilter('ERC721', !ERC721)}
+          isChecked={standart.includes('ERC721')}
+          onChange={() => handleChangeStandartValue('ERC721')}
           content={
             <Text variant="body-2" color="metal800">
               721 NFT
@@ -361,8 +348,8 @@ export const Filters: VFC<FiltersProps> = ({
           className={styles.standart}
         />
         <CheckboxButton
-          isChecked={ERC1155}
-          onChange={() => handleChangeFilter('ERC1155', !ERC1155)}
+          isChecked={standart.includes('ERC1155')}
+          onChange={() => handleChangeStandartValue('ERC1155')}
           content={
             <Text variant="body-2" color="metal800">
               1155 NFT
@@ -414,14 +401,11 @@ export const Filters: VFC<FiltersProps> = ({
           variant="transparent"
           isOutsideClickClose={false}
         />
-        {(ERC721 ||
-          ERC1155 ||
+        {(standart.length ||
           isAuction ||
           currency.length ||
           collections.length ||
-          price ||
-          date ||
-          likes ||
+          orderBy ||
           minValue ||
           maxValue) && (
           <div className={styles.filtersButtons}>

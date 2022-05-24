@@ -9,4 +9,5 @@ export const userPopoverPropsMocked: UserPopoverProps = {
   bodyRef: null,
   address: '',
   disconnect: () => {},
+  onClose: () => {},
 };

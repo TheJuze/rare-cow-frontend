@@ -29,6 +29,19 @@
     margin-top: space(8);
     &Wrapper {
       height: 44px;
+      
+      outline: none;
+      -webkit-touch-callout: none; /* iOS Safari */
+      &:focus-visible,
+      &:focus,
+      &:active,
+      &:focus-within,
+      &:target,
+      &:hover,
+      &:visited {
+        outline: none;
+        -webkit-touch-callout: none; /* iOS Safari */
+      }
     }
     &Head {
       @include flex(row, center, flex-start);
@@ -52,6 +65,19 @@
       cursor: pointer;
       &:visited {
         color: var(--userPopover-link-icon-avctive);
+      }
+      
+      outline: none;
+      -webkit-touch-callout: none; /* iOS Safari */
+      &:focus-visible,
+      &:focus,
+      &:active,
+      &:focus-within,
+      &:target,
+      &:hover,
+      &:visited {
+        outline: none;
+        -webkit-touch-callout: none; /* iOS Safari */
       }
     }
   }
