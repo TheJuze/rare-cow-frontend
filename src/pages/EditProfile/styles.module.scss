@@ -2,6 +2,9 @@
 .edit-profile__wrapper {
   @include container;
   padding-bottom: 136px;
+  .loader{
+    margin: 0 auto;
+  }
   &__title {
     margin: space(43, 0, 47) !important;
     @include transition;
