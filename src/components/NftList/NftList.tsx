@@ -18,13 +18,20 @@ export interface NftListProps {
   nfts: TokenFull[];
   minSize?: number;
   currentPage: number;
+  skeletonsCount?: number;
 }
 
 export const NftList: VFC<NftListProps> = ({
-  className, nfts, minSize = 264, currentPage,
+  className,
+  nfts,
+  minSize = 264,
+  currentPage,
+  skeletonsCount = 8,
 }) => {
   const { [actionTypes.SEARCH_NFTS]: getNftsRequestStatus } = useShallowSelector(uiSelector.getUI);
-  const skeleton = Array.from(Array(8).keys()).map((element) => <ArtCardSkeleton key={element} />);
+  const skeleton = Array.from(Array(skeletonsCount).keys()).map((element) => (
+    <ArtCardSkeleton key={element} />
+  ));
   const elements = nfts.map((nft) => {
     const {
       id,
@@ -91,7 +98,9 @@ export const NftList: VFC<NftListProps> = ({
       className={cn(styles.nftList, className)}
       style={{
         gridTemplateColumns:
-        nfts.length !== 0 || getNftsRequestStatus === RequestStatus.REQUEST ? `repeat(auto-fill,minmax(${minSize}px,1fr))` : '1fr',
+          nfts.length !== 0 || getNftsRequestStatus === RequestStatus.REQUEST
+            ? `repeat(auto-fill,minmax(${minSize}px,1fr))`
+            : '1fr',
       }}
     >
       {returnedElements}
