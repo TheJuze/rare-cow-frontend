@@ -18,7 +18,7 @@ import {
 } from 'assets/icons/icons';
 import { initialFiltersState, useBreakpoints, useFilters, useShallowSelector } from 'hooks';
 import { createDynamicLink, DEBOUNCE_DELAY_100, routes } from 'appConstants';
-import { TBarOption } from 'types';
+import { RequestStatus, TBarOption } from 'types';
 import cn from 'clsx';
 import nftSelector from 'store/nfts/selectors';
 import collectionsSelector from 'store/collections/selectors';
@@ -30,6 +30,9 @@ import { searchNfts } from 'store/nfts/actions';
 import { SearchNftReq } from 'types/requests';
 import { clearCollections } from 'store/collections/reducer';
 import { searchCollections } from 'store/collections/actions';
+import actionTypes from 'store/collections/actionTypes';
+import uiSelector from 'store/ui/selectors';
+import profileActionTypes from 'store/profile/actionsTypes';
 import { FilterButton } from '../FIlterButton';
 import styles from './styles.module.scss';
 import Tabs from '../Tabs';
@@ -85,6 +88,10 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
   const nfts = useShallowSelector(nftSelector.getProp('nfts'));
   const totalPages = useShallowSelector(nftSelector.getProp('totalPages'));
   const collections = useShallowSelector(collectionsSelector.getProp('collections'));
+  const {
+    [actionTypes.SEARCH_COLLECTIONS]: isSerchingCollections,
+    [profileActionTypes.GET_PROFILE]: isGettingProfile,
+  } = useShallowSelector(uiSelector.getUI);
   const { pathname } = useLocation();
   const [isMobile] = useBreakpoints([541]);
   const navigate = useNavigate();
@@ -95,6 +102,16 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
   );
   const [isShowFilters, setIsShowFilters] = useState(false);
   const [isShowChips, setIsShowChips] = useState(false);
+
+  const isSearchCollectionsLoading = useMemo(
+    () => isSerchingCollections === RequestStatus.REQUEST,
+    [isSerchingCollections],
+  );
+
+  const isGettingProfileLoading = useMemo(
+    () => isGettingProfile === RequestStatus.REQUEST,
+    [isGettingProfile],
+  );
 
   const [appliedFilters, setAppliedFilters] = useState(initialFiltersState);
 
@@ -151,7 +168,7 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
     (filtersData: any, page: number, activeTabForSearch: string, shouldConcat?: boolean) => {
       if (!activeTabForSearch) return;
       if (activeTabForSearch === '/collections') {
-        const requestData: any = { type: 'collections', page, owner: userId };
+        const requestData: any = { type: 'collections', page, creator: userId };
         dispatch(searchCollections({ requestData }));
         return;
       }
@@ -260,6 +277,8 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
             onLoadMoreClick={onLoadMoreClick}
             currentPage={currentPage}
             collections={collections}
+            isSearchCollectionsLoading={isSearchCollectionsLoading}
+            isGettingProfileLoading={isGettingProfileLoading}
           />
         </div>
       </div>

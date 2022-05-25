@@ -1,0 +1,94 @@
+@import 'src/styles/helpers';
+
+.header {
+  @include flex(row, flex-start, flex-start);
+  margin-top: space(65);
+  padding: 0 20px;
+
+  .right {
+    @include flex(row, flex-start, space-between);
+    width: 100%;
+  }
+  .info {
+    margin-left: space(60);
+  }
+
+  .following {
+    @include flex(row, flex-start, flex-start);
+    margin-bottom: space(16);
+    .followers,
+    .follows {
+      height: 32px;
+      min-width: 120px;
+      border: 1px solid;
+      box-shadow: none;
+    }
+    .followers {
+      border-color: $accent;
+      background-color: $light-100;
+    }
+    .follows {
+      border-color: $yellow-500;
+      background-color: $yellow-50;
+      &:hover {
+        background-color: $yellow-50;
+      }
+    }
+    .followers + .follows {
+      margin-left: space(10);
+    }
+  }
+
+  .balances {
+    @include flex(row, flex-start, flex-start);
+    margin-bottom: space(24);
+    .balanceItem {
+      @include flex(row, center, flex-start);
+    }
+    .balanceItem + .balanceItem {
+      margin-left: space(27);
+    }
+    .balanceText {
+      font-size: 20px;
+      line-height: 34px;
+      margin-left: space(8);
+    }
+  }
+
+  .edit {
+    margin-top: space(16);
+  }
+}
+
+@include middle-screen {
+  .header {
+    padding: 0 !important;
+    .info {
+      margin-left: space(80);
+    }
+  }
+}
+@include large-tablet {
+  .header {
+    .edit {
+      min-width: 182px;
+    }
+    .info {
+      margin-left: space(32);
+    }
+  }
+}
+@include large-mobile {
+  .header {
+    flex-direction: column;
+    align-items: center;
+    .info {
+      margin-left: 0;
+      width: 100%;
+      @include flex(column, center, flex-start);
+    }
+    .edit {
+      min-width: 182px;
+    }
+  }
+}

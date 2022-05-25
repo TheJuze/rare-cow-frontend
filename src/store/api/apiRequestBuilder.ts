@@ -23,8 +23,7 @@ export const baseApi = {
       params,
     });
   },
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  presearchNfts(params: any) {
+  presearchNfts(params: { presearch: string }) {
     return ajax({
       method: 'get',
       url: URL.presearchNfts,
