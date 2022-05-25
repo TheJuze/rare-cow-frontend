@@ -174,14 +174,14 @@ export const Filters: VFC<FiltersProps> = ({
       id: '0',
       content: (
         <CheckboxButton
-          isChecked={orderBy === 'created_at'}
-          onChange={() => handleChangeDirection('created_at')}
+          isChecked={orderBy === '-created_at'}
+          onChange={() => handleChangeDirection('-created_at')}
           content={
             <div className={styles.currency}>
               <Text variant="body-2" color="light1">
                 New
               </Text>
-              <img src={arrowUp} alt="arrowUp" />
+              <img src={arrowDown} alt="arrowDown" />
             </div>
           }
         />
@@ -191,14 +191,14 @@ export const Filters: VFC<FiltersProps> = ({
       id: '1',
       content: (
         <CheckboxButton
-          isChecked={orderBy === '-created_at'}
-          onChange={() => handleChangeDirection('-created_at')}
+          isChecked={orderBy === 'created_at'}
+          onChange={() => handleChangeDirection('created_at')}
           content={
             <div className={styles.currency}>
               <Text variant="body-2" color="light1">
                 Last
               </Text>
-              <img src={arrowDown} alt="arrowDown" />
+              <img src={arrowUp} alt="arrowUp" />
             </div>
           }
         />

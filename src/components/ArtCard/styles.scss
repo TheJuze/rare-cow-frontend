@@ -5,6 +5,7 @@
 .artCard { 
   position: relative;
   width: 100%;
+  max-height: 500px;
   margin: 0 auto !important;
   background-color: var(--artcard-default-background-color);
   border: var(--artcard-border-width) solid var(--artcard-default-border-color);
