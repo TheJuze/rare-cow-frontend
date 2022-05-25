@@ -43,7 +43,7 @@ export const FilterButton:VFC<IFilterButton> = ({
         handleChangeFilter={handleChangeFilter}
         onClose={onApply}
         handleClearFilters={handleClearChips}
-        isButtonOny
+        isButtonOnly
         isWithCollections={false}
         className={styles.filterOptions}
         bodyRef={filterRef}

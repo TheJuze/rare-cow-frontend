@@ -30,7 +30,7 @@ export const NftList: VFC<NftListProps> = ({
 }) => {
   const { [actionTypes.SEARCH_NFTS]: getNftsRequestStatus } = useShallowSelector(uiSelector.getUI);
   const skeleton = Array.from(Array(skeletonsCount).keys()).map((element) => (
-    <ArtCardSkeleton key={element} />
+    <ArtCardSkeleton key={element} className={styles.skeleton} />
   ));
   const elements = nfts.map((nft) => {
     const {

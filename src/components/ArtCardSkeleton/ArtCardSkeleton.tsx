@@ -11,5 +11,5 @@ export interface ArtCardSkeletonProps {
 }
 
 export const ArtCardSkeleton: VFC<ArtCardSkeletonProps> = ({ className, key }) => (
-  <Skeleton height="300px" key={key} className={cn(className, styles.skeleton)} />
+  <Skeleton height="380px" key={key} className={cn(className, styles.skeleton)} />
 );

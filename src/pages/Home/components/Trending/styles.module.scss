@@ -111,3 +111,10 @@
     z-index: 10;
   }
 }
+@include large-mobile {
+  .wrapper{
+    .notableDrops{
+      margin-top: 0;
+    }
+  }
+}

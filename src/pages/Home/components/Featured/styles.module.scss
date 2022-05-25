@@ -115,3 +115,10 @@
     padding-top: space(50);
   }
 }
+@include large-mobile {
+  .wrapper{
+    .notableDrops{
+      margin-top: 0;
+    }
+  }
+}

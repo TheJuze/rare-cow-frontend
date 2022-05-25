@@ -434,6 +434,7 @@ const Body: VFC<IBodyProps> = ({ category }) => {
           className={styles.collections}
           activeCollections={filters.collections}
           handleClickCollection={handleCollectionChange}
+          disabled={isNftsLoading}
         />
       </div>
       {isShowChips && isAppliedFilters && (
