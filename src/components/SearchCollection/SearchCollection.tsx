@@ -16,6 +16,7 @@ export interface SearchCollectionProps {
   collections: any;
   activeCollections: any;
   handleClickCollection: any;
+  disabled?: boolean;
 }
 
 export const SearchCollection: VFC<SearchCollectionProps> = ({
@@ -23,6 +24,7 @@ export const SearchCollection: VFC<SearchCollectionProps> = ({
   collections,
   activeCollections,
   handleClickCollection,
+  disabled = false,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -40,7 +42,7 @@ export const SearchCollection: VFC<SearchCollectionProps> = ({
     <div className={cn(styles.searchCollection, className)}>
       <div
         className={styles.searchCollectionButton}
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
+        onClick={disabled ? null : () => setIsMenuOpen(!isMenuOpen)}
         ref={headRef}
       >
         <Text variant="body-2" color="light1">

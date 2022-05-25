@@ -30,7 +30,7 @@ export interface FiltersProps {
   handleChangeFilter: any;
   handleClearFilters: any;
   isWithCollections?: boolean;
-  isButtonOny?: boolean;
+  isButtonOnly?: boolean;
   className?: string;
   bodyRef?: RefObject<HTMLDivElement>;
 }
@@ -57,7 +57,7 @@ export const Filters: VFC<FiltersProps> = ({
   handleChangeFilter,
   handleClearFilters,
   isWithCollections = true,
-  isButtonOny = false,
+  isButtonOnly = false,
   className,
   bodyRef,
 }) => {
@@ -316,7 +316,7 @@ export const Filters: VFC<FiltersProps> = ({
         styles.filters,
         className,
         { [styles.active]: isShowFilters },
-        { [styles.buttonOnly]: isButtonOny },
+        { [styles.buttonOnly]: isButtonOnly },
       )}
       ref={bodyRef}
     >
