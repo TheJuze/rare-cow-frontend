@@ -12,13 +12,13 @@ import actionTypes from '../actionTypes';
 
 export function* presearchNftsSaga({
   type,
-  payload: { requestData },
+  payload: { presearch },
 }: ReturnType<typeof presearchNfts>) {
   yield put(apiActions.request(type));
 
   try {
-    const { data } = yield call(baseApi.searchNfts, requestData);
-    const camelizedResult = camelize(data.results) as TokenFull[];
+    const { data } = yield call(baseApi.presearchNfts, { presearch });
+    const camelizedResult = camelize(data) as TokenFull[];
 
     yield put(setPresearchedNfts(camelizedResult));
 

@@ -232,6 +232,10 @@ export type SearchNftAction = {
   shouldConcat?: boolean;
 };
 
+export type GetPresearchNfts = {
+  presearch: string;
+};
+
 export type SearchAction = {
   requestData: Partial<
   Rewrite<SearchNftReq, 'type', { type: 'items' | 'collections' | 'users' | 'categories' }>
