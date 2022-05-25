@@ -79,6 +79,7 @@ export const SearchInput: VFC<SearchInputProps> = ({
   const handleNavigate = useCallback(
     (id) => () => {
       handleSearchActiveOff();
+      // TODO: add nft link
       navigate(`/${id}`);
     },
     [handleSearchActiveOff, navigate],
