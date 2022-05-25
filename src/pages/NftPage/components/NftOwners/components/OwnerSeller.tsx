@@ -1,4 +1,6 @@
-import { Avatar, Text, Button } from 'components';
+import {
+  Avatar, Text, Button, NumberText,
+} from 'components';
 import React, { VFC } from 'react';
 import { Ownership } from 'types/api';
 import styles from '../styles.module.scss';
@@ -20,7 +22,7 @@ export const OwnerSeller: VFC<IOwnerSeller> = ({ owner, isSelling = false }) => 
         <Text size="xs" color="metal400" tag="span">
           {owner.sellingQuantity}/{owner.quantity} on sale for{' '}
           <Text size="xs" color="accent" weight="semiBold" tag="span">
-            {owner.price} {owner.currency.symbol}
+            <NumberText>{owner.price}</NumberText> {owner.currency.symbol}
           </Text>{' '}
           each
         </Text>

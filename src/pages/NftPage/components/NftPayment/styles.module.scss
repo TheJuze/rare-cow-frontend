@@ -64,9 +64,9 @@
     background-color: var(--nftpage-price-background-color);
     @include flex(row, center, center);
     border-radius: 8px;
-    margin-top: space(8);
+    margin-top: space(4);
     &Wrapper {
-      margin-top: space(24);
+      margin: space(24, 0);
     }
     &Image {
       width: 24px;

@@ -143,6 +143,7 @@ export const ArtCard: VFC<ArtCardProps> = ({
             </Text>
           </div>
           <LikeButton
+            nftId={String(id)}
             likesCount={likeCount}
             isLiked={isLiked}
             className="artCard-info__line-author-like"

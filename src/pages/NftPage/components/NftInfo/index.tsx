@@ -34,23 +34,25 @@ const NftInfo: FC<Props> = ({ name, id, description, likeCount, isLiked, isOwner
         <div className={styles.actionButtons}>
           {isOwner && <div className={styles.actionItem}><BurnButton onBurn={() => console.log('burn')} /></div>}
           <div className={styles.actionItem}>
-            <LikeButton likesCount={likeCount} isLiked={isLiked} />
+            <LikeButton nftId={String(id)} likesCount={likeCount} isLiked={isLiked} />
           </div>
         </div>
       </div>
       <Text variant="body-2" color="metal800">
         Id: {id}
       </Text>
+      {description.length > 0 && (
       <div className={styles.nftInfoDescription}>
         <Text variant="body-2" color="metal800">
           {isDescriptionOpened ? description : sliceString(description, 120, 0)}
         </Text>
         {isShowDots && (
-          <div className={styles.dots} onClick={handleOpenDescription}>
-            <Dots />
-          </div>
+        <div className={styles.dots} onClick={handleOpenDescription}>
+          <Dots />
+        </div>
         )}
       </div>
+      )}
     </div>
   );
 };

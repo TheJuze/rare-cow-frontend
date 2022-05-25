@@ -97,7 +97,7 @@ export const OwnerListing:VFC<IOwnerListing> = ({
       {isTransfer ? (
         <Transfer onSend={onTransfer} nftType={nftType} nftSupply={nftSupply} />
       ) : (
-        <Listing optionsDirection="horizontal" buttonText="Create lot" className={styles.listing} onSubmit={onListing} />
+        <Listing isMultiple={nftType === 'ERC1155'} optionsDirection="horizontal" buttonText="Create lot" className={styles.listing} onSubmit={onListing} />
       )}
     </>
   );
