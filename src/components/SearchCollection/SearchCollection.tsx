@@ -1,19 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line object-curly-newline
 import React, { useCallback, useRef, useState, VFC } from 'react';
-import { Loader, Text } from 'components';
+import { Text } from 'components';
 import cn from 'clsx';
 
 import { ChevronDown } from 'assets/icons/icons';
 import { SearchInput } from 'components/SearchInput';
-import { Checkbox } from 'components/Checkbox';
-import { Avatar } from 'components/Avatar';
 import { useClickOutside, useShallowSelector } from 'hooks';
 import { Button } from 'components/Button';
 import actionTypes from 'store/collections/actionTypes';
 import uiSelector from 'store/ui/selectors';
 import { RequestStatus } from 'types';
 import styles from './styles.module.scss';
+import { CollectionCard } from './CollectionCard';
 
 export interface SearchCollectionProps {
   className?: string;
@@ -72,38 +71,25 @@ export const SearchCollection: VFC<SearchCollectionProps> = ({
       <div className={cn(styles.body, { [styles.open]: isMenuOpen })} ref={bodyRef}>
         <SearchInput
           searchValue={searchValue}
-          isSearchResultsLoading={false}
           presearchedNfts={[]}
           onSearchValueChange={(e) => handleChangeSearch(e.currentTarget.value)}
           placeholder="Search..."
           className={styles.search}
+          isSearchResultsLoading={getCollectionsRequestStatus === RequestStatus.REQUEST}
         />
         <div className={styles.collections}>
           {collections?.length ? (
             collections.map((collection) => (
-              <div className={styles.collectionsItem}>
-                <Checkbox
-                  id={collection.url}
-                  value={activeCollections.includes(collection.name)}
-                  onChange={() => handleClickCollection(collection.name)}
-                />
-                <Avatar
-                  size={36}
-                  avatar={collection.avatar}
-                  isCollection
-                  id={collection.url}
-                  className={styles.avatar}
-                />
-                <Text weight="normal" size="xs" className={styles.name}>
-                  {collection.name}
-                </Text>
-              </div>
+              <CollectionCard
+                url={collection.url}
+                isActive={activeCollections.includes(collection.name)}
+                handleClickCollection={() => handleClickCollection(collection.name)}
+                avatar={collection.avatar}
+                name={collection.name}
+              />
             ))
           ) : (
             <Text>No collections for your request</Text>
-          )}
-          {getCollectionsRequestStatus === RequestStatus.REQUEST && currentPage < totalPages && (
-            <Loader className={styles.loader} />
           )}
           {!isLoading && currentPage < totalPages && (
             <Button

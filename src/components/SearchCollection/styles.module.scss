@@ -55,17 +55,6 @@
       overflow-x: hidden;
       max-height: 346px;
       padding: space(0, 4);
-      &Item {
-        height: 57px;
-        border-bottom:  var(--searchCollection-border-width) solid var(--searchCollection-item-border-color);
-        @include flex(row, center, flex-start);
-        .avatar {
-          margin-right: space(12);
-        }
-        .name {
-          @include ellipsis;
-        }
-      }
       .load {
         height: 44px;
         width: 100%;

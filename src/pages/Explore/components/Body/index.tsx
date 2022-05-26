@@ -99,10 +99,6 @@ const Body: VFC<IBodyProps> = ({ category }) => {
     debouncedHandleSearchCollections({ page: 1 });
   }, [debouncedHandleSearchCollections]);
 
-  // useEffect(() => {
-  //   debouncedHandleSearchCollections(currentCollectionsPage, collectionsText);
-  // }, [collectionsText, currentCollectionsPage, debouncedHandleSearchCollections]);
-
   useEffect(
     () => () => {
       dispatch(clearCollections());
@@ -210,7 +206,7 @@ const Body: VFC<IBodyProps> = ({ category }) => {
           handleClickCollection={handleCollectionChange}
           disabled={isNftsLoading && !nftCards?.length}
           searchValue={collectionsText}
-          setSearchValue={(text: string) => handleChangeCollectionsText(text)}
+          setSearchValue={handleChangeCollectionsText}
           currentPage={currentCollectionsPage}
           totalPages={totalCollectionsPages}
           onLoadMore={(page: number) => debouncedHandleSearchCollections({ page }, currentCollectionsPage, collectionsText)}
@@ -242,7 +238,7 @@ const Body: VFC<IBodyProps> = ({ category }) => {
           searchValue={collectionsText}
           currentCollectionsPage={currentCollectionsPage}
           totalCollectionsPages={totalCollectionsPages}
-          setSearchValue={(text: string) => handleChangeCollectionsText(text)}
+          setSearchValue={handleChangeCollectionsText}
           onLoadMore={(page: number) => debouncedHandleSearchCollections({ page }, currentCollectionsPage, collectionsText)}
         />
         <div className={styles.bodyResultsWrapper}>
