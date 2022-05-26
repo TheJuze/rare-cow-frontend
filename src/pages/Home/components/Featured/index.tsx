@@ -175,6 +175,7 @@ const Trending: FC<Props> = ({ className }) => {
                             standart={standart}
                             endAuction={endAuction}
                             isPromo
+                            className={styles.card}
                           />
                         </Link>
                       </SwiperSlide>
@@ -218,6 +219,7 @@ const Trending: FC<Props> = ({ className }) => {
                       standart={standart}
                       endAuction={endAuction}
                       isPromo
+                      className={styles.card}
                     />
                   </Link>
                 );

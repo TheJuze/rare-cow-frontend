@@ -32,13 +32,15 @@
 }
 
 .drop {
-  max-width: 350px;
   width: 100%;
+  max-width: 264px;
 
   &Double {
     & + & {
       margin-left: 24px !important;
     }
+  }
+  .card{
   }
 }
 

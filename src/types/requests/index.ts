@@ -140,7 +140,7 @@ export type GetSingleCollectionReq = {
 };
 
 export type GetTrendingNftsReq = {
-  category: string | number;
+  tags: string | number;
 };
 
 export type BuyReq = {
