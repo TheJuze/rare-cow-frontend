@@ -93,10 +93,7 @@ const Trending: FC<Props> = ({ className }) => {
             <TitleDropdown
               value={title}
               setValue={setTitle}
-              options={[
-                { name: CategoryName.allCategories, id: 0, image: '', banner: '' },
-                ...categories,
-              ]}
+              options={categories}
             />
           ) : ' All Categories'}
         </Text>
