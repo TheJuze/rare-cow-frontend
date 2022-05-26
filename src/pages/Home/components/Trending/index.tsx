@@ -63,7 +63,7 @@ const Trending: FC<Props> = ({ className }) => {
   const fetchTrendingNfts = useCallback(() => {
     dispatch(
       getTrending(
-        title.name !== CategoryName.allCategories ? { category: title?.id } : { category: '' },
+        title.name !== CategoryName.allCategories ? { tags: title?.id } : { tags: '' },
       ),
     );
   }, [dispatch, title]);
@@ -178,6 +178,7 @@ const Trending: FC<Props> = ({ className }) => {
                             isLiked={isLiked}
                             standart={standart}
                             endAuction={endAuction}
+                            className={styles.card}
                           />
                         </Link>
                       </SwiperSlide>
@@ -219,6 +220,7 @@ const Trending: FC<Props> = ({ className }) => {
                       isLiked={isLiked}
                       standart={standart}
                       endAuction={endAuction}
+                      className={styles.card}
                     />
                   </Link>
                 );

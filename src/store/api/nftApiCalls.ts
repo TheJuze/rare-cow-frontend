@@ -79,7 +79,7 @@ export default {
       url: URL.endAuction(data.id),
     });
   },
-  trendingTokens(params: { category?: string | number }) {
+  trendingTokens(params: { tags?: string | number }) {
     return ajax({
       method: 'get',
       url: URL.trendingTokens,

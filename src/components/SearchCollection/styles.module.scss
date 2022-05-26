@@ -37,7 +37,7 @@
     border-radius: var(--searchCollection-body-border-radius);
     padding: spacing(2.5, 3);
     z-index: -1;
-    max-width: 274px;
+    width: 274px;
     max-height: 446px;
     transform: translateX(-274px);
     @include transition;
@@ -55,16 +55,19 @@
       overflow-x: hidden;
       max-height: 346px;
       padding: space(0, 4);
-      &Item {
-        height: 57px;
-        border-bottom:  var(--searchCollection-border-width) solid var(--searchCollection-item-border-color);
-        @include flex(row, center, flex-start);
-        .avatar {
-          margin-right: space(12);
+      .load {
+        height: 44px;
+        width: 100%;
+        margin-top: space(32);
+        margin-bottom: space(16);
+        &Text{
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 16.94px;
         }
-        .name {
-          @include ellipsis;
-        }
+      }
+      .loader{
+        margin: 12px auto;
       }
     }
   }

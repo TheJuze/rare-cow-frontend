@@ -12,12 +12,12 @@ import actionTypes from '../actionTypes';
 
 export function* searchTrendingSaga({
   type,
-  payload: { category },
+  payload: { tags },
 }: ReturnType<typeof getTrending>) {
   yield put(apiActions.request(type));
 
   try {
-    const { data } = yield call(baseApi.trendingTokens, { category });
+    const { data } = yield call(baseApi.trendingTokens, { tags });
 
     const camelizedResult = camelize(data) as TokenFull[];
 

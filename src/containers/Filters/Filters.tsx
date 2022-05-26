@@ -19,8 +19,8 @@ import {
   Text,
 } from 'components';
 import { CloseIcon } from 'assets/icons';
-import { collectionsMock } from 'pages/Explore/components/Body';
 import BigNumber from 'bignumber.js';
+import { Collection } from 'types/api';
 import styles from './styles.module.scss';
 
 export interface FiltersProps {
@@ -33,6 +33,13 @@ export interface FiltersProps {
   isButtonOnly?: boolean;
   className?: string;
   bodyRef?: RefObject<HTMLDivElement>;
+  allCollections?: Collection[];
+  searchCollectionsDisabled?: boolean;
+  searchValue?: string;
+  setSearchValue?: (value: string) => void;
+  currentCollectionsPage?: number;
+  totalCollectionsPages?: number;
+  onLoadMore?: (page: number) => void
 }
 
 export const rates = [
@@ -60,6 +67,13 @@ export const Filters: VFC<FiltersProps> = ({
   isButtonOnly = false,
   className,
   bodyRef,
+  allCollections,
+  searchCollectionsDisabled = false,
+  searchValue = '',
+  setSearchValue = () => {},
+  currentCollectionsPage,
+  totalCollectionsPages,
+  onLoadMore = () => {},
 }) => {
   const [minValue, setMinValue] = useState('');
   const [maxValue, setMaxValue] = useState('');
@@ -322,10 +336,16 @@ export const Filters: VFC<FiltersProps> = ({
     >
       {isWithCollections && (
         <SearchCollection
-          collections={collectionsMock}
+          collections={allCollections}
           className={styles.collections}
           activeCollections={collections}
           handleClickCollection={handleCollectionChange}
+          disabled={searchCollectionsDisabled}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          currentPage={currentCollectionsPage}
+          totalPages={totalCollectionsPages}
+          onLoadMore={onLoadMore}
         />
       )}
       <div className={styles.filtersHead}>
