@@ -61,7 +61,11 @@ const NftPage: FC = () => {
     return getPreviewer(previewerProps, nft?.format);
   }, [nft?.format, previewerProps]);
 
-  const { isOwner } = useGetUserAccessForNft(nft, userId);
+  const { isOwner, isUserCanEnterInAuction } = useGetUserAccessForNft(nft, userId);
+  const currentOwnerData = useMemo(
+    () => nft?.owners?.find((owner) => +owner.url === userId),
+    [nft?.owners, userId],
+  );
 
   if (!nft) {
     return null;
@@ -77,11 +81,12 @@ const NftPage: FC = () => {
           likeCount={nft.likeCount}
           isLiked={nft.isLiked}
           isOwner={isOwner}
+          isMultiple={nft.standart === 'ERC1155'}
+          maxBurnAmount={+currentOwnerData?.quantity || 0}
+          canBurn={isUserCanEnterInAuction}
         />
         <div className={styles.nftImage}>{previewComponent}</div>
-        <NftPayment
-          detailedNFT={nft}
-        />
+        <NftPayment detailedNFT={nft} />
         <NftCreators
           creatorAvatar={nft.creator.avatar}
           creatorId={String(nft.creator.url)}
@@ -98,6 +103,7 @@ const NftPage: FC = () => {
           nftId={String(nft.id)}
           currency={nft.currency}
           normalPrice={nft.price}
+          isAuction={nft.isAucSelling || nft.isTimedAucSelling}
         />
       </div>
     );
@@ -114,10 +120,11 @@ const NftPage: FC = () => {
           likeCount={nft.likeCount}
           isLiked={nft.isLiked}
           isOwner={isOwner}
+          isMultiple={nft.standart === 'ERC1155'}
+          maxBurnAmount={+currentOwnerData?.quantity || 0}
+          canBurn={isUserCanEnterInAuction}
         />
-        <NftPayment
-          detailedNFT={nft}
-        />
+        <NftPayment detailedNFT={nft} />
         <NftCreators
           creatorAvatar={nft.creator.avatar}
           creatorId={String(nft.creator.url)}
@@ -134,6 +141,7 @@ const NftPage: FC = () => {
           nftId={String(nft.id)}
           currency={nft.currency}
           normalPrice={nft.price}
+          isAuction={nft.isAucSelling || nft.isTimedAucSelling}
         />
       </div>
     </div>

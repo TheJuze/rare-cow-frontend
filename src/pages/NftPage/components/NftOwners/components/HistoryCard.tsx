@@ -1,8 +1,8 @@
-import { Avatar, Text } from 'components';
+import { Avatar, NumberText, Text } from 'components';
 import moment from 'moment';
 import React, { useCallback, VFC } from 'react';
 import { TokenHistory } from 'types/api';
-import { getTokenAmountDisplay, sliceString } from 'utils';
+import { sliceString } from 'utils';
 
 import styles from '../styles.module.scss';
 
@@ -22,7 +22,6 @@ export const HistoryCard:VFC<IHistoryCard> = ({ historyItem }) => {
         return `${method}ed`;
     }
   }, []);
-
   return (
     <div className={styles.historyItem}>
       <Avatar
@@ -36,7 +35,7 @@ export const HistoryCard:VFC<IHistoryCard> = ({ historyItem }) => {
           <Text size="xs" color="light1">
             {getMethod(historyItem.method)} for{' '}
             <Text color="accent" size="xs" weight="semiBold" tag="span">
-              {getTokenAmountDisplay(historyItem.price)}{' '}
+              <NumberText>{historyItem.price}</NumberText> {' '}
               {historyItem.currency.symbol}
             </Text>
           </Text>

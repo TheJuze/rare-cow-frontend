@@ -1,4 +1,6 @@
-import { ArrowGreen, BidedIcon } from 'assets/icons/icons';
+/* eslint-disable max-len */
+import { fromNameToCurrencyObj } from 'appConstants';
+import { ArrowGreen, PlaceABidIcon } from 'assets/icons/icons';
 import BigNumber from 'bignumber.js';
 import {
   Avatar, Button, Input, Text,
@@ -7,8 +9,14 @@ import { useShallowSelector } from 'hooks';
 import React, {
   useCallback, useState, VFC, useMemo,
 } from 'react';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { useWalletConnectorContext } from 'services';
+import { bid } from 'store/nfts/actions';
 import userSelector from 'store/user/selectors';
-import { EInputStatus, TInputCaption } from 'types';
+import {
+  Chains, EInputStatus, TInputCaption, WalletProviders,
+} from 'types';
 import { TokenFull } from 'types/api';
 
 import styles from './styles.module.scss';
@@ -25,21 +33,23 @@ const validation = [
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const isValid = (amount: string, out: any) => validation
-  .filter((validator) => !validator.validator(amount, out));
+const isValid = (amount: string, out: any) => validation.filter((validator) => !validator.validator(amount, out));
 
 export const UserBid: VFC<IUserBid> = ({ detailedNFT }) => {
-  const [bid, setBid] = useState('');
+  const [bidValue, setBidValue] = useState('');
   const [errorsList, setErrorsList] = useState([]);
   const highestBid = useMemo(() => detailedNFT.highestBid || {}, [detailedNFT.highestBid]);
   const { USDT: USDTUserBalance } = useShallowSelector(userSelector.getProp('balance'));
+  const userAddress = useShallowSelector(userSelector.getProp('address'));
+  const dispatch = useDispatch();
+  const { walletService, connect } = useWalletConnectorContext();
 
   const onBidInputChangeHandler = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const newBid = e.currentTarget.value;
       const validationList = isValid(newBid, { userBalance: USDTUserBalance });
       setErrorsList(validationList);
-      setBid(newBid);
+      setBidValue(newBid);
     },
     [USDTUserBalance],
   );
@@ -51,6 +61,26 @@ export const UserBid: VFC<IUserBid> = ({ detailedNFT }) => {
     }),
     [errorsList],
   );
+
+  const onBidClickHandler = useCallback(() => {
+    const highestBidAmount = +highestBid.amount || +detailedNFT.price || 0;
+    if (highestBidAmount < +bidValue) {
+      dispatch(
+        bid({
+          id: detailedNFT.id,
+          currency: fromNameToCurrencyObj(detailedNFT?.currency?.symbol),
+          amount: bidValue,
+          web3Provider: walletService.Web3(),
+        }),
+      );
+    } else {
+      toast.error('You cannot set a bid lower than min');
+    }
+  }, [bidValue, detailedNFT?.currency?.symbol, detailedNFT.id, detailedNFT.price, dispatch, highestBid.amount, walletService]);
+
+  const onConnectClickHandler = useCallback(async () => {
+    await connect(WalletProviders.metamask, Chains.polygon);
+  }, [connect]);
 
   return (
     <div className={styles.wrapper}>
@@ -65,17 +95,30 @@ export const UserBid: VFC<IUserBid> = ({ detailedNFT }) => {
       ) : null}
       <div className={styles.body}>
         <div className={styles.bodyInfo}>
-          <div className={styles.bodyInfoElement}>
-            <Input onChange={onBidInputChangeHandler} caption={newCaption} value={bid} name="bid" />
-          </div>
-          <div className={styles.bodyInfoElement}>
-            <Button
-              disabled={errorsList.length > 0}
-              endAdornment={<BidedIcon className={styles.bidIcon} />}
-            >
-              Place a bid
-            </Button>
-          </div>
+          {userAddress.length > 0 ? (
+            <>
+              <div className={styles.bodyInfoElement}>
+                <Input
+                  onChange={onBidInputChangeHandler}
+                  caption={newCaption}
+                  value={bidValue}
+                  name="bid"
+                />
+              </div>
+              <div className={styles.bodyInfoElement}>
+                <Button
+                  disabled={errorsList.length > 0 || bidValue.length === 0}
+                  endAdornment={<PlaceABidIcon className={styles.bidIcon} />}
+                  onClick={onBidClickHandler}
+                  className={styles.placeBid}
+                >
+                  Place a bid
+                </Button>
+              </div>
+            </>
+          ) : (
+            <Button onClick={onConnectClickHandler}>Connect wallet</Button>
+          )}
         </div>
       </div>
     </div>

@@ -2,15 +2,6 @@
 
 .wrapper {
   .body {
-    .bidder {
-      @include flex(row, center, flex-start);
-      &Name {
-        @include ellipsis;
-        max-width: 50%;
-        margin-left: space(16);
-        margin-right: space(6);
-      }
-    }
     &Info {
       @include flex(row, flex-start, center);
       &Element {
@@ -21,7 +12,28 @@
         &:nth-child(n + 1) {
           padding: space(0, 0, 4, 4);
         }
+        .placeBid {
+          padding-top: space(10);
+          padding-bottom: space(10);
+          button {
+            width: 100%;
+          }
+        }
       }
     }
+  }
+}
+
+.bidIcon {
+  stroke: currentColor;
+}
+
+.bidder {
+  margin-bottom: space(24);
+  @include flex(row, center, flex-start);
+  &Name {
+    @include ellipsis;
+    max-width: 50%;
+    margin: space(0, 8) !important;
   }
 }

@@ -1,6 +1,6 @@
 import React, { VFC } from 'react';
 import { Bid, Currency } from 'types/api';
-import { Text } from 'components';
+import { NumberText, Text } from 'components';
 
 import styles from '../../styles.module.scss';
 
@@ -41,7 +41,7 @@ export const NFTPrice:VFC<INFTPrice> = ({
       <div className={styles.price}>
         <img src={currency?.image} alt={currency?.name || 'currency'} className={styles.priceImage} />
         <Text color="accent" className={styles.priceText}>
-          {price}
+          <NumberText>{price}</NumberText>
         </Text>
       </div>
       <Text className={styles.priceUsd}>$ {usdPrice}</Text>

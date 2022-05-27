@@ -44,19 +44,35 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
   }, [detailedNFT.owners, isOwner, userId]);
 
   const sellers = useMemo(() => detailedNFT?.sellers || [], [detailedNFT?.sellers]);
-  console.log(isUserCanEnterInAuction);
+
+  const currentPrice = useMemo(() => {
+    const { highestBid, price, usdPrice } = detailedNFT;
+    if (highestBid && price && usdPrice) {
+      if (detailedNFT.isAucSelling || detailedNFT.isTimedAucSelling) {
+        if (!highestBid) {
+          return { price, usdPrice };
+        }
+        const { currency } = highestBid;
+        return { price: highestBid.amount, usdPrice: +highestBid.amount * (+currency?.rate || 1) };
+      }
+    }
+    return { price: price || '0', usdPrice: usdPrice || '0' };
+  }, [detailedNFT]);
+
   return (
     <div className={styles.nftPayment}>
       {isTimedAuction && (
         <Countdown endAuction={+detailedNFT.endAuction} className={styles.countdown} />
       )}
-      <NFTPrice
-        highestBid={detailedNFT.highestBid}
-        price={detailedNFT.price}
-        usdPrice={detailedNFT.usdPrice}
-        isAuction={isAuction}
-        currency={detailedNFT.currency}
-      />
+      {(isUserCanBuyNft || isUserCanEnterInAuction) && (
+        <NFTPrice
+          highestBid={detailedNFT.highestBid}
+          price={currentPrice.price}
+          usdPrice={+currentPrice.usdPrice}
+          isAuction={isAuction}
+          currency={detailedNFT.currency}
+        />
+      )}
       {isOwner &&
         (hasBeenListed ? (
           <OwnerAfterListing

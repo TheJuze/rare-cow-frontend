@@ -15,10 +15,11 @@ interface IOwnerSeller {
   currency: Currency;
   nftId: string;
   normalPrice: string;
+  isAuction: boolean;
 }
 
 export const OwnerSeller: VFC<IOwnerSeller> = ({
-  owner, isSelling = false, currency, nftId, normalPrice,
+  owner, isSelling = false, currency, nftId, normalPrice, isAuction,
 }) => {
   const [quantity, setQuantity] = useState('1');
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ export const OwnerSeller: VFC<IOwnerSeller> = ({
           <Text variant="body-2" color="dark" weight="semiBold">
             {owner.name}
           </Text>
-          {isSelling && (
+          {isSelling && !isAuction && (
             <Text size="xs" color="metal400" tag="span">
               {owner.sellingQuantity}/{owner.quantity} on sale for{' '}
               <Text size="xs" color="accent" weight="semiBold" tag="span">
@@ -63,7 +64,7 @@ export const OwnerSeller: VFC<IOwnerSeller> = ({
           )}
         </div>
       </div>
-      {isSelling && (
+      {isSelling && !isAuction && (
         <div className={styles.right}>
           {+owner.sellingQuantity > 1 && (
             <QuantityInput

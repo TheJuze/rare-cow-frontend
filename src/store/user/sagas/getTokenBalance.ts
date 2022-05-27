@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import {
-  call, put, takeLatest,
+  call, put, takeEvery,
 } from 'redux-saga/effects';
 import apiActions from 'store/api/actions';
 
@@ -48,5 +48,5 @@ export function* getTokenBalanceSaga({
 }
 
 export default function* listener() {
-  yield takeLatest(actionTypes.GET_TOKEN_BALANCE, getTokenBalanceSaga);
+  yield takeEvery(actionTypes.GET_TOKEN_BALANCE, getTokenBalanceSaga);
 }

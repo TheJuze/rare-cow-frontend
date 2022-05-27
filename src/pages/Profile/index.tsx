@@ -61,8 +61,6 @@ const Profile: VFC = () => {
     [balance],
   );
 
-  console.log(balance);
-
   const handleFollowUser = useCallback(
     (userIdToFollow: ReactText) => {
       dispatch(follow({ id: userIdToFollow }));

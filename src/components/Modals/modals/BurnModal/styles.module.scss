@@ -1,8 +1,35 @@
-.button{
+@import '/src/styles/helpers';
+
+.button {
   margin-top: 24px;
   text-transform: uppercase;
 }
 .title {
-  font-size: 20px;
-  line-height: 34px;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 24px;
+  margin-bottom: space(8);
+  margin-top: space(14);
+}
+.quantityTitle {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin-top: space(8);
+}
+.btnGroup {
+  margin-top: space(20);
+  @include flex(row, center, center);
+  &Element {
+    flex: 0 0 50%;
+    &:nth-child(2n + 1) {
+      margin: space(0, 8, 8, 0);
+    }
+    &:nth-child(n + 1) {
+      margin: space(0, 0, 8, 8);
+    }
+    .burnIcon {
+      margin-left: space(8);
+    }
+  }
 }

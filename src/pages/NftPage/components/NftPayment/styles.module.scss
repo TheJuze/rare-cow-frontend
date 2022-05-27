@@ -86,15 +86,6 @@
       @include ellipsis;
     }
   }
-  .bidder {
-    @include flex(row, center, flex-start);
-    &Name {
-      @include ellipsis;
-      max-width: 50%;
-      margin-left: space(16);
-      margin-right: space(6);
-    }
-  }
   .buy {
     margin-top: space(16);
   }
