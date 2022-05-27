@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-wrap-multilines */
@@ -35,6 +36,7 @@ const Body: VFC<IBodyProps> = ({ category }) => {
   const totalCollectionsPages = useShallowSelector(collectionsSelector.getProp('totalPages'));
   const nftCards = useShallowSelector(nftSelector.getProp('nfts'));
   const totalPages = useShallowSelector(nftSelector.getProp('totalPages'));
+  const [activeCollectionsIds, setActiveCollectionsIds] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [currentCollectionsPage, setCurrentCollectionsPage] = useState(1);
   const [isShowFilters, setIsShowFilters] = useState(false);
@@ -90,10 +92,13 @@ const Body: VFC<IBodyProps> = ({ category }) => {
     debounce(handleSearchCollections, DEBOUNCE_DELAY_100),
   ).current;
 
-  const handleChangeCollectionsText = useCallback((text: string) => {
-    setCollectionsText(text);
-    debouncedHandleSearchCollections({ text }, currentCollectionsPage, collectionsText);
-  }, [collectionsText, currentCollectionsPage, debouncedHandleSearchCollections]);
+  const handleChangeCollectionsText = useCallback(
+    (text: string) => {
+      setCollectionsText(text);
+      debouncedHandleSearchCollections({ text }, currentCollectionsPage, collectionsText);
+    },
+    [collectionsText, currentCollectionsPage, debouncedHandleSearchCollections],
+  );
 
   useEffect(() => {
     debouncedHandleSearchCollections({ page: 1 });
@@ -106,13 +111,32 @@ const Body: VFC<IBodyProps> = ({ category }) => {
     [dispatch],
   );
 
+  const getCollectionsIds = useCallback(
+    (filtersCollections: any) =>
+      collections
+        .filter((col) => filtersCollections.includes(col.name))
+        .map((filteredCol) => filteredCol.url)
+        .join(','),
+    [collections],
+  );
+
+  useEffect(() => {
+    setActiveCollectionsIds(getCollectionsIds(appliedFilters.collections));
+  }, [appliedFilters.collections, getCollectionsIds]);
+
   const handleSearchNfts = useCallback(
-    (filtersData: any, tags: number, page: number, shouldConcat?: boolean) => {
+    (
+      filtersData: any,
+      tags: number,
+      page: number,
+      activeCollections: string,
+      shouldConcat?: boolean,
+    ) => {
       const requestData: SearchNftReq = {
         type: 'items',
         tags,
         page,
-        collections: filtersData?.collections?.join(','),
+        collections: activeCollections,
         currency: filtersData?.currency?.join(','),
         standart: filtersData?.standart?.join(','),
         max_price: filtersData?.maxPrice,
@@ -129,15 +153,15 @@ const Body: VFC<IBodyProps> = ({ category }) => {
 
   const handleLoadMore = useCallback(
     (page: number, shouldConcat = false) => {
-      handleSearchNfts(appliedFilters, category?.id, page, shouldConcat);
+      handleSearchNfts(appliedFilters, category?.id, page, activeCollectionsIds, shouldConcat);
     },
-    [appliedFilters, category?.id, handleSearchNfts],
+    [activeCollectionsIds, appliedFilters, category?.id, handleSearchNfts],
   );
 
   useEffect(() => {
-    debouncedHandleSearchNfts(appliedFilters, category?.id, 1);
+    debouncedHandleSearchNfts(appliedFilters, category?.id, 1, activeCollectionsIds);
     setCurrentPage(1);
-  }, [debouncedHandleSearchNfts, appliedFilters, category?.id]);
+  }, [debouncedHandleSearchNfts, appliedFilters, category?.id, activeCollectionsIds]);
 
   useEffect(
     () => () => {
@@ -209,7 +233,9 @@ const Body: VFC<IBodyProps> = ({ category }) => {
           setSearchValue={handleChangeCollectionsText}
           currentPage={currentCollectionsPage}
           totalPages={totalCollectionsPages}
-          onLoadMore={(page: number) => debouncedHandleSearchCollections({ page }, currentCollectionsPage, collectionsText)}
+          onLoadMore={(page: number) =>
+            debouncedHandleSearchCollections({ page }, currentCollectionsPage, collectionsText)
+          }
         />
       </div>
       {isShowChips && isAppliedFilters && (
@@ -239,7 +265,9 @@ const Body: VFC<IBodyProps> = ({ category }) => {
           currentCollectionsPage={currentCollectionsPage}
           totalCollectionsPages={totalCollectionsPages}
           setSearchValue={handleChangeCollectionsText}
-          onLoadMore={(page: number) => debouncedHandleSearchCollections({ page }, currentCollectionsPage, collectionsText)}
+          onLoadMore={(page: number) =>
+            debouncedHandleSearchCollections({ page }, currentCollectionsPage, collectionsText)
+          }
         />
         <div className={styles.bodyResultsWrapper}>
           <NftList nfts={nftCards} currentPage={currentPage} />
