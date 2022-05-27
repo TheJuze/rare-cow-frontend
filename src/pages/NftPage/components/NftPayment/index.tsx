@@ -60,7 +60,7 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
         };
       }
     }
-    return { price: price || '0', usdPrice: usdPrice || '0', is: false };
+    return { price: price || '0', usdPrice: usdPrice || '0', is: true };
   }, [detailedNFT]);
 
   return (
@@ -68,7 +68,7 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
       {isTimedAuction && (
         <Countdown endAuction={+detailedNFT.endAuction} className={styles.countdown} />
       )}
-      {currentPrice.is && (
+      {+currentPrice.price > 0 && (
         <NFTPrice
           highestBid={detailedNFT.highestBid}
           price={currentPrice.price}
