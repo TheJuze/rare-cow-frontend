@@ -3,7 +3,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
 
-import { like } from '../actions';
+import { getDetailedNft, like } from '../actions';
 import actionTypes from '../actionTypes';
 
 export function* likeSaga({
@@ -14,6 +14,7 @@ export function* likeSaga({
   try {
     yield call(baseApi.like, { id });
     successCallback?.();
+    yield put(getDetailedNft({ id }));
   } catch (err) {
     console.log(err);
     errorCallback?.();
