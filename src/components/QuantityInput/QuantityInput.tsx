@@ -34,6 +34,7 @@ export interface QuantityInputProps {
   error?: string;
   writeable?: boolean;
   placeholder?: string;
+  className?: string;
   inputClassName?: string;
   maxCounterWidth?: string;
   onBlur?: (e: FormEvent) => void;
@@ -56,7 +57,8 @@ export const QuantityInput: VFC<QuantityInputProps> = ({
   // writeable = true,
   maxAmount = 'infinity',
   minAmount = 0,
-  // inputClassName,
+  className,
+  inputClassName,
   // maxCounterWidth = '50%',
   onBlur,
 }) => {
@@ -124,9 +126,9 @@ export const QuantityInput: VFC<QuantityInputProps> = ({
   }, [value]);
 
   return (
-    <div className="quantityInput">
+    <div className={cn('quantityInput', className)}>
       <QuantityOption type="remove" onClick={onRemoveHandler} className="remove" />
-      <div className="amount">{formattedValue}</div>
+      <div className={cn('amount', inputClassName)}>{formattedValue}</div>
       <QuantityOption type="add" onClick={onAddHandler} className="add" />
     </div>
   );

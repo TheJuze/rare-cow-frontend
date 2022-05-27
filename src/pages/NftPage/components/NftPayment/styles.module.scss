@@ -19,7 +19,7 @@
       margin-top: space(16);
     }
     &Quantity{
-      margin-bottom: space(16);
+      margin: space(16, 0);
     }
   }
   .listing {
@@ -96,8 +96,6 @@
     }
   }
   .buy {
-    max-width: 128px;
-    width: 100%;
     margin-top: space(16);
   }
 }

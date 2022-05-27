@@ -26,6 +26,12 @@
         @include flex(column, flex-start, flex-start);
         margin-left: space(13);
       }
+      .right{
+        @include flex(row, center, flex-end);
+        .buy{
+          margin-left: space(8);
+        }
+      }
     }
   }
   .history,

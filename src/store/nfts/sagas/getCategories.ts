@@ -15,7 +15,7 @@ export function* getCategoriesSaga({ type, payload }: ReturnType<typeof getCateg
       banner,
       name: 'All Categories',
       description:
-        'All Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+        'Buy NFTs that are directly sold by top creators. Monetize your own creations in NFT.We have compiled a number of popular categories in the NFT space. You can learn more about each of them.',
       image: '',
     }]));
 

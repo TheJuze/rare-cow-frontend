@@ -32,16 +32,14 @@ export function* getTokenBalanceSaga({
           web3Provider,
           contractName: ContractsNames[token.name],
         });
-
-        const balance = yield call(tokenContract.methods.balances(address).call);
+        const balance = yield call(tokenContract.methods.balanceOf(address).call);
         const decimals = yield call(tokenContract.methods.decimals().call);
         yield put(setterMap[setter]({ [token.name]: getTokenAmountDisplay(balance, decimals) }));
-
-        yield put(apiActions.success(type));
       } else {
         const nativeBalance = yield call(() => web3Provider.eth.getBalance(address));
         yield put(setterMap[setter]({ MATIC: getTokenAmountDisplay(nativeBalance, 18) }));
       }
+      yield put(apiActions.success(type));
     } catch (err) {
       yield put(apiActions.error(type, err));
     }

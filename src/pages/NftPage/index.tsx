@@ -95,6 +95,9 @@ const NftPage: FC = () => {
           owners={nft.owners}
           properties={nft.properties}
           history={nft.history}
+          nftId={String(nft.id)}
+          currency={nft.currency}
+          normalPrice={nft.price}
         />
       </div>
     );
@@ -128,6 +131,9 @@ const NftPage: FC = () => {
           owners={nft.owners}
           properties={nft.properties}
           history={nft.history}
+          nftId={String(nft.id)}
+          currency={nft.currency}
+          normalPrice={nft.price}
         />
       </div>
     </div>

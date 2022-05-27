@@ -64,10 +64,10 @@ const CreateFormContainer: VFC = () => {
     ],
   );
   useEffect(() => {
-    if (!profile.id && id) {
+    if (id) {
       dispatch(getProfileById({ id, web3Provider: walletService.Web3() }));
     }
-  }, [dispatch, id, profile.id, walletService]);
+  }, [dispatch, id, walletService]);
 
   useEffect(() => {
     if (editingProfile === RequestStatus.SUCCESS) {
@@ -107,6 +107,8 @@ const CreateFormContainer: VFC = () => {
       const newProfileForm = new FormData();
       if (values.avatarFile) {
         newProfileForm.append('avatar', values.avatarFile);
+      } else if (!values.avatarURL) {
+        newProfileForm.append('avatar', null);
       }
       newProfileForm.append('bio', values.description);
       newProfileForm.append('display_name', values.name);

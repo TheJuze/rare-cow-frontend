@@ -196,6 +196,7 @@ export type SearchNftReq = {
   text?: string;
   standart?: string;
   creator?: string;
+  currency?: string;
 };
 
 export type TransferTokenReq = {
@@ -229,6 +230,10 @@ export type GetCategoriesReq = {
 export type SearchNftAction = {
   requestData: SearchNftReq;
   shouldConcat?: boolean;
+};
+
+export type GetPresearchNfts = {
+  presearch: string;
 };
 
 export type SearchAction = {

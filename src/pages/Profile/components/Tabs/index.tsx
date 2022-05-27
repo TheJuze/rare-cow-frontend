@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/jsx-wrap-multilines */
-import { CollectionsList, Text } from 'components';
+import { CollectionsList, Loader, Text } from 'components';
 import React, { VFC } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Collection, TokenFull } from 'types/api';
@@ -16,9 +16,12 @@ interface ITabsProps {
   handleDeleteChips: (key: string, value: string) => void;
   handleClearChips: () => void;
   nfts: TokenFull[];
+  totalPages: number;
   onLoadMoreClick: (page: number) => void;
   currentPage: number;
   collections: Collection[];
+  isSearchCollectionsLoading: boolean;
+  isGettingProfileLoading: boolean;
 }
 const Tabs: VFC<ITabsProps> = ({
   bio,
@@ -29,9 +32,12 @@ const Tabs: VFC<ITabsProps> = ({
   handleDeleteChips,
   handleClearChips,
   nfts,
+  totalPages,
   onLoadMoreClick,
   currentPage,
   collections,
+  isSearchCollectionsLoading,
+  isGettingProfileLoading,
 }) => (
   <>
     <Routes>
@@ -39,12 +45,18 @@ const Tabs: VFC<ITabsProps> = ({
         path="about-me"
         element={
           <div className={styles.bio}>
-            <Text className={styles.bioTitle} color="dark">
-              Profile Information
-            </Text>
-            <Text className={styles.bioInfo} variant="body-2" color="dark">
-              {bio || 'There is no bio on this profile yet'}
-            </Text>
+            {isGettingProfileLoading ? (
+              <Loader />
+            ) : (
+              <>
+                <Text className={styles.bioTitle} color="dark">
+                  Profile Information
+                </Text>
+                <Text className={styles.bioInfo} variant="body-2" color="dark">
+                  {bio || 'There is no bio on this profile yet'}
+                </Text>
+              </>
+            )}
           </div>
         }
       />
@@ -59,6 +71,7 @@ const Tabs: VFC<ITabsProps> = ({
             handleDeleteChips={handleDeleteChips}
             handleClearChips={handleClearChips}
             nfts={nfts}
+            totalPages={totalPages}
             onLoadMoreClick={onLoadMoreClick}
             currentPage={currentPage}
           />
@@ -75,6 +88,7 @@ const Tabs: VFC<ITabsProps> = ({
             handleDeleteChips={handleDeleteChips}
             handleClearChips={handleClearChips}
             nfts={nfts}
+            totalPages={totalPages}
             onLoadMoreClick={onLoadMoreClick}
             currentPage={currentPage}
           />
@@ -91,6 +105,7 @@ const Tabs: VFC<ITabsProps> = ({
             handleDeleteChips={handleDeleteChips}
             handleClearChips={handleClearChips}
             nfts={nfts}
+            totalPages={totalPages}
             onLoadMoreClick={onLoadMoreClick}
             currentPage={currentPage}
           />
@@ -107,12 +122,18 @@ const Tabs: VFC<ITabsProps> = ({
             handleDeleteChips={handleDeleteChips}
             handleClearChips={handleClearChips}
             nfts={nfts}
+            totalPages={totalPages}
             onLoadMoreClick={onLoadMoreClick}
             currentPage={currentPage}
           />
         }
       />
-      <Route path="collections" element={<CollectionsList collections={collections} />} />
+      <Route
+        path="collections"
+        element={
+          <CollectionsList isLoading={isSearchCollectionsLoading} collections={collections} />
+        }
+      />
       <Route
         path="sold"
         element={
@@ -124,6 +145,7 @@ const Tabs: VFC<ITabsProps> = ({
             handleDeleteChips={handleDeleteChips}
             handleClearChips={handleClearChips}
             nfts={nfts}
+            totalPages={totalPages}
             onLoadMoreClick={onLoadMoreClick}
             currentPage={currentPage}
           />

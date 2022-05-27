@@ -20,9 +20,19 @@ interface IOwnerAfterListing {
   detailedNFT: TokenFull;
   userId: string;
   isAuction: boolean;
+  isUserCanEndAuction: boolean;
+  isUserCanRemoveFromSale: boolean;
+  isUserCanPutOnSale?: boolean;
+  isUserCanChangePrice?: boolean;
 }
 
-export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({ detailedNFT, userId, isAuction }) => {
+export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({
+  detailedNFT,
+  userId,
+  isAuction,
+  isUserCanEndAuction,
+  isUserCanRemoveFromSale,
+}) => {
   const { currency, totalSupply: itemsAmount } = detailedNFT;
   const [price, setPrice] = useState('');
   const dispatch = useDispatch();
@@ -42,12 +52,12 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({ detailedNFT, userId
   );
 
   const currentPaymentPrice = useMemo(() => {
-    const requiredToken = rates.find((rate) => rate.symbol === currency?.symbol);
+    const requiredToken = rates?.find((rate) => rate.symbol === currency?.symbol);
     if (requiredToken) {
       return parseFloat(requiredToken.rate);
     }
     return parseFloat(currency.rate);
-  }, [currency.rate, currency.symbol, rates]);
+  }, [currency?.rate, currency.symbol, rates]);
 
   const currentOwnerAmountTokens = useMemo(() => {
     const { owners } = detailedNFT;
@@ -139,9 +149,24 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({ detailedNFT, userId
           </div>
         </div>
       )}
-      <Button onClick={removeClickHandler} className={styles.remove}>
-        Remove from sale
-      </Button>
+      {isUserCanRemoveFromSale && (
+        <Button
+          disabled={!isUserCanRemoveFromSale}
+          onClick={removeClickHandler}
+          className={styles.remove}
+        >
+          Remove from sale
+        </Button>
+      )}
+      {isUserCanEndAuction && (
+        <Button
+          disabled={!isUserCanEndAuction}
+          onClick={removeClickHandler}
+          className={styles.remove}
+        >
+          Remove from auction
+        </Button>
+      )}
     </div>
   );
 };

@@ -6,7 +6,7 @@ import Web3 from 'web3';
 
 import {
   erc20Abi, erc721Abi,
-  erc1155Abi, marketPlaceAbi, whitelistAbi, erc721InstanceAbi, erc1155InstanceAbi,
+  erc1155Abi, marketPlaceAbi, whitelistAbi, erc721InstanceAbi, erc1155InstanceAbi, erc20freeAbi,
 } from './abi';
 import { isMainnet } from './constants';
 
@@ -130,9 +130,9 @@ export const contractsConfig: IContracts = {
       testnet: {
         address: {
           [Chains.bsc]: '0xcec38C5b1B4b869835623CFCB7F42a206589A446',
-          [Chains.polygon]: '0x3813e82e6f7098b9583FC0F33a962D02018B6803', // replace to polygon address
+          [Chains.polygon]: '0xEbED2E78Ba4Ecedc9b314a6EA21b3F085f564494',
         },
-        abi: erc20Abi,
+        abi: erc20freeAbi,
       },
       mainnet: {
         address: {

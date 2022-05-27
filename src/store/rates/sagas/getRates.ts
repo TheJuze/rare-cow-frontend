@@ -13,8 +13,8 @@ export function* getRatesSaga({ type, payload }: ReturnType<typeof getRates>) {
   yield put(request(type));
   try {
     const { data } = yield call(baseApi.getRates, payload);
-
-    yield put(updateRates(camelize(data.results) as Rates[]));
+    const camelizeData = camelize(data.results);
+    yield put(updateRates(Array.isArray(camelizeData) ? camelizeData : [] as Rates[]));
 
     yield put(success(type));
   } catch (err) {

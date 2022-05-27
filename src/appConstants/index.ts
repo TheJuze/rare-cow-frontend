@@ -9,3 +9,4 @@ export { default as URL } from './URL';
 
 export const DEFAULT_CURRENCY = 'USDT';
 export const DEBOUNCE_DELAY_100 = 100;
+export const DEBOUNCE_DELAY = 500;

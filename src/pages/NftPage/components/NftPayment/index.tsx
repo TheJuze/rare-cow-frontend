@@ -1,17 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react/jsx-wrap-multilines */
-/* eslint-disable object-curly-newline */
-/* eslint-disable arrow-body-style */
 import { TStandards } from 'appConstants';
-import { ArrowGreen } from 'assets/icons/icons';
-import { matic } from 'assets/img';
-import { Text, Countdown, Button, Selector, Input, Avatar, Listing } from 'components';
+import { Countdown } from 'components';
 import { useGetUserAccessForNft, useShallowSelector } from 'hooks';
-import React, { FC, useCallback, useMemo, useState } from 'react';
+import React, { FC, useMemo } from 'react';
 import userSelector from 'store/user/selectors';
-import { CollectionSlim, Ownership, TokenFull } from 'types/api';
-import { NFTPrice, OwnerAfterListing, OwnerListing } from './components';
+import { Ownership, TokenFull } from 'types/api';
+import {
+  NFTPrice, OwnerAfterListing, OwnerListing, UserBuy,
+} from './components';
+import { UserBid } from './components/UserBid.ts';
 
 import styles from './styles.module.scss';
 
@@ -25,10 +21,9 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
     isUserCanEndAuction,
     isUserCanBuyNft,
     isUserCanEnterInAuction,
-    isUserCanPutOnSale,
     isOwner,
     isUserCanRemoveFromSale,
-    isUserCanChangePrice,
+    isTimedAuction,
   } = useGetUserAccessForNft(detailedNFT, String(userId));
 
   const hasBeenListed = useMemo(() => {
@@ -48,8 +43,13 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
     return {} as Ownership;
   }, [detailedNFT.owners, isOwner, userId]);
 
+  const sellers = useMemo(() => detailedNFT?.sellers || [], [detailedNFT?.sellers]);
+  console.log(isUserCanEnterInAuction);
   return (
     <div className={styles.nftPayment}>
+      {isTimedAuction && (
+        <Countdown endAuction={+detailedNFT.endAuction} className={styles.countdown} />
+      )}
       <NFTPrice
         highestBid={detailedNFT.highestBid}
         price={detailedNFT.price}
@@ -63,6 +63,8 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
             detailedNFT={detailedNFT}
             userId={String(userId)}
             isAuction={isAuction}
+            isUserCanEndAuction={isUserCanEndAuction}
+            isUserCanRemoveFromSale={isUserCanRemoveFromSale}
           />
         ) : (
           <OwnerListing
@@ -73,37 +75,18 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
             internalNftId={String(detailedNFT.internalId)}
           />
         ))}
-      {(isUserCanBuyNft || isUserCanEnterInAuction) && (
-        <>
-          <Countdown endAuction={+detailedNFT.endAuction} className={styles.countdown} />
-          <NFTPrice
-            highestBid={detailedNFT.highestBid}
-            price={detailedNFT.price}
-            usdPrice={detailedNFT.usdPrice}
-            isAuction={isAuction}
+      <>
+        {isUserCanBuyNft && (
+          <UserBuy
+            nftId={String(detailedNFT.id)}
             currency={detailedNFT.currency}
+            isMultiple={detailedNFT.standart === 'ERC1155'}
+            sellers={sellers}
+            normalPrice={detailedNFT.price}
           />
-
-          {detailedNFT.highestBid ? (
-            <div className={styles.bidder}>
-              <Avatar
-                id={detailedNFT.highestBid.user.url}
-                avatar={detailedNFT.highestBid.user.avatar}
-                size={40}
-              />
-              <Text className={styles.bidderName} color="dark" variant="body-2" weight="semiBold">
-                {detailedNFT.highestBid.user.displayName || detailedNFT.highestBid.user.address}
-              </Text>
-              <ArrowGreen />
-            </div>
-          ) : null}
-          <Button className={styles.buy}>
-            <Text variant="body-2" color="light">
-              Buy
-            </Text>
-          </Button>
-        </>
-      )}
+        )}
+        {isUserCanEnterInAuction && <UserBid detailedNFT={detailedNFT} />}
+      </>
     </div>
   );
 };

@@ -5,7 +5,6 @@ import cn from 'clsx';
 import { Text } from 'components/Typography';
 
 import './styles.scss';
-import { Link } from 'react-router-dom';
 import { Loader } from 'components/Loader';
 import { formatDigits, sliceString } from 'utils';
 import { BidedIcon, Promo } from 'assets/icons/icons';
@@ -50,7 +49,7 @@ export const ArtCard: VFC<ArtCardProps> = ({
   inStock,
   isPromo = false,
 }) => {
-  const wrapRef = useRef<HTMLAnchorElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const offset = 2.5;
   const timeLeft = useTimeLeft(Number(endAuction) * 1000);
@@ -94,9 +93,7 @@ export const ArtCard: VFC<ArtCardProps> = ({
           <Promo />
         </div>
       )}
-      <Link
-        to="/"
-        // to={isCollection ? routes.collection.link(artId) : routes.nft.link(artId)}
+      <div
         className="artCard-imageWrapper"
         onMouseOver={onMouseOver}
         onFocus={() => {}}
@@ -107,7 +104,7 @@ export const ArtCard: VFC<ArtCardProps> = ({
         ) : (
           <Loader className="artCard-loader" />
         )}
-      </Link>
+      </div>
       <div className="artCard-info__wrapper">
         <div className="artCard-info__line">
           <Text size="s" color="dark" weight="medium">

@@ -35,6 +35,7 @@ export interface ListingProps {
   onError?: () => void;
   buttonText?: string;
   withAmount?: boolean;
+  maxAmount?: number | 'infinity';
   isMultiple?: boolean;
 }
 
@@ -51,12 +52,13 @@ export const Listing: VFC<ListingProps> = ({
   onError,
   buttonText = '',
   withAmount,
+  maxAmount = 'infinity',
   isMultiple = false,
 }) => {
   const listingOptions = useMemo(
     () =>
       initialListingOptions
-        .filter((opt) => (isMultiple ? excludeFromMultiple.includes(opt) : true))
+        .filter((opt) => (isMultiple ? !excludeFromMultiple.includes(opt) : true))
         .map<TOption>((opt) => ({ value: opt, content: opt })),
     [isMultiple],
   );
@@ -80,7 +82,7 @@ export const Listing: VFC<ListingProps> = ({
   );
 
   useEffect(() => {
-    if(listType.value) {
+    if (listType.value) {
       setSelectedCurrency(sortedCurrencies[0]);
     }
   }, [listType.value, sortedCurrencies]);
@@ -141,12 +143,13 @@ export const Listing: VFC<ListingProps> = ({
         currency: selectedCurrency,
         timestamp: selectedTimestamp.value,
         price,
+        amount: amount || '1',
       });
     } else {
       onError?.();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listType.value, price, selectedCurrency, selectedTimestamp.value, validateData]);
+  }, [listType.value, price, selectedCurrency, selectedTimestamp.value, validateData, amount]);
 
   useEffect(() => {
     if (!buttonText) {
@@ -198,13 +201,14 @@ export const Listing: VFC<ListingProps> = ({
           </div>
         ))}
       </div>
-      {withAmount && (
+      {(withAmount || isMultiple) && (
         <div className={styles.quantity}>
           <QuantityInput
             name="amount"
             label="Quantity"
             minAmount={1}
             value={amount}
+            maxAmount={maxAmount}
             setValue={handleChangeAmount}
           />
         </div>

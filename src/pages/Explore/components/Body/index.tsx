@@ -4,9 +4,8 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useEffect, useMemo, useRef, useState, VFC } from 'react';
-import { ArtCard, ArtCardSkeleton, Button, FilterChips, SearchCollection, Text } from 'components';
+import { Button, FilterChips, NftList, SearchCollection, Text } from 'components';
 
-import { Link } from 'react-router-dom';
 import { FiltersIcon } from 'assets/icons/icons';
 import { initialFiltersState, useFilters, useShallowSelector } from 'hooks';
 import { Filters } from 'containers/Filters/Filters';
@@ -284,6 +283,7 @@ const Body: VFC<IBodyProps> = ({ category }) => {
   const dispatch = useDispatch();
   const collections = useShallowSelector(collectionsSelector.getProp('collections'));
   const nftCards = useShallowSelector(nftSelector.getProp('nfts'));
+  const totalPages = useShallowSelector(nftSelector.getProp('totalPages'));
   const [currentPage, setCurrentPage] = useState(1);
   const [isShowFilters, setIsShowFilters] = useState(false);
   const [isShowChips, setIsShowChips] = useState(false);
@@ -343,6 +343,7 @@ const Body: VFC<IBodyProps> = ({ category }) => {
         tags,
         page,
         collections: filtersData?.collections?.join(','),
+        currency: filtersData?.currency?.join(','),
         standart: filtersData?.standart?.join(','),
         max_price: filtersData?.maxPrice,
         min_price: filtersData?.minPrice,
@@ -358,9 +359,9 @@ const Body: VFC<IBodyProps> = ({ category }) => {
 
   const handleLoadMore = useCallback(
     (page: number, shouldConcat = false) => {
-      handleSearchNfts(appliedFilters, page, shouldConcat);
+      handleSearchNfts(appliedFilters, category?.id, page, shouldConcat);
     },
-    [appliedFilters, handleSearchNfts],
+    [appliedFilters, category?.id, handleSearchNfts],
   );
 
   useEffect(() => {
@@ -414,7 +415,6 @@ const Body: VFC<IBodyProps> = ({ category }) => {
     [handleLoadMore],
   );
 
-  const minSize = 264;
   return (
     <div className={styles.body}>
       <div className={styles.bodyTop}>
@@ -459,57 +459,8 @@ const Body: VFC<IBodyProps> = ({ category }) => {
           handleClearFilters={handleClearChips}
         />
         <div className={styles.bodyResultsWrapper}>
-          <div
-            className={styles.bodyResults}
-            style={{
-              gridTemplateColumns:
-                nftCards.length !== 0 || isNftsLoading
-                  ? `repeat(auto-fill,minmax(${minSize}px,1fr))`
-                  : '1fr',
-            }}
-          >
-            {nftCards.map((nft) => {
-              const {
-                id,
-                name,
-                price,
-                highestBid,
-                media,
-                currency,
-                creator,
-                isAucSelling,
-                standart,
-                likeCount,
-                isLiked,
-                available,
-                endAuction,
-              } = nft;
-              return (
-                <Link key={id} to="/" className={styles.card}>
-                  <ArtCard
-                    id={id || 0}
-                    inStock={available}
-                    name={name}
-                    price={price || highestBid?.amount}
-                    media={media || ''}
-                    currency={currency?.image || ''}
-                    authorName={creator?.name || ''}
-                    authorAvatar={creator?.avatar || ''}
-                    authorId={creator?.url || '0'}
-                    isAuction={isAucSelling || Boolean(endAuction)}
-                    likeCount={likeCount}
-                    isLiked={isLiked}
-                    standart={standart}
-                    endAuction={endAuction}
-                    className={styles.card}
-                  />
-                </Link>
-              );
-            })}
-            {isNftsLoading &&
-              Array.from(Array(8).keys()).map((element) => <ArtCardSkeleton key={element} />)}
-          </div>
-          {!isNftsLoading && (
+          <NftList nfts={nftCards} currentPage={currentPage} />
+          {!isNftsLoading && currentPage < totalPages && (
             <Button
               className={styles.load}
               onClick={() => onLoadMoreClick(currentPage + 1)}

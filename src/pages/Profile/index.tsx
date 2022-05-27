@@ -1,8 +1,6 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable arrow-body-style */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Avatar, Button, FollowButton, Text } from 'components';
-import Clipboard from 'components/Clipboard/Clipboard';
 import useShallowSelector from 'hooks/useShallowSelector';
 import React, { ReactText, useCallback, useEffect, useMemo, VFC } from 'react';
 import { useDispatch } from 'react-redux';
@@ -12,22 +10,17 @@ import profileSelector from 'store/profile/selectors';
 import userSelector from 'store/user/selectors';
 import { useWalletConnectorContext } from 'services';
 
-import { nullAvatar } from 'assets/img';
-import { sliceString } from 'utils';
-import {
-  GlobeOutlinedIcon,
-  InstagramOutlinedIcon,
-  MailOutlinedIcon,
-  TwitterOutlinedIcon,
-} from 'assets/icons/icons';
 import { useBreakpoints } from 'hooks';
-import { createDynamicLink, currenciesIconsMap, routes } from 'appConstants';
+import { currenciesIconsMap } from 'appConstants';
 import uiSelector from 'store/ui/selectors';
 import profileActionTypes from 'store/profile/actionsTypes';
 import { RequestStatus } from 'types';
+import { ArtCardSkeleton } from 'components';
 import { Body } from './components';
 
 import styles from './styles.module.scss';
+import Socials from './components/Socials';
+import Header from './components/Header';
 
 const Profile: VFC = () => {
   const [isMobile] = useBreakpoints([767]);
@@ -39,6 +32,7 @@ const Profile: VFC = () => {
   const {
     [profileActionTypes.FOLLOW]: followRequestStatus,
     [profileActionTypes.UNFOLLOW]: unfollowRequestStatus,
+    [profileActionTypes.GET_PROFILE]: getProfileRequestStatus,
   } = useShallowSelector(uiSelector.getUI);
   const {
     avatar,
@@ -67,6 +61,8 @@ const Profile: VFC = () => {
     [balance],
   );
 
+  console.log(balance);
+
   const handleFollowUser = useCallback(
     (userIdToFollow: ReactText) => {
       dispatch(follow({ id: userIdToFollow }));
@@ -82,10 +78,13 @@ const Profile: VFC = () => {
   );
 
   const isFollowingInProcess = useMemo(
-    () => [followRequestStatus, unfollowRequestStatus].includes(
-      RequestStatus.REQUEST,
-    ),
+    () => [followRequestStatus, unfollowRequestStatus].includes(RequestStatus.REQUEST),
     [followRequestStatus, unfollowRequestStatus],
+  );
+
+  const isGettingProfile = useMemo(
+    () => getProfileRequestStatus === RequestStatus.REQUEST,
+    [getProfileRequestStatus],
   );
 
   useEffect(() => {
@@ -97,237 +96,67 @@ const Profile: VFC = () => {
   if (isMobile) {
     return (
       <div className={styles.profile}>
-        <div className={styles.header}>
-          <Avatar size={112} id={userId} avatar={avatar || nullAvatar} />
-          <div className={styles.right}>
-            <div className={styles.info}>
-              {name ? (
-                <Text variant="subtitle-1" color="base900">
-                  {name?.length > 15 ? sliceString(name, 7, 5) : name}
-                </Text>
-              ) : (
-                <Text variant="subtitle-1" color="base900">
-                  User {userId}
-                </Text>
-              )}
-              <div className={styles.following}>
-                <Button
-                  to={createDynamicLink(routes.nest.followers.path, { userId })}
-                  className={styles.followers}
-                  variant="outlined"
-                  size="sm"
-                  disabled={!followersCount}
-                >
-                  <Text size="xs" weight="medium" color="accent">
-                    {followersCount || 0} followers
-                  </Text>
-                </Button>
-                <Button
-                  to={createDynamicLink(routes.nest.following.path, { userId })}
-                  className={styles.follows}
-                  variant="outlined"
-                  disabled={!followsCount}
-                >
-                  <Text size="xs" weight="medium" color="yellow500">
-                    {followsCount || 0} following
-                  </Text>
-                </Button>
-              </div>
-              {isUser ? (
-                <div className={styles.balances}>
-                  {mappedBalance.map(({ icon, value }) => (
-                    <div className={styles.balanceItem}>
-                      <img src={icon} alt="" className={styles.balanceItemIcon} />
-                      <Text weight="medium" color="dark" className={styles.balanceText}>
-                        {value}
-                      </Text>
-                    </div>
-                  ))}
-                </div>
-              ) : null}
-              {address ? <Clipboard name={address} value={address} /> : null}
-              {isUser ? (
-                <Button
-                  to={createDynamicLink(routes.nest.profile.nest.edit.path, { userId })}
-                  className={styles.edit}
-                >
-                  Edit profile
-                </Button>
-              ) : (
-                <FollowButton
-                  disabled={isFollowingInProcess}
-                  onClick={() => (isFollowing ?
-                    handleUnfollowUser(userId) : handleFollowUser(userId))}
-                  isFollowing={isFollowing}
-                  className={styles.edit}
-                />
-              )}
-            </div>
-          </div>
-        </div>
+        {isGettingProfile ? (
+          <ArtCardSkeleton key={userId} />
+        ) : (
+          <Header
+            isMobile={isMobile}
+            userId={userId}
+            avatar={avatar}
+            name={name}
+            followersCount={followersCount}
+            followsCount={followsCount}
+            isUser={isUser}
+            address={address}
+            isFollowingInProcess={isFollowingInProcess}
+            handleFollowUser={handleFollowUser}
+            handleUnfollowUser={handleUnfollowUser}
+            balance={mappedBalance}
+            isFollowing={isFollowing}
+            hasSocials={hasSocials}
+            email={email}
+            site={site}
+            twitter={twitter}
+            instagram={instagram}
+          />
+        )}
+
         <Body userId={userId} bio={bio} />
 
-        {hasSocials && (
-          <div className={styles.socials}>
-            {email ? (
-              <div className={styles.socialsItem}>
-                <div className={styles.socialsIcon}>
-                  <MailOutlinedIcon />
-                </div>
-                <Text variant="body-2" color="base900">
-                  {email}
-                </Text>
-              </div>
-            ) : null}
-            {site ? (
-              <div className={styles.socialsItem}>
-                <div className={styles.socialsIcon}>
-                  <GlobeOutlinedIcon />
-                </div>
-                <Text variant="body-2" color="base900">
-                  {site}
-                </Text>
-              </div>
-            ) : null}
-            {twitter ? (
-              <div className={styles.socialsItem}>
-                <div className={styles.socialsIcon}>
-                  <TwitterOutlinedIcon />
-                </div>
-                <Text variant="body-2" color="base900">
-                  {twitter}
-                </Text>
-              </div>
-            ) : null}
-            {instagram ? (
-              <div className={styles.socialsItem}>
-                <div className={styles.socialsIcon}>
-                  <InstagramOutlinedIcon />
-                </div>
-                <Text variant="body-2" color="base900">
-                  {instagram}
-                </Text>
-              </div>
-            ) : null}
-          </div>
-        )}
+        <Socials
+          hasSocials={hasSocials}
+          email={email}
+          site={site}
+          twitter={twitter}
+          instagram={instagram}
+        />
       </div>
     );
   }
   return (
     <div className={styles.profile}>
-      <div className={styles.header}>
-        <Avatar size={112} id={userId} avatar={avatar || nullAvatar} />
-        <div className={styles.right}>
-          <div className={styles.info}>
-            {name ? (
-              <Text variant="subtitle-1" color="base900">
-                {name?.length > 15 ? sliceString(name, 7, 5) : name}
-              </Text>
-            ) : (
-              <Text variant="subtitle-1" color="base900">
-                User {userId}
-              </Text>
-            )}
-            <div className={styles.following}>
-              <Button
-                to={createDynamicLink(routes.nest.followers.path, { userId })}
-                className={styles.followers}
-                variant="outlined"
-                size="sm"
-                disabled={!followersCount}
-              >
-                <Text size="xs" weight="medium" color="accent">
-                  {followersCount || 0} followers
-                </Text>
-              </Button>
-              <Button
-                to={createDynamicLink(routes.nest.following.path, { userId })}
-                className={styles.follows}
-                variant="outlined"
-                disabled={!followsCount}
-              >
-                <Text size="xs" weight="medium" color="yellow500">
-                  {followsCount || 0} following
-                </Text>
-              </Button>
-            </div>
-            {isUser ? (
-              <div className={styles.balances}>
-                {mappedBalance.map(({ icon, value }) => (
-                  <div className={styles.balanceItem}>
-                    <img src={icon} alt="" className={styles.balanceItemIcon} />
-                    <Text weight="medium" color="dark" className={styles.balanceText}>
-                      {value}
-                    </Text>
-                  </div>
-                ))}
-              </div>
-            ) : null}
-            {address ? <Clipboard name={address} value={address} /> : null}
-            {isUser ? (
-              <Button
-                to={createDynamicLink(routes.nest.profile.nest.edit.path, { userId })}
-                className={styles.edit}
-              >
-                Edit profile
-              </Button>
-            ) : (
-              <FollowButton
-                disabled={isFollowingInProcess}
-                onClick={() => (isFollowing ?
-                  handleUnfollowUser(userId) : handleFollowUser(userId))}
-                isFollowing={isFollowing}
-                className={styles.edit}
-              />
-            )}
-          </div>
-          {hasSocials && (
-            <div className={styles.socials}>
-              {email ? (
-                <div className={styles.socialsItem}>
-                  <div className={styles.socialsIcon}>
-                    <MailOutlinedIcon />
-                  </div>
-                  <Text variant="body-2" color="base900">
-                    {email}
-                  </Text>
-                </div>
-              ) : null}
-              {site ? (
-                <div className={styles.socialsItem}>
-                  <div className={styles.socialsIcon}>
-                    <GlobeOutlinedIcon />
-                  </div>
-                  <Text variant="body-2" color="base900">
-                    {site}
-                  </Text>
-                </div>
-              ) : null}
-              {twitter ? (
-                <div className={styles.socialsItem}>
-                  <div className={styles.socialsIcon}>
-                    <TwitterOutlinedIcon />
-                  </div>
-                  <Text variant="body-2" color="base900">
-                    {twitter}
-                  </Text>
-                </div>
-              ) : null}
-              {instagram ? (
-                <div className={styles.socialsItem}>
-                  <div className={styles.socialsIcon}>
-                    <InstagramOutlinedIcon />
-                  </div>
-                  <Text variant="body-2" color="base900">
-                    {instagram}
-                  </Text>
-                </div>
-              ) : null}
-            </div>
-          )}
-        </div>
-      </div>
+      {isGettingProfile ? <ArtCardSkeleton key={userId} /> : (
+        <Header
+          isMobile={isMobile}
+          userId={userId}
+          avatar={avatar}
+          name={name}
+          followersCount={followersCount}
+          followsCount={followsCount}
+          isUser={isUser}
+          address={address}
+          isFollowingInProcess={isFollowingInProcess}
+          handleFollowUser={handleFollowUser}
+          handleUnfollowUser={handleUnfollowUser}
+          balance={mappedBalance}
+          isFollowing={isFollowing}
+          hasSocials={hasSocials}
+          email={email}
+          site={site}
+          twitter={twitter}
+          instagram={instagram}
+        />
+      )}
       <Body userId={userId} bio={bio} />
     </div>
   );

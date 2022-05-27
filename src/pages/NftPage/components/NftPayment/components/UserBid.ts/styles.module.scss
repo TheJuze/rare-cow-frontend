@@ -1,0 +1,27 @@
+@import '/src/styles/helpers';
+
+.wrapper {
+  .body {
+    .bidder {
+      @include flex(row, center, flex-start);
+      &Name {
+        @include ellipsis;
+        max-width: 50%;
+        margin-left: space(16);
+        margin-right: space(6);
+      }
+    }
+    &Info {
+      @include flex(row, flex-start, center);
+      &Element {
+        flex: 0 0 50%;
+        &:nth-child(2n + 1) {
+          padding: space(0, 4, 4, 0);
+        }
+        &:nth-child(n + 1) {
+          padding: space(0, 0, 4, 4);
+        }
+      }
+    }
+  }
+}

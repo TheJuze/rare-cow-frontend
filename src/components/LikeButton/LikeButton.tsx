@@ -71,8 +71,10 @@ export const LikeButton: VFC<LikeButtonProps> = ({
     [dispatch, errorCallback, successCallback],
   );
 
-  const onLikeClickHandler = useCallback(() => {
+  const onLikeClickHandler = useCallback((e) => {
+    e.preventDefault();
     likeAction(nftId);
+    e.stopPropagation();
   }, [likeAction, nftId]);
 
   return (
