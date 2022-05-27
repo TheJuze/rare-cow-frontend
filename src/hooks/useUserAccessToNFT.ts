@@ -48,14 +48,14 @@ export default (nft: TNullable<TokenFull>, userId: string | number) => {
   }, [nft, isOwner, userId]);
 
   const isUserCanBuyNft = React.useMemo(() => {
-    if (userId && nft && nft.price && nft.isSelling && nft.available !== 0) {
-      if (nft.standart === 'ERC721' && !isOwner) {
+    if (userId && nft && nft.price && nft.isSelling) {
+      if (nft.standart === 'ERC721' && !isOwner && nft.available !== 0) {
         return true;
       }
       if (
         nft.standart === 'ERC1155' &&
-        ((nft.sellers?.length === 1 && nft.sellers[0].url !== userId) ||
-          (nft.sellers && nft.sellers.length > 1))
+        ((nft.sellers && nft.sellers.some((seller) => +seller.url !== +userId)) ||
+          (nft.sellers && nft.sellers.length >= 1))
       ) {
         return true;
       }

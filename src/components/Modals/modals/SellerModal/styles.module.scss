@@ -14,8 +14,11 @@
     @include middle-tablet {
       justify-content: flex-start;
     }
+    .currency{
+      margin-right: space(8);
+    }
     .quantity{
-      margin: space(0, 8);
+      margin-right: space(8);
     }
     .quantityInput{
       margin: 0 -4px;

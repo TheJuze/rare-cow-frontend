@@ -59,6 +59,8 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
     return { price: price || '0', usdPrice: usdPrice || '0' };
   }, [detailedNFT]);
 
+  console.log(isUserCanBuyNft);
+
   return (
     <div className={styles.nftPayment}>
       {isTimedAuction && (
