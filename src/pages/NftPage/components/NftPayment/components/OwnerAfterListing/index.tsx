@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { currenciesIconsMap, fromNameToCurrencyObj } from 'appConstants';
 import { Button, Input, Text } from 'components';
 import { useShallowSelector } from 'hooks';
@@ -115,43 +116,48 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({
 
   return (
     <div className={styles.wrapper}>
-      {isSingle && (
-        <div className={styles.priceSection}>
-          <div className={styles.priceField}>
-            <Input
-              label="Price"
-              caption={{
-                status: EInputStatus.COMMON,
-                caption: (
-                  <Text color="light3" size="xs">
-                    ${' '}
-                    {new BigNumber(itemsAmount * (parseFloat(price) || 0) * currentPaymentPrice)
-                      .decimalPlaces(5)
-                      .toString()}
-                  </Text>
-                ),
-              }}
-              name="price"
-              value={price}
-              endAdornment={<img src={currenciesIconsMap[currency.symbol]} alt={currency.name} />}
-              onChange={onPriceChangeHandler}
-              placeholder={detailedNFT.price}
-            />
-          </div>
-          <div className={cn(styles.priceField, styles.priceUpdater)}>
-            <Button
-              disabled={!Number.isFinite(parseFloat(price)) || +price === +detailedNFT.price}
-              variant="outlined"
-              onClick={updateClickHandler}
-            >
-              Update
-            </Button>
-          </div>
+      <div className={styles.priceSection}>
+        <div className={styles.priceField}>
+          <Input
+            label="Price"
+            caption={{
+              status: EInputStatus.COMMON,
+              caption: (
+                <Text color="light3" size="xs">
+                  ${' '}
+                  {new BigNumber(itemsAmount * (parseFloat(price) || 0) * currentPaymentPrice)
+                    .decimalPlaces(5)
+                    .toString()}
+                </Text>
+              ),
+            }}
+            name="price"
+            value={price}
+            endAdornment={<img src={currenciesIconsMap[currency.symbol]} alt={currency.name} />}
+            onChange={onPriceChangeHandler}
+            placeholder={detailedNFT.price}
+          />
         </div>
-      )}
+        <div className={cn(styles.priceField, styles.priceUpdater)}>
+          <Button
+            disabled={!Number.isFinite(parseFloat(price)) || +price === +detailedNFT.price}
+            variant="outlined"
+            onClick={updateClickHandler}
+          >
+            Update
+          </Button>
+        </div>
+      </div>
+
       {isUserCanRemoveFromSale && (
         <Button
-          disabled={!isUserCanRemoveFromSale || !isUserCanEndAuction}
+          disabled={
+            isUserCanRemoveFromSale
+              ? !isUserCanRemoveFromSale
+              : isUserCanEndAuction
+                ? !isUserCanEndAuction
+                : false
+          }
           onClick={removeClickHandler}
           className={styles.remove}
         >

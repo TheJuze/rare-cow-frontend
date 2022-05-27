@@ -21,7 +21,7 @@ export default (nft: TNullable<TokenFull>, userId: string | number) => {
       }
       if (
         nft.standart === 'ERC1155' &&
-        nft.sellers?.find((seller: Ownership) => seller.url !== String(userId)) &&
+        nft.sellers?.find((seller: Ownership) => +seller.url === +userId) &&
         isOwner
       ) {
         return true;

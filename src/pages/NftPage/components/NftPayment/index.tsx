@@ -59,14 +59,12 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
     return { price: price || '0', usdPrice: usdPrice || '0' };
   }, [detailedNFT]);
 
-  console.log(isUserCanBuyNft);
-
   return (
     <div className={styles.nftPayment}>
       {isTimedAuction && (
         <Countdown endAuction={+detailedNFT.endAuction} className={styles.countdown} />
       )}
-      {(isUserCanBuyNft || isUserCanEnterInAuction) && (
+      {(currentPrice.price) && (
         <NFTPrice
           highestBid={detailedNFT.highestBid}
           price={currentPrice.price}
