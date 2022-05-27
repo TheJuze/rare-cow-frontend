@@ -13,9 +13,11 @@ import { TokenHistory } from "./TokenHistory";
 import { Network } from "./Network";
 import { Ownership } from "./Ownership";
 import { Tag } from "./Tag";
+import { Property } from "./Property";
 
 
 export interface TokenFull {
+    is_timed_auc_selling: boolean;
     animation?: string;
     available?: number;
     bids?: Bid[];
@@ -44,7 +46,7 @@ export interface TokenFull {
     owners: Ownership[];
     price?: string;
     promotionInfo?: string;
-    properties?: string;
+    properties?: Property[];
     rankings: any;
     sellers?: Ownership[];
     standart?: string;

@@ -17,7 +17,12 @@ export default {
       data,
     });
   },
-  buy(data: { id: string | number; tokenAmount?: string | number; sellerId?: string | number }) {
+  buy(data: {
+    id: string | number;
+    tokenAmount?: string | number;
+    sellerId?: string | number;
+    currency: string;
+  }) {
     return ajax({
       method: 'post',
       url: URL.buy,
@@ -52,7 +57,6 @@ export default {
       method: 'post',
       url: URL.setOnAuction(data.id),
       data: {
-        selling: true,
         ...data,
       },
     });

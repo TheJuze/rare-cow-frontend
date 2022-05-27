@@ -3,6 +3,7 @@ import { CollectionsState } from './collections';
 import { ModalsInitialState } from './modals';
 import { NftsState } from './nft';
 import { ProfileState } from './profile';
+import { RatesState } from './rates';
 import { UserState } from './user';
 
 export * from './user';
@@ -22,4 +23,5 @@ export type State = {
   nfts: NftsState;
   collections: CollectionsState;
   profile: ProfileState;
+  rates: RatesState;
 };

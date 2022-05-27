@@ -33,18 +33,20 @@ export function* buySaga({
   // @ts-ignore
   const address = yield select(userSelector.getProp('address'));
   try {
-    yield call(approveSaga, {
-      type: actionTypes.APPROVE,
-      payload: {
-        web3Provider,
-        amount: getTokenAmount(
-          new BigNumber(amount).times(new BigNumber(tokenAmount || 1)).toFixed(),
-        ),
-        spender: ContractsNames.marketplace,
-        approveAddress: currency.isNative ? '' : ContractsNames[currency.name],
-        currency,
-      },
-    });
+    if (!currency.isNative) {
+      yield call(approveSaga, {
+        type: actionTypes.APPROVE,
+        payload: {
+          web3Provider,
+          amount: getTokenAmount(
+            new BigNumber(amount).times(new BigNumber(tokenAmount || 1)).toFixed(),
+          ),
+          spender: ContractsNames.marketplace,
+          approveAddress: ContractsNames[currency.name],
+          currency,
+        },
+      });
+    }
 
     yield put(
       setActiveModal({
@@ -53,40 +55,60 @@ export function* buySaga({
         txHash: '',
       }),
     );
-
-    const { data } = yield call(baseApi.buy, { id, tokenAmount, sellerId });
+    const { data } = yield call(baseApi.buy, {
+      id,
+      tokenAmount,
+      sellerId,
+      currency: currency.name,
+    });
 
     if (data.initial_tx) {
-      const { transactionHash } = yield call(web3Provider.eth.sendTransaction, {
-        ...data.initial_tx,
-        from: address,
-      });
+      try {
+        const { transactionHash } = yield call(web3Provider.eth.sendTransaction, {
+          ...data.initial_tx,
+          from: address,
+        });
 
-      yield call(baseApi.trackTransaction, {
-        tx_hash: String(transactionHash),
-        token: id,
-        ownership: sellerId,
-        amount,
-      });
+        yield call(baseApi.trackTransaction, {
+          tx_hash: String(transactionHash),
+          token: id,
+          ownership: sellerId,
+          amount,
+        });
 
-      yield call(getDetailedNftSaga, {
-        type: actionTypes.GET_DETAILED_NFT,
-        payload: {
-          id,
-        },
-      });
+        yield call(getDetailedNftSaga, {
+          type: actionTypes.GET_DETAILED_NFT,
+          payload: {
+            id,
+          },
+        });
 
-      // yield put(
-      //   setActiveModal({
-      //     activeModal: Modals.SendSuccess,
-      //     open: true,
-      //     txHash: transactionHash,
-      //   }),
-      // );
+        yield put(
+          setActiveModal({
+            activeModal: Modals.SendSuccess,
+            open: true,
+            txHash: transactionHash,
+          }),
+        );
 
-      yield put(apiActions.success(type));
+        yield put(apiActions.success(type));
+      } catch (e) {
+        throw new Error(e);
+      }
     } else {
       toast.error('Something went wrong');
+      yield call(baseApi.buyReject, {
+        id,
+        type: 'token',
+        owner: sellerId,
+      });
+      yield put(
+        setActiveModal({
+          activeModal: Modals.SendError,
+          open: true,
+          txHash: '',
+        }),
+      );
     }
   } catch (e: unknown) {
     yield call(baseApi.buyReject, {
@@ -94,23 +116,23 @@ export function* buySaga({
       type: 'token',
       owner: sellerId,
     });
-    // if (typeof e === 'number') {
-    //   yield put(
-    //     setActiveModal({
-    //       activeModal: e === 4001 ? Modals.SendRejected : Modals.SendError,
-    //       open: true,
-    //       txHash: '',
-    //     }),
-    //   );
-    // } else {
-    //   yield put(
-    //     setActiveModal({
-    //       activeModal: e.code === 4001 ? Modals.SendRejected : Modals.SendError,
-    //       open: true,
-    //       txHash: '',
-    //     }),
-    //   );
-    // }
+    if (typeof e === 'number') {
+      yield put(
+        setActiveModal({
+          activeModal: e === 4001 ? Modals.SendRejected : Modals.SendError,
+          open: true,
+          txHash: '',
+        }),
+      );
+    } else {
+      yield put(
+        setActiveModal({
+          activeModal: Modals.SendError,
+          open: true,
+          txHash: '',
+        }),
+      );
+    }
 
     yield put(apiActions.error(type, e));
   }

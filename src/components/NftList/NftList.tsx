@@ -11,6 +11,7 @@ import actionTypes from 'store/nfts/actionTypes';
 import { useShallowSelector } from 'hooks';
 import uiSelector from 'store/ui/selectors';
 import { RequestStatus } from 'types';
+import { createDynamicLink, routes } from 'appConstants';
 import styles from './styles.module.scss';
 
 export interface NftListProps {
@@ -49,7 +50,7 @@ export const NftList: VFC<NftListProps> = ({
       endAuction,
     } = nft;
     return (
-      <Link key={id} to="/" className={styles.card}>
+      <Link key={id} to={createDynamicLink(routes.nest.nft.path, { id })} className={styles.card}>
         <ArtCard
           id={id || 0}
           inStock={available}

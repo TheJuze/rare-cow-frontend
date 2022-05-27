@@ -11,7 +11,6 @@ import { updateUserInfo } from 'store/user/actions';
 import userSelector from 'store/user/selectors';
 
 import { Modals } from 'types';
-import { getTokenAmount } from 'utils';
 
 import { createToken } from '../actions';
 import actionTypes from '../actionTypes';
@@ -40,10 +39,10 @@ export function* createTokenSaga({
       token.append('selling', String(true));
       token.append('currency', currency.name);
       if(listType === 'Price') {
-        token.append('price', getTokenAmount(price));
+        token.append('price', price);
       }
       if(listType === 'Auction' || listType === 'Auction time') {
-        token.append('minimal_bid', getTokenAmount(price));
+        token.append('minimal_bid', price);
         if(listType === 'Auction time') {
           token.append('start_auction', String(now));
           token.append('end_auction', String(now + timestamp));

@@ -8,10 +8,9 @@
   padding: 0 20px;
   &__body {
     width: fit-content;
-    // margin: 0 auto;
     @include flex(row, center, flex-start);
     &-tab {
-      padding: 19px 0;
+      padding: 20px 0 10px;
       color: var(--tab-default);
       font-weight: 500;
       width: 110px;
@@ -34,7 +33,11 @@
         color: var(--tab-hover);
       }
       &.active-tab {
-        color: var(--tab-hover);
+        text-shadow: 0 0 .65px var(--tab-color-active), 0 0 .65px var(--tab-color-active);
+        color: var(--tab-color-active);
+        .tab-bar__wrapper__body-tab-icon__wrapper{
+          color: var(--tab-hover);
+        }
         &:after {
           transform: translateY(-100%);
         }

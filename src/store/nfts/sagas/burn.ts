@@ -30,30 +30,47 @@ export function* burnSaga({
     );
     const { data } = yield call(baseApi.burn, { id, amount });
 
-    const { transactionHash } = yield call(web3Provider.eth.sendTransaction, {
-      ...data.initial_tx,
-      from: userAddress,
-    });
+    if (data.initial_tx) {
+      const { transactionHash } = yield call(web3Provider.eth.sendTransaction, {
+        ...data.initial_tx,
+        from: userAddress,
+      });
+      yield call(getDetailedNftSaga, {
+        type: actionTypes.GET_DETAILED_NFT,
+        payload: {
+          id,
+        },
+      });
 
-    yield call(getDetailedNftSaga, {
-      type: actionTypes.GET_DETAILED_NFT,
-      payload: {
-        id,
-      },
-    });
+      yield put(
+        setActiveModal({
+          activeModal: Modals.SendSuccess,
+          open: true,
+          txHash: transactionHash,
+        }),
+      );
 
-    yield put(
-      setActiveModal({
-        activeModal: Modals.SendSuccess,
-        open: true,
-        txHash: transactionHash,
-      }),
-    );
-
-    yield put(apiActions.success(type));
+      yield put(apiActions.success(type));
+    } else {
+      yield put(apiActions.error(type));
+      yield put(
+        setActiveModal({
+          activeModal: Modals.SendError,
+          open: true,
+          txHash: '',
+        }),
+      );
+    }
   } catch (err) {
     console.log(err);
     yield put(apiActions.error(type, err));
+    yield put(
+      setActiveModal({
+        activeModal: Modals.SendError,
+        open: true,
+        txHash: '',
+      }),
+    );
   }
 }
 

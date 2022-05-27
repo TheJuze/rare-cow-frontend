@@ -53,14 +53,15 @@ export function* transferSaga({
     );
 
     yield put(apiActions.success(type));
-  } catch (err: unknown) {
-    // yield put(
-    //   setActiveModal({
-    //     activeModal: err.code === 4001 ? Modals.SendRejected : Modals.SendError,
-    //     open: true,
-    //     txHash: '',
-    //   }),
-    // );
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    yield put(
+      setActiveModal({
+        activeModal: err.code === 4001 ? Modals.SendRejected : Modals.SendError,
+        open: true,
+        txHash: '',
+      }),
+    );
     yield put(apiActions.error(type, err));
   }
 }

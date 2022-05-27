@@ -30,5 +30,7 @@ export { ImageIconSVG } from './components/ImageIcon';
 export { TrashIcon } from './components/Trash';
 export { ArrowGreen } from './components/ArrowGreen';
 export { ExitSVG } from './components/Exit';
+export { PlaceABidIcon } from './components/PlaceABid';
+export { BurnActionIcon } from './components/BurnAction';
 export * from './socials';
 export * from './pages';

@@ -35,6 +35,7 @@
 @import './component-variables/avatar-uploader';
 @import './component-variables/nft-page';
 @import './component-variables/connect-modals';
+@import './component-variables/modals';
 
 :root {
 	$colors:(
@@ -75,6 +76,7 @@
 		$avatarUploaderColorsDefault,
 		$nftpageColorsDefault,
 		$connectModalColorsDefault,
+		$modalsColorsDefault,
 	);
 
 	@each $key_name in $colors {

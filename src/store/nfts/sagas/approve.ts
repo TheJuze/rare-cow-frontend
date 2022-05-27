@@ -41,7 +41,7 @@ export function* approveSaga({
         // allowance
         try {
           yield call(
-            tokenContract.methods.approve(spender, new BigNumber(amount).toString()).send,
+            tokenContract.methods.approve(spenderAddress, new BigNumber(amount).toString()).send,
             {
               from: myAddress,
             },

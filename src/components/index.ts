@@ -34,4 +34,5 @@ export * from './Modal';
 export * from './Modals';
 export * from './FollowButton';
 export * from './ArtCardSkeleton';
+export * from './Number';
 export * from './NftList';
