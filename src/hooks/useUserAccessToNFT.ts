@@ -54,8 +54,7 @@ export default (nft: TNullable<TokenFull>, userId: string | number) => {
       }
       if (
         nft.standart === 'ERC1155' &&
-        ((nft.sellers && nft.sellers.some((seller) => +seller.url !== +userId)) ||
-          (nft.sellers && nft.sellers.length >= 1))
+        ((nft.sellers && nft.sellers.some((seller) => +seller.url !== +userId)))
       ) {
         return true;
       }
