@@ -7,7 +7,7 @@ import { Ownership, TokenFull } from 'types/api';
 import {
   NFTPrice, OwnerAfterListing, OwnerListing, UserBuy,
 } from './components';
-import { UserBid } from './components/UserBid.ts';
+import { UserBid } from './components/UserBid';
 
 import styles from './styles.module.scss';
 

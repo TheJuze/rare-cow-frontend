@@ -1,4 +1,6 @@
 /* eslint-disable max-len */
+import { toast } from 'react-toastify';
+
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
@@ -6,6 +8,8 @@ import { baseApi } from 'store/api/apiRequestBuilder';
 import { ContractsNames } from 'config';
 import { getTokenAmount } from 'utils';
 
+import { setActiveModal } from 'store/modals/reducer';
+import { Modals } from 'types';
 import { bid } from '../actions';
 import actionTypes from '../actionTypes';
 import { approveSaga } from './approve';
@@ -43,26 +47,26 @@ export function* bidNftSaga({
         id,
       },
     });
-
+    toast.success('Success bid');
     yield put(apiActions.success(type));
   } catch (err: unknown) {
-    // if (typeof err === 'number') {
-    //   yield put(
-    //     setActiveModal({
-    //       activeModal: err === 4001 ? Modals.SendRejected : Modals.SendError,
-    //       open: true,
-    //       txHash: '',
-    //     }),
-    //   );
-    // } else {
-    //   yield put(
-    //     setActiveModal({
-    //       activeModal: err.code === 4001 ? Modals.SendRejected : Modals.SendError,
-    //       open: true,
-    //       txHash: '',
-    //     }),
-    //   );
-    // }
+    if (typeof err !== 'number') {
+      yield put(
+        setActiveModal({
+          activeModal: err === 4001 ? Modals.SendRejected : Modals.SendError,
+          open: true,
+          txHash: '',
+        }),
+      );
+    } else {
+      yield put(
+        setActiveModal({
+          activeModal: Modals.SendError,
+          open: true,
+          txHash: '',
+        }),
+      );
+    }
     yield put(apiActions.error(type, err));
   }
 }
