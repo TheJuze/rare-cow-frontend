@@ -63,52 +63,36 @@ export function* buySaga({
     });
 
     if (data.initial_tx) {
-      try {
-        const { transactionHash } = yield call(web3Provider.eth.sendTransaction, {
-          ...data.initial_tx,
-          from: address,
-        });
-
-        yield call(baseApi.trackTransaction, {
-          tx_hash: String(transactionHash),
-          token: id,
-          ownership: sellerId,
-          amount,
-        });
-
-        yield call(getDetailedNftSaga, {
-          type: actionTypes.GET_DETAILED_NFT,
-          payload: {
-            id,
-          },
-        });
-
-        yield put(
-          setActiveModal({
-            activeModal: Modals.SendSuccess,
-            open: true,
-            txHash: transactionHash,
-          }),
-        );
-
-        yield put(apiActions.success(type));
-      } catch (e) {
-        throw new Error(e);
-      }
-    } else {
-      toast.error('Something went wrong');
-      yield call(baseApi.buyReject, {
-        id,
-        type: 'token',
-        owner: sellerId,
+      const { transactionHash } = yield call(web3Provider.eth.sendTransaction, {
+        ...data.initial_tx,
+        from: address,
       });
+
+      yield call(baseApi.trackTransaction, {
+        tx_hash: String(transactionHash),
+        token: id,
+        ownership: sellerId,
+        amount,
+      });
+
+      yield call(getDetailedNftSaga, {
+        type: actionTypes.GET_DETAILED_NFT,
+        payload: {
+          id,
+        },
+      });
+
       yield put(
         setActiveModal({
-          activeModal: Modals.SendError,
+          activeModal: Modals.SendSuccess,
           open: true,
-          txHash: '',
+          txHash: transactionHash,
         }),
       );
+
+      yield put(apiActions.success(type));
+    } else {
+      toast.error('Something went wrong');
     }
   } catch (e: unknown) {
     yield call(baseApi.buyReject, {
@@ -116,7 +100,7 @@ export function* buySaga({
       type: 'token',
       owner: sellerId,
     });
-    if (typeof e === 'number') {
+    if (typeof e !== 'number') {
       yield put(
         setActiveModal({
           activeModal: e === 4001 ? Modals.SendRejected : Modals.SendError,

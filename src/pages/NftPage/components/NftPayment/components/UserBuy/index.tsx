@@ -4,6 +4,7 @@ import { useModals, useShallowSelector } from 'hooks';
 import React, { useCallback, VFC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useWalletConnectorContext } from 'services';
+import { setModalProps } from 'store/modals/reducer';
 import { buy } from 'store/nfts/actions';
 import userSelector from 'store/user/selectors';
 import { Chains, Modals, WalletProviders } from 'types';
@@ -39,6 +40,13 @@ export const UserBuy: VFC<IUserBuy> = ({
             currency: tokenCurrency,
             amount: seller.price || normalPrice,
             web3Provider: walletService.Web3(),
+          }),
+        );
+        dispatch(
+          setModalProps({
+            onApprove: () => handleBuyAction(seller, amount),
+            onSendAgain: () => handleBuyAction(seller, amount),
+            onTryAgain: () => handleBuyAction(seller, amount),
           }),
         );
       }
