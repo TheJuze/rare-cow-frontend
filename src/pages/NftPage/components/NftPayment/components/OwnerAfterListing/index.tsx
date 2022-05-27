@@ -148,20 +148,15 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({
           </Button>
         </div>
       </div>
-
       {isUserCanRemoveFromSale && (
         <Button
           disabled={
-            isUserCanRemoveFromSale
-              ? !isUserCanRemoveFromSale
-              : isUserCanEndAuction
-                ? !isUserCanEndAuction
-                : false
+            isAuction ? !isUserCanEndAuction : !isUserCanRemoveFromSale
           }
           onClick={removeClickHandler}
           className={styles.remove}
         >
-          Remove from {isUserCanEndAuction ? 'auction' : 'sale'}
+          Remove from {isAuction ? 'auction' : 'sale'}
         </Button>
       )}
     </div>
