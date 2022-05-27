@@ -1,4 +1,5 @@
 import { URL } from 'appConstants';
+import { Chains } from 'types';
 import {
   GetCategoriesReq,
   RequestWithNetwork,
@@ -44,7 +45,7 @@ export const baseApi = {
       params,
     });
   },
-  searchSingleCollection(data: { id: string | number; network: string }) {
+  searchSingleCollection(data: { id: string | number; network: Chains }) {
     return ajax({
       method: 'get',
       url: URL.getSingleCollection(data.id),

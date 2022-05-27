@@ -4,18 +4,29 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useMemo, useState, VFC } from 'react';
-import { ArtCard, Button, FilterChips, Text } from 'components';
+import { Button, FilterChips, NftList, Text } from 'components';
 
-import { nfts } from 'components/ArtCard/ArtCard.mock';
-import { Link } from 'react-router-dom';
 import { FiltersIcon } from 'assets/icons/icons';
 import { initialFiltersState, useFilters } from 'hooks';
 import { Filters } from 'containers/Filters/Filters';
+import { TokenFull } from 'types/api';
 import styles from './styles.module.scss';
 
-interface IBodyProps {}
+interface IBodyProps {
+  nfts: TokenFull[];
+  currentPage: number;
+  totalPages: number;
+  isNftsLoading: boolean;
+  onLoadMoreClick: (page: number) => void;
+}
 
-const Body: VFC<IBodyProps> = () => {
+const Body: VFC<IBodyProps> = ({
+  nfts,
+  currentPage,
+  totalPages,
+  isNftsLoading,
+  onLoadMoreClick,
+}) => {
   const [isShowFilters, setIsShowFilters] = useState(false);
   const [isShowChips, setIsShowChips] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState(initialFiltersState);
@@ -30,7 +41,14 @@ const Body: VFC<IBodyProps> = () => {
           appliedFilters.minPrice ||
           appliedFilters.maxPrice,
       ),
-    [appliedFilters.currency.length, appliedFilters.isAuction, appliedFilters.maxPrice, appliedFilters.minPrice, appliedFilters.orderBy, appliedFilters.standart.length],
+    [
+      appliedFilters.currency.length,
+      appliedFilters.isAuction,
+      appliedFilters.maxPrice,
+      appliedFilters.minPrice,
+      appliedFilters.orderBy,
+      appliedFilters.standart.length,
+    ],
   );
 
   const onApply = useCallback(() => {
@@ -52,7 +70,6 @@ const Body: VFC<IBodyProps> = () => {
     setAppliedFilters(initialFiltersState);
   }, [handleClearFilters]);
 
-  const minSize = 264;
   return (
     <div className={styles.body}>
       <div className={styles.bodyTop}>
@@ -89,53 +106,18 @@ const Body: VFC<IBodyProps> = () => {
           handleClearFilters={handleClearChips}
           isWithCollections={false}
         />
-        <div
-          className={styles.bodyResults}
-          style={{
-            gridTemplateColumns:
-              nfts.length !== 0 ? `repeat(auto-fill,minmax(${minSize}px,1fr))` : '1fr',
-          }}
-        >
-          {nfts.map((nft) => {
-            const {
-              id,
-              name,
-              price,
-              highestBid,
-              minimalBid,
-              media,
-              currency,
-              creator,
-              isAucSelling,
-              standart,
-              likeCount,
-              isLiked,
-              available,
-              endAuction,
-            } = nft;
-            return (
-              <Link key={id} to="/" className={styles.card}>
-                <ArtCard
-                  id={id || 0}
-                  inStock={available}
-                  name={name}
-                  price={price || highestBid?.amount || minimalBid}
-                  media={media || ''}
-                  currency={currency?.image || ''}
-                  authorName={creator?.name || ''}
-                  authorAvatar={creator?.avatar || ''}
-                  authorId={creator?.url || '0'}
-                  isAuction={isAucSelling || Boolean(endAuction)}
-                  likeCount={likeCount}
-                  isLiked={isLiked}
-                  standart={standart}
-                  endAuction={endAuction}
-                  className={styles.card}
-                />
-              </Link>
-            );
-          })}
-        </div>
+        <NftList nfts={nfts} currentPage={currentPage} />
+        {!isNftsLoading && currentPage < totalPages && (
+          <Button
+            className={styles.load}
+            onClick={() => onLoadMoreClick(currentPage + 1)}
+            variant="outlined"
+          >
+            <Text className={styles.loadText} color="accent">
+              Load more
+            </Text>
+          </Button>
+        )}
       </div>
     </div>
   );

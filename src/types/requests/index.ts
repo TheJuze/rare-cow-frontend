@@ -136,7 +136,7 @@ export type RequestWithId = {
 
 export type GetSingleCollectionReq = {
   id: number | string;
-  network: string;
+  network: Chains;
 };
 
 export type GetTrendingNftsReq = {
