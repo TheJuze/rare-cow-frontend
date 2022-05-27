@@ -50,13 +50,17 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
     if (highestBid && price && usdPrice) {
       if (detailedNFT.isAucSelling || detailedNFT.isTimedAucSelling) {
         if (!highestBid) {
-          return { price, usdPrice };
+          return { price, usdPrice, is: true };
         }
         const { currency } = highestBid;
-        return { price: highestBid.amount, usdPrice: +highestBid.amount * (+currency?.rate || 1) };
+        return {
+          price: highestBid.amount,
+          usdPrice: +highestBid.amount * (+currency?.rate || 1),
+          is: true,
+        };
       }
     }
-    return { price: price || '0', usdPrice: usdPrice || '0' };
+    return { price: price || '0', usdPrice: usdPrice || '0', is: false };
   }, [detailedNFT]);
 
   return (
@@ -64,7 +68,7 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
       {isTimedAuction && (
         <Countdown endAuction={+detailedNFT.endAuction} className={styles.countdown} />
       )}
-      {(currentPrice.price) && (
+      {currentPrice.is && (
         <NFTPrice
           highestBid={detailedNFT.highestBid}
           price={currentPrice.price}
