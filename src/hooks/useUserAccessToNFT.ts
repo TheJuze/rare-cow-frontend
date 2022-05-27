@@ -14,7 +14,7 @@ export default (nft: TNullable<TokenFull>, userId: string | number) => {
     if (userId && nft) {
       if (
         nft.standart === 'ERC721' &&
-        (nft.isSelling || nft.isAucSelling || nft.isTimedAucSelling) &&
+        (nft.isSelling || (nft.isAucSelling && !nft.bids)) &&
         isOwner
       ) {
         return true;
