@@ -14,7 +14,7 @@ import nftsSelector from 'store/nfts/selectors';
 import cx from 'classnames';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react';
-
+import { createDynamicLink, routes } from 'appConstants';
 import { ArtCard, Text } from 'components';
 
 import { useShallowSelector, useWindowState } from 'hooks';
@@ -62,9 +62,7 @@ const Trending: FC<Props> = ({ className }) => {
 
   const fetchTrendingNfts = useCallback(() => {
     dispatch(
-      getTrending(
-        title.name !== CategoryName.allCategories ? { tags: title?.id } : { tags: '' },
-      ),
+      getTrending(title.name !== CategoryName.allCategories ? { tags: title?.id } : { tags: '' }),
     );
   }, [dispatch, title]);
 
@@ -90,12 +88,10 @@ const Trending: FC<Props> = ({ className }) => {
         >
           Trending in
           {categories?.length ? (
-            <TitleDropdown
-              value={title}
-              setValue={setTitle}
-              options={categories}
-            />
-          ) : ' All Categories'}
+            <TitleDropdown value={title} setValue={setTitle} options={categories} />
+          ) : (
+            ' All Categories'
+          )}
         </Text>
         {nfts.length ? (
           <div className={cx(styles.drops, { [styles.row]: nfts.length <= 3 })}>
@@ -162,7 +158,10 @@ const Trending: FC<Props> = ({ className }) => {
                     } = nft;
                     return (
                       <SwiperSlide key={id}>
-                        <Link to="/" className={styles.drop}>
+                        <Link
+                          to={createDynamicLink(routes.nest.nft.path, { id })}
+                          className={styles.drop}
+                        >
                           <ArtCard
                             id={id || 0}
                             inStock={available}
@@ -204,7 +203,11 @@ const Trending: FC<Props> = ({ className }) => {
                   endAuction,
                 } = nft;
                 return (
-                  <Link key={id} to="/" className={cx(styles.drop, styles.dropDouble)}>
+                  <Link
+                    key={id}
+                    to={createDynamicLink(routes.nest.nft.path, { id })}
+                    className={cx(styles.drop, styles.dropDouble)}
+                  >
                     <ArtCard
                       id={id || 0}
                       inStock={available}
