@@ -4,6 +4,7 @@ import nftSagas from './nfts/sagas';
 import collectionsSaga from './collections/sagas';
 import profileSaga from './profile/sagas';
 import ratesSagas from './rates/sagas';
+import promotes from './promotion/sagas';
 
 export default function* rootSaga() {
   yield fork(userSaga);
@@ -11,4 +12,5 @@ export default function* rootSaga() {
   yield fork(collectionsSaga);
   yield fork(profileSaga);
   yield fork(ratesSagas);
+  yield fork(promotes);
 }

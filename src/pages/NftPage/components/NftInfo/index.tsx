@@ -1,7 +1,7 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable arrow-body-style */
 import React, { FC, useCallback, useMemo, useState } from 'react';
-import { BurnModal, LikeButton, Text } from 'components';
+import { BurnModal, Button, LikeButton, Text } from 'components';
 
 import { Dots } from 'assets/icons/icons';
 import { sliceString } from 'utils';
@@ -65,6 +65,10 @@ const NftInfo: FC<Props> = ({
     changeModalType(Modals.Burn);
   }, [changeModalType]);
 
+  const onPromoteClickHandler = useCallback(() => {
+    changeModalType(Modals.Promote);
+  }, [changeModalType]);
+
   return (
     <div className={styles.nftInfo}>
       <BurnModal
@@ -87,6 +91,7 @@ const NftInfo: FC<Props> = ({
           <div className={styles.actionItem}>
             <LikeButton nftId={String(id)} likesCount={likeCount} isLiked={isLiked} />
           </div>
+          {isOwner && <Button onClick={onPromoteClickHandler}>Promote</Button>}
         </div>
       </div>
       <Text variant="body-2" color="metal800">

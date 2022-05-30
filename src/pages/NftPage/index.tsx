@@ -11,7 +11,7 @@ import { TAudioPreview } from 'components/Preview/AudioPreview';
 import { TImagePreview } from 'components/Preview/ImagePreview';
 import { TVideoPreview } from 'components/Preview/VideoPreview';
 import { TThreePreview } from 'components/Preview/ThreePreview';
-import { getPreviewer } from 'components';
+import { getPreviewer, PromoteModal } from 'components';
 import { clearDetailedNft } from 'store/nfts/reducer';
 import userSelector from 'store/user/selectors';
 import { NftCreators, NftInfo, NftOwners, NftPayment } from './components';
@@ -105,6 +105,7 @@ const NftPage: FC = () => {
           normalPrice={nft.price}
           isAuction={nft.isAucSelling || nft.isTimedAucSelling}
         />
+        <PromoteModal />
       </div>
     );
   }
@@ -143,6 +144,7 @@ const NftPage: FC = () => {
           normalPrice={nft.price}
           isAuction={nft.isAucSelling || nft.isTimedAucSelling}
         />
+        <PromoteModal />
       </div>
     </div>
   );

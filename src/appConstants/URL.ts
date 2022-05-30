@@ -44,9 +44,15 @@ const ratesURLs = {
   rates: '/rates/',
 };
 
+const promotionURLs = {
+  promotion: '/promotion/',
+  premiumPromotion: '/promotion/premium',
+};
+
 export default {
   ...accountURLs,
   ...storeURLs,
   ...activityURLs,
   ...ratesURLs,
+  ...promotionURLs,
 };

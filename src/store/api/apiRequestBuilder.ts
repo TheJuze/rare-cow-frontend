@@ -15,6 +15,7 @@ import ajax from './ajax';
 import createApiCalls from './createApiCalls';
 import NftApiCalls from './nftApiCalls';
 import profileApiCalls from './profileApiCalls';
+import promoteApiCalls from './promoteApiCalls';
 
 export const baseApi = {
   getTrendingNfts(params: { type: string }) {
@@ -85,4 +86,5 @@ export const baseApi = {
   ...NftApiCalls,
   ...activityApiCalls,
   ...accountApiCalls,
+  ...promoteApiCalls,
 };

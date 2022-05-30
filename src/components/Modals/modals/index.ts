@@ -7,3 +7,4 @@ export { default as SendSuccessModal } from './SendSuccessModal';
 export { default as QuantityModal } from './QuantityModal';
 export { default as ConnectWalletModal } from './ConnectWallet';
 export { default as SellersModal } from './SellerModal';
+export { default as PromoteModal } from './Promote';
