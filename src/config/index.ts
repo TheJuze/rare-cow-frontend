@@ -160,7 +160,7 @@ export const contractsConfig: IContracts = {
       testnet: {
         address: {
           [Chains.bsc]: '0xbA9669b82011ed728A87278CD6B9Daf6A8Bf11F9',
-          [Chains.polygon]: '0xC3ff779C932B6f75716c159318C02cF52cCB4056',
+          [Chains.polygon]: '0x15D71fC965a7dA2cF3eE953dd1944Cf2A2a8fcd2',
         },
         abi: erc721Abi,
       },
@@ -190,7 +190,7 @@ export const contractsConfig: IContracts = {
       testnet: {
         address: {
           [Chains.bsc]: '0xf58248adaDE39b1ECA2e59Ff6219642aE0Ea2Bf5',
-          [Chains.polygon]: '0x87e2F2bD5f60A8bb4eAEB24caAA280eA1d1559c0',
+          [Chains.polygon]: '0xD5176936bCe2d492262C874306612fc2f7c24FD8',
         },
         abi: erc1155Abi,
       },
