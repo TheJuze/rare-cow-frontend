@@ -93,6 +93,7 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
             nftSupply={+currentOwnerNFTInfo?.quantity}
             collectionAddress={detailedNFT.collection?.address}
             internalNftId={String(detailedNFT.internalId)}
+            userId={String(userId)}
           />
         ))}
       <>

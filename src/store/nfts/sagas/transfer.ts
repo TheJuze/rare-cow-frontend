@@ -16,7 +16,7 @@ import { getDetailedNftSaga } from './getDetailedNft';
 export function* transferSaga({
   type,
   payload: {
-    id, address, amount, web3Provider,
+    id, address, amount, web3Provider, userId,
   },
 }: ReturnType<typeof transfer>) {
   yield put(apiActions.request(type));
@@ -36,6 +36,15 @@ export function* transferSaga({
       ...data.initial_tx,
       from: userAddress,
     });
+
+    // TODO: раскоментировать, когда на бэке разберутся с треком транзакции для трансефра
+    console.log(userId);
+    // yield call(baseApi.trackTransaction, {
+    //   tx_hash: String(transactionHash),
+    //   token: id,
+    //   ownership: userId,
+    //   amount,
+    // });
 
     yield call(getDetailedNftSaga, {
       type: actionTypes.GET_DETAILED_NFT,

@@ -16,6 +16,7 @@ import { useShallowSelector } from 'hooks';
 import uiSelector from 'store/ui/selectors';
 import { useDispatch } from 'react-redux';
 import { setModalProps } from 'store/modals/reducer';
+import { useNavigate } from 'react-router-dom';
 import styles from './styles.module.scss';
 
 interface ICreateCollectionForm {
@@ -33,6 +34,7 @@ const captionGenerator = (touched: boolean, errors: string | undefined) => {
 };
 
 export const CreateCollectionForm: VFC<ICreateCollectionForm> = ({ handleSubmit, formValues }) => {
+  const navigate = useNavigate();
   const { [actionTypes.CREATE_COLLECTION]: collectionCreateRequest } = useShallowSelector(
     uiSelector.getUI,
   );
@@ -54,6 +56,10 @@ export const CreateCollectionForm: VFC<ICreateCollectionForm> = ({ handleSubmit,
     );
     handleSubmitAction(values, actions);
   }, [dispatch, handleSubmitAction]);
+
+  const onCancelClick = useCallback(() => {
+    navigate(routes.nest.create.path);
+  }, [navigate]);
   return (
     <Formik
       validationSchema={Yup.object().shape({
@@ -70,10 +76,11 @@ export const CreateCollectionForm: VFC<ICreateCollectionForm> = ({ handleSubmit,
       initialValues={{ ...formValues }}
       onSubmit={(values, actions) => onSubmitClick(values, actions)}
       enableReinitialize
+      validateOnChange
       validateOnBlur
     >
       {({
-        errors, touched, values, handleBlur, setFieldValue, handleSubmit: submitForm,
+        errors, touched, values, setFieldValue, handleBlur, handleSubmit: submitForm,
       }) => (
         <Form className={styles.wrapper}>
           <div className={styles.uploader}>
@@ -203,7 +210,7 @@ export const CreateCollectionForm: VFC<ICreateCollectionForm> = ({ handleSubmit,
                 <Button
                   className={cx(styles.fullSize, styles.regular)}
                   variant="outlined"
-                  to={routes.nest.create.path}
+                  onClick={onCancelClick}
                   disabled={collectionCreateRequest === RequestStatus.REQUEST}
                 >
                   Cancel

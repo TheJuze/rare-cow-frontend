@@ -1,17 +1,37 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable arrow-body-style */
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import logo from 'assets/img/logo.png';
 
 import { Button, Text } from 'components';
 
-import { useBreakpoints } from 'hooks';
+import { useBreakpoints, useShallowSelector } from 'hooks';
 import { createDynamicLink, routes } from 'appConstants';
-import { CategoryName } from 'types';
+import { CategoryName, Modals } from 'types';
+import { useDispatch } from 'react-redux';
+import { setActiveModal } from 'store/modals/reducer';
+import userSelector from 'store/user/selectors';
+import { useNavigate } from 'react-router-dom';
 import styles from './styles.module.scss';
 
 const Banner: FC = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isDefaultScreen = useBreakpoints([1179]);
+  const address = useShallowSelector(userSelector.getProp('address'));
+  const handleClickButton = useCallback(() => {
+    if (address?.length) {
+      navigate(routes.nest.create.path);
+    } else {
+      dispatch(
+        setActiveModal({
+          activeModal: Modals.ConnectWallet,
+          txHash: '',
+          open: true,
+        }),
+      );
+    }
+  }, [address?.length, dispatch, navigate]);
   return (
     <div className={styles.banner}>
       <div className={styles.bannerBody}>
@@ -43,7 +63,7 @@ const Banner: FC = () => {
             >
               Explore
             </Button>
-            <Button variant="outlined" className={styles.btn} to={routes.nest.create.path}>
+            <Button variant="outlined" className={styles.btn} onClick={handleClickButton}>
               Create
             </Button>
           </div>

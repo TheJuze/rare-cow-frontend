@@ -90,7 +90,7 @@ const NftPage: FC = () => {
         <NftCreators
           creatorAvatar={nft.creator.avatar}
           creatorId={String(nft.creator.url)}
-          creatorName={nft.creator.displayName}
+          creatorName={nft.creator.name}
           collectionAvatar={nft.collection.avatar}
           collectionId={String(nft.collection.url)}
           collectionName={nft.collection.name}
@@ -128,7 +128,7 @@ const NftPage: FC = () => {
         <NftCreators
           creatorAvatar={nft.creator.avatar}
           creatorId={String(nft.creator.url)}
-          creatorName={nft.creator.displayName}
+          creatorName={nft.creator.name}
           collectionAvatar={nft.collection.avatar}
           collectionId={String(nft.collection.url)}
           collectionName={nft.collection.name}

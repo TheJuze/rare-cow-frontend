@@ -27,6 +27,7 @@ const Profile: VFC = () => {
   const { walletService } = useWalletConnectorContext();
   const { userId } = useParams();
   const id = useShallowSelector(userSelector.getProp('id'));
+  console.log('userId', userId, 'id', id);
   const isUser = useMemo(() => String(userId) === String(id), [id, userId]);
   const balance = useShallowSelector(userSelector.getProp('balance'));
   const {
