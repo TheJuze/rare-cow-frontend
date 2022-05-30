@@ -32,5 +32,6 @@ export { ArrowGreen } from './components/ArrowGreen';
 export { ExitSVG } from './components/Exit';
 export { PlaceABidIcon } from './components/PlaceABid';
 export { BurnActionIcon } from './components/BurnAction';
+export { PromoteModalIcon } from './components/PromoteModal';
 export * from './socials';
 export * from './pages';

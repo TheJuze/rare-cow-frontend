@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import { combineProviders } from 'utils';
 import { WalletConnectContext } from 'services';
+import { PromoteProvider } from 'context/Promote';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './store/configureStore';
@@ -13,6 +14,7 @@ import store from './store/configureStore';
 const CombinedProviders = combineProviders([
   WalletConnectContext,
   BrowserRouter,
+  PromoteProvider,
   [PersistGate, { loading: null, persistor: store.persistor }],
   [Provider, { store: store.store }],
 ]);

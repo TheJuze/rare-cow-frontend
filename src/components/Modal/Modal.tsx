@@ -15,7 +15,7 @@ export interface ModalProps {
   containerClassName?: string;
   visible: boolean;
   onClose: () => void;
-  title: string | JSX.Element,
+  title?: string | JSX.Element,
   maxWidth?: number,
 }
 
@@ -25,7 +25,7 @@ export const Modal: React.FC<ModalProps> = ({
   visible,
   onClose,
   children,
-  title,
+  title = '',
   maxWidth,
 }) => {
   const escFunction = useCallback(

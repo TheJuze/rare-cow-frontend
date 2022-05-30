@@ -13,6 +13,7 @@ export enum Modals {
   Burn = 'Burn',
   none = 'none',
   ConnectWallet = 'ConnectWallet',
+  Promote = 'Promote',
 }
 
 export interface ModalState {
