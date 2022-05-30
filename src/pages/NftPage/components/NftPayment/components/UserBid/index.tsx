@@ -12,6 +12,7 @@ import React, {
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useWalletConnectorContext } from 'services';
+import { setModalProps } from 'store/modals/reducer';
 import { bid } from 'store/nfts/actions';
 import userSelector from 'store/user/selectors';
 import {
@@ -65,6 +66,13 @@ export const UserBid: VFC<IUserBid> = ({ detailedNFT }) => {
   const onBidClickHandler = useCallback(() => {
     const highestBidAmount = +highestBid.amount || +detailedNFT.price || 0;
     if (highestBidAmount < +bidValue) {
+      dispatch(
+        setModalProps({
+          onApprove: () => onBidClickHandler(),
+          onSendAgain: () => onBidClickHandler(),
+          onTryAgain: () => onBidClickHandler(),
+        }),
+      );
       dispatch(
         bid({
           id: detailedNFT.id,

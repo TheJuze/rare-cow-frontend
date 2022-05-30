@@ -14,6 +14,7 @@ import ApproveErrorModal from 'components/Modals/modals/ApproveErrorModal';
 
 import { useModals, useShallowSelector } from 'hooks';
 import { Modals } from 'types';
+import SendErrorModal from 'components/Modals/modals/SendErrorModal';
 
 const ModalsComponent: VFC = () => {
   const { modalType, closeModals } = useModals();
@@ -57,6 +58,12 @@ const ModalsComponent: VFC = () => {
         visible={modalType === Modals.SendRejected}
         onClose={() => closeModals()}
         onSendAgain={'onSendAgain' in modalProps ? modalProps.onSendAgain : undefined}
+      />
+      <SendErrorModal
+        withSteps={'withSteps' in modalProps ? modalProps.withSteps : true}
+        visible={modalType === Modals.SendError}
+        onClose={() => closeModals()}
+        onTryAgain={'onTryAgain' in modalProps ? modalProps.onTryAgain : undefined}
       />
       <ConnectWalletModal
         visible={modalType === Modals.ConnectWallet}

@@ -35,6 +35,13 @@ export function* approveSaga({
   });
 
   if (!currency.isNative) {
+    yield put(
+      setActiveModal({
+        activeModal: Modals.ApprovePending,
+        open: true,
+        txHash: '',
+      }),
+    );
     try {
       const allowance = yield call(tokenContract.methods.allowance(myAddress, spenderAddress).call);
       if (+allowance < +amount) {
@@ -47,6 +54,13 @@ export function* approveSaga({
             },
           );
           yield put(apiActions.success(type));
+          yield put(
+            setActiveModal({
+              activeModal: Modals.none,
+              open: true,
+              txHash: '',
+            }),
+          );
         } catch (e: unknown) {
           yield put(apiActions.error(type, e));
           throw e;
@@ -54,6 +68,23 @@ export function* approveSaga({
       }
     } catch (e) {
       yield put(apiActions.error(type, e));
+      if (typeof e !== 'number') {
+        yield put(
+          setActiveModal({
+            activeModal: e === 4001 ? Modals.SendRejected : Modals.SendError,
+            open: true,
+            txHash: '',
+          }),
+        );
+      } else {
+        yield put(
+          setActiveModal({
+            activeModal: Modals.SendError,
+            open: true,
+            txHash: '',
+          }),
+        );
+      }
       throw e;
     }
   } else {
