@@ -49,10 +49,14 @@ const PromoteModal: VFC = () => {
   );
 
   return (
-    <Modal visible={modalType === Modals.Promote} onClose={closeModals}>
+    <Modal
+      outerClassName={styles.wrapper}
+      visible={modalType === Modals.Promote}
+      onClose={closeModals}
+    >
       <div className={styles.heading}>
         <PromoteModalIcon />
-        <Text variant="heading-2">Pricing promote</Text>
+        <Text className={styles.headingTitle} weight="bold" color="base900" variant="heading-2">Pricing promote</Text>
       </div>
       <div className={styles.selectPromotion}>
         <Selector
@@ -76,7 +80,9 @@ const PromoteModal: VFC = () => {
                   promotionOption={promoteOption}
                   key={promoteOption.package}
                   promotionType={isRightOption ? PromotionType.Featured : PromotionType.Premium}
-                  isSelected={promoteOption.package === selectedOption.package}
+                  isSelected={
+                    selectedOption ? promoteOption.package === selectedOption.package : false
+                  }
                   setIsSelected={selectOptionHandler}
                 />
               ),

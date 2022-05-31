@@ -19,6 +19,7 @@ const promotionSelector = {
           groups[type][name] = options;
         }
       } else {
+        groups[type] = {};
         groups[type][name] = options;
       }
     }, []);

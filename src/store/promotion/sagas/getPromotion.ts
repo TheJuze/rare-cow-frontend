@@ -13,7 +13,7 @@ export function* getPromotesSaga({ type }: ReturnType<typeof getPromotions>) {
   yield put(request(type));
   try {
     const { data } = yield call(baseApi.getPromotes);
-    const camelizeData = camelize(data.results);
+    const camelizeData = camelize(data);
     yield put(setPromoteState(camelizeData as PromotionSettings[]));
     yield put(success(type));
   } catch (err) {
@@ -23,7 +23,7 @@ export function* getPromotesSaga({ type }: ReturnType<typeof getPromotions>) {
 }
 
 function* getPromotesSagaListener() {
-  yield takeLatest(promoteActionTypes.SET_PROMOTION_OPTION, getPromotesSaga);
+  yield takeLatest(promoteActionTypes.SET_PROMOTION_SETTINGS, getPromotesSaga);
 }
 
 export default getPromotesSagaListener;

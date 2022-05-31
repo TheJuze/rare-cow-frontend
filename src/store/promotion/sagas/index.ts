@@ -1,8 +1,8 @@
 import { fork } from 'redux-saga/effects';
 import getPromotesSagaListener from './getPromotion';
 
-function* ratesSagas() {
+function* promoteSaga() {
   yield fork(getPromotesSagaListener);
 }
 
-export default ratesSagas;
+export default promoteSaga;

@@ -1,0 +1,12 @@
+@import '/src/styles/helpers';
+
+.wrapper{
+    max-width: 90%;
+}
+
+.heading{
+    @include flex(row, center, center);
+    &Title{
+        margin-left: space(8);
+    }
+}
