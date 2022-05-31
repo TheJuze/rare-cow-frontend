@@ -85,6 +85,13 @@ export const OwnerListing: VFC<IOwnerListing> = ({
           break;
         }
       }
+      dispatch(
+        setModalProps({
+          onApprove: () => onListing(values),
+          onSendAgain: () => onListing(values),
+          onTryAgain: () => onListing(values),
+        }),
+      );
     },
     [collectionAddress, dispatch, internalNftId, nftId, nftType, walletService],
   );

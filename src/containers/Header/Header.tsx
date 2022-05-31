@@ -226,7 +226,7 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect }) => {
           <SearchInput
             searchValue={searchValue}
             isSearchResultsLoading={isSearchResultsLoading}
-            presearchedNfts={presearchedNfts}
+            presearchedNfts={searchValue ? presearchedNfts : []}
             onSearchValueChange={handleSearch}
             classNameInput={s.headerInput}
             sendIsSearchActive={handleSearchActive}

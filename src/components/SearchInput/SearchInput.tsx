@@ -17,6 +17,7 @@ import { Button } from 'components/Button';
 import { Input } from 'components/Input';
 import { TokenFastSearch } from 'types/api/TokenFastSearch';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { createDynamicLink, routes } from 'appConstants';
 import styles from './styles.module.scss';
 import { SearchItem } from './components/SearchItem';
 
@@ -79,8 +80,7 @@ export const SearchInput: VFC<SearchInputProps> = ({
   const handleNavigate = useCallback(
     (id) => () => {
       handleSearchActiveOff();
-      // TODO: add nft link
-      navigate(`/${id}`);
+      navigate(createDynamicLink(routes.nest.nft.path, { id }));
     },
     [handleSearchActiveOff, navigate],
   );

@@ -115,7 +115,7 @@ export const UserBid: VFC<IUserBid> = ({ detailedNFT }) => {
               </div>
               <div className={styles.bodyInfoElement}>
                 <Button
-                  disabled={errorsList.length > 0 || bidValue.length === 0}
+                  disabled={errorsList.length > 0 || bidValue.length === 0 || new BigNumber(bidValue).isLessThanOrEqualTo(highestBid.amount || detailedNFT.price)}
                   endAdornment={<PlaceABidIcon className={styles.bidIcon} />}
                   onClick={onBidClickHandler}
                   className={styles.placeBid}

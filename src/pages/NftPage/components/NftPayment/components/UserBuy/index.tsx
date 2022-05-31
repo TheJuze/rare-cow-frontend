@@ -70,10 +70,10 @@ export const UserBuy: VFC<IUserBuy> = ({
   const handleChooseSeller = useCallback(
     (seller: Ownership, amount: string) => {
       if (seller) {
-        handleBuyAction(seller, amount);
+        handleBuyAction(seller, isMultiple ? amount : '0');
       }
     },
-    [handleBuyAction],
+    [handleBuyAction, isMultiple],
   );
 
   return (
