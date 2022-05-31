@@ -64,7 +64,7 @@ export default (nft: TNullable<TokenFull>, userId: string | number) => {
 
   const isUserCanEnterInAuction = React.useMemo(() => {
     if (userId && nft && (nft.isAucSelling || nft?.isTimedAucSelling)) {
-      if (nft.standart === 'ERC721' && !isOwner && String(nft.highestBid.user.id) !== String(userId)) {
+      if (nft.standart === 'ERC721' && !isOwner && String(nft.highestBid?.user?.id) !== String(userId)) {
         return true;
       }
     }
