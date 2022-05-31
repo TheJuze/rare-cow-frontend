@@ -208,7 +208,6 @@ export const Dropdown: VFC<DropdownProps> = ({
               size={variant === 'transparent' ? 'sm' : 'md'}
               onChange={setSearchingValue}
               endAdornment={isSearching ? <Loader size="extra-sm" variant="gray50" /> : <svg />}
-              disabled={isSearching}
               className="dropdown-search-input"
             />
           )}

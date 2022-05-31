@@ -3,7 +3,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/no-array-index-key */
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
@@ -19,6 +19,8 @@ import { ArtCard, Text } from 'components';
 
 import { useShallowSelector, useWindowState } from 'hooks';
 import { CategoryName } from 'types';
+// import actionTypes from 'store/nfts/actionTypes';
+// import uiSelector from 'store/ui/selectors';
 import { TitleDropdown } from './components';
 
 import 'swiper/swiper.less';
@@ -35,6 +37,9 @@ const Trending: FC<Props> = ({ className }) => {
   const categories = useShallowSelector(nftsSelector.getProp('categories'));
   const nfts = useShallowSelector(nftsSelector.getProp('trending'));
   const dispatch = useDispatch();
+  // const {
+  //   [actionTypes.GET_TRENDING]: fetchingTrending,
+  // } = useShallowSelector(uiSelector.getUI);
   const [title, setTitle] = useState<any>({ name: CategoryName.allCategories, id: 0 });
   const [numberOfSlide, setNumberOfSlide] = useState(3);
   const { width } = useWindowState();
@@ -59,6 +64,8 @@ const Trending: FC<Props> = ({ className }) => {
   useEffect(() => {
     setNumberOfSlide(slidesToShow(width));
   }, [width]);
+
+  const isSwiper = useMemo(() => nfts.length > numberOfSlide, [nfts.length, numberOfSlide]);
 
   const fetchTrendingNfts = useCallback(() => {
     dispatch(
@@ -94,8 +101,8 @@ const Trending: FC<Props> = ({ className }) => {
           )}
         </Text>
         {nfts.length ? (
-          <div className={cx(styles.drops, { [styles.row]: nfts.length <= 3 })}>
-            {nfts.length > numberOfSlide ? (
+          <div className={cx(styles.drops, { [styles.row]: nfts.length <= numberOfSlide })}>
+            {isSwiper ? (
               <>
                 <div
                   ref={prevRef}

@@ -1,6 +1,12 @@
 import {
+  createDynamicLink,
   currencies,
-  getExtension, getFileGroup, routes, standardsMap, TAvailableExtensions, TStandards,
+  getExtension,
+  getFileGroup,
+  routes,
+  standardsMap,
+  TAvailableExtensions,
+  TStandards,
 } from 'appConstants';
 import { Text } from 'components';
 import { MATIC_ADDRESS } from 'config';
@@ -53,9 +59,10 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
   );
 
   const dispatch = useDispatch();
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
   const chain = useShallowSelector(userSelector.getProp('chain'));
+  const id = useShallowSelector(userSelector.getProp('id'));
   const { amount: feeAmount } = useShallowSelector(nftSelector.getProp('fees'));
   const { walletService } = useWalletConnectorContext();
 
@@ -90,10 +97,14 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
         newTokenForm.append('cover', values.preview[0]);
       }
       newTokenForm.append('total_supply', values.quantity);
-      const defaultCollection = collections.find((collection) => collection.isDefault &&
-      collection.standart === createType);
+      const defaultCollection = collections.find(
+        (collection) => collection.isDefault && collection.standart === createType,
+      );
       const selectedCollection = values.collection.collections?.[0];
-      newTokenForm.append('collection', selectedCollection ? selectedCollection.url : defaultCollection.url);
+      newTokenForm.append(
+        'collection',
+        selectedCollection ? selectedCollection.url : defaultCollection.url,
+      );
       newTokenForm.append('fee_address', MATIC_ADDRESS);
       dispatch(
         createToken({
@@ -101,11 +112,12 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
           web3: walletService.Web3(),
           listingInfo: values.listing,
           onEnd: () => resolve(null),
-          onSuccess: () => navigator(routes.path),
+          onSuccess: () => navigate(createDynamicLink(routes.nest.profile.nest.owned.path,
+            { userId: id })),
         }),
       );
     }),
-    [collections, createType, dispatch, navigator, walletService],
+    [collections, createType, dispatch, id, navigate, walletService],
   );
 
   useEffect(() => {
