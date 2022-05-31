@@ -104,6 +104,7 @@ const NftPage: FC = () => {
           currency={nft.currency}
           normalPrice={nft.price}
           isAuction={nft.isAucSelling || nft.isTimedAucSelling}
+          isMultiple={nft.standart === 'ERC1155'}
         />
       </div>
     );
@@ -142,6 +143,7 @@ const NftPage: FC = () => {
           currency={nft.currency}
           normalPrice={nft.price}
           isAuction={nft.isAucSelling || nft.isTimedAucSelling}
+          isMultiple={nft.standart === 'ERC1155'}
         />
       </div>
     </div>
