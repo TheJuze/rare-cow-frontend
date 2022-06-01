@@ -24,3 +24,4 @@ export * from './UserSlim';
 export * from './enums';
 export * from './Rates';
 export * from './Property';
+export * from './Promotion';

@@ -1,20 +1,25 @@
 import React, {
-  useCallback, useMemo, useState, VFC,
+  useCallback, useEffect, useMemo, useState, VFC,
 } from 'react';
 
 import cn from 'clsx';
 import { Text } from 'components/Typography';
-import { PromotionType } from 'types/api';
-import { currencies, currenciesIconsMap, TCurrencies } from 'appConstants';
+import { PromotionType, Rates } from 'types/api';
+import {
+  currencies, currenciesIconsMap, fromNameToCurrencyObj, TCurrencies,
+} from 'appConstants';
 import { CheckboxButton } from 'components/CheckboxButton';
 import { Button } from 'components/Button';
-import { ExtendedPromotionOption } from 'types';
+import { ExtendedPromotionOption, TBalance } from 'types';
 import styles from './styles.module.scss';
 
 interface IPromoteCard {
   promotionType: PromotionType;
   promotionOption: ExtendedPromotionOption;
   isSelected: boolean;
+  balance: TBalance;
+  rates: Rates[];
+  isBuying?: boolean;
   setIsSelected: (option: ExtendedPromotionOption) => void;
   onBuy: (option: ExtendedPromotionOption) => void;
 }
@@ -23,6 +28,9 @@ export const PromoteCard: VFC<IPromoteCard> = ({
   promotionOption,
   isSelected,
   promotionType,
+  balance,
+  rates,
+  isBuying,
   setIsSelected,
   onBuy,
 }) => {
@@ -46,15 +54,44 @@ export const PromoteCard: VFC<IPromoteCard> = ({
     }
   }, [promotionOption.clicks, promotionOption.days, promotionType]);
 
+  const canPay = useMemo(() => Object.entries(balance).some(([token, tokenBalance]) => {
+    const tokenRate = rates.find((rate) => rate.symbol === token);
+    if(tokenRate) {
+      return +tokenBalance * +tokenRate.rate > +promotionOption.usdPrice;
+    }
+    return false;
+  }), [balance, promotionOption.usdPrice, rates]);
+
+  useEffect(() => {
+    Object.entries(balance).forEach(([token, tokenBalance]) => {
+      const tokenRate = rates.find((rate) => rate.symbol === token);
+      if(tokenRate) {
+        if(+tokenBalance * +tokenRate.rate > +promotionOption.usdPrice) {
+          setSelectedCurrency(fromNameToCurrencyObj(token));
+        }
+      }
+    });
+  }, [balance, promotionOption.usdPrice, rates]);
+
   return (
     <div
       onClick={() => setIsSelected(promotionOption)}
-      className={cn(styles.wrapper, { [styles.selected]: isSelected })}
+      className={cn(styles.wrapper, {
+        [styles.selected]: isSelected,
+        [styles.disabled]: !canPay || isBuying,
+      })}
     >
       <div className={styles.pricing}>
-        <Text variant="heading-2" color="metal700" weight="bold" tag="span">${promotionOption.usdPrice}</Text>
-        <Text tag="span" color="metal700" className={styles.slash}>/</Text>
-        <Text tag="span" color="accent"> {timestampString} </Text>
+        <Text variant="heading-2" color="metal700" weight="bold" tag="span">
+          ${promotionOption.usdPrice}
+        </Text>
+        <Text tag="span" color="metal700" className={styles.slash}>
+          /
+        </Text>
+        <Text tag="span" color="accent">
+          {' '}
+          {timestampString}{' '}
+        </Text>
       </div>
       <hr className={styles.hr} />
       <div className={styles.currency}>
@@ -74,12 +111,22 @@ export const PromoteCard: VFC<IPromoteCard> = ({
               isChecked={currency.name === selectedCurrency.name}
               onChange={onCurrencyClickHandler(currency)}
               className={styles.listingCurrencyItem}
+              disabled={
+                +balance[currency.name] *
+                  +(rates.find((rate) => rate.symbol === currency.name)?.rate || 0) <
+                +promotionOption.usdPrice
+              }
             />
           </div>
         ))}
       </div>
       <div className={styles.pay}>
-        <Button onClick={() => onBuy({ ...promotionOption, currency: selectedCurrency })} className={styles.payBtn} variant={isSelected ? 'filled' : 'outlined'}>
+        <Button
+          onClick={() => onBuy({ ...promotionOption, currency: selectedCurrency })}
+          className={styles.payBtn}
+          variant={isSelected ? 'filled' : 'outlined'}
+          disabled={!canPay}
+        >
           Pay
         </Button>
       </div>

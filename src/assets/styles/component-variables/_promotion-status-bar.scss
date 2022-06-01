@@ -1,0 +1,11 @@
+@import '/src/styles/variables';
+
+$promotionStatusBarColorsDefault:(
+  'promotion-status-bar-promote-background': #F0F3FF,
+  'promotion-status-bar-promote-border': 1px solid $accent-2,
+  'promotion-status-bar-promote-color': $accent,
+
+  'promotion-status-bar-queued-background': $metal-100,
+  'promotion-status-bar-queued-border': 1px solid $metal-400,
+  'promotion-status-bar-queued-color': $metal-600,
+)

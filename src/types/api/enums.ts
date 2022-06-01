@@ -20,6 +20,12 @@ export enum PromotionType {
     Featured = "Featured",
     Premium = "Premium"
 } 
+
+export enum PromotionStatus {
+    WaitingList = "Waiting list",
+    InProgress = "In progress",
+    Finished = "Finished",
+}
  
 export enum State {
     Pending = "Pending",

@@ -84,6 +84,7 @@ const NftPage: FC = () => {
           isMultiple={nft.standart === 'ERC1155'}
           maxBurnAmount={+currentOwnerData?.quantity || 0}
           canBurn={isUserCanBurn}
+          promotionInfo={nft.promotionInfo}
         />
         <div className={styles.nftImage}>{previewComponent}</div>
         <NftPayment detailedNFT={nft} />
@@ -125,6 +126,7 @@ const NftPage: FC = () => {
           isMultiple={nft.standart === 'ERC1155'}
           maxBurnAmount={+currentOwnerData?.quantity || 0}
           canBurn={isUserCanBurn}
+          promotionInfo={nft.promotionInfo}
         />
         <NftPayment detailedNFT={nft} />
         <NftCreators

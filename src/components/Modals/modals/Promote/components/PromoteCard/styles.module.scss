@@ -8,10 +8,15 @@
   border: var(--promote-card-border);
   @include transition;
   &:hover {
-    transform: translateY(-10px);
+    &:not(.disabled){
+      transform: translateY(-10px);
+    }
     &:not(.selected) {
       cursor: pointer;
     }
+  }
+  &.disabled{
+    pointer-events: none;
   }
   &.selected {
     background: var(--selected-promote-card-background);

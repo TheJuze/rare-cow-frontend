@@ -11,6 +11,7 @@ export interface CheckboxButtonProps {
   isChecked: boolean;
   onChange: () => void;
   content: any;
+  disabled?: boolean;
 }
 
 export const CheckboxButton: VFC<CheckboxButtonProps> = ({
@@ -18,12 +19,14 @@ export const CheckboxButton: VFC<CheckboxButtonProps> = ({
   isChecked,
   onChange,
   content,
+  disabled = false,
 }) => {
   return (
     <button
       type="button"
       className={cn(styles.checkboxButton, className, { [styles.active]: isChecked })}
       onClick={() => onChange()}
+      disabled={disabled}
     >
       {content}
     </button>

@@ -37,6 +37,7 @@
 @import './component-variables/connect-modals';
 @import './component-variables/modals';
 @import './component-variables/promote-card';
+@import './component-variables/promotion-status-bar';
 
 :root {
 	$colors:(
@@ -79,6 +80,7 @@
 		$connectModalColorsDefault,
 		$modalsColorsDefault,
 		$promoteCardColorsDefault,
+		$promotionStatusBarColorsDefault,
 	);
 
 	@each $key_name in $colors {

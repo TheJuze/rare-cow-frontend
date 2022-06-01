@@ -19,9 +19,23 @@ export function* buyPromotesSaga({ type, payload }: ReturnType<typeof buyPromoti
     const {
       tokenId, web3Provider, currency,
     } = payload;
-    const { data } = yield call(baseApi.payPromotes, { token_id: tokenId, currency, package: payload['package'] });
+    const { data } = yield call(baseApi.payPromotes, { token_id: tokenId, currency: currency.name, package: payload['package'] });
     const userAddress: string = yield select(userSelector.getProp('address'));
     if (data) {
+      if(!currency.isNative) {
+        // yield call(approveNftSaga, {
+        //   type: actionTypes.APPROVE,
+        //   payload: {
+        //     web3Provider,
+        //     amount: getTokenAmount(
+        //       new BigNumber(amount).times(new BigNumber(tokenAmount || 1)).toFixed(),
+        //     ),
+        //     spender: ContractsNames.marketplace,
+        //     approveAddress: ContractsNames[currency.name],
+        //     currency,
+        //   },
+        // });
+      }
       const { transactionHash } = yield call(web3Provider.eth.sendTransaction, {
         ...data,
         from: userAddress,

@@ -12,7 +12,10 @@ import { useWalletConnectorContext } from 'services';
 import { buyPromotion, getPromotions } from 'store/promotion/actions';
 import { setSelectedOption } from 'store/promotion/reducer';
 import promotionSelector from 'store/promotion/selectors';
+import { getRates } from 'store/rates/actions';
+import ratesSelector from 'store/rates/selectors';
 import uiSelector from 'store/ui/selectors';
+import userSelector from 'store/user/selectors';
 import {
   Chains, ExtendedPromotionOption, Modals, RequestStatus,
 } from 'types';
@@ -35,18 +38,29 @@ const PromoteModal: VFC<IPromoteModal> = ({ tokenId }) => {
 
   const promoteByGroups = useShallowSelector(promotionSelector.getPromoteByGroups);
   const selectedOption = useShallowSelector(promotionSelector.getProp('selectedOption'));
+  const balance = useShallowSelector(userSelector.getProp('balance'));
+  const rates = useShallowSelector(ratesSelector.getProp('rates'));
+  const network = useShallowSelector(userSelector.getProp('chain'));
 
-  const [isPromoteFetching] = useShallowSelector(uiSelector.getStatus(['SET_PROMOTION_SETTINGS']));
+  const [isPromoteFetching, isRatesFetching, isBuyingPromoting] = useShallowSelector(
+    uiSelector.getStatus(['SET_PROMOTION_SETTINGS', 'GET_RATES', 'BUY_PROMOTION']),
+  );
 
   useEffect(() => {
     dispatch(getPromotions());
-  }, [dispatch]);
+    dispatch(getRates({
+      network: network || Chains.polygon,
+    }));
+  }, [dispatch, network]);
 
   useEffect(() => {
     setIsFetching(
-      isPromoteFetching === RequestStatus.SUCCESS || isPromoteFetching === RequestStatus.ERROR,
+      isPromoteFetching === RequestStatus.SUCCESS ||
+        isPromoteFetching === RequestStatus.ERROR ||
+        isRatesFetching === RequestStatus.SUCCESS ||
+        isRatesFetching === RequestStatus.ERROR,
     );
-  }, [isPromoteFetching]);
+  }, [isPromoteFetching, isRatesFetching]);
 
   const selectOptionHandler = useCallback(
     (option: ExtendedPromotionOption) => {
@@ -55,18 +69,25 @@ const PromoteModal: VFC<IPromoteModal> = ({ tokenId }) => {
     [dispatch],
   );
 
-  const onBuyClickHandler = useCallback((promoteOption: ExtendedPromotionOption) => {
-    dispatch(buyPromotion({
-      web3Provider: walletService.Web3(),
-      package: promoteOption.package,
-      currency: promoteOption.currency.name,
-      tokenId,
-    }));
-  }, [dispatch, tokenId, walletService]);
+  const onBuyClickHandler = useCallback(
+    (promoteOption: ExtendedPromotionOption) => {
+      dispatch(
+        buyPromotion({
+          web3Provider: walletService.Web3(),
+          package: promoteOption.package,
+          currency: promoteOption.currency,
+          tokenId,
+        }),
+      );
+    },
+    [dispatch, tokenId, walletService],
+  );
 
   return (
     <Modal
+      modalClassName={styles.modal}
       outerClassName={styles.wrapper}
+      closeClassName={styles.close}
       visible={modalType === Modals.Promote}
       onClose={closeModals}
       title=""
@@ -98,6 +119,9 @@ const PromoteModal: VFC<IPromoteModal> = ({ tokenId }) => {
               (promoteOption) => (
                 <div className={styles.promotionPlansItem}>
                   <PromoteCard
+                    isBuying={isBuyingPromoting === RequestStatus.REQUEST}
+                    rates={rates}
+                    balance={balance}
                     promotionOption={promoteOption}
                     key={promoteOption.package}
                     promotionType={isLeftOption ? PromotionType.Premium : PromotionType.Featured}

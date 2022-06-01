@@ -13,6 +13,9 @@
   &:hover {
     border-color: var(--checkboxButton-hover-border-color);
   }
+  &:disabled{
+    filter: grayscale(1);
+  }
   &.active {
     background: var(--checkboxButton-active-background-color);
     background: var(--checkboxButton-active-border-color);
