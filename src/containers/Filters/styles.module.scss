@@ -19,6 +19,10 @@
   .currency {
     @include flex(row, center, center);
     gap: 8px;
+    .rate{
+      width: 20px;
+      height: 20px;
+    }
   }
   .auction {
     margin-top: space(17);
