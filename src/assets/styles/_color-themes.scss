@@ -36,6 +36,7 @@
 @import './component-variables/nft-page';
 @import './component-variables/connect-modals';
 @import './component-variables/modals';
+@import './component-variables/promote-card';
 
 :root {
 	$colors:(
@@ -77,6 +78,7 @@
 		$nftpageColorsDefault,
 		$connectModalColorsDefault,
 		$modalsColorsDefault,
+		$promoteCardColorsDefault,
 	);
 
 	@each $key_name in $colors {

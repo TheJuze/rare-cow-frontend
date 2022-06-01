@@ -16,6 +16,7 @@ interface IPromoteCard {
   promotionOption: ExtendedPromotionOption;
   isSelected: boolean;
   setIsSelected: (option: ExtendedPromotionOption) => void;
+  onBuy: (option: ExtendedPromotionOption) => void;
 }
 
 export const PromoteCard: VFC<IPromoteCard> = ({
@@ -23,6 +24,7 @@ export const PromoteCard: VFC<IPromoteCard> = ({
   isSelected,
   promotionType,
   setIsSelected,
+  onBuy,
 }) => {
   const [selectedCurrency, setSelectedCurrency] = useState(currencies[0]);
   const onCurrencyClickHandler = useCallback(
@@ -50,11 +52,11 @@ export const PromoteCard: VFC<IPromoteCard> = ({
       className={cn(styles.wrapper, { [styles.selected]: isSelected })}
     >
       <div className={styles.pricing}>
-        <Text>$ {promotionOption.usdPrice}</Text>
-        <Text>/</Text>
-        <Text> {timestampString} </Text>
+        <Text variant="heading-2" color="metal700" weight="bold" tag="span">${promotionOption.usdPrice}</Text>
+        <Text tag="span" color="metal700" className={styles.slash}>/</Text>
+        <Text tag="span" color="accent"> {timestampString} </Text>
       </div>
-      <hr />
+      <hr className={styles.hr} />
       <div className={styles.currency}>
         {currencies.map((currency) => (
           <div className={styles.currencyItemWrapper}>
@@ -76,8 +78,8 @@ export const PromoteCard: VFC<IPromoteCard> = ({
           </div>
         ))}
       </div>
-      <div>
-        <Button className={styles.payBtn} variant={isSelected ? 'filled' : 'outlined'}>
+      <div className={styles.pay}>
+        <Button onClick={() => onBuy({ ...promotionOption, currency: selectedCurrency })} className={styles.payBtn} variant={isSelected ? 'filled' : 'outlined'}>
           Pay
         </Button>
       </div>

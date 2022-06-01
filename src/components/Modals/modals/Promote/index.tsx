@@ -8,7 +8,8 @@ import React, {
   useCallback, useEffect, useState, VFC,
 } from 'react';
 import { useDispatch } from 'react-redux';
-import { getPromotions } from 'store/promotion/actions';
+import { useWalletConnectorContext } from 'services';
+import { buyPromotion, getPromotions } from 'store/promotion/actions';
 import { setSelectedOption } from 'store/promotion/reducer';
 import promotionSelector from 'store/promotion/selectors';
 import uiSelector from 'store/ui/selectors';
@@ -20,11 +21,17 @@ import { PromoteCard } from './components/PromoteCard';
 
 import styles from './styles.module.scss';
 
-const PromoteModal: VFC = () => {
+interface IPromoteModal {
+  tokenId: number;
+}
+
+const PromoteModal: VFC<IPromoteModal> = ({ tokenId }) => {
   const { closeModals, modalType } = useModals();
-  const [isRightOption, setIsRightOption] = useState(false);
+  const [isLeftOption, setIsLeftOption] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
   const dispatch = useDispatch();
+
+  const { walletService } = useWalletConnectorContext();
 
   const promoteByGroups = useShallowSelector(promotionSelector.getPromoteByGroups);
   const selectedOption = useShallowSelector(promotionSelector.getProp('selectedOption'));
@@ -48,43 +55,59 @@ const PromoteModal: VFC = () => {
     [dispatch],
   );
 
+  const onBuyClickHandler = useCallback((promoteOption: ExtendedPromotionOption) => {
+    dispatch(buyPromotion({
+      web3Provider: walletService.Web3(),
+      package: promoteOption.package,
+      currency: promoteOption.currency.name,
+      tokenId,
+    }));
+  }, [dispatch, tokenId, walletService]);
+
   return (
     <Modal
       outerClassName={styles.wrapper}
       visible={modalType === Modals.Promote}
       onClose={closeModals}
+      title=""
     >
       <div className={styles.heading}>
         <PromoteModalIcon />
-        <Text className={styles.headingTitle} weight="bold" color="base900" variant="heading-2">Pricing promote</Text>
+        <Text className={styles.headingTitle} weight="bold" color="base900" variant="heading-2">
+          Pricing promote
+        </Text>
       </div>
       <div className={styles.selectPromotion}>
         <Selector
-          value={isRightOption}
-          setValue={setIsRightOption}
+          value={isLeftOption}
+          setValue={setIsLeftOption}
           optionLeft="Premium Listing"
           optionRight="Featured listing"
+          className={styles.selectPromotionSelector}
         />
         <Text className={styles.selectPromotionDescription}>
-          {isRightOption
+          {isLeftOption
             ? 'Your NFT will be listed on the main page'
             : 'Your NFT will be at the top of category page'}
         </Text>
       </div>
       {isFetching ? (
-        <div>
+        <div className={styles.promotionPlans}>
           {promoteByGroups ? (
-            promoteByGroups[isRightOption ? 'Featured' : 'Premium'][Chains.polygon].map(
+            promoteByGroups[isLeftOption ? 'Premium' : 'Featured'][Chains.polygon].map(
               (promoteOption) => (
-                <PromoteCard
-                  promotionOption={promoteOption}
-                  key={promoteOption.package}
-                  promotionType={isRightOption ? PromotionType.Featured : PromotionType.Premium}
-                  isSelected={
-                    selectedOption ? promoteOption.package === selectedOption.package : false
-                  }
-                  setIsSelected={selectOptionHandler}
-                />
+                <div className={styles.promotionPlansItem}>
+                  <PromoteCard
+                    promotionOption={promoteOption}
+                    key={promoteOption.package}
+                    promotionType={isLeftOption ? PromotionType.Premium : PromotionType.Featured}
+                    isSelected={
+                      selectedOption ? promoteOption.package === selectedOption.package : false
+                    }
+                    setIsSelected={selectOptionHandler}
+                    onBuy={onBuyClickHandler}
+                  />
+                </div>
               ),
             )
           ) : (
@@ -92,7 +115,9 @@ const PromoteModal: VFC = () => {
           )}
         </div>
       ) : (
-        <Loader />
+        <div className={styles.promotionPlans}>
+          <Loader />
+        </div>
       )}
     </Modal>
   );

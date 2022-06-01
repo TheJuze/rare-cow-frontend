@@ -1,12 +1,49 @@
 @import '/src/styles/helpers';
 
 .wrapper{
-    max-width: 90%;
+    max-width: 1080px;
 }
 
 .heading{
     @include flex(row, center, center);
     &Title{
         margin-left: space(8);
+    }
+}
+
+.selectPromotion{
+    margin: space(23) auto;
+    max-width: 420px;
+    @include flex(column, center, flex-start);
+    &Selector{
+        max-width: 365px;
+    }
+    &Description{
+        margin-top: space(23);
+    }
+}
+
+.promotionPlans{
+    width: 100%;
+    @include flex(row, center, center, wrap);
+    &Item{
+        flex: 0 0 33.333%;
+        padding: space(12);
+    }
+}
+
+@include large-tablet{
+    .promotionPlans{
+        &Item{
+            flex: 0 0 50%;
+        }
+    }
+}
+
+@include middle-tablet{
+    .promotionPlans{
+        &Item{
+            flex: 0 0 100%;
+        }
     }
 }

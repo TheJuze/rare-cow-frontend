@@ -15,4 +15,5 @@ export interface PromotionSettings {
     options: PromotionOptions[];
     slots: number;
     type?: PromotionType;
+    availableSlots: number;
 }

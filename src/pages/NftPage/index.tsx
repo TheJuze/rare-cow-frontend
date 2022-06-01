@@ -105,7 +105,7 @@ const NftPage: FC = () => {
           normalPrice={nft.price}
           isAuction={nft.isAucSelling || nft.isTimedAucSelling}
         />
-        <PromoteModal />
+        <PromoteModal tokenId={nft.id} />
       </div>
     );
   }
@@ -144,7 +144,7 @@ const NftPage: FC = () => {
           normalPrice={nft.price}
           isAuction={nft.isAucSelling || nft.isTimedAucSelling}
         />
-        <PromoteModal />
+        <PromoteModal tokenId={nft.id} />
       </div>
     </div>
   );
