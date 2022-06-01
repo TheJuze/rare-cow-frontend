@@ -11,6 +11,8 @@ import { formatDigits } from 'utils/numberFormatter';
 import { toast } from 'react-toastify';
 import { like } from 'store/nfts/actions';
 import { useDispatch } from 'react-redux';
+import { useShallowSelector } from 'hooks';
+import userSelector from 'store/user/selectors';
 
 export interface LikeButtonProps {
   className?: string;
@@ -27,6 +29,7 @@ export interface LikeButtonProps {
 export const LikeButton: VFC<LikeButtonProps> = ({
   className, likesCount, isLiked, nftId,
 }) => {
+  const isUser = useShallowSelector(userSelector.getProp('isUser'));
   const [liked, setLiked] = useState(isLiked);
   const [count, setCount] = useState(likesCount);
 
@@ -85,6 +88,7 @@ export const LikeButton: VFC<LikeButtonProps> = ({
       className={cn(className, 'likeButton', { liked })}
       active={liked}
       onClick={onLikeClickHandler}
+      disabled={!isUser}
     >
       {formatDigits(count)}
     </Button>

@@ -114,7 +114,7 @@ const Header: VFC<IHeaderProps> = ({
               </Button>
             ) : (
               <FollowButton
-                disabled={isFollowingInProcess}
+                disabled={isFollowingInProcess || !isUser}
                 onClick={() => (isFollowing ? handleUnfollowUser(userId) : handleFollowUser(userId))}
                 isFollowing={isFollowing}
                 className={styles.edit}
@@ -185,7 +185,7 @@ const Header: VFC<IHeaderProps> = ({
             </Button>
           ) : (
             <FollowButton
-              disabled={isFollowingInProcess}
+              disabled={isFollowingInProcess || !isUser}
               onClick={() => (isFollowing ? handleUnfollowUser(userId) : handleFollowUser(userId))}
               isFollowing={isFollowing}
               className={styles.edit}
