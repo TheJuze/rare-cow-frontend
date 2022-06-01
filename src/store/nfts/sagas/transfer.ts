@@ -37,14 +37,12 @@ export function* transferSaga({
       from: userAddress,
     });
 
-    // TODO: раскоментировать, когда на бэке разберутся с треком транзакции для трансефра
-    console.log(userId);
-    // yield call(baseApi.trackTransaction, {
-    //   tx_hash: String(transactionHash),
-    //   token: id,
-    //   ownership: userId,
-    //   amount,
-    // });
+    yield call(baseApi.trackTransaction, {
+      tx_hash: String(transactionHash),
+      token: id,
+      ownership: userId,
+      amount,
+    });
 
     yield call(getDetailedNftSaga, {
       type: actionTypes.GET_DETAILED_NFT,

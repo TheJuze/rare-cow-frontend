@@ -61,7 +61,7 @@ const NftPage: FC = () => {
     return getPreviewer(previewerProps, nft?.format);
   }, [nft?.format, previewerProps]);
 
-  const { isOwner, isUserCanEnterInAuction } = useGetUserAccessForNft(nft, userId);
+  const { isOwner, isUserCanBurn } = useGetUserAccessForNft(nft, userId);
   const currentOwnerData = useMemo(
     () => nft?.owners?.find((owner) => +owner.url === userId),
     [nft?.owners, userId],
@@ -83,7 +83,7 @@ const NftPage: FC = () => {
           isOwner={isOwner}
           isMultiple={nft.standart === 'ERC1155'}
           maxBurnAmount={+currentOwnerData?.quantity || 0}
-          canBurn={isUserCanEnterInAuction}
+          canBurn={isUserCanBurn}
         />
         <div className={styles.nftImage}>{previewComponent}</div>
         <NftPayment detailedNFT={nft} />
@@ -123,7 +123,7 @@ const NftPage: FC = () => {
           isOwner={isOwner}
           isMultiple={nft.standart === 'ERC1155'}
           maxBurnAmount={+currentOwnerData?.quantity || 0}
-          canBurn={isUserCanEnterInAuction}
+          canBurn={isUserCanBurn}
         />
         <NftPayment detailedNFT={nft} />
         <NftCreators

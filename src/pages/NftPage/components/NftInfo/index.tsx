@@ -11,6 +11,7 @@ import { Modals } from 'types';
 import { useDispatch } from 'react-redux';
 import { burn } from 'store/nfts/actions';
 import { useWalletConnectorContext } from 'services';
+import { setModalProps } from 'store/modals/reducer';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -55,6 +56,12 @@ const NftInfo: FC<Props> = ({
           id,
           amount,
           web3Provider: walletService.Web3(),
+        }),
+      );
+      dispatch(
+        setModalProps({
+          onSendAgain: () => onBurnHandler(amount),
+          onTryAgain: () => onBurnHandler(amount),
         }),
       );
     },
