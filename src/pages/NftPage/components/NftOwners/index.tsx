@@ -18,6 +18,7 @@ type Props = {
   currency: Currency;
   normalPrice: string;
   isAuction: boolean;
+  isMultiple: boolean;
 };
 
 const NftOwners: FC<Props> = ({
@@ -29,6 +30,7 @@ const NftOwners: FC<Props> = ({
   currency,
   normalPrice,
   isAuction,
+  isMultiple,
 }) => {
   const options = useMemo(
     () => [
@@ -88,6 +90,7 @@ const NftOwners: FC<Props> = ({
                   owner={owner}
                   isSelling
                   isAuction={isAuction}
+                  isMultiple={isMultiple}
                 />
               ))}
               {notSellingOwners.map((owner) => (
@@ -97,6 +100,7 @@ const NftOwners: FC<Props> = ({
                   currency={currency}
                   owner={owner}
                   isAuction={isAuction}
+                  isMultiple={isMultiple}
                 />
               ))}
             </>

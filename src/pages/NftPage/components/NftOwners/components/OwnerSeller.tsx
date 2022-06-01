@@ -5,6 +5,7 @@ import {
 import React, { useCallback, useState, VFC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useWalletConnectorContext } from 'services';
+import { setModalProps } from 'store/modals/reducer';
 import { buy } from 'store/nfts/actions';
 import { Currency, Ownership } from 'types/api';
 import styles from '../styles.module.scss';
@@ -16,10 +17,11 @@ interface IOwnerSeller {
   nftId: string;
   normalPrice: string;
   isAuction: boolean;
+  isMultiple: boolean;
 }
 
 export const OwnerSeller: VFC<IOwnerSeller> = ({
-  owner, isSelling = false, currency, nftId, normalPrice, isAuction,
+  owner, isSelling = false, currency, nftId, normalPrice, isAuction, isMultiple,
 }) => {
   const [quantity, setQuantity] = useState('1');
   const dispatch = useDispatch();
@@ -35,15 +37,22 @@ export const OwnerSeller: VFC<IOwnerSeller> = ({
       dispatch(
         buy({
           id: nftId,
-          tokenAmount: quantity,
+          tokenAmount: isMultiple ? quantity : '0',
           amount: owner.price || normalPrice,
           sellerId: owner.url,
           currency: tokenCurrency,
           web3Provider: walletService.Web3(),
         }),
       );
+      dispatch(
+        setModalProps({
+          onApprove: () => handleBuyAction(),
+          onSendAgain: () => handleBuyAction(),
+          onTryAgain: () => handleBuyAction(),
+        }),
+      );
     }
-  }, [currency, dispatch, nftId, normalPrice, owner, quantity, walletService]);
+  }, [currency, dispatch, isMultiple, nftId, normalPrice, owner, quantity, walletService]);
 
   return (
     <div className={styles.owner}>

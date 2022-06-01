@@ -202,6 +202,7 @@ export type SearchNftReq = {
 export type TransferTokenReq = {
   id: number | string;
   address: string;
+  userId: string;
   amount?: number | string;
   web3Provider: Web3;
 };

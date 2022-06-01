@@ -39,7 +39,7 @@
           &.absolute {
             transform: translateY(0);
             opacity: 1;
-            z-index: 1;
+            z-index: 2;
             pointer-events: all;
           }
           &.relative {

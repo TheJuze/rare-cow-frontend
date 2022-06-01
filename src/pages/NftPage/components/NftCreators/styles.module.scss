@@ -20,6 +20,9 @@
   .creator + .collection{
     margin-left: space(16);
   }
+  .creator{
+    width: 50%;
+  }
 }
 
 @include large-mobile {

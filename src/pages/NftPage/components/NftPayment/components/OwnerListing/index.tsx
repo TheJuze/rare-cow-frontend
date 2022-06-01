@@ -3,6 +3,7 @@ import { Listing, ListingSubmit, Selector } from 'components';
 import React, { useCallback, useState, VFC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useWalletConnectorContext } from 'services';
+import { setModalProps } from 'store/modals/reducer';
 import { setOnAuction, setOnSale, transfer } from 'store/nfts/actions';
 
 import styles from '../../styles.module.scss';
@@ -14,6 +15,7 @@ interface IOwnerListing {
   internalNftId: string;
   collectionAddress: string;
   nftSupply: number;
+  userId: string;
 }
 
 export const OwnerListing: VFC<IOwnerListing> = ({
@@ -22,6 +24,7 @@ export const OwnerListing: VFC<IOwnerListing> = ({
   nftSupply,
   internalNftId,
   collectionAddress,
+  userId,
 }) => {
   const [isTransfer, setIsTransfer] = useState(false);
   const dispatch = useDispatch();
@@ -82,6 +85,13 @@ export const OwnerListing: VFC<IOwnerListing> = ({
           break;
         }
       }
+      dispatch(
+        setModalProps({
+          onApprove: () => onListing(values),
+          onSendAgain: () => onListing(values),
+          onTryAgain: () => onListing(values),
+        }),
+      );
     },
     [collectionAddress, dispatch, internalNftId, nftId, nftType, walletService],
   );
@@ -93,11 +103,19 @@ export const OwnerListing: VFC<IOwnerListing> = ({
           web3Provider: walletService.Web3(),
           id: nftId,
           address: transferAddress,
-          amount: transferAmount,
+          amount: transferAmount || 1,
+          userId,
+        }),
+      );
+      dispatch(
+        setModalProps({
+          onApprove: () => onTransfer(transferAddress, transferAmount),
+          onSendAgain: () => onTransfer(transferAddress, transferAmount),
+          onTryAgain: () => onTransfer(transferAddress, transferAmount),
         }),
       );
     },
-    [dispatch, nftId, walletService],
+    [dispatch, nftId, userId, walletService],
   );
 
   return (

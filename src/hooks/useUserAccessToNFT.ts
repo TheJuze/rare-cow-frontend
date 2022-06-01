@@ -64,7 +64,19 @@ export default (nft: TNullable<TokenFull>, userId: string | number) => {
 
   const isUserCanEnterInAuction = React.useMemo(() => {
     if (userId && nft && (nft.isAucSelling || nft?.isTimedAucSelling)) {
-      if (nft.standart === 'ERC721' && !isOwner && String(nft.highestBid.user.id) !== String(userId)) {
+      if (nft.standart === 'ERC721' && !isOwner && String(nft.highestBid?.user?.id) !== String(userId)) {
+        return true;
+      }
+    }
+    return false;
+  }, [userId, nft, isOwner]);
+
+  const isUserCanBurn = React.useMemo(() => {
+    if (userId && nft && isOwner) {
+      if (nft.standart === 'ERC721' && (nft.isAucSelling || nft.isTimedAucSelling) && !nft.bids?.length) {
+        return true;
+      }
+      if (nft.standart === 'ERC1155') {
         return true;
       }
     }
@@ -107,6 +119,7 @@ export default (nft: TNullable<TokenFull>, userId: string | number) => {
     isUserCanBuyNft,
     isUserCanEnterInAuction,
     isUserCanPutOnSale,
+    isUserCanBurn,
     isUserCanEndAuction,
     isUserCanChangePrice,
     isTimedAuction,

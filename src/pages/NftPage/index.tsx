@@ -61,7 +61,7 @@ const NftPage: FC = () => {
     return getPreviewer(previewerProps, nft?.format);
   }, [nft?.format, previewerProps]);
 
-  const { isOwner, isUserCanEnterInAuction } = useGetUserAccessForNft(nft, userId);
+  const { isOwner, isUserCanBurn } = useGetUserAccessForNft(nft, userId);
   const currentOwnerData = useMemo(
     () => nft?.owners?.find((owner) => +owner.url === userId),
     [nft?.owners, userId],
@@ -83,14 +83,14 @@ const NftPage: FC = () => {
           isOwner={isOwner}
           isMultiple={nft.standart === 'ERC1155'}
           maxBurnAmount={+currentOwnerData?.quantity || 0}
-          canBurn={isUserCanEnterInAuction}
+          canBurn={isUserCanBurn}
         />
         <div className={styles.nftImage}>{previewComponent}</div>
         <NftPayment detailedNFT={nft} />
         <NftCreators
           creatorAvatar={nft.creator.avatar}
           creatorId={String(nft.creator.url)}
-          creatorName={nft.creator.displayName}
+          creatorName={nft.creator.name}
           collectionAvatar={nft.collection.avatar}
           collectionId={String(nft.collection.url)}
           collectionName={nft.collection.name}
@@ -104,6 +104,7 @@ const NftPage: FC = () => {
           currency={nft.currency}
           normalPrice={nft.price}
           isAuction={nft.isAucSelling || nft.isTimedAucSelling}
+          isMultiple={nft.standart === 'ERC1155'}
         />
         <PromoteModal tokenId={nft.id} />
       </div>
@@ -123,13 +124,13 @@ const NftPage: FC = () => {
           isOwner={isOwner}
           isMultiple={nft.standart === 'ERC1155'}
           maxBurnAmount={+currentOwnerData?.quantity || 0}
-          canBurn={isUserCanEnterInAuction}
+          canBurn={isUserCanBurn}
         />
         <NftPayment detailedNFT={nft} />
         <NftCreators
           creatorAvatar={nft.creator.avatar}
           creatorId={String(nft.creator.url)}
-          creatorName={nft.creator.displayName}
+          creatorName={nft.creator.name}
           collectionAvatar={nft.collection.avatar}
           collectionId={String(nft.collection.url)}
           collectionName={nft.collection.name}
@@ -143,6 +144,7 @@ const NftPage: FC = () => {
           currency={nft.currency}
           normalPrice={nft.price}
           isAuction={nft.isAucSelling || nft.isTimedAucSelling}
+          isMultiple={nft.standart === 'ERC1155'}
         />
         <PromoteModal tokenId={nft.id} />
       </div>

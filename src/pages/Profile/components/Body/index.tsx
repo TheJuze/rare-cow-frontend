@@ -165,10 +165,10 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
   );
 
   const handleSearchNfts = useCallback(
-    (filtersData: any, page: number, activeTabForSearch: string, shouldConcat?: boolean) => {
+    (filtersData: any, page: number, activeTabForSearch: string, id: string, shouldConcat?: boolean) => {
       if (!activeTabForSearch) return;
       if (activeTabForSearch === '/collections') {
-        const requestData: any = { type: 'collections', page, creator: userId };
+        const requestData: any = { type: 'collections', page, creator: id };
         dispatch(searchCollections({ requestData }));
         return;
       }
@@ -182,20 +182,20 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
         min_price: filtersData?.minPrice,
         on_auc_sale: filtersData?.isAuction || undefined,
         order_by: filtersData?.orderBy || undefined,
-        ...getFilterForActiveTab(activeTabForSearch.replaceAll('/', ''), userId),
+        ...getFilterForActiveTab(activeTabForSearch.replaceAll('/', ''), id),
       };
       dispatch(searchNfts({ requestData, shouldConcat }));
     },
-    [dispatch, userId],
+    [dispatch],
   );
 
   const debouncedHandleSearchNfts = useRef(debounce(handleSearchNfts, DEBOUNCE_DELAY_100)).current;
 
   const handleLoadMore = useCallback(
     (page: number, shouldConcat = false) => {
-      handleSearchNfts(appliedFilters, page, activeTab, shouldConcat);
+      handleSearchNfts(appliedFilters, page, activeTab, userId, shouldConcat);
     },
-    [activeTab, appliedFilters, handleSearchNfts],
+    [activeTab, appliedFilters, handleSearchNfts, userId],
   );
 
   const onLoadMoreClick = useCallback(
@@ -213,9 +213,9 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
     [dispatch],
   );
   useEffect(() => {
-    debouncedHandleSearchNfts(appliedFilters, 1, activeTab);
+    debouncedHandleSearchNfts(appliedFilters, 1, activeTab, userId);
     setCurrentPage(1);
-  }, [debouncedHandleSearchNfts, appliedFilters, activeTab]);
+  }, [debouncedHandleSearchNfts, appliedFilters, activeTab, userId]);
 
   useEffect(
     () => () => {
