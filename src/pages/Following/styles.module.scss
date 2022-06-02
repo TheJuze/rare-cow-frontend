@@ -17,7 +17,8 @@
     }
   }
   .follower {
-    background-color: $metal-200;
+    background-color: var(--following-default-background-color);
+    border: var(--following-default-border);
     border-radius: 14px;
     padding: space(15, 24);
     @include flex(row, center, flex-start);

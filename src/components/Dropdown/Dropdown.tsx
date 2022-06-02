@@ -226,7 +226,7 @@ export const Dropdown: VFC<DropdownProps> = ({
                 {option.content}
               </div>
             ))
-            : emptyOptionsMsg}
+            : <Text size="s" color="metal700">{emptyOptionsMsg}</Text>}
         </div>
       </div>
     </OutsideClickHandler>

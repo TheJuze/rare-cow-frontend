@@ -1,0 +1,13 @@
+@import 'src/styles/variables';
+
+$followingColorsDefault:(
+  'following-default-background-color': $metal-200,
+  "following-default-border": none,
+
+);
+
+$followingColorsDark:(
+  'following-default-background-color': $bg-dark,
+  "following-default-border": 1px solid $dark-3,
+
+)
