@@ -1,0 +1,11 @@
+@import 'src/styles/variables';
+
+$skeletonColorsDefault:(
+  'skeleton-default-background-color': $light-6,
+  'skeleton-default-after-color': linear-gradient( 90deg, $light-6, $light-white, $light-6 ),
+);
+
+$skeletonColorsDark:(
+  'skeleton-default-background-color': $dark-4,
+  'skeleton-default-after-color': linear-gradient( 90deg, $dark-4, $dark-3, $dark-4 ),
+);

@@ -39,6 +39,7 @@
 @import './component-variables/logo';
 @import './component-variables/promote-card';
 @import './component-variables/promotion-status-bar';
+@import './component-variables/skeleton';
 
 :root {
 	$colors:(
@@ -83,6 +84,7 @@
 		$logoColorsDefault,
 		$promoteCardColorsDefault,
 		$promotionStatusBarColorsDefault,
+		$skeletonColorsDefault,
 	);
 
 	@each $key_name in $colors {
@@ -109,6 +111,14 @@
 		$clipboardColorsDark,
 		$switchColorsDark,
 		$collectionCardColorsDark,
+		$skeletonColorsDark,
+		$breadcrumbsColorsDark,
+		$searchCollectionColorsDark,
+		$checkboxColorsDark,
+		$checkboxButtonColorsDark,
+		$chipsColorsDark,
+		$tabBarColorsDark,
+		$loaderColorsDark,
 	);
 
 	@each $key_name in $colors {

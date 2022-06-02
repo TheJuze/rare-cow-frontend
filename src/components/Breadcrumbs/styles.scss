@@ -11,6 +11,11 @@
   }
   .breadcrumb{
     @include flex(row, center, flex-start);
+    &-home {
+      path{
+        color: var(--breadcrumbs-text-color-default);
+      }
+    }
     &-breaker{
       transform: rotate(-90deg),
     }

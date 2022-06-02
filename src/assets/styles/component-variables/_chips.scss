@@ -8,5 +8,14 @@ $chipsColorsDefault:(
   'chips-hover-background-color': $light-100,
   'chips-hover-border-color': $accent-300,
   'chips-active-color': $accent-2,
+);
 
+$chipsColorsDark:(
+  'chips-default-background-color': $dark-2,
+  'chips-default-border-color': $accent,
+  'chips-border-width': 1px,
+  'chips-border-radius': 8px,
+  'chips-hover-background-color': $dark-2,
+  'chips-hover-border-color': $accent,
+  'chips-active-color': $accent,
 )
