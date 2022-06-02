@@ -6,3 +6,4 @@ export { default as whitelistAbi } from './whitelist';
 export { default as erc721InstanceAbi } from './erc721Instance';
 export { default as erc1155InstanceAbi } from './erc1155Instance';
 export { default as erc20freeAbi } from './erc20free';
+export { default as promotionAbi } from './promotion';

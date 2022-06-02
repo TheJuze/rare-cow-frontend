@@ -309,3 +309,11 @@ export type SendTransactionAction = {
   web3Provider: Web3;
   data: object;
 };
+
+export type BuyPromotion = {
+  package: number;
+  currency: TCurrencies;
+  tokenId: number;
+  web3Provider: Web3;
+  priceInUsd: string;
+};

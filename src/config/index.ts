@@ -6,7 +6,8 @@ import Web3 from 'web3';
 
 import {
   erc20Abi, erc721Abi,
-  erc1155Abi, marketPlaceAbi, whitelistAbi, erc721InstanceAbi, erc1155InstanceAbi, erc20freeAbi,
+  erc1155Abi, marketPlaceAbi, whitelistAbi, erc721InstanceAbi, erc1155InstanceAbi,
+  erc20freeAbi, promotionAbi,
 } from './abi';
 import { isMainnet } from './constants';
 
@@ -102,6 +103,7 @@ export enum ContractsNames {
   erc721Instance = 'erc721Instance',
   erc1155Instance = 'erc1155Instance',
   whitelist = 'whitelist',
+  promotion = 'promotion',
 }
 
 export type IContractsNames = keyof typeof ContractsNames;
@@ -214,6 +216,22 @@ export const contractsConfig: IContracts = {
           [Chains.bsc]: '',
         },
         abi: erc1155InstanceAbi,
+      },
+    },
+    [ContractsNames.promotion]: {
+      testnet: {
+        address: {
+          [Chains.bsc]: '',
+          [Chains.polygon]: '0x333862FFFc6bC1EF5698eF4A8581d322461F624f',
+        },
+        abi: promotionAbi,
+      },
+      mainnet: {
+        address: {
+          [Chains.bsc]: '',
+          [Chains.polygon]: '',
+        },
+        abi: promotionAbi,
       },
     },
   },

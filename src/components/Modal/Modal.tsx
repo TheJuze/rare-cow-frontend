@@ -11,21 +11,25 @@ import { CloseIcon } from 'assets/icons';
 import styles from './styles.module.scss';
 
 export interface ModalProps {
+  modalClassName?: string;
   outerClassName?: string;
+  closeClassName?: string;
   containerClassName?: string;
   visible: boolean;
   onClose: () => void;
-  title: string | JSX.Element,
+  title?: string | JSX.Element,
   maxWidth?: number,
 }
 
 export const Modal: React.FC<ModalProps> = ({
+  modalClassName,
   outerClassName,
   containerClassName,
+  closeClassName,
   visible,
   onClose,
   children,
-  title,
+  title = '',
   maxWidth,
 }) => {
   const escFunction = useCallback(
@@ -59,13 +63,13 @@ export const Modal: React.FC<ModalProps> = ({
 
   return createPortal(
     visible && (
-      <div className={styles.modal}>
+      <div className={cn(styles.modal, modalClassName)}>
         <div className={cn(styles.outer, outerClassName)} style={{ maxWidth }}>
           <OutsideClickHandler onOutsideClick={onClose}>
             <div className={cn(styles.container, containerClassName)}>
               {title ? <Text className={styles.title}>{title}</Text> : null}
               {children}
-              <button type="button" className={styles.close} onClick={onClose}>
+              <button type="button" className={cn(styles.close, closeClassName)} onClick={onClose}>
                 <img src={CloseIcon} width={16} height={16} alt="close" />
               </button>
             </div>

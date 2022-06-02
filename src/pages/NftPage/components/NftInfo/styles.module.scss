@@ -5,13 +5,17 @@
 .nftInfo {
   width: 100%;
   &Top {
-    @include flex(row, center, space-between);
+    @include flex(row, flex-start, space-between);
     .actionButtons{
       margin-left: auto;
       @include flex(row, center, space-between);
       .actionItem{
         &:not(:last-child){
           margin-right: space(4);
+        }
+        .promote{
+          background: $red;
+          padding: 12px 18px;
         }
       }
     }
@@ -24,6 +28,20 @@
       height: fit-content;
       align-self: flex-end;
       cursor: pointer;
+    }
+  }
+}
+
+@include middle-tablet{
+  .nftInfo{
+    &Top{
+      .actionButtons{
+        flex: 0 0 40%;
+        @include flex(row-reverse, center, space-between, wrap-reverse);
+        .actionItem{
+          margin-bottom: space(4);
+        }
+      }
     }
   }
 }

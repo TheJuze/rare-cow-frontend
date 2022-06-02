@@ -3,10 +3,10 @@ import { currenciesIconsMap, fromNameToCurrencyObj } from 'appConstants';
 import { Button, Input, Text } from 'components';
 import { useShallowSelector } from 'hooks';
 import React, {
-  useCallback, useMemo, useState, VFC,
+  useCallback, useEffect, useMemo, useState, VFC,
 } from 'react';
 import ratesSelector from 'store/rates/selectors';
-import { EInputStatus } from 'types';
+import { Chains, EInputStatus } from 'types';
 import { TokenFull } from 'types/api';
 import { validateOnlyNumbers } from 'utils';
 
@@ -15,6 +15,8 @@ import { useDispatch } from 'react-redux';
 import { endAuction, removeFromSale, setOnSale } from 'store/nfts/actions';
 import { useWalletConnectorContext } from 'services';
 import BigNumber from 'bignumber.js';
+import userSelector from 'store/user/selectors';
+import { getRates } from 'store/rates/actions';
 import styles from './styles.module.scss';
 
 interface IOwnerAfterListing {
@@ -37,10 +39,19 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({
   const { currency, totalSupply: itemsAmount } = detailedNFT;
   const [price, setPrice] = useState('');
   const dispatch = useDispatch();
+  const userNetwork = useShallowSelector(userSelector.getProp('chain'));
   const rates = useShallowSelector(ratesSelector.getProp('rates'));
   const { walletService } = useWalletConnectorContext();
 
   const isSingle = useMemo(() => detailedNFT.standart === 'ERC721', [detailedNFT.standart]);
+
+  const handleGetRates = useCallback(() => {
+    dispatch(getRates({ network: userNetwork || Chains.polygon }));
+  }, [dispatch, userNetwork]);
+
+  useEffect(() => {
+    handleGetRates();
+  }, [handleGetRates]);
 
   const onPriceChangeHandler = useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
