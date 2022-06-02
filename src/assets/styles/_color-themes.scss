@@ -36,6 +36,7 @@
 @import './component-variables/nft-page';
 @import './component-variables/connect-modals';
 @import './component-variables/modals';
+@import './component-variables/logo';
 
 :root {
 	$colors:(
@@ -77,6 +78,7 @@
 		$nftpageColorsDefault,
 		$connectModalColorsDefault,
 		$modalsColorsDefault,
+		$logoColorsDefault,
 	);
 
 	@each $key_name in $colors {
@@ -86,17 +88,18 @@
 	}
 }
 
-.light {
+.dark {
 	$colors:(
-		$mainColorsLight,
-		$buttonColorsLight,
-		$iconButtonColorsLight,
-		$typographyColorsLight,
-		$switchColorsLight,
-		$inputColorsLight,
-		$selectColorsLight,
-		$tableColorsLight,
-		$tooltipColorsLight,
+		$mainColorsDark,
+		$artcardColorsDark,
+		$typographyColorsDark,
+		$inputColorsDark,
+		$dropdownColorsDark,
+		$avatarColorsDark,
+		$searchInputColorsDark,
+		$searchItemColorsDark,
+		$logoColorsDark,
+		$buttonColorsDark,
 	);
 
 	@each $key_name in $colors {

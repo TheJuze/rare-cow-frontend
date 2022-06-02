@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable object-curly-newline */
 /* eslint-disable arrow-body-style */
-import React, { useCallback, useEffect, useMemo, useState, VFC } from 'react';
+import React, { useCallback, useEffect, useMemo, VFC } from 'react';
 
 import cn from 'clsx';
 
@@ -72,6 +72,8 @@ export interface UserPopoverProps {
   address: string;
   disconnect: () => void;
   onClose: () => void;
+  isLight: boolean;
+  setIsLight: (value: boolean) => void;
 }
 
 export const UserPopover: VFC<UserPopoverProps> = ({
@@ -84,9 +86,10 @@ export const UserPopover: VFC<UserPopoverProps> = ({
   address,
   disconnect,
   onClose,
+  isLight,
+  setIsLight,
 }) => {
   const { pathname } = useLocation();
-  const [isLight, setIsLight] = useState(true);
   const balance = useShallowSelector(userSelector.getProp('balance'));
   const mappedBalance = useMemo(
     () => Object.entries(balance).map(([token, value]) => ({
@@ -134,7 +137,7 @@ export const UserPopover: VFC<UserPopoverProps> = ({
 
   const handleChangeTheme = useCallback((value: boolean) => {
     setIsLight(value);
-  }, []);
+  }, [setIsLight]);
 
   useEffect(() => {
     onClose();
