@@ -2,8 +2,10 @@
 
 $collectionCardColorsDefault: (
   "collectionCard-default-background": $light-white,
+  "collectionCard-default-border": none,
 );
 
-$collectionCardColorsLight: (
-  "collectionCard-default-background": $light-white,
+$collectionCardColorsDark: (
+  "collectionCard-default-background": $bg-dark,
+  "collectionCard-default-border": 1px solid $dark-3,
 );

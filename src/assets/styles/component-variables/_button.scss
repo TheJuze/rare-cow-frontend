@@ -236,8 +236,8 @@ $buttonColorsDark: (
   //background
   'button-outlined-primary-background': $metal-50,
   'button-outlined-primary-hover-background': $base-50,
-  'button-outlined-primary-active-background': $light-100,
-  'button-outlined-primary-focus-background': $light-100,
+  'button-outlined-primary-active-background': $dark-5,
+  'button-outlined-primary-focus-background': $dark-5,
   'button-outlined-primary-disabled-background': $metal-50,
   //border
   'button-outlined-primary-border': $metal-300,
@@ -297,11 +297,11 @@ $buttonColorsDark: (
 
   ////primary
   //background
-  'button-filled-primary-background': $metal-200,
-  'button-filled-primary-hover-background': $metal-200,
-  'button-filled-primary-active-background': $light-100,
-  'button-filled-primary-focus-background': $metal-200,
-  'button-filled-primary-disabled-background': $metal-200,
+  'button-filled-primary-background': $dark-5,
+  'button-filled-primary-hover-background': $dark-5,
+  'button-filled-primary-active-background': $dark-5,
+  'button-filled-primary-focus-background': $dark-5,
+  'button-filled-primary-disabled-background': $dark-5,
   //border
   'button-filled-primary-border': transparent,
   'button-filled-primary-border-width': 2px,
@@ -328,11 +328,11 @@ $buttonColorsDark: (
 
   ////secondary
   //background
-  'button-filled-secondary-background': $metal-200,
+  'button-filled-secondary-background': $dark-5,
   'button-filled-secondary-hover-background': $accent,
-  'button-filled-secondary-active-background': $metal-200,
-  'button-filled-secondary-focus-background': $metal-200,
-  'button-filled-secondary-disabled-background': $metal-200,
+  'button-filled-secondary-active-background': $dark-5,
+  'button-filled-secondary-focus-background': $dark-5,
+  'button-filled-secondary-disabled-background': $dark-5,
   //border
   'button-filled-secondary-border': transparent,
   'button-filled-secondary-border-width': 2px,
@@ -359,11 +359,11 @@ $buttonColorsDark: (
 
   ////tertiary
   //background
-  'button-filled-tertiary-background': $metal-200,
-  'button-filled-tertiary-hover-background': $metal-200,
-  'button-filled-tertiary-active-background': $light-100,
-  'button-filled-tertiary-focus-background': $light-100,
-  'button-filled-tertiary-disabled-background': $metal-200,
+  'button-filled-tertiary-background': $dark-5,
+  'button-filled-tertiary-hover-background': $dark-5,
+  'button-filled-tertiary-active-background': $dark-5,
+  'button-filled-tertiary-focus-background': $dark-5,
+  'button-filled-tertiary-disabled-background': $dark-5,
   //border
   'button-filled-tertiary-border': transparent,
   'button-filled-tertiary-border-width': 2px,

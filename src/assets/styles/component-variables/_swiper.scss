@@ -4,10 +4,12 @@ $swiperColorsDefault: (
   "swiper-default-background": $light-white,
   "swiper-bullet-background": $light-white,  
   "swiper-bullet-background-active": $accent-2,
+  "swiper-arrow-color": $metal-500,
 );
 
-$swiperColorsLight: (
-  "swiper-default-background": $light-white,
-  "swiper-bullet-background": $light-white,  
+$swiperColorsDark: (
+  "swiper-default-background": $metal-500,
+  "swiper-bullet-background": $metal-500,  
   "swiper-bullet-background-active": $accent-2,
+  "swiper-arrow-color": $light-white,
 );

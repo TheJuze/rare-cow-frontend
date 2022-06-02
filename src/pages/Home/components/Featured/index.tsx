@@ -6,6 +6,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowLeft, ArrowRight } from 'assets/img';
 
 // import { useDispatch } from 'react-redux';
 // import { getTrending } from 'store/nfts/actions';
@@ -99,11 +100,15 @@ const Trending: FC<Props> = ({ className }) => {
                 <div
                   ref={prevRef}
                   className={cx('swiper-button-prev', styles['swiper-button-prev'])}
-                />
+                >
+                  <ArrowLeft className={styles['swiper-button-prev-icon']} />
+                </div>
                 <div
                   ref={nextRef}
                   className={cx('swiper-button-next', styles['swiper-button-next'])}
-                />
+                >
+                  <ArrowRight className={styles['swiper-button-next-icon']} />
+                </div>
                 <div className={styles.bullets} ref={bulletsRef} />
                 <Swiper
                   spaceBetween={30}

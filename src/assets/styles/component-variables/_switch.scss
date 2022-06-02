@@ -18,20 +18,20 @@ $switchColorsDefault: (
   "switch-secondary-border-checked": #64656A,
 );
 
-$switchColorsLight: (
+$switchColorsDark: (
   "switch-default-background":$light-8,
-  "switch-default-thumb": $light-4,
+  "switch-default-thumb": $dark-4,
   "switch-default-border": transparent,
 
   "switch-default-background-checked": $accent,
   "switch-default-thumb-checked": $light-8,
   "switch-default-border-checked": transparent,
 
-  "switch-secondary-background": $light-4,
+  "switch-secondary-background": $dark-4,
   "switch-secondary-thumb": #F2F2F2,
   "switch-secondary-border": #F2F2F2,
 
   "switch-secondary-background-checked": #64656A,
-  "switch-secondary-thumb-checked": $light-4,
+  "switch-secondary-thumb-checked": $dark-4,
   "switch-secondary-border-checked": #64656A,
 );
