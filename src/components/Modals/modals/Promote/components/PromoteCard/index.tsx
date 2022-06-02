@@ -11,6 +11,7 @@ import {
 import { CheckboxButton } from 'components/CheckboxButton';
 import { Button } from 'components/Button';
 import { ExtendedPromotionOption, TBalance } from 'types';
+import BigNumber from 'bignumber.js';
 import styles from './styles.module.scss';
 
 interface IPromoteCard {
@@ -58,7 +59,7 @@ export const PromoteCard: VFC<IPromoteCard> = ({
     () => Object.entries(balance).filter(([token, tokenBalance]) => {
       const tokenRate = rates.find((rate) => rate.symbol === token);
       if (tokenRate) {
-        if(+tokenBalance * +tokenRate.rate > +promotionOption.usdPrice) {
+        if(new BigNumber(tokenBalance).multipliedBy(tokenRate.rate).gt(promotionOption.usdPrice)) {
           return token;
         }
       }
