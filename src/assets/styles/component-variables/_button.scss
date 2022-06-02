@@ -199,44 +199,199 @@ $buttonColorsDefault: (
   'button-like-default-background': $metal-100,
 );
 
-$buttonColorsLight: (
-  ////outlined
+$buttonColorsDark: (
+  //////outlined
+  ////common
   //background
-  'button-outlined-default-background': #ffffff,
-  'button-outlined-hover-background': linear-gradient(90deg, #291aed 0%, #c59afc 100%),
-  'button-outlined-active-background': #8a7ff6,
+  'button-outlined-default-background': transparent,
+  'button-outlined-hover-background': rgba($accent, 0.1),
+  'button-outlined-active-background': rgba($accent, 0.2),
+  'button-outlined-focus-background': transparent,
+  'button-outlined-disabled-background': transparent,
   //border
-  'button-outlined-default-border': #dfe3ec,
-  'button-outlined-hover-border': transparent,
-  'button-outlined-active-border': #8a7ff6,
+  'button-outlined-default-border': $accent,
+  'button-outlined-default-border-width': 2px,
+  'button-outlined-hover-border': $accent,
+  'button-outlined-hover-border-width': 2px,
+  'button-outlined-active-border': $accent,
+  'button-outlined-active-border-width': 2px,
+  'button-outlined-focus-border': $accent,
+  'button-outlined-focus-border-width': 2px,
+  'button-outlined-disabled-border': $accent,
+  'button-outlined-disabled-border-width': 2px,
   //color
-  'button-outlined-default-color': #2e3a59,
-  'button-outlined-hover-color': #ffffff,
-  'button-outlined-active-color': #ffffff,
+  'button-outlined-default-color': $accent,
+  'button-outlined-hover-color': $accent,
+  'button-outlined-active-color': $accent,
+  'button-outlined-focus-color': $accent,
+  'button-outlined-disabled-color': $accent,
   //icon
-  'button-outlined-default-icon-color': #6c778f,
-  'button-outlined-hover-icon-color': #e9d9fe,
-  'button-outlined-active-icon-color': #e9d9fe,
-  'button-outlined-disabled-icon-color': #c5cee0,
-  ////filled
+  'button-outlined-default-icon-color': currentColor,
+  'button-outlined-hover-icon-color': currentColor,
+  'button-outlined-active-icon-color': currentColor,
+  'button-outlined-focus-icon-color': currentColor,
+  'button-outlined-disabled-icon-color': currentColor,
+
+  ////primary
   //background
-  'button-filled-default-background': linear-gradient(90deg, #291aed 0%, #c59afc 100%),
-  'button-filled-hover-background': linear-gradient(90deg, #bf8ffb 0%, #877ef6 100%),
-  'button-filled-active-background': #8a7ff6,
+  'button-outlined-primary-background': $metal-50,
+  'button-outlined-primary-hover-background': $base-50,
+  'button-outlined-primary-active-background': $dark-5,
+  'button-outlined-primary-focus-background': $dark-5,
+  'button-outlined-primary-disabled-background': $metal-50,
+  //border
+  'button-outlined-primary-border': $metal-300,
+  'button-outlined-primary-border-width': 1px,
+  'button-outlined-primary-hover-border': $base-500,
+  'button-outlined-primary-hover-border-width': 1px,
+  'button-outlined-primary-active-border': $accent-300,
+  'button-outlined-primary-active-border-width': 2px,
+  'button-outlined-primary-focus-border': $accent-300,
+  'button-outlined-primary-focus-border-width': 2px,
+  'button-outlined-primary-disabled-border': $metal-300,
+  'button-outlined-primary-disabled-border-width': 1px,
+  //color
+  'button-outlined-primary-color': $dark-0,
+  'button-outlined-primary-hover-color': $dark-0,
+  'button-outlined-primary-active-color': $dark-0,
+  'button-outlined-primary-focus-color': $dark-0,
+  'button-outlined-primary-disabled-color': $dark-0,
+  //icon
+  'button-outlined-primary-icon-color': currentColor,
+  'button-outlined-primary-hover-icon-color': currentColor,
+  'button-outlined-primary-active-icon-color': currentColor,
+  'button-outlined-primary-focus-icon-color': currentColor,
+  'button-outlined-primary-disabled-icon-color': currentColor,
+
+  //////filled
+  ////common
+  //background
+  'button-filled-default-background': $accent,
+  'button-filled-hover-background': $accent-2,
+  'button-filled-active-background': $accent,
+  'button-filled-focus-background': $accent,
+  'button-filled-disabled-background': $accent,
   //border
   'button-filled-default-border': transparent,
+  'button-filled-default-border-width': 1px,
   'button-filled-hover-border': transparent,
-  'button-filled-active-border': #8a7ff6,
+  'button-filled-hover-border-width': 1px,
+  'button-filled-active-border': $accent,
+  'button-filled-active-border-width': 1px,
+  'button-filled-focus-border': $accent-2,
+  'button-filled-focus-border-width': 2px,
+  'button-filled-disabled-border': transparent,
+  'button-filled-disabled-border-width': 1px,
   //color
-  'button-filled-default-color': #ffffff,
-  'button-filled-hover-color': #ffffff,
-  'button-filled-active-color': #ffffff,
+  'button-filled-default-color': $light-8,
+  'button-filled-hover-color': $light-8,
+  'button-filled-active-color': $light-8,
+  'button-filled-focus-color': $light-8,
+  'button-filled-disabled-color': $light-8,
   //icon
-  'button-filled-default-icon-color': #6c778f,
-  'button-filled-hover-icon-color': #e9d9fe,
-  'button-filled-active-icon-color': #e9d9fe,
-  'button-filled-disabled-icon-color': #c5cee0,
+  'button-filled-default-icon-color': currentColor,
+  'button-filled-hover-icon-color': currentColor,
+  'button-filled-active-icon-color': currentColor,
+  'button-filled-focus-icon-color': currentColor,
+  'button-filled-disabled-icon-color': currentColor,
+
+  ////primary
+  //background
+  'button-filled-primary-background': $dark-5,
+  'button-filled-primary-hover-background': $dark-5,
+  'button-filled-primary-active-background': $dark-5,
+  'button-filled-primary-focus-background': $dark-5,
+  'button-filled-primary-disabled-background': $dark-5,
+  //border
+  'button-filled-primary-border': transparent,
+  'button-filled-primary-border-width': 2px,
+  'button-filled-primary-hover-border': transparent,
+  'button-filled-primary-hover-border-width': 2px,
+  'button-filled-primary-active-border': transparent,
+  'button-filled-primary-active-border-width': 2px,
+  'button-filled-primary-focus-border': $accent,
+  'button-filled-primary-focus-border-width': 2px,
+  'button-filled-primary-disabled-border': transparent,
+  'button-filled-primary-disabled-border-width': 2px,
+  //color
+  'button-filled-primary-color': $dark-8,
+  'button-filled-primary-hover-color': $dark-8,
+  'button-filled-primary-active-color': $dark-8,
+  'button-filled-primary-focus-color': $dark-8,
+  'button-filled-primary-disabled-color': $dark-8,
+  //icon
+  'button-filled-primary-icon-color': currentColor,
+  'button-filled-primary-hover-icon-color': $dark-8,
+  'button-filled-primary-active-icon-color': $dark-8,
+  'button-filled-primary-focus-icon-color': currentColor,
+  'button-filled-primary-disabled-icon-color': currentColor,
+
+  ////secondary
+  //background
+  'button-filled-secondary-background': $dark-5,
+  'button-filled-secondary-hover-background': $accent,
+  'button-filled-secondary-active-background': $dark-5,
+  'button-filled-secondary-focus-background': $dark-5,
+  'button-filled-secondary-disabled-background': $dark-5,
+  //border
+  'button-filled-secondary-border': transparent,
+  'button-filled-secondary-border-width': 2px,
+  'button-filled-secondary-hover-border': transparent,
+  'button-filled-secondary-hover-border-width': 2px,
+  'button-filled-secondary-active-border': transparent,
+  'button-filled-secondary-active-border-width': 2px,
+  'button-filled-secondary-focus-border': transparent,
+  'button-filled-secondary-focus-border-width': 2px,
+  'button-filled-secondary-disabled-border': transparent,
+  'button-filled-secondary-disabled-border-width': 2px,
+  //color
+  'button-filled-secondary-color': $metal-800,
+  'button-filled-secondary-hover-color': $metal-50,
+  'button-filled-secondary-active-color': $accent,
+  'button-filled-secondary-focus-color': $accent,
+  'button-filled-secondary-disabled-color': $metal-800,
+  //icon
+  'button-filled-secondary-icon-color': currentColor,
+  'button-filled-secondary-hover-icon-color': currentColor,
+  'button-filled-secondary-active-icon-color': currentColor,
+  'button-filled-secondary-focus-icon-color': currentColor,
+  'button-filled-secondary-disabled-icon-color': currentColor,
+
+  ////tertiary
+  //background
+  'button-filled-tertiary-background': $dark-5,
+  'button-filled-tertiary-hover-background': $dark-5,
+  'button-filled-tertiary-active-background': $dark-5,
+  'button-filled-tertiary-focus-background': $dark-5,
+  'button-filled-tertiary-disabled-background': $dark-5,
+  //border
+  'button-filled-tertiary-border': transparent,
+  'button-filled-tertiary-border-width': 2px,
+  'button-filled-tertiary-hover-border': transparent,
+  'button-filled-tertiary-hover-border-width': 2px,
+  'button-filled-tertiary-active-border': transparent,
+  'button-filled-tertiary-active-border-width': 2px,
+  'button-filled-tertiary-focus-border': transparent,
+  'button-filled-tertiary-focus-border-width': 2px,
+  'button-filled-tertiary-disabled-border': transparent,
+  'button-filled-tertiary-disabled-border-width': 2px,
+  //color
+  'button-filled-tertiary-color': $metal-700,
+  'button-filled-tertiary-hover-color': $accent,
+  'button-filled-tertiary-active-color': $accent,
+  'button-filled-tertiary-focus-color': $accent,
+  'button-filled-tertiary-disabled-color': $metal-700,
+  //icon
+  'button-filled-tertiary-icon-color': currentColor,
+  'button-filled-tertiary-hover-icon-color': currentColor,
+  'button-filled-tertiary-active-icon-color': currentColor,
+  'button-filled-tertiary-focus-icon-color': currentColor,
+  'button-filled-tertiary-disabled-icon-color': currentColor,
+
   //misc
-  'button-disabled-background': #ffffff,
-  'button-disabled-color': #64656a
+  'button-disabled-background': #191a1d,
+  'button-disabled-color': #64656a,
+
+  //like button
+  'button-like-default-background': $dark-3,
 );

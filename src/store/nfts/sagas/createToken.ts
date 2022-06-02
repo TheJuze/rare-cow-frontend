@@ -74,6 +74,7 @@ export function* createTokenSaga({
         );
         yield put(apiActions.success(type));
       } catch (e) {
+        console.log('error', e);
         yield call(baseApi.mintReject, {
           id: createdToken.id,
           type: 'token',

@@ -6,7 +6,7 @@ import { Text } from 'components';
 
 import { NavLink } from 'react-router-dom';
 import { socials } from 'appConstants';
-import logo from 'assets/icons/logo.svg';
+import { Logo } from 'assets/icons';
 import s from './styles.module.scss';
 
 export interface FooterProps {
@@ -29,7 +29,7 @@ export const Footer: VFC<FooterProps> = ({ className }) => (
     <section className={s.container}>
       <hr className={s.line} />
       <div className={s.generalInfo}>
-        <img src={logo} alt="logo" />
+        <Logo className={s.logo} />
         <Text className={s.info} size="xs" color="dark">
           We are happy to work with people who are inspired, curious and motivated to build the
           future with us! Join RareCow, we will help your creation stand out!

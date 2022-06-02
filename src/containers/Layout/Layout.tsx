@@ -2,7 +2,7 @@
 // import { UrlObject } from 'url';
 
 import React, {
-  FC, useCallback, useEffect, useMemo,
+  FC, useCallback, useEffect, useMemo, useState,
 } from 'react';
 
 import { Footer, Header } from 'containers';
@@ -27,6 +27,7 @@ export interface LayoutProps {
 }
 
 export const Layout: FC<LayoutProps> = ({ children }) => {
+  const [isLight, setIsLight] = useState(false);
   const { pathname } = useLocation();
   const { connect, disconnect, walletService } = useWalletConnectorContext();
 
@@ -73,7 +74,7 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
 
   const isNeedToShowHeaderFooter = useMemo(() => true, []);
   return (
-    <div className={clsx(styles.app)}>
+    <div className={clsx(styles.app, { [styles.dark]: !isLight })}>
       <div className={styles.content}>
         {isNeedToShowHeaderFooter && (
           <Header
@@ -84,6 +85,8 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
             onConnectWallet={handleConnectWallet}
             disconnect={disconnectWallet}
             onToggleChainType={handleToggleChainType}
+            isLight={isLight}
+            setIsLight={setIsLight}
           />
         )}
         <main className={styles.main}>{children}</main>

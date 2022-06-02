@@ -23,25 +23,25 @@ $typographyColorsDefault: (
   "typography-yellow-500-color": $yellow-500,
 );
 
-$typographyColorsLight: (
+$typographyColorsDark: (
   "typography-default-color": $metal-500,
   "typography-secondary-color": $metal-500,
   "typography-error-color": $red,
   "typography-gray-6-color": $gray-6,
-  "typography-dark-color": $dark,
-  "typography-dark-0-color": $dark-0,
-  "typography-dark-1-color": $dark-1,
+  "typography-dark-color": $dark-8,
+  "typography-dark-0-color": $dark-8,
+  "typography-dark-1-color": $dark-5,
   "typography-accent-color": $accent,
   "typography-light-color": $light-white,
   "typography-light-1-color": $light-1,
-  "typography-light-3-color": $light-3,
+  "typography-light-3-color": $dark-5,
   "typography-light-4-color": $light-4,
   "typography-iris-100-color": $iris-100,
   "typography-metal-50-color": $metal-50,
-  "typography-metal-400-color": $metal-400,
+  "typography-metal-400-color": $dark-7,
   "typography-metal-600-color": $metal-600,
-  "typography-metal-700-color": $metal-700,
-  "typography-metal-800-color": $metal-800,
+  "typography-metal-700-color": $dark-5,
+  "typography-metal-800-color": $dark-8,
   "typography-base-900-color": $base-900,
   "typography-yellow-500-color": $yellow-500,
 );

@@ -47,8 +47,8 @@ export interface DropdownProps {
 }
 
 const iconMap = {
-  outlined: <TriangleDownIcon />,
-  transparent: <ArrowHeadDownIcon />,
+  outlined: <TriangleDownIcon className="dropdown-head-icon-triangle" />,
+  transparent: <ArrowHeadDownIcon className="dropdown-head-icon-arrow" />,
 };
 
 /**

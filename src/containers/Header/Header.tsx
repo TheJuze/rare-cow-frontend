@@ -1,6 +1,6 @@
 /* eslint-disable object-curly-newline */
-import React, { useCallback, useMemo, useRef, useState, VFC } from 'react';
-import logo from 'assets/icons/logo.svg';
+import React, { useCallback, useEffect, useMemo, useRef, useState, VFC } from 'react';
+import { Logo } from 'assets/icons';
 import arrow from 'assets/chevron-down.svg';
 import cn from 'classnames';
 
@@ -34,9 +34,11 @@ export interface HeaderProps {
   isHomePage: boolean;
   isUserInfoLoading: boolean;
   chainType: 'testnet' | 'mainnet';
+  isLight: boolean;
+  setIsLight: (value: boolean) => void;
 }
 
-export const Header: VFC<HeaderProps> = ({ address, disconnect }) => {
+export const Header: VFC<HeaderProps> = ({ address, disconnect, isLight, setIsLight }) => {
   const { breadcrumbs, dynamicValues } = useBreadcrumbs();
   const exploreValue = useMemo(
     () => (dynamicValues[0]?.categoryName
@@ -216,12 +218,19 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect }) => {
 
   useClickOutside(bodyRef, handleHideUser, headRef);
 
+  useEffect(
+    () => () => {
+      dispatch(clearPresearchedNfts());
+    },
+    [dispatch],
+  );
+
   return (
     <header className={s.header}>
       <div className={s.headerContainer}>
         <div className={s.headerLeft}>
-          <Link to="/" className={cn(s.logo, { [s.closed]: isSearchActive })}>
-            <img src={logo} alt="logo" />
+          <Link to="/" className={cn(s.logoWrapper, { [s.closed]: isSearchActive })}>
+            <Logo className={s.logo} />
           </Link>
           <SearchInput
             searchValue={searchValue}
@@ -263,6 +272,8 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect }) => {
               <Avatar avatar={user.avatar} id={user.id} size="40" />
               <UserPopover
                 disconnect={disconnect}
+                isLight={isLight}
+                setIsLight={setIsLight}
                 {...user}
                 visible={isUserShown}
                 bodyRef={bodyRef}
