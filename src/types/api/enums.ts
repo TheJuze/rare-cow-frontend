@@ -16,10 +16,16 @@ export enum Standart {
     ERC1155 = "ERC1155"
 } 
  
-export enum Type {
+export enum PromotionType {
     Featured = "Featured",
     Premium = "Premium"
 } 
+
+export enum PromotionStatus {
+    WaitingList = "Waiting list",
+    InProgress = "In progress",
+    Finished = "Finished",
+}
  
 export enum State {
     Pending = "Pending",
@@ -36,4 +42,4 @@ export enum Method {
     Burn = "Burn",
     Listing = "Listing"
 } 
- 
+

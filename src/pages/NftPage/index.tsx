@@ -11,7 +11,7 @@ import { TAudioPreview } from 'components/Preview/AudioPreview';
 import { TImagePreview } from 'components/Preview/ImagePreview';
 import { TVideoPreview } from 'components/Preview/VideoPreview';
 import { TThreePreview } from 'components/Preview/ThreePreview';
-import { getPreviewer } from 'components';
+import { getPreviewer, PromoteModal } from 'components';
 import { clearDetailedNft } from 'store/nfts/reducer';
 import userSelector from 'store/user/selectors';
 import { NftCreators, NftInfo, NftOwners, NftPayment } from './components';
@@ -84,6 +84,7 @@ const NftPage: FC = () => {
           isMultiple={nft.standart === 'ERC1155'}
           maxBurnAmount={+currentOwnerData?.quantity || 0}
           canBurn={isUserCanBurn}
+          promotionInfo={nft.promotionInfo}
         />
         <div className={styles.nftImage}>{previewComponent}</div>
         <NftPayment detailedNFT={nft} />
@@ -106,6 +107,7 @@ const NftPage: FC = () => {
           isAuction={nft.isAucSelling || nft.isTimedAucSelling}
           isMultiple={nft.standart === 'ERC1155'}
         />
+        <PromoteModal tokenId={nft.id} />
       </div>
     );
   }
@@ -124,6 +126,7 @@ const NftPage: FC = () => {
           isMultiple={nft.standart === 'ERC1155'}
           maxBurnAmount={+currentOwnerData?.quantity || 0}
           canBurn={isUserCanBurn}
+          promotionInfo={nft.promotionInfo}
         />
         <NftPayment detailedNFT={nft} />
         <NftCreators
@@ -145,6 +148,7 @@ const NftPage: FC = () => {
           isAuction={nft.isAucSelling || nft.isTimedAucSelling}
           isMultiple={nft.standart === 'ERC1155'}
         />
+        <PromoteModal tokenId={nft.id} />
       </div>
     </div>
   );

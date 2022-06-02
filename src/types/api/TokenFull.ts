@@ -14,6 +14,7 @@ import { Network } from "./Network";
 import { Ownership } from "./Ownership";
 import { Tag } from "./Tag";
 import { Property } from "./Property";
+import { Promotion } from "./Promotion";
 
 
 export interface TokenFull {
@@ -45,7 +46,7 @@ export interface TokenFull {
     network: Network;
     owners: Ownership[];
     price?: string;
-    promotionInfo?: string;
+    promotionInfo?: Promotion;
     properties?: Property[];
     rankings: any;
     sellers?: Ownership[];

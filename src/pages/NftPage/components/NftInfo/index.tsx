@@ -1,9 +1,9 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable arrow-body-style */
 import React, { FC, useCallback, useMemo, useState } from 'react';
-import { BurnModal, LikeButton, Text } from 'components';
+import { BurnModal, Button, LikeButton, Text } from 'components';
 
-import { Dots } from 'assets/icons/icons';
+import { Dots, LightningIcon } from 'assets/icons/icons';
 import { sliceString } from 'utils';
 import { BurnButton } from 'components/BurnButton';
 import { useModals } from 'hooks';
@@ -12,7 +12,9 @@ import { useDispatch } from 'react-redux';
 import { burn } from 'store/nfts/actions';
 import { useWalletConnectorContext } from 'services';
 import { setModalProps } from 'store/modals/reducer';
+import { Promotion } from 'types/api';
 import styles from './styles.module.scss';
+import { PromotionStatusBar } from './components';
 
 type Props = {
   name: string;
@@ -24,6 +26,7 @@ type Props = {
   isMultiple: boolean;
   maxBurnAmount: number;
   canBurn: boolean;
+  promotionInfo: Promotion;
 };
 const NftInfo: FC<Props> = ({
   name,
@@ -35,6 +38,7 @@ const NftInfo: FC<Props> = ({
   isMultiple,
   maxBurnAmount,
   canBurn,
+  promotionInfo,
 }) => {
   const [isDescriptionOpened, setIsDescriptionOpened] = useState(false);
   const { modalType, closeModals, changeModalType } = useModals();
@@ -72,6 +76,10 @@ const NftInfo: FC<Props> = ({
     changeModalType(Modals.Burn);
   }, [changeModalType]);
 
+  const onPromoteClickHandler = useCallback(() => {
+    changeModalType(Modals.Promote);
+  }, [changeModalType]);
+
   return (
     <div className={styles.nftInfo}>
       <BurnModal
@@ -82,9 +90,14 @@ const NftInfo: FC<Props> = ({
         maxBurnAmount={maxBurnAmount}
       />
       <div className={styles.nftInfoTop}>
-        <Text variant="subtitle-1" color="dark">
-          {name}
-        </Text>
+        <div>
+          <Text variant="subtitle-1" color="dark">
+            {name}
+          </Text>
+          <Text variant="body-2" color="metal800">
+            Id: {id}
+          </Text>
+        </div>
         <div className={styles.actionButtons}>
           {isOwner && canBurn && (
             <div className={styles.actionItem}>
@@ -94,11 +107,20 @@ const NftInfo: FC<Props> = ({
           <div className={styles.actionItem}>
             <LikeButton nftId={String(id)} likesCount={likeCount} isLiked={isLiked} />
           </div>
+          {isOwner && (
+            <div className={styles.actionItem}>
+              <Button
+                className={styles.promote}
+                startAdornment={<LightningIcon />}
+                onClick={onPromoteClickHandler}
+              >
+                Promote
+              </Button>
+            </div>
+          )}
         </div>
       </div>
-      <Text variant="body-2" color="metal800">
-        Id: {id}
-      </Text>
+      <PromotionStatusBar promotionInfo={promotionInfo} />
       {description.length > 0 && (
         <div className={styles.nftInfoDescription}>
           <Text variant="body-2" color="metal800">

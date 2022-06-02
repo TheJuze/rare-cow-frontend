@@ -19,6 +19,7 @@ const SendErrorModal: VFC<ISendErrorModal> = ({
   visible,
   onClose,
   onTryAgain,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   error,
   errorCode,
   withSteps = true,
@@ -31,7 +32,6 @@ const SendErrorModal: VFC<ISendErrorModal> = ({
       </Text>
     </Text>
   );
-  console.log(error);
   return (
     <Modal visible={visible} onClose={onClose} title={title} maxWidth={628}>
       <div className={styles.icon}>
