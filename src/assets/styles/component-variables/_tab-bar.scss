@@ -1,7 +1,13 @@
 @import 'src/styles/variables';
 
-$tabBarColorsDefault:(
-'tab-default': $metal-400,
-'tab-hover': $accent,
-'tab-color-active': $metal-700,
-)
+$tabBarColorsDefault: (
+  'tab-default': $metal-400,
+  'tab-hover': $accent,
+  'tab-color-active': $metal-700,
+);
+
+$tabBarColorsDark: (
+  'tab-default': $dark-4,
+  'tab-hover': $accent,
+  'tab-color-active': $dark-8,
+);

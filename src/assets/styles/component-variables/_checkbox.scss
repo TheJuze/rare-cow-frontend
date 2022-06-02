@@ -24,3 +24,28 @@ $checkboxColorsDefault: (
   'checkbox-focus-color': $light-8,
   'checkbox-disabled-color': $light-8,
 );
+
+$checkboxColorsDark: (
+  'checkbox-default-background': $dark-2,
+  'checkbox-hover-background': $dark-2,
+  'checkbox-active-background': $accent,
+  'checkbox-focus-background': $dark-2,
+  'checkbox-disabled-background': $dark-2,
+
+  'checkbox-default-border': $dark-4,
+  'checkbox-default-border-width': 1px,
+  'checkbox-hover-border': $accent,
+  'checkbox-hover-border-width': 2px,
+  'checkbox-active-border': $accent,
+  'checkbox-active-border-width': 2px,
+  'checkbox-focus-border': $accent,
+  'checkbox-focus-border-width': 2px,
+  'checkbox-disabled-border': $dark-4,
+  'checkbox-disabled-border-width': 2px,
+
+  'checkbox-default-color': $dark-8,
+  'checkbox-hover-color': $dark-8,
+  'checkbox-active-color': $dark-8,
+  'checkbox-focus-color': $dark-8,
+  'checkbox-disabled-color': $dark-8,
+);
