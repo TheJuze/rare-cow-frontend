@@ -315,4 +315,5 @@ export type BuyPromotion = {
   currency: TCurrencies;
   tokenId: number;
   web3Provider: Web3;
+  priceInUsd: string;
 };

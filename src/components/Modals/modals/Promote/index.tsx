@@ -77,6 +77,7 @@ const PromoteModal: VFC<IPromoteModal> = ({ tokenId }) => {
           package: promoteOption.package,
           currency: promoteOption.currency,
           tokenId,
+          priceInUsd: promoteOption.usdPrice,
         }),
       );
     },

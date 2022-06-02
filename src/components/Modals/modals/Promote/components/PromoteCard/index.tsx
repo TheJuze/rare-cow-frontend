@@ -54,24 +54,27 @@ export const PromoteCard: VFC<IPromoteCard> = ({
     }
   }, [promotionOption.clicks, promotionOption.days, promotionType]);
 
-  const canPay = useMemo(() => Object.entries(balance).some(([token, tokenBalance]) => {
-    const tokenRate = rates.find((rate) => rate.symbol === token);
-    if(tokenRate) {
-      return +tokenBalance * +tokenRate.rate > +promotionOption.usdPrice;
-    }
-    return false;
-  }), [balance, promotionOption.usdPrice, rates]);
-
-  useEffect(() => {
-    Object.entries(balance).forEach(([token, tokenBalance]) => {
+  const payableToken = useMemo(
+    () => Object.entries(balance).filter(([token, tokenBalance]) => {
       const tokenRate = rates.find((rate) => rate.symbol === token);
-      if(tokenRate) {
+      if (tokenRate) {
         if(+tokenBalance * +tokenRate.rate > +promotionOption.usdPrice) {
-          setSelectedCurrency(fromNameToCurrencyObj(token));
+          return token;
         }
       }
-    });
-  }, [balance, promotionOption.usdPrice, rates]);
+      return false;
+    })[0],
+    [balance, promotionOption.usdPrice, rates],
+  );
+
+  const canPay = useMemo(
+    () => payableToken,
+    [payableToken],
+  );
+
+  useEffect(() => {
+    setSelectedCurrency(fromNameToCurrencyObj(payableToken?.[0]));
+  }, [payableToken]);
 
   return (
     <div
@@ -108,7 +111,7 @@ export const PromoteCard: VFC<IPromoteCard> = ({
                   {currency.name}
                 </div>
               )}
-              isChecked={currency.name === selectedCurrency.name}
+              isChecked={currency.name === selectedCurrency?.name}
               onChange={onCurrencyClickHandler(currency)}
               className={styles.listingCurrencyItem}
               disabled={
