@@ -181,7 +181,7 @@ export const CreateCollectionForm: VFC<ICreateCollectionForm> = ({ handleSubmit,
                   dir="horizontal"
                   options={Object.entries(standardsMap).map(([value, content]) => ({
                     value,
-                    content: `${content} NFT`,
+                    content: <Text size="xs">{content} NFT</Text>,
                     disabled: isSubmitting,
                   }))}
                   selected={{ value: field.value, content: `${standardsMap[field.value]} NFT` }}

@@ -24,3 +24,28 @@ $optionColorsDefault: (
   'option-focus-color': $light-8,
   'option-disabled-color': $light-8,
 );
+
+$optionColorsDark: (
+  'option-default-background': $dark-2,
+  'option-hover-background': $dark-2,
+  'option-active-background': $accent,
+  'option-focus-background': $dark-2,
+  'option-disabled-background': $dark-2,
+
+  'option-default-border': $dark-4,
+  'option-default-border-width': 1px,
+  'option-hover-border': $accent,
+  'option-hover-border-width': 2px,
+  'option-active-border': $accent,
+  'option-active-border-width': 2px,
+  'option-focus-border': $accent,
+  'option-focus-border-width': 2px,
+  'option-disabled-border': $dark-4,
+  'option-disabled-border-width': 2px,
+
+  'option-default-color': $dark-8,
+  'option-hover-color': $dark-8,
+  'option-active-color': $dark-8,
+  'option-focus-color': $dark-8,
+  'option-disabled-color': $dark-8,
+);

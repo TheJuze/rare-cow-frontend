@@ -42,6 +42,7 @@
   .listing {
     margin-bottom: space(32);
     background: var(--property-block-background);
+    border: var(--property-block-border);
     border-radius: 20px;
     padding: space(24);
     &Body {

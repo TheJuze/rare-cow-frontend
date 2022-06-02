@@ -1,7 +1,7 @@
 @import 'src/styles/helpers';
 
 .socials {
-  background-color: $light-white;
+  background-color: var(--socials-default-background-color);
   padding: space(24);
   border-radius: 14px;
   &Item {
@@ -12,7 +12,7 @@
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background-color: $light-100;
+    background-color: var(--socials-default-icon-background-color);
     @include flex(row, center, center);
   }
   .socialsItem + .socialsItem {

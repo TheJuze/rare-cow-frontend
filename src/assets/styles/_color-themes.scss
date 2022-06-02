@@ -40,6 +40,8 @@
 @import './component-variables/promote-card';
 @import './component-variables/promotion-status-bar';
 @import './component-variables/skeleton';
+@import './component-variables/socials';
+@import './component-variables/following';
 
 :root {
 	$colors:(
@@ -85,6 +87,8 @@
 		$promoteCardColorsDefault,
 		$promotionStatusBarColorsDefault,
 		$skeletonColorsDefault,
+		$socialsColorsDefault,
+		$followingColorsDefault,
 	);
 
 	@each $key_name in $colors {
@@ -119,6 +123,12 @@
 		$chipsColorsDark,
 		$tabBarColorsDark,
 		$loaderColorsDark,
+		$socialsColorsDark,
+		$filtersColorsDark,
+		$followingColorsDark,
+		$propertiesColorsDark,
+		$optionColorsDark,
+		$avatarUploaderColorsDark,
 	);
 
 	@each $key_name in $colors {

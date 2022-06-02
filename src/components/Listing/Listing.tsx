@@ -59,7 +59,7 @@ export const Listing: VFC<ListingProps> = ({
     () =>
       initialListingOptions
         .filter((opt) => (isMultiple ? !excludeFromMultiple.includes(opt) : true))
-        .map<TOption>((opt) => ({ value: opt, content: opt })),
+        .map<TOption>((opt) => ({ value: opt, content: <Text variant="body-2" weight="normal">{opt}</Text> })),
     [isMultiple],
   );
 
@@ -91,7 +91,7 @@ export const Listing: VFC<ListingProps> = ({
     () =>
       initialTimestampOptions.map((timestamp) => ({
         value: timestamp,
-        content: `${secondToHours(timestamp)} h`,
+        content: <Text variant="medium-body" weight="normal">${secondToHours(timestamp)} h</Text>,
       })),
     [],
   );
@@ -191,7 +191,7 @@ export const Listing: VFC<ListingProps> = ({
                     src={currenciesIconsMap[currency.name]}
                     alt={currency.name}
                   />
-                  {currency.name}
+                  <Text variant="body-2" weight="normal">{currency.name}</Text>
                 </div>
               }
               isChecked={currency.name === selectedCurrency.name}
