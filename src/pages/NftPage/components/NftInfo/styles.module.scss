@@ -6,16 +6,23 @@
   width: 100%;
   &Top {
     @include flex(row, flex-start, space-between);
+    &Name{
+      flex: 0 0 40%;
+      &Title{
+        @include ellipsis;
+      }
+    }
     .actionButtons{
       margin-left: auto;
-      @include flex(row, center, space-between);
+      @include flex(row, center, flex-end, wrap);
       .actionItem{
+        margin-bottom: space(4);
         &:not(:last-child){
-          margin-right: space(4);
+          margin-right: space(4); 
         }
         .promote{
           background: $red;
-          padding: 12px 18px;
+          padding: 8px 14px;
         }
       }
     }
@@ -32,12 +39,22 @@
   }
 }
 
+@include large-tablet{
+  .nftInfo{
+    &Top{
+      &Name{
+        flex: 0 0 auto;
+      }
+    }
+  }
+}
+
 @include middle-tablet{
   .nftInfo{
     &Top{
       .actionButtons{
         flex: 0 0 40%;
-        @include flex(row-reverse, center, space-between, wrap-reverse);
+        @include flex(row-reverse, center, flex-start, wrap-reverse);
         .actionItem{
           margin-bottom: space(4);
         }

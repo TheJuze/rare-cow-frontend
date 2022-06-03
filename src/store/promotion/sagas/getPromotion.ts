@@ -14,7 +14,7 @@ export function* getPromotesSaga({ type }: ReturnType<typeof getPromotions>) {
   try {
     const { data } = yield call(baseApi.getPromotes);
     const camelizeData = camelize(data);
-    yield put(setPromoteState(camelizeData as PromotionSettings[]));
+    yield put(setPromoteState(Array.isArray(camelizeData) ? camelizeData : [] as PromotionSettings[]));
     yield put(success(type));
   } catch (err) {
     console.log(err);

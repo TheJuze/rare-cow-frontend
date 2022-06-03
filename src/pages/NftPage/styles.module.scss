@@ -17,7 +17,7 @@
   }
   .nftBlock {
     @include flex(column, flex-start, flex-start);
-    max-width: 456px;
+    max-width: 592px;
     width: 100%;
   }
   .nftImage + .nftBlock {

@@ -34,6 +34,7 @@ const storeURLs = {
   burn: (id: number | string) => `/store/token/${id}/burn/`,
   getSingleCollection: (id: number | string) => `/store/collection/${id}/`,
   getLiked: (id: number | string) => `/account/${id}/liked/`,
+  getFeatured: '/store/favorites/',
 };
 
 const activityURLs = {
@@ -46,7 +47,7 @@ const ratesURLs = {
 
 const promotionURLs = {
   promotion: '/promotion/',
-  premiumPromotion: '/promotion/premium',
+  premiumPromotion: '/promotion/premium/',
 };
 
 export default {
