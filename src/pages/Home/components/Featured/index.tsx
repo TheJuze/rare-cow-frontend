@@ -6,7 +6,6 @@
 /* eslint-disable react/no-array-index-key */
 import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight } from 'assets/img';
 
 import { useDispatch } from 'react-redux';
 import nftsSelector from 'store/nfts/selectors';
