@@ -4,6 +4,7 @@
 @import './component-variables/switch';
 @import './component-variables/input';
 @import './component-variables/select';
+@import './component-variables/selector';
 @import './component-variables/table';
 @import './component-variables/tooltip';
 @import './component-variables/main';
@@ -42,6 +43,7 @@
 @import './component-variables/skeleton';
 @import './component-variables/socials';
 @import './component-variables/following';
+@import './component-variables/modal';
 
 :root {
 	$colors:(
@@ -89,6 +91,8 @@
 		$skeletonColorsDefault,
 		$socialsColorsDefault,
 		$followingColorsDefault,
+		$modalColorsDefault,
+		$selectorColorsDefault,
 	);
 
 	@each $key_name in $colors {
@@ -129,6 +133,11 @@
 		$propertiesColorsDark,
 		$optionColorsDark,
 		$avatarUploaderColorsDark,
+		$titleDropdownColorsDark,
+		$modalColorsDark,
+		$nftpageColorsDark,
+		$selectorColorsDark,
+		$promoteCardColorsDark,
 	);
 
 	@each $key_name in $colors {

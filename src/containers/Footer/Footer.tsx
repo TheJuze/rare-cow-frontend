@@ -30,7 +30,7 @@ export const Footer: VFC<FooterProps> = ({ className }) => (
       <hr className={s.line} />
       <div className={s.generalInfo}>
         <Logo className={s.logo} />
-        <Text className={s.info} size="xs" color="dark">
+        <Text className={s.info} size="xs" color="darkDefault">
           We are happy to work with people who are inspired, curious and motivated to build the
           future with us! Join RareCow, we will help your creation stand out!
         </Text>
@@ -51,13 +51,13 @@ export const Footer: VFC<FooterProps> = ({ className }) => (
       </div>
       <hr className={s.line} />
       <div className={s.copyright}>
-        <Text size="xs" color="dark">
+        <Text size="xs" color="darkDefault">
           Copyright © {new Date().getFullYear()} LLC. All rights reserved
         </Text>
         <div className={s.privacy}>
           {mockedRoutes.map((route) => (
             <NavLink to={route.link}>
-              <Text size="xs" color="dark">
+              <Text size="xs" color="darkDefault">
                 {route.name}
               </Text>
             </NavLink>

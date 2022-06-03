@@ -209,7 +209,7 @@ const UploadAvatar: VFC<IUploadAvatar> = ({
               [styles.invisible]: fileURL,
             })}
           >
-            <Text color="dark" weight="medium">
+            <Text color="darkDefault" weight="medium">
               Upload file
             </Text>
           </div>

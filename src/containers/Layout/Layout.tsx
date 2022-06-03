@@ -2,7 +2,7 @@
 // import { UrlObject } from 'url';
 
 import React, {
-  FC, useCallback, useEffect, useMemo, useState,
+  FC, useCallback, useEffect, useMemo,
 } from 'react';
 
 import { Footer, Header } from 'containers';
@@ -20,6 +20,7 @@ import { useDispatch } from 'react-redux';
 import { updateUserState } from 'store/user/reducer';
 import clsx from 'clsx';
 import { getFeeInfo } from 'store/nfts/actions';
+import { updateTheme } from 'store/user/actions';
 import styles from './styles.module.scss';
 
 export interface LayoutProps {
@@ -27,11 +28,19 @@ export interface LayoutProps {
 }
 
 export const Layout: FC<LayoutProps> = ({ children }) => {
-  const [isLight, setIsLight] = useState(false);
+  const isLight = useShallowSelector(userSelector.getProp('isLight'));
   const { pathname } = useLocation();
   const { connect, disconnect, walletService } = useWalletConnectorContext();
 
   const dispatch = useDispatch();
+
+  const handleSwitchTheme = useCallback((newValue: boolean) => {
+    dispatch(updateTheme({ isLight: newValue }));
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(updateTheme({ isLight }));
+  }, [dispatch, isLight]);
 
   const { address, chainType } = useShallowSelector<State, UserState>(userSelector.getUser);
   const { [actionTypesUser.UPDATE_USER_INFO]: userInfoRequest } = useShallowSelector(
@@ -86,7 +95,7 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
             disconnect={disconnectWallet}
             onToggleChainType={handleToggleChainType}
             isLight={isLight}
-            setIsLight={setIsLight}
+            setIsLight={handleSwitchTheme}
           />
         )}
         <main className={styles.main}>{children}</main>

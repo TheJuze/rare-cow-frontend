@@ -19,7 +19,7 @@ const ApproveRejectedModal: VFC<IApproveRejectedModal> = ({
   onApproveAgain,
 }) => {
   const title = (
-    <Text align="center" className={styles.title} weight="bold" color="dark">
+    <Text align="center" className={styles.title} weight="bold" color="darkDefault">
       {withSteps && 'STEP 1/2 '}
       <Text tag="span" className={styles.title} color="accent" weight="bold">
         APPROVE
@@ -32,7 +32,7 @@ const ApproveRejectedModal: VFC<IApproveRejectedModal> = ({
       <div className={styles.icon}>
         <Error className={styles.error} />
       </div>
-      <Text weight="semiBold" align="center" color="dark" className={styles.subtitle}>
+      <Text weight="semiBold" align="center" color="darkDefault" className={styles.subtitle}>
         You rejected Approve transaction in Metamask. Press Approve again to start over or close
         this window.
       </Text>

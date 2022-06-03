@@ -1,0 +1,15 @@
+@import 'src/styles/variables';
+
+$selectorColorsDefault: (
+  "selector-default-background": $metal-200,
+  "selector-default-option-color": $metal-700,
+  "selector-active-option-color": $metal-50,
+  "selector-default-toggle-color": $accent,
+);
+
+$selectorColorsDark: (
+  "selector-default-background": $dark-5,
+  "selector-default-option-color": $accent-100,
+  "selector-active-option-color": $metal-50,
+  "selector-default-toggle-color": $accent,
+);

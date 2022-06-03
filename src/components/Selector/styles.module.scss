@@ -4,7 +4,7 @@
 
 .selector {
   position: relative;
-  background-color: $metal-200;
+  background-color: var(--selector-default-background);
   border-radius: 21px;
   width: 100%;
   @include flex(row, center, center);
@@ -22,12 +22,12 @@
   z-index: 1;
   transition: all 0.4s ease-in-out;
 
-  color: $metal-700;
+  color: var(--selector-default-option-color);
 
   &Active {
     z-index: 1;
     transition: all 0.4s ease-in-out;
-    color: $metal-50 !important;
+    color: var(--selector-active-option-color) !important;
   }
 }
 
@@ -35,7 +35,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-color: $accent;
+  background-color: var(--selector-default-toggle-color);
   border-radius: 21px;
   width: 50%;
   transition: all 0.4s ease-in-out;

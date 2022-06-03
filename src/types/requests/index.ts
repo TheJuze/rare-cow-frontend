@@ -126,6 +126,10 @@ export type UpdateUserInfoReq = {
   web3Provider: Web3;
 };
 
+export type UpdateThemeReq = {
+  isLight: boolean;
+};
+
 export type GetDetailedNftReq = {
   id: number | string;
 };

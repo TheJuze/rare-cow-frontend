@@ -19,6 +19,7 @@ const initialState: UserState = {
   rate: '',
   chainType: 'testnet',
   isUser: false,
+  isLight: Boolean(localStorage.isLight),
 };
 
 export const userReducer = createSlice({
@@ -65,6 +66,13 @@ export const userReducer = createSlice({
       ...state,
       isUser: state.id === action.payload,
     }),
+    setIsLight: (state, action: PayloadAction<Partial<UserState>>) => {
+      localStorage.setItem('isLight', action.payload.isLight ? 'light' : '');
+      return {
+        ...state,
+        ...action.payload,
+      };
+    },
     disconnectWalletState: () => {
       localStorage.removeItem('rare-cow-wallet-connect');
       return {
@@ -75,9 +83,13 @@ export const userReducer = createSlice({
 });
 
 export const {
-  disconnectWalletState, updateUserState, updateProvider, updateCollections,
-  updateBalance, setIsUser,
-} =
-  userReducer.actions;
+  disconnectWalletState,
+  updateUserState,
+  updateProvider,
+  updateCollections,
+  updateBalance,
+  setIsUser,
+  setIsLight,
+} = userReducer.actions;
 
 export default userReducer.reducer;

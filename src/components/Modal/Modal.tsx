@@ -8,6 +8,8 @@ import { Text } from 'components';
 
 import { CloseIcon } from 'assets/icons';
 
+import { useShallowSelector } from 'hooks';
+import userSelector from 'store/user/selectors';
 import styles from './styles.module.scss';
 
 export interface ModalProps {
@@ -32,6 +34,7 @@ export const Modal: React.FC<ModalProps> = ({
   title = '',
   maxWidth,
 }) => {
+  const isLight = useShallowSelector(userSelector.getProp('isLight'));
   const escFunction = useCallback(
     (e) => {
       if (e.keyCode === 27) {
@@ -63,7 +66,7 @@ export const Modal: React.FC<ModalProps> = ({
 
   return createPortal(
     visible && (
-      <div className={cn(styles.modal, modalClassName)}>
+      <div className={cn(styles.modal, modalClassName, { [styles.dark]: !isLight })}>
         <div className={cn(styles.outer, outerClassName)} style={{ maxWidth }}>
           <OutsideClickHandler onOutsideClick={onClose}>
             <div className={cn(styles.container, containerClassName)}>

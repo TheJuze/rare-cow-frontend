@@ -86,7 +86,7 @@ export const NftList: VFC<NftListProps> = ({
       els = elements.length ? (
         elements
       ) : (
-        <Text align="center" variant="subtitle-1" color="dark">
+        <Text align="center" variant="subtitle-1" color="darkDefault">
           No NFTs found for your request
         </Text>
       );
