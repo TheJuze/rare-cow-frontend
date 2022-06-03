@@ -5,7 +5,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/no-array-index-key */
 import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import nftsSelector from 'store/nfts/selectors';
@@ -27,7 +27,7 @@ import uiSelector from 'store/ui/selectors';
 import actionTypes from 'store/nfts/actionTypes';
 import { getFeatured } from 'store/nfts/actions';
 import { RequestStatus } from 'types';
-import { setFeatured } from 'store/nfts/reducer';
+import { setFeatured, setFeaturedId } from 'store/nfts/reducer';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -36,6 +36,7 @@ type Props = {
 const Trending: FC<Props> = ({ className }) => {
   const nfts = useShallowSelector(nftsSelector.getProp('featured'));
   const dispatch = useDispatch();
+  const navigator = useNavigate();
   const { [actionTypes.GET_TRENDING]: fetchingTrending } = useShallowSelector(uiSelector.getUI);
   const [numberOfSlide, setNumberOfSlide] = useState(3);
   const { width } = useWindowState();
@@ -78,6 +79,11 @@ const Trending: FC<Props> = ({ className }) => {
   useEffect(() => {
     fetchFeaturedNfts();
   }, [fetchFeaturedNfts]);
+
+  const onNftPageClick = useCallback((nftId, featuredId) => {
+    dispatch(setFeaturedId(featuredId));
+    navigator(createDynamicLink(routes.nest.nft.path, { id: nftId }));
+  }, [dispatch, navigator]);
 
   useEffect(() => () => { dispatch(setFeatured([])); }, [dispatch]);
 
@@ -144,11 +150,12 @@ const Trending: FC<Props> = ({ className }) => {
                 isLiked,
                 available,
                 endAuction,
+                promotionInfo,
               } = nft;
               return (
                 <SwiperSlide key={id}>
-                  <Link
-                    to={createDynamicLink(routes.nest.nft.path, { id })}
+                  <div
+                    onClick={() => onNftPageClick(id, promotionInfo?.id)}
                     className={styles.drop}
                   >
                     <ArtCard
@@ -169,7 +176,7 @@ const Trending: FC<Props> = ({ className }) => {
                       className={styles.card}
                       isPromo
                     />
-                  </Link>
+                  </div>
                 </SwiperSlide>
               );
             })}
@@ -195,11 +202,12 @@ const Trending: FC<Props> = ({ className }) => {
               isLiked,
               available,
               endAuction,
+              promotionInfo,
             } = nft;
             return (
-              <Link
+              <div
                 key={id}
-                to={createDynamicLink(routes.nest.nft.path, { id })}
+                onClick={() => onNftPageClick(id, promotionInfo?.id)}
                 className={cx(styles.drop, styles.dropDouble)}
               >
                 <ArtCard
@@ -220,7 +228,7 @@ const Trending: FC<Props> = ({ className }) => {
                   isPromo
                   className={styles.card}
                 />
-              </Link>
+              </div>
             );
           })}
         </div>
@@ -236,7 +244,7 @@ const Trending: FC<Props> = ({ className }) => {
       );
     }
     return result;
-  }, [isNftsLoading, isSwiper, nfts, numberOfSlide]);
+  }, [isNftsLoading, isSwiper, nfts, numberOfSlide, onNftPageClick]);
 
   return (
     <div className={styles.wrapper}>

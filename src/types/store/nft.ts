@@ -12,6 +12,7 @@ export type NftsState = {
   nfts: TokenFull[];
   presearchedNfts: TokenFull[];
   detailedNft: TNullable<TokenFull>;
+  featuredId: TNullable<number>;
   totalPages: number;
   categories: TNullable<TResponseCategories>;
   trending: TokenFull[];

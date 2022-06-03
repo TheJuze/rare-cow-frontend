@@ -8,6 +8,7 @@ const initialState: NftsState = {
   nfts: [],
   presearchedNfts: [],
   detailedNft: null,
+  featuredId: null,
   categories: [],
   totalPages: 0,
   trending: [],
@@ -43,6 +44,10 @@ export const nftsReducer = createSlice({
       ...state,
       categories: action.payload,
     }),
+    setFeaturedId: (state, action: PayloadAction<null | number>) => ({
+      ...state,
+      featuredId: action.payload,
+    }),
     setTotalPages: (state, action: PayloadAction<number>) => ({
       ...state,
       totalPages: action.payload,
@@ -50,6 +55,7 @@ export const nftsReducer = createSlice({
     setDetailedNft: (state, action: PayloadAction<TokenFull>) => ({
       ...state,
       detailedNft: action.payload,
+      featuredId: null,
     }),
     setFeatured: (state, action: PayloadAction<TokenFull[]>) => ({
       ...state,
@@ -96,6 +102,7 @@ export const {
   setSearchValues,
   setFees,
   setFeatured,
+  setFeaturedId,
 } = nftsReducer.actions;
 
 export default nftsReducer.reducer;

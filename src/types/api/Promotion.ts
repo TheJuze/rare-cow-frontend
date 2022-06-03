@@ -6,4 +6,5 @@ export interface Promotion {
   queue: string;
   status: PromotionStatus;
   type: PromotionType;
+  id: number;
 }

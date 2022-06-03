@@ -4,10 +4,11 @@ import { RejectAction, SetOnAuctionReq, SetOnSaleReq } from 'types/requests';
 import ajax from './ajax';
 
 export default {
-  getTokenById(params: { id: string | number }) {
+  getTokenById(params: { id: string | number, featuredId: number | null}) {
     return ajax({
       method: 'get',
       url: URL.getTokenById(params.id),
+      params: { from_promotion: params.featuredId },
     });
   },
   like(data: { id: string | number }) {

@@ -32,6 +32,7 @@ export interface ArtCardProps {
   standart: string | 'ERC721' | 'ERC1155';
   inStock: number;
   isPromo?: boolean;
+  fromFeatured?: boolean;
 }
 
 export const ArtCard: VFC<ArtCardProps> = ({
