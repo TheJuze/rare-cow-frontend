@@ -107,7 +107,7 @@ export const ArtCard: VFC<ArtCardProps> = ({
       </div>
       <div className="artCard-info__wrapper">
         <div className="artCard-info__line">
-          <Text size="s" color="dark" weight="medium">
+          <Text size="s" color="darkDefault" weight="medium">
             {sliceString(name, 20, 0)}
           </Text>
           {price ? (
@@ -135,7 +135,7 @@ export const ArtCard: VFC<ArtCardProps> = ({
         <div className="artCard-info__line">
           <div className="artCard-info__line-author">
             <Avatar id={authorId} avatar={authorAvatar} size={28} />
-            <Text size="xs" color="dark" className="artCard-info__line-author-name" weight="medium">
+            <Text size="xs" color="darkDefault" className="artCard-info__line-author-name" weight="medium">
               {sliceString(authorName, 7, 5)}
             </Text>
           </div>

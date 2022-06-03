@@ -22,6 +22,8 @@ export default function* ajax<T = unknown>(
 
   if (accessToken) {
     client.defaults.headers.common.Authorization = `Token ${accessToken}`;
+  } else {
+    client.defaults.headers.common.Authorization = '';
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

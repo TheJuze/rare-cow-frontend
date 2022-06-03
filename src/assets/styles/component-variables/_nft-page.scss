@@ -4,4 +4,10 @@ $nftpageColorsDefault:(
   'nftpage-owners-border': 2px solid $metal-300,
   'nftpage-price-background-color': $metal-200,
 
+);
+
+$nftpageColorsDark:(
+  'nftpage-owners-border': 2px solid $dark-3,
+  'nftpage-price-background-color': $dark-2,
+
 )

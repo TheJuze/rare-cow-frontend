@@ -59,7 +59,7 @@ export const OwnerSeller: VFC<IOwnerSeller> = ({
       <div className={styles.left}>
         <Avatar size={40} avatar={owner.avatar} id={owner.url} withShadow />
         <div className={styles.ownerInfo}>
-          <Text variant="body-2" color="dark" weight="semiBold">
+          <Text variant="body-2" color="darkDefault" weight="semiBold">
             {owner.name}
           </Text>
           {isSelling && !isAuction && (

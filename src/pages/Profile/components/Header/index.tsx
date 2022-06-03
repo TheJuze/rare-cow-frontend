@@ -97,7 +97,7 @@ const Header: VFC<IHeaderProps> = ({
                 {balance.map(({ icon, value }) => (
                   <div className={styles.balanceItem}>
                     <img src={icon} alt="" className={styles.balanceItemIcon} />
-                    <Text weight="medium" color="dark" className={styles.balanceText}>
+                    <Text weight="medium" color="darkDefault" className={styles.balanceText}>
                       {value}
                     </Text>
                   </div>
@@ -168,7 +168,7 @@ const Header: VFC<IHeaderProps> = ({
               {balance.map(({ icon, value }) => (
                 <div className={styles.balanceItem}>
                   <img src={icon} alt="" className={styles.balanceItemIcon} />
-                  <Text weight="medium" color="dark" className={styles.balanceText}>
+                  <Text weight="medium" color="darkDefault" className={styles.balanceText}>
                     {value}
                   </Text>
                 </div>

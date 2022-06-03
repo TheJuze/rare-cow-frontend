@@ -251,7 +251,7 @@ const Trending: FC<Props> = ({ className }) => {
         <Text
           variant="heading-2"
           weight="bold"
-          color="dark"
+          color="darkDefault"
           className={styles.title}
           align="center"
         >

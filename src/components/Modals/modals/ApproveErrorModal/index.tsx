@@ -19,7 +19,7 @@ const ApproveErrorModal: VFC<IApproveErrorModal> = ({
   onApproveAgain,
 }) => {
   const title = (
-    <Text className={styles.title} align="center" weight="bold" color="dark">
+    <Text className={styles.title} align="center" weight="bold" color="darkDefault">
       {withSteps && 'STEP 1/2 '}
       <Text tag="span" className={styles.title} color="accent" weight="bold">
         APPROVE
@@ -32,7 +32,7 @@ const ApproveErrorModal: VFC<IApproveErrorModal> = ({
       <div className={styles.icon}>
         <Error className={styles.error} />
       </div>
-      <Text weight="semiBold" align="center" color="dark" className={styles.subtitle}>
+      <Text weight="semiBold" align="center" color="darkDefault" className={styles.subtitle}>
         Something went wrong 😖. Please try again. If it doesn&apos;t help then try again later.
       </Text>
       <Button onClick={onApproveAgain} className={styles.button} size="sm">
