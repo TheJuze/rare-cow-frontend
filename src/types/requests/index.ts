@@ -127,7 +127,7 @@ export type UpdateUserInfoReq = {
 };
 
 export type UpdateThemeReq = {
-  isLight: boolean;
+  isDark: boolean;
 };
 
 export type GetDetailedNftReq = {

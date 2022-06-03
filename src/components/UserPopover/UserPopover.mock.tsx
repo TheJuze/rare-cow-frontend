@@ -10,6 +10,6 @@ export const userPopoverPropsMocked: UserPopoverProps = {
   address: '',
   disconnect: () => {},
   onClose: () => {},
-  isLight: true,
-  setIsLight: () => {},
+  isDark: false,
+  setIsDark: () => {},
 };

@@ -34,7 +34,7 @@ export const Modal: React.FC<ModalProps> = ({
   title = '',
   maxWidth,
 }) => {
-  const isLight = useShallowSelector(userSelector.getProp('isLight'));
+  const isDark = useShallowSelector(userSelector.getProp('isDark'));
   const escFunction = useCallback(
     (e) => {
       if (e.keyCode === 27) {
@@ -66,7 +66,7 @@ export const Modal: React.FC<ModalProps> = ({
 
   return createPortal(
     visible && (
-      <div className={cn(styles.modal, modalClassName, { [styles.dark]: !isLight })}>
+      <div className={cn(styles.modal, modalClassName, { [styles.dark]: isDark })}>
         <div className={cn(styles.outer, outerClassName)} style={{ maxWidth }}>
           <OutsideClickHandler onOutsideClick={onClose}>
             <div className={cn(styles.container, containerClassName)}>

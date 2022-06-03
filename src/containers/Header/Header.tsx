@@ -34,11 +34,11 @@ export interface HeaderProps {
   isHomePage: boolean;
   isUserInfoLoading: boolean;
   chainType: 'testnet' | 'mainnet';
-  isLight: boolean;
-  setIsLight: (value: boolean) => void;
+  isDark: boolean;
+  setIsDark: (value: boolean) => void;
 }
 
-export const Header: VFC<HeaderProps> = ({ address, disconnect, isLight, setIsLight }) => {
+export const Header: VFC<HeaderProps> = ({ address, disconnect, isDark, setIsDark }) => {
   const { breadcrumbs, dynamicValues } = useBreadcrumbs();
   const exploreValue = useMemo(
     () => (dynamicValues[0]?.categoryName
@@ -272,8 +272,8 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect, isLight, setIsLi
               <Avatar avatar={user.avatar} id={user.id} size="40" />
               <UserPopover
                 disconnect={disconnect}
-                isLight={isLight}
-                setIsLight={setIsLight}
+                isDark={isDark}
+                setIsDark={setIsDark}
                 {...user}
                 visible={isUserShown}
                 bodyRef={bodyRef}

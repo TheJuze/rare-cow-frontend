@@ -28,19 +28,19 @@ export interface LayoutProps {
 }
 
 export const Layout: FC<LayoutProps> = ({ children }) => {
-  const isLight = useShallowSelector(userSelector.getProp('isLight'));
+  const isDark = useShallowSelector(userSelector.getProp('isDark'));
   const { pathname } = useLocation();
   const { connect, disconnect, walletService } = useWalletConnectorContext();
 
   const dispatch = useDispatch();
 
   const handleSwitchTheme = useCallback((newValue: boolean) => {
-    dispatch(updateTheme({ isLight: newValue }));
+    dispatch(updateTheme({ isDark: newValue }));
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(updateTheme({ isLight }));
-  }, [dispatch, isLight]);
+    dispatch(updateTheme({ isDark }));
+  }, [dispatch, isDark]);
 
   const { address, chainType } = useShallowSelector<State, UserState>(userSelector.getUser);
   const { [actionTypesUser.UPDATE_USER_INFO]: userInfoRequest } = useShallowSelector(
@@ -83,7 +83,7 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
 
   const isNeedToShowHeaderFooter = useMemo(() => true, []);
   return (
-    <div className={clsx(styles.app, { [styles.dark]: !isLight })}>
+    <div className={clsx(styles.app, { [styles.dark]: isDark })}>
       <div className={styles.content}>
         {isNeedToShowHeaderFooter && (
           <Header
@@ -94,8 +94,8 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
             onConnectWallet={handleConnectWallet}
             disconnect={disconnectWallet}
             onToggleChainType={handleToggleChainType}
-            isLight={isLight}
-            setIsLight={handleSwitchTheme}
+            isDark={isDark}
+            setIsDark={handleSwitchTheme}
           />
         )}
         <main className={styles.main}>{children}</main>

@@ -9,6 +9,6 @@ export const headerPropsMocked: HeaderProps = {
   isUserInfoLoading: false,
   onToggleChainType: () => {},
   chainType: 'testnet',
-  isLight: true,
-  setIsLight: () => {},
+  isDark: false,
+  setIsDark: () => {},
 };

@@ -19,7 +19,7 @@ const initialState: UserState = {
   rate: '',
   chainType: 'testnet',
   isUser: false,
-  isLight: Boolean(localStorage.isLight),
+  isDark: Boolean(localStorage.isDark),
 };
 
 export const userReducer = createSlice({
@@ -66,8 +66,8 @@ export const userReducer = createSlice({
       ...state,
       isUser: state.id === action.payload,
     }),
-    setIsLight: (state, action: PayloadAction<Partial<UserState>>) => {
-      localStorage.setItem('isLight', action.payload.isLight ? 'light' : '');
+    setIsDark: (state, action: PayloadAction<Partial<UserState>>) => {
+      localStorage.setItem('isDark', action.payload.isDark ? 'dark' : '');
       return {
         ...state,
         ...action.payload,
@@ -89,7 +89,7 @@ export const {
   updateCollections,
   updateBalance,
   setIsUser,
-  setIsLight,
+  setIsDark,
 } = userReducer.actions;
 
 export default userReducer.reducer;

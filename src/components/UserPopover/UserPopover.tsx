@@ -72,8 +72,8 @@ export interface UserPopoverProps {
   address: string;
   disconnect: () => void;
   onClose: () => void;
-  isLight: boolean;
-  setIsLight: (value: boolean) => void;
+  isDark: boolean;
+  setIsDark: (value: boolean) => void;
 }
 
 export const UserPopover: VFC<UserPopoverProps> = ({
@@ -86,8 +86,8 @@ export const UserPopover: VFC<UserPopoverProps> = ({
   address,
   disconnect,
   onClose,
-  isLight,
-  setIsLight,
+  isDark,
+  setIsDark,
 }) => {
   const { pathname } = useLocation();
   const balance = useShallowSelector(userSelector.getProp('balance'));
@@ -136,8 +136,8 @@ export const UserPopover: VFC<UserPopoverProps> = ({
   );
 
   const handleChangeTheme = useCallback((value: boolean) => {
-    setIsLight(value);
-  }, [setIsLight]);
+    setIsDark(value);
+  }, [setIsDark]);
 
   useEffect(() => {
     onClose();
@@ -208,9 +208,9 @@ export const UserPopover: VFC<UserPopoverProps> = ({
         </button>
       </div>
       <div className={styles.theme}>
-        <Switch checked={isLight} onChange={() => handleChangeTheme(!isLight)} size="sm" />
+        <Switch checked={isDark} onChange={() => handleChangeTheme(!isDark)} size="sm" />
         <LightTheme />
-        <Text>{isLight ? 'Light' : 'Dark'}</Text>
+        <Text>{isDark ? 'Dark' : 'Light'}</Text>
       </div>
     </div>
   );
