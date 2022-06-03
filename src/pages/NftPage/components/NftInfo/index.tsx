@@ -120,7 +120,7 @@ const NftInfo: FC<Props> = ({
           )}
         </div>
       </div>
-      <PromotionStatusBar promotionInfo={promotionInfo} />
+      {isOwner && <PromotionStatusBar promotionInfo={promotionInfo} />}
       {description.length > 0 && (
         <div className={styles.nftInfoDescription}>
           <Text variant="body-2" color="metal800">
