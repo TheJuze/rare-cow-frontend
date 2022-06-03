@@ -149,6 +149,7 @@ const Trending: FC<Props> = ({ className }) => {
                 isLiked,
                 available,
                 endAuction,
+                promotionInfo,
               } = nft;
               return (
                 <SwiperSlide key={id}>
@@ -172,6 +173,7 @@ const Trending: FC<Props> = ({ className }) => {
                       standart={standart}
                       endAuction={endAuction}
                       className={styles.card}
+                      isPromo={Boolean(promotionInfo)}
                     />
                   </Link>
                 </SwiperSlide>
@@ -199,6 +201,7 @@ const Trending: FC<Props> = ({ className }) => {
               isLiked,
               available,
               endAuction,
+              promotionInfo,
             } = nft;
             return (
               <Link
@@ -221,6 +224,7 @@ const Trending: FC<Props> = ({ className }) => {
                   isLiked={isLiked}
                   standart={standart}
                   endAuction={endAuction}
+                  isPromo={Boolean(promotionInfo)}
                   className={styles.card}
                 />
               </Link>

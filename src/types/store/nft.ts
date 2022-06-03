@@ -15,6 +15,7 @@ export type NftsState = {
   totalPages: number;
   categories: TNullable<TResponseCategories>;
   trending: TokenFull[];
+  featured: TokenFull[];
   searchData: {
     collections: Collection[];
     users: User[];

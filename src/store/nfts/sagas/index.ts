@@ -19,6 +19,7 @@ import setOnSaleSaga from './setOnSale';
 import transferSaga from './transfer';
 import endAuctionSaga from './endAuction';
 import feeInfo from './feeInfo';
+import getFeaturedSagaListener from './getFeatured';
 
 export default function* nftSagas() {
   yield fork(getDetailedNftSaga);
@@ -39,4 +40,5 @@ export default function* nftSagas() {
   yield fork(getLiked);
   yield fork(search);
   yield fork(feeInfo);
+  yield fork(getFeaturedSagaListener);
 }

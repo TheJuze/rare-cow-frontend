@@ -1,4 +1,6 @@
-import React, { useCallback, useRef, VFC } from 'react';
+import React, {
+  useCallback, useMemo, useRef, VFC,
+} from 'react';
 
 import cn from 'clsx';
 
@@ -7,10 +9,11 @@ import { Text } from 'components/Typography';
 import './styles.scss';
 import { Loader } from 'components/Loader';
 import { formatDigits, sliceString } from 'utils';
-import { BidedIcon, Promo } from 'assets/icons/icons';
+import { BidedIcon } from 'assets/icons/icons';
 import { useTimeLeft } from 'hooks';
 import { Avatar } from 'components/Avatar';
 import { LikeButton } from 'components/LikeButton';
+import { ENftTags, TagsWrapper, TTagsPropsMap } from 'components/Preview';
 
 export interface ArtCardProps {
   className?: string;
@@ -72,27 +75,15 @@ export const ArtCard: VFC<ArtCardProps> = ({
       };
     }
   }, [imgRef, wrapRef]);
+
+  const tagsProps = useMemo<TTagsPropsMap>(() => (id ? {
+    Auction: isAuction,
+    InStock: standart === 'ERC1155' ? inStock : 0,
+    Promote: isPromo,
+  } : {}), [id, inStock, isAuction, isPromo, standart]);
+
   return (
     <div className={cn('artCard', className)}>
-      {isAuction && (
-        <div className="artCard-auction">
-          <Text size="xs" color="gray6">
-            Auction
-          </Text>
-        </div>
-      )}
-      {standart === 'ERC1155' && (
-        <div className="artCard-auction">
-          <Text size="xs" color="gray6">
-            In stock: {inStock}
-          </Text>
-        </div>
-      )}
-      {isPromo && (
-        <div className="artCard-promo">
-          <Promo />
-        </div>
-      )}
       <div
         className="artCard-imageWrapper"
         onMouseOver={onMouseOver}
@@ -100,7 +91,13 @@ export const ArtCard: VFC<ArtCardProps> = ({
         ref={wrapRef}
       >
         {media ? (
-          <img ref={imgRef} className="artCard-image" src={media} alt="" />
+          <TagsWrapper
+            tags={[ENftTags.Auction, ENftTags.InStock, ENftTags.Promote]}
+            propsMap={tagsProps}
+          >
+            <img ref={imgRef} className="artCard-image" src={media} alt="" />
+          </TagsWrapper>
+
         ) : (
           <Loader className="artCard-loader" />
         )}

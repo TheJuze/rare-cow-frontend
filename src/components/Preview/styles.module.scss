@@ -46,3 +46,47 @@ model-viewer{
   width: 100%;
   height: 400px;
 }
+
+.tag{
+  &Wrapper{
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  &Body{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  &Content{
+    width: 100%;
+    height: 100%;
+    padding: space(10, 12);
+    z-index: 1;
+    position: relative;
+  }
+}
+
+.accent{
+  width: fit-content;
+  padding: space(0, 10);
+  font-size: 14px;
+  line-height: 22px;
+  color: $gray-6;
+  background: $accent;
+  border-radius: 12px;
+  margin-bottom: space(8);
+}
+
+.promote{
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  background: $red;
+  border-radius: 50%;
+  top: 12px;
+  right: 20px;
+  @include flex(row, center, center);
+}

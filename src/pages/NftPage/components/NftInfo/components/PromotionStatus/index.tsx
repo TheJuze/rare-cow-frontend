@@ -1,5 +1,5 @@
 import React, { VFC } from 'react';
-import { Promotion, PromotionStatus } from 'types/api';
+import { Promotion, PromotionStatus, PromotionType } from 'types/api';
 
 import cn from 'clsx';
 
@@ -20,7 +20,7 @@ export const PromotionStatusBar: VFC<IPromotionStatusBar> = ({ promotionInfo }) 
     return null;
   }
   if(promotionInfo.status === PromotionStatus.InProgress) {
-    const left = promotionInfo.validUntil ? `${moment(promotionInfo.validUntil).fromNow().slice(2)} left` : `${promotionInfo.clicksLeft} clicks left`;
+    const left = promotionInfo.type === PromotionType.Premium ? `${moment(promotionInfo.validUntil).fromNow().slice(2)} left` : `${promotionInfo.clicksLeft} clicks left`;
     return (
       <div className={cn(styles.wrapper, styles.promote)}>
         <ClockIcon className={styles.icon} />

@@ -11,9 +11,10 @@ import { TAudioPreview } from 'components/Preview/AudioPreview';
 import { TImagePreview } from 'components/Preview/ImagePreview';
 import { TVideoPreview } from 'components/Preview/VideoPreview';
 import { TThreePreview } from 'components/Preview/ThreePreview';
-import { getPreviewer, PromoteModal } from 'components';
+import { getPreviewer, PromoteModal, TagsWrapper, TTagsPropsMap } from 'components';
 import { clearDetailedNft } from 'store/nfts/reducer';
 import userSelector from 'store/user/selectors';
+import { PromotionStatus } from 'types/api';
 import { NftCreators, NftInfo, NftOwners, NftPayment } from './components';
 import styles from './styles.module.scss';
 
@@ -67,6 +68,13 @@ const NftPage: FC = () => {
     [nft?.owners, userId],
   );
 
+  const tagsProps = useMemo<TTagsPropsMap>(() => (nft ? {
+    Auction: nft.isAucSelling || nft.isTimedAucSelling,
+    InStock: nft.standart === 'ERC1155' ? nft.available : 0,
+    Owned: isOwner ? nft.owners.find((owner) => +owner.url === +userId).sellingQuantity : false,
+    Promote: nft.promotionInfo && nft.promotionInfo.status === PromotionStatus.InProgress,
+  } : {}), [isOwner, nft, userId]);
+
   if (!nft) {
     return null;
   }
@@ -86,7 +94,9 @@ const NftPage: FC = () => {
           canBurn={isUserCanBurn}
           promotionInfo={nft.promotionInfo}
         />
-        <div className={styles.nftImage}>{previewComponent}</div>
+        <div className={styles.nftImage}>
+          <TagsWrapper propsMap={tagsProps}>{previewComponent}</TagsWrapper>
+        </div>
         <NftPayment detailedNFT={nft} />
         <NftCreators
           creatorAvatar={nft.creator.avatar}
@@ -114,7 +124,9 @@ const NftPage: FC = () => {
 
   return (
     <div className={styles.nftWrapper}>
-      <div className={styles.nftImage}>{previewComponent}</div>
+      <div className={styles.nftImage}>
+        <TagsWrapper propsMap={tagsProps}>{previewComponent}</TagsWrapper>
+      </div>
       <div className={styles.nftBlock}>
         <NftInfo
           name={nft.name}

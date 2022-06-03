@@ -90,8 +90,8 @@ const NftInfo: FC<Props> = ({
         maxBurnAmount={maxBurnAmount}
       />
       <div className={styles.nftInfoTop}>
-        <div>
-          <Text variant="subtitle-1" color="dark">
+        <div className={styles.nftInfoTopName}>
+          <Text className={styles.nftInfoTopNameTitle} variant="subtitle-1" color="dark">
             {name}
           </Text>
           <Text variant="body-2" color="metal800">
