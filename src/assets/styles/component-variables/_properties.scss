@@ -1,5 +1,11 @@
 @import 'src/styles/variables';
 
 $propertiesColorsDefault: (
-    "property-block-background": rgba($light-white, 0.5),
-)
+  'property-block-background': rgba($light-white, 0.5),
+  'property-block-border': none,
+);
+
+$propertiesColorsDark: (
+  'property-block-background': rgba($bg-dark, 0.5),
+  'property-block-border': 1px solid $dark-3,
+);

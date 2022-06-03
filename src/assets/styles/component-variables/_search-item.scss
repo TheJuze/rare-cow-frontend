@@ -15,3 +15,19 @@ $searchItemColorsDefault: (
   'search-item-disabled-border-width': 0px,
   'search-item-disabled-border-color': transparent,
 );
+
+$searchItemColorsDark: (
+  'search-item-default-background': $dark-3,
+  'search-item-hover-background': $dark-2,
+  'search-item-focus-background': $dark-2,
+  'search-item-disabled-background': $dark-3,
+
+  'search-item-default-border-width': 0px,
+  'search-item-default-border-color': transparent,
+  'search-item-hover-border-width': 0px,
+  'search-item-hover-border-color': transparent,
+  'search-item-focus-border-width': 0px,
+  'search-item-focus-border-color': transparent,
+  'search-item-disabled-border-width': 0px,
+  'search-item-disabled-border-color': transparent,
+);

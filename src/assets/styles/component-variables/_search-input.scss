@@ -15,3 +15,19 @@ $searchInputColorsDefault: (
   'search-input-disabled-result-border-width': 0px,
   'search-input-disabled-result-border-color': transparent,
 );
+
+$searchInputColorsDark: (
+  'search-input-default-result-background': $dark-3,
+  'search-input-hover-result-background': $dark-3,
+  'search-input-focus-result-background': $dark-3,
+  'search-input-disabled-result-background': $dark-3,
+
+  'search-input-default-result-border-width': 0px,
+  'search-input-default-result-border-color': transparent,
+  'search-input-hover-result-border-width': 0px,
+  'search-input-hover-result-border-color': transparent,
+  'search-input-focus-result-border-width': 0px,
+  'search-input-focus-result-border-color': transparent,
+  'search-input-disabled-result-border-width': 0px,
+  'search-input-disabled-result-border-color': transparent,
+);

@@ -3,5 +3,9 @@
 $breadcrumbsColorsDefault:(
   'breadcrumbs-text-color-default': $light-1,
   'breadcrumbs-text-color-hover': $accent,
+);
 
-)
+$breadcrumbsColorsDark:(
+  'breadcrumbs-text-color-default': $dark-8,
+  'breadcrumbs-text-color-hover': $accent-300,
+);

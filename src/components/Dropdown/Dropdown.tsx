@@ -47,8 +47,8 @@ export interface DropdownProps {
 }
 
 const iconMap = {
-  outlined: <TriangleDownIcon />,
-  transparent: <ArrowHeadDownIcon />,
+  outlined: <TriangleDownIcon className="dropdown-head-icon-triangle" />,
+  transparent: <ArrowHeadDownIcon className="dropdown-head-icon-arrow" />,
 };
 
 /**
@@ -226,7 +226,7 @@ export const Dropdown: VFC<DropdownProps> = ({
                 {option.content}
               </div>
             ))
-            : emptyOptionsMsg}
+            : <Text size="s" color="metal700">{emptyOptionsMsg}</Text>}
         </div>
       </div>
     </OutsideClickHandler>

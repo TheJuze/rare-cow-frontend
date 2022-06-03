@@ -76,7 +76,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
         className={styles['edit-profile__wrapper__title']}
         variant="subtitle-1"
         weight="medium"
-        color="dark"
+        color="darkDefault"
         align="left"
       >
         Edit profile

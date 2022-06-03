@@ -44,6 +44,7 @@
 .collection-section__wrapper {
   margin-bottom: space(24);
   background: var(--property-block-background);
+  border: var(--property-block-border);
   border-radius: 20px;
   padding: space(24);
   &__title {

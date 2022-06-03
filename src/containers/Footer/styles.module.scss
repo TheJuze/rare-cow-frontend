@@ -13,6 +13,13 @@
 .generalInfo {
   margin: space(30, 0, 25, 0) !important;
   @include flex(row, flex-start, space-between, wrap);
+  .logo {
+    g {
+      path {
+        color: var(--logo-default-color);
+      }
+    }
+  }
   .info {
     flex: 0 0 clamp(200px, 100%, 460px);
   }

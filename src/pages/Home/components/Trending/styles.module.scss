@@ -75,11 +75,16 @@
 }
 .swiper-button-prev {
   left: -64px;
-  background: url('../../../../assets/img/icons/arrowLeft.svg');
+}
+.swiper-button-prev-icon, .swiper-button-next-icon{
+  width: 9px;
+  height: 14px;
+  path {
+    color: var(--swiper-arrow-color)
+  }
 }
 .swiper-button-next {
   right: -64px;
-  background: url('../../../../assets/img/icons/arrowRight.svg');
 }
 .swiper-button-prev,
 .swiper-button-next {

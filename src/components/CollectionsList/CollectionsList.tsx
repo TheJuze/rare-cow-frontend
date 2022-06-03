@@ -34,7 +34,7 @@ export const CollectionsList: VFC<CollectionsListProps> = ({
       id={collection.url || collection.collection?.url || 0}
       index={index + 1}
       name={collection.name || collection.collection?.name || ''}
-      currency={collection.currency?.image}
+      currency={collection.currency?.image || collection.collection?.currency?.image}
       price={collection?.floorPrice}
     />
   ));
@@ -53,7 +53,7 @@ export const CollectionsList: VFC<CollectionsListProps> = ({
       els = elements.length ? (
         elements
       ) : (
-        <Text align="center" variant="subtitle-1" color="dark">
+        <Text align="center" variant="subtitle-1" color="darkDefault">
           No Collections found for your request
         </Text>
       );

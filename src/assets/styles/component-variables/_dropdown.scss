@@ -80,4 +80,90 @@ $dropdownColorsDefault: (
     "dropdown-outlined-focus-body-border-width": 1px,
     "dropdown-outlined-disabled-body-border": $light-middle,
     "dropdown-outlined-disabled-body-border-width": 1px,
+
+    "dropdown-head-icon-triangle": $base-900,
+);
+
+$dropdownColorsDark: (
+    "dropdown-transparent-default-head-background": transparent,
+    "dropdown-transparent-hover-head-background": transparent,
+    "dropdown-transparent-focus-head-background": transparent,
+    "dropdown-transparent-disabled-head-background": transparent,
+
+    "dropdown-transparent-default-head-border": transparent,
+    "dropdown-transparent-default-head-border-width": 0px,
+    "dropdown-transparent-hover-head-border": transparent,
+    "dropdown-transparent-hover-head-border-width": 0px,
+    "dropdown-transparent-focus-head-border": transparent,
+    "dropdown-transparent-focus-head-border-width": 0px,
+    "dropdown-transparent-disabled-head-border": transparent,
+    "dropdown-transparent-disabled-head-border-width": 0px,
+
+    "dropdown-transparent-default-head-color": $dark-5,
+    "dropdown-transparent-hover-head-color": $dark-5,
+    "dropdown-transparent-focus-head-color": $dark-5,
+    "dropdown-transparent-disabled-head-color": $dark-5,
+
+    "dropdown-transparent-default-body-main-background": transparent,
+
+    "dropdown-transparent-default-body-background": transparent,
+    "dropdown-transparent-hover-body-background": transparent,
+    "dropdown-transparent-active-body-background": transparent,
+    "dropdown-transparent-focus-body-background": transparent,
+    "dropdown-transparent-disabled-body-background": transparent,
+
+    "dropdown-transparent-default-body-color": currentColor,
+    "dropdown-transparent-hover-body-color": currentColor,
+    "dropdown-transparent-active-body-color": currentColor,
+    "dropdown-transparent-focus-body-color": currentColor,
+    "dropdown-transparent-disabled-body-color": currentColor,
+
+    "dropdown-transparent-default-body-border": transparent,
+    "dropdown-transparent-default-body-border-width": 0px,
+    "dropdown-transparent-hover-body-border": transparent,
+    "dropdown-transparent-hover-body-border-width": 0px,
+    "dropdown-transparent-active-body-border": transparent,
+    "dropdown-transparent-active-body-border-width": 0px,
+    "dropdown-transparent-focus-body-border": transparent,
+    "dropdown-transparent-focus-body-border-width": 0px,
+    "dropdown-transparent-disabled-body-border": transparent,
+    "dropdown-transparent-disabled-body-border-width": 0px,
+
+    //outlined
+    "dropdown-outlined-default-head-background": $dark-2,
+    "dropdown-outlined-hover-head-background": $dark-2,
+    "dropdown-outlined-focus-head-background": $dark-2,
+    "dropdown-outlined-disabled-head-background": $dark-2,
+
+    "dropdown-outlined-default-head-border": $dark-3,
+    "dropdown-outlined-default-head-border-width": 1px,
+    "dropdown-outlined-hover-head-border": $dark-5,
+    "dropdown-outlined-hover-head-border-width": 1px,
+    "dropdown-outlined-focus-head-border": $accent,
+    "dropdown-outlined-focus-head-border-width": 2px,
+    "dropdown-outlined-disabled-head-border": $dark-3,
+    "dropdown-outlined-disabled-head-border-width": 1px,
+
+    "dropdown-outlined-default-head-color": $dark-5,
+    "dropdown-outlined-hover-head-color": $dark-5,
+    "dropdown-outlined-focus-head-color": $dark-5,
+    "dropdown-outlined-disabled-head-color": $dark-5,
+
+    "dropdown-outlined-default-body-main-background": $dark,
+
+    "dropdown-outlined-default-body-background": transparent,
+    "dropdown-outlined-hover-body-background": transparent,
+    "dropdown-outlined-focus-body-background": transparent,
+    "dropdown-outlined-disabled-body-background": transparent,
+
+    "dropdown-outlined-default-body-border": $light-middle,
+    "dropdown-outlined-default-body-border-width": 1px,
+    "dropdown-outlined-hover-body-border": $light-middle,
+    "dropdown-outlined-hover-body-border-width": 1px,
+    "dropdown-outlined-focus-body-border": $light-middle,
+    "dropdown-outlined-focus-body-border-width": 1px,
+    "dropdown-outlined-disabled-body-border": $light-middle,
+    "dropdown-outlined-disabled-body-border-width": 1px,
+    
+    "dropdown-head-icon-triangle": $dark-5,
 )

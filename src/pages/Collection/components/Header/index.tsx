@@ -26,10 +26,10 @@ const Header: VFC<IHeaderProps> = ({ collection, isLoading, id }) => {
             <img src={collection?.avatar} alt="collection" className={styles.avatar} />
           </div>
           <div className={styles.info}>
-            <Text variant="subtitle-1" color="dark">
+            <Text variant="subtitle-1" color="darkDefault">
               {collection?.name}
             </Text>
-            <Text size="xs" color="dark" tag="span">
+            <Text size="xs" color="darkDefault" tag="span">
               Created by{' '}
               <Link
                 to={createDynamicLink(routes.nest.profile.path, {
@@ -43,7 +43,7 @@ const Header: VFC<IHeaderProps> = ({ collection, isLoading, id }) => {
               </Link>
             </Text>
             <div className={styles.price}>
-              <Text size="xs" color="dark">
+              <Text size="xs" color="darkDefault">
                 Items {collection?.tokensCount}, Floor price: $
                 {formatDigits(collection?.floorPrice)}
               </Text>

@@ -95,7 +95,7 @@ export const UserBid: VFC<IUserBid> = ({ detailedNFT }) => {
       {highestBid && highestBid.user ? (
         <div className={styles.bidder}>
           <Avatar id={highestBid?.user.url} avatar={highestBid?.user.avatar} size={40} />
-          <Text className={styles.bidderName} color="dark" variant="body-2" weight="semiBold">
+          <Text className={styles.bidderName} color="darkDefault" variant="body-2" weight="semiBold">
             {highestBid?.user.displayName || highestBid?.user.address}
           </Text>
           <ArrowGreen />

@@ -91,7 +91,7 @@ const NftInfo: FC<Props> = ({
       />
       <div className={styles.nftInfoTop}>
         <div className={styles.nftInfoTopName}>
-          <Text className={styles.nftInfoTopNameTitle} variant="subtitle-1" color="dark">
+          <Text className={styles.nftInfoTopNameTitle} variant="subtitle-1" color="darkDefault">
             {name}
           </Text>
           <Text variant="body-2" color="metal800">

@@ -8,7 +8,7 @@
   .filters {
     background-color: var(--filters-button-background-color);
     .filtersIcon {
-      color: #384252;
+      color: var(--filters-button-icon-color);
       @include transition;
     }
     &:hover,

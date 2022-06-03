@@ -10,4 +10,16 @@ $artcardColorsDefault:(
   'artcard-auction-block-width': 90px,
   'artcard-auction-border-radius': 24px,
 
+);
+
+$artcardColorsDark:(
+  'artcard-default-background-color': $dark-base-50,
+  'artcard-default-border-color': $dark-base-100,
+  'artcard-border-width': 1px,
+  'artcard-border-radius': 20px,
+  'artcard-auction-position': 28px,
+  'artcard-auction-background-color': $accent,
+  'artcard-auction-block-width': 90px,
+  'artcard-auction-border-radius': 24px,
+
 )

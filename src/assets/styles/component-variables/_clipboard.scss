@@ -3,4 +3,11 @@
 $clipboardColorsDefault:(
   'clipboard-success-color': $green,
   'clipboard-error-color': $red,
+  'clipboard-default-color': $dark-0,
+);
+
+$clipboardColorsDark:(
+  'clipboard-success-color': $green,
+  'clipboard-error-color': $red,
+  'clipboard-default-color': $light-white,
 )

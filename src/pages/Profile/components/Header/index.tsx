@@ -97,7 +97,7 @@ const Header: VFC<IHeaderProps> = ({
                 {balance.map(({ icon, value }) => (
                   <div className={styles.balanceItem}>
                     <img src={icon} alt="" className={styles.balanceItemIcon} />
-                    <Text weight="medium" color="dark" className={styles.balanceText}>
+                    <Text weight="medium" color="darkDefault" className={styles.balanceText}>
                       {value}
                     </Text>
                   </div>
@@ -114,7 +114,7 @@ const Header: VFC<IHeaderProps> = ({
               </Button>
             ) : (
               <FollowButton
-                disabled={isFollowingInProcess || !isUser}
+                disabled={isFollowingInProcess || !address}
                 onClick={() => (isFollowing ? handleUnfollowUser(userId) : handleFollowUser(userId))}
                 isFollowing={isFollowing}
                 className={styles.edit}
@@ -168,7 +168,7 @@ const Header: VFC<IHeaderProps> = ({
               {balance.map(({ icon, value }) => (
                 <div className={styles.balanceItem}>
                   <img src={icon} alt="" className={styles.balanceItemIcon} />
-                  <Text weight="medium" color="dark" className={styles.balanceText}>
+                  <Text weight="medium" color="darkDefault" className={styles.balanceText}>
                     {value}
                   </Text>
                 </div>
@@ -185,7 +185,7 @@ const Header: VFC<IHeaderProps> = ({
             </Button>
           ) : (
             <FollowButton
-              disabled={isFollowingInProcess || !isUser}
+              disabled={isFollowingInProcess || !address}
               onClick={() => (isFollowing ? handleUnfollowUser(userId) : handleFollowUser(userId))}
               isFollowing={isFollowing}
               className={styles.edit}

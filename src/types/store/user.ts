@@ -20,6 +20,7 @@ export type UserState = {
   rate: string;
   chainType: IChainType;
   isUser: boolean;
+  isDark: boolean;
 };
 
 export type LoginReq = {

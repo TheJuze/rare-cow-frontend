@@ -109,7 +109,7 @@ export const PromoteCard: VFC<IPromoteCard> = ({
                     src={currenciesIconsMap[currency.name]}
                     alt={currency.name}
                   />
-                  {currency.name}
+                  <Text size="xs" variant="medium-body">{currency.name}</Text>
                 </div>
               )}
               isChecked={currency.name === selectedCurrency?.name}

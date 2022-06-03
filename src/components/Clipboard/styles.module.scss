@@ -42,6 +42,9 @@
     .clipboard-icon {
       width: 16px !important;
       height: 16px !important;
+      path {
+        fill: var(--clipboard-default-color) !important;
+      }
     }
   }
 }

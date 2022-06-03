@@ -15,7 +15,7 @@ const NotFound: VFC<INotFoundProps> = () => {
       <Text align="center" color="accent" weight="bold" className={styles.title}>
         404
       </Text>
-      <Text align="center" weight="bold" color="dark" className={styles.subtitle}>
+      <Text align="center" weight="bold" color="darkDefault" className={styles.subtitle}>
         Page not found.
       </Text>
       <Text align="center" variant="body-2" className={styles.text}>

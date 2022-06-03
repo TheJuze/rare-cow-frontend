@@ -4,6 +4,7 @@
 @import './component-variables/switch';
 @import './component-variables/input';
 @import './component-variables/select';
+@import './component-variables/selector';
 @import './component-variables/table';
 @import './component-variables/tooltip';
 @import './component-variables/main';
@@ -36,8 +37,13 @@
 @import './component-variables/nft-page';
 @import './component-variables/connect-modals';
 @import './component-variables/modals';
+@import './component-variables/logo';
 @import './component-variables/promote-card';
 @import './component-variables/promotion-status-bar';
+@import './component-variables/skeleton';
+@import './component-variables/socials';
+@import './component-variables/following';
+@import './component-variables/modal';
 
 :root {
 	$colors:(
@@ -79,8 +85,14 @@
 		$nftpageColorsDefault,
 		$connectModalColorsDefault,
 		$modalsColorsDefault,
+		$logoColorsDefault,
 		$promoteCardColorsDefault,
 		$promotionStatusBarColorsDefault,
+		$skeletonColorsDefault,
+		$socialsColorsDefault,
+		$followingColorsDefault,
+		$modalColorsDefault,
+		$selectorColorsDefault,
 	);
 
 	@each $key_name in $colors {
@@ -90,17 +102,42 @@
 	}
 }
 
-.light {
+.dark {
 	$colors:(
-		$mainColorsLight,
-		$buttonColorsLight,
-		$iconButtonColorsLight,
-		$typographyColorsLight,
-		$switchColorsLight,
-		$inputColorsLight,
-		$selectColorsLight,
-		$tableColorsLight,
-		$tooltipColorsLight,
+		$mainColorsDark,
+		$artcardColorsDark,
+		$typographyColorsDark,
+		$inputColorsDark,
+		$dropdownColorsDark,
+		$avatarColorsDark,
+		$searchInputColorsDark,
+		$searchItemColorsDark,
+		$logoColorsDark,
+		$buttonColorsDark,
+		$swiperColorsDark,
+		$userPopoverColorsDark,
+		$clipboardColorsDark,
+		$switchColorsDark,
+		$collectionCardColorsDark,
+		$skeletonColorsDark,
+		$breadcrumbsColorsDark,
+		$searchCollectionColorsDark,
+		$checkboxColorsDark,
+		$checkboxButtonColorsDark,
+		$chipsColorsDark,
+		$tabBarColorsDark,
+		$loaderColorsDark,
+		$socialsColorsDark,
+		$filtersColorsDark,
+		$followingColorsDark,
+		$propertiesColorsDark,
+		$optionColorsDark,
+		$avatarUploaderColorsDark,
+		$titleDropdownColorsDark,
+		$modalColorsDark,
+		$nftpageColorsDark,
+		$selectorColorsDark,
+		$promoteCardColorsDark,
 	);
 
 	@each $key_name in $colors {

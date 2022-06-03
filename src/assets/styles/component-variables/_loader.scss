@@ -1,9 +1,15 @@
 @import 'src/styles/variables';
 
 $loaderColorsDefault: (
-    "loader-primary-load-color": $accent,
-    "loader-primary-center-color": $light-8,
+  'loader-primary-load-color': $accent,
+  'loader-primary-center-color': $light-8,
+  'loader-gray50-load-color': $accent,
+  'loader-gray50-center-color': $gray-50,
+);
 
-    "loader-gray50-load-color": $accent,
-    "loader-gray50-center-color": $gray-50,
-)
+$loaderColorsDark: (
+  'loader-primary-load-color': $accent,
+  'loader-primary-center-color': $bg-dark,
+  'loader-gray50-load-color': $accent,
+  'loader-gray50-center-color': $gray-50,
+);
