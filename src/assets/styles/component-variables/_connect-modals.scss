@@ -4,6 +4,17 @@ $connectModalColorsDefault: (
   'createModal-subtitle-color': #8F8F8F,
   'createModal-metaMask-border': 1px solid #FF4B23,
   'createModal-walletConnect-border': 1px solid #5697F5,
+  'createModal-btn-color': #000,
+
+  'createModal-metaMask-hover-background': rgba(255, 75, 35, 0.3),
+  'createModal-walletConnect-hover-background': rgba(86, 151, 245, 0.3),
+);
+
+$connectModalColorsDark: (
+  'createModal-subtitle-color': #8F8F8F,
+  'createModal-metaMask-border': 1px solid #FF4B23,
+  'createModal-walletConnect-border': 1px solid #5697F5,
+  'createModal-btn-color': $dark-8,
 
   'createModal-metaMask-hover-background': rgba(255, 75, 35, 0.3),
   'createModal-walletConnect-hover-background': rgba(86, 151, 245, 0.3),

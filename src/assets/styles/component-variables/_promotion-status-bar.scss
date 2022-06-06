@@ -8,4 +8,14 @@ $promotionStatusBarColorsDefault:(
   'promotion-status-bar-queued-background': $metal-100,
   'promotion-status-bar-queued-border': 1px solid $metal-400,
   'promotion-status-bar-queued-color': $metal-600,
-)
+);
+
+$promotionStatusBarColorsDark: (
+  'promotion-status-bar-promote-background': #323235,
+  'promotion-status-bar-promote-border': 1px solid #5D5FEF,
+  'promotion-status-bar-promote-color': #F8F8FA,
+
+  'promotion-status-bar-queued-background': #323235,
+  'promotion-status-bar-queued-border': 1px solid #5D5FEF,
+  'promotion-status-bar-queued-color': #A1A1A9,
+);

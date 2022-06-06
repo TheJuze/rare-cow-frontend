@@ -171,7 +171,7 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({
                           content: searchValues.searchValue ? (
                             <HighlightedText text={c.name} filter={searchValues.searchValue} />
                           ) : (
-                            c.name
+                            <Text size="xs" color="darkDefault">{c.name}</Text>
                           ),
                         }))
                         : []

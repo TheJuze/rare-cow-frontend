@@ -36,7 +36,7 @@
     width: 200px;
   }
   .connect {
-    background-color: $metal-50;
+    background-color: var(--dropdown-outlined-default-head-background);
     position: relative;
     width: 44px;
     &Icon {
@@ -44,6 +44,7 @@
       top: 100%;
       right: 22px;
       transform: translate(5px, 10px);
+      color: var(--dropdown-outlined-default-head-color);
     }
   }
 }
@@ -111,4 +112,9 @@
       }
     }
   }
+}
+
+.wallet{
+  min-width: 24px;
+  color: var(--dropdown-outlined-default-head-color);
 }

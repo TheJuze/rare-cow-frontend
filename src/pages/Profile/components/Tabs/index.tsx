@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react/jsx-wrap-multilines */
 import React, { VFC } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Collection, TokenFull } from 'types/api';

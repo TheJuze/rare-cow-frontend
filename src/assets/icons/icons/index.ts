@@ -35,5 +35,6 @@ export { BurnActionIcon } from './components/BurnAction';
 export { PromoteModalIcon } from './components/PromoteModal';
 export { ClockIcon } from './components/Clock';
 export { LightningIcon } from './components/Lightning';
+export { WalletIcon } from './components/Wallet';
 export * from './socials';
 export * from './pages';

@@ -14,10 +14,10 @@ interface IBioProps {
 
 const Bio: VFC<IBioProps> = ({ bio }) => (
   <div className={styles.bio}>
-    <Text className={styles.bioTitle} color="dark">
+    <Text className={styles.bioTitle} color="darkDefault">
       Profile Information
     </Text>
-    <Text className={styles.bioInfo} variant="body-2" color="dark">
+    <Text className={styles.bioInfo} variant="body-2" color="darkDefault">
       {bio || 'There is no bio on this profile yet'}
     </Text>
   </div>
