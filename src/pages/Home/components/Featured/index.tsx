@@ -6,6 +6,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ArrowRight } from 'assets/img';
 
 import { useDispatch } from 'react-redux';
 import nftsSelector from 'store/nfts/selectors';
@@ -95,8 +96,12 @@ const Trending: FC<Props> = ({ className }) => {
     if (isSwiper && nfts?.length) {
       result = (
         <div className={cx(styles.drops, { [styles.row]: nfts.length <= numberOfSlide })}>
-          <div ref={prevRef} className={cx('swiper-button-prev', styles['swiper-button-prev'])} />
-          <div ref={nextRef} className={cx('swiper-button-next', styles['swiper-button-next'])} />
+          <div ref={prevRef} className={cx('swiper-button-prev', styles['swiper-button-prev'])}>
+            <ArrowLeft className={styles['swiper-button-prev-icon']} />
+          </div>
+          <div ref={nextRef} className={cx('swiper-button-next', styles['swiper-button-next'])}>
+            <ArrowRight className={styles['swiper-button-next-icon']} />
+          </div>
           <div className={styles.bullets} ref={bulletsRef} />
           <Swiper
             spaceBetween={30}

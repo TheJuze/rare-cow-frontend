@@ -17,7 +17,7 @@ import { clearCollections } from 'store/collections/reducer';
 import { Category } from 'types/api';
 import nftSelector from 'store/nfts/selectors';
 import { SearchNftReq } from 'types/requests';
-import { searchNfts } from 'store/nfts/actions';
+import { getPremium, searchNfts } from 'store/nfts/actions';
 import { debounce } from 'lodash';
 import { DEBOUNCE_DELAY_100 } from 'appConstants';
 import { clearNfts } from 'store/nfts/reducer';
@@ -34,6 +34,7 @@ const Body: VFC<IBodyProps> = ({ category }) => {
   const dispatch = useDispatch();
   const collections = useShallowSelector(collectionsSelector.getProp('collections'));
   const totalCollectionsPages = useShallowSelector(collectionsSelector.getProp('totalPages'));
+  const premiumNfts = useShallowSelector(nftSelector.getProp('premium'));
   const nftCards = useShallowSelector(nftSelector.getProp('nfts'));
   const totalPages = useShallowSelector(nftSelector.getProp('totalPages'));
   const [activeCollectionsIds, setActiveCollectionsIds] = useState('');
@@ -45,6 +46,14 @@ const Body: VFC<IBodyProps> = ({ category }) => {
   const [appliedFilters, setAppliedFilters] = useState(initialFiltersState);
   const { filters, handleChangeFilter, handleClearFilters } = useFilters();
   const { [actionTypes.SEARCH_NFTS]: getNftsRequestStatus } = useShallowSelector(uiSelector.getUI);
+
+  const handleFetchPremium = useCallback(() => {
+    dispatch(getPremium());
+  }, [dispatch]);
+
+  useEffect(() => {
+    handleFetchPremium();
+  }, [handleFetchPremium]);
 
   const isNftsLoading = useMemo(
     () => getNftsRequestStatus === RequestStatus.REQUEST,
@@ -143,6 +152,7 @@ const Body: VFC<IBodyProps> = ({ category }) => {
         min_price: filtersData?.minPrice,
         on_auc_sale: filtersData?.isAuction || undefined,
         order_by: filtersData?.orderBy || undefined,
+        hide_premium: true,
       };
       dispatch(searchNfts({ requestData, shouldConcat }));
     },
@@ -270,7 +280,7 @@ const Body: VFC<IBodyProps> = ({ category }) => {
           }
         />
         <div className={styles.bodyResultsWrapper}>
-          <NftList nfts={nftCards} currentPage={currentPage} />
+          <NftList nfts={[...premiumNfts, ...nftCards]} currentPage={currentPage} isWithPremium />
           {!isNftsLoading && currentPage < totalPages && (
             <Button
               className={styles.load}
