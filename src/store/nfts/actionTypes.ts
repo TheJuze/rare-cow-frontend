@@ -21,6 +21,7 @@ const SEND_TRANSACTION = 'SEND_TRANSACTION' as const;
 const SEARCH = 'SEARCH' as const;
 const GET_FEE_INFO = 'GET_FEE_INFO' as const;
 const GET_FEATURED = 'GET_FEATURED' as const;
+const GET_PREMIUM = 'GET_PREMIUM' as const;
 
 const nftActionTypes = {
   GET_CATEGORIES,
@@ -46,6 +47,7 @@ const nftActionTypes = {
   SEARCH,
   GET_FEE_INFO,
   GET_FEATURED,
+  GET_PREMIUM,
 };
 
 export default nftActionTypes;

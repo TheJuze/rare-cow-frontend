@@ -31,6 +31,12 @@ export const baseApi = {
       url: URL.getFeatured,
     });
   },
+  getPremiumNFTs() {
+    return ajax({
+      method: 'get',
+      url: URL.premiumPromotion,
+    });
+  },
   presearchNfts(params: { presearch: string }) {
     return ajax({
       method: 'get',
