@@ -4,3 +4,8 @@ $highlightedTextColorsDefault: (
   'common-text-color': $metal-400,
   'highlighted-text-color': $dark,
 );
+
+$highlightedTextColorsDark: (
+  'common-text-color': $dark-5,
+  'highlighted-text-color': $dark-8,
+)

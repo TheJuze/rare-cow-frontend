@@ -29,7 +29,7 @@ export interface LikeButtonProps {
 export const LikeButton: VFC<LikeButtonProps> = ({
   className, likesCount, isLiked, nftId,
 }) => {
-  const isUser = useShallowSelector(userSelector.getProp('isUser'));
+  const isUser = useShallowSelector(userSelector.getProp('address'));
   const [liked, setLiked] = useState(isLiked);
   const [count, setCount] = useState(likesCount);
 

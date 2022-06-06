@@ -1,6 +1,7 @@
 import { Avatar, Button } from 'components';
 import { NumberText } from 'components/Number';
 import { QuantityInput } from 'components/QuantityInput';
+import { Text } from 'components/Typography';
 import React, { useCallback, useState, VFC } from 'react';
 import { Currency, Ownership } from 'types/api';
 
@@ -28,13 +29,13 @@ export const SellerCard: VFC<ISellerCard> = ({
       <div className={styles.itemWrapper}>
         <Avatar id={seller.url || 0} avatar={seller.avatar} size="32" />
         <div className={styles.itemInfo}>
-          <div className={styles.itemName}>{seller?.name}</div>
-          <div className={styles.itemQuantity}>{`${seller.sellingQuantity} token`}</div>
+          <Text color="darkDefault" className={styles.itemName}>{seller?.name}</Text>
+          <Text color="metal400" className={styles.itemQuantity}>{`${seller.sellingQuantity} token`}</Text>
         </div>
       </div>
       <div className={styles.itemWrapper}>
         <div className={styles.currency}>
-          <NumberText>{seller.price}</NumberText> {currency?.symbol}
+          <Text size="s" color="darkDefault"><NumberText>{seller.price}</NumberText> {currency?.symbol}</Text>
         </div>
         {isMultiple && +seller.sellingQuantity > 1 && (
           <QuantityInput

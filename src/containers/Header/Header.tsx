@@ -12,7 +12,6 @@ import { Link } from 'react-router-dom';
 import { Breadcrumbs } from 'components/Breadcrumbs';
 import { useBreadcrumbs } from 'hooks/useBreadcrumbs';
 import userSelector from 'store/user/selectors';
-import wallet from 'assets/wallet.svg';
 import connect from 'assets/connect.svg';
 import { useDispatch } from 'react-redux';
 import { setActiveModal } from 'store/modals/reducer';
@@ -23,6 +22,7 @@ import uiSelector from 'store/ui/selectors';
 import { presearchNfts } from 'store/nfts/actions';
 import { debounce } from 'lodash';
 import { clearPresearchedNfts } from 'store/nfts/reducer';
+import { WalletIcon } from 'assets/icons/icons';
 import s from './styles.module.scss';
 
 export interface HeaderProps {
@@ -285,7 +285,7 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect, isDark, setIsDar
               className={cn(s.connect, { [s.mobileConnect]: isMobile })}
               onClick={handleChangeConnecting}
             >
-              <img src={wallet} alt="wallet" />
+              <WalletIcon className={s.wallet} />
               <img src={connect} alt="connect" className={s.connectIcon} />
             </Button>
           )}

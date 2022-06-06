@@ -17,6 +17,7 @@
     background: transparent;
     border-radius: 12px;
     min-height: 76px;
+    color: var(--createModal-btn-color);
     @include flex(row, center, center);
     @include transition;
     cursor: pointer;
