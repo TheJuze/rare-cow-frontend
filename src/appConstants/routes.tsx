@@ -24,6 +24,7 @@ import { useSelector } from 'react-redux';
 import {
   Navigate, Route, Routes, useOutletContext,
 } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { State, TGuards, TGuardsAction } from 'types';
 
 export type TDynamicValues = { [key: string]: string | number };
@@ -115,16 +116,19 @@ const routesConfig = {
           path: 'single',
           content: <CreateForm createType="ERC721" />,
           label: 'Single NFT',
+          guards: ['auth'],
         },
         multiple: {
           path: 'multiple',
           content: <CreateForm createType="ERC1155" />,
           label: 'Multiple NFT',
+          guards: ['auth'],
         },
         collection: {
           path: 'collection/:type',
           content: <CreateCollection />,
           label: '{{type | capitalize}} collection',
+          guards: ['auth'],
         },
       },
     },
@@ -158,6 +162,7 @@ const guardsActions: TGuardsAction = {
   },
   'is-me': {
     check: (value) => value.user.id === value.profile.id,
+    errorMsg: "You don't have permission for this",
   },
 };
 class RouteWorker<T extends object> {
@@ -220,6 +225,7 @@ const GuardRoute: FC<TGuardRoute> = ({ children, guards }) => {
   if(failedGuards.length === 0) {
     return children;
   }
+  toast.error(failedGuards.map((v) => guardsActions[v].errorMsg || '').join(', '));
   if(!isMainnet) console.warn(`guarded ${Children.toArray(children)[0]?.valueOf()}`);
   return <Navigate to="/" />;
 };
@@ -228,11 +234,7 @@ const getOutletRoute = (nest: TRoutes[]) => {
   for (let i = 0; i < nest.length; i += 1) {
     const subPath = nest[i];
     let component = (
-      <Route
-        key={subPath.path}
-        path={subPath.path}
-        element={<OutletProvider>{subPath.content}</OutletProvider>}
-      />
+      <OutletProvider>{subPath.content}</OutletProvider>
     );
     if(subPath.guards) {
       component = (
@@ -242,23 +244,19 @@ const getOutletRoute = (nest: TRoutes[]) => {
       );
     }
     if (subPath.nest) {
-      let nestComponent = (
-        <Route key={subPath.path} path={subPath.path} element={subPath.content}>
+      return (
+        <Route key={subPath.path} path={subPath.path} element={subPath.guards ? <GuardRoute guards={subPath.guards}>{subPath.content}</GuardRoute> : subPath.content}>
           {Object.entries(subPath.nest)
             .map(([, data]) => ({ ...data, path: data.path.replaceAll(subPath.path, '').slice(1) }))
             .map((child) => getOutletRoute([child]))}
         </Route>
       );
-      if(subPath.guards) {
-        nestComponent = (
-          <GuardRoute guards={subPath.guards}>
-            {nestComponent}
-          </GuardRoute>
-        );
-      }
-      return nestComponent;
     }
-    return component;
+    return <Route
+      key={subPath.path}
+      path={subPath.path}
+      element={component}
+    />;
   }
   return null;
 };
@@ -299,14 +297,14 @@ const getRoute = () =>
     if (outlet) {
       return getOutletRoute([{ ...subPath }]);
     }
-    let component = <Route key={path} path={normalizePath(path)} element={content} />;
+    let component = content;
     if(guards) {
       component = (
         <GuardRoute guards={guards}>
           {component}
         </GuardRoute>);
     }
-    return component;
+    return <Route key={path} path={normalizePath(path)} element={component} />;
   });
 
 export const getAllAvailableRoutes = () =>

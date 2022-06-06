@@ -16,7 +16,7 @@ import { getDetailedNftSaga } from './getDetailedNft';
 export function* transferSaga({
   type,
   payload: {
-    id, address, amount, web3Provider,
+    id, address, amount, web3Provider, userId,
   },
 }: ReturnType<typeof transfer>) {
   yield put(apiActions.request(type));
@@ -37,6 +37,13 @@ export function* transferSaga({
       from: userAddress,
     });
 
+    yield call(baseApi.trackTransaction, {
+      tx_hash: String(transactionHash),
+      token: id,
+      ownership: userId,
+      amount,
+    });
+
     yield call(getDetailedNftSaga, {
       type: actionTypes.GET_DETAILED_NFT,
       payload: {
@@ -53,14 +60,15 @@ export function* transferSaga({
     );
 
     yield put(apiActions.success(type));
-  } catch (err: unknown) {
-    // yield put(
-    //   setActiveModal({
-    //     activeModal: err.code === 4001 ? Modals.SendRejected : Modals.SendError,
-    //     open: true,
-    //     txHash: '',
-    //   }),
-    // );
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    yield put(
+      setActiveModal({
+        activeModal: err.code === 4001 ? Modals.SendRejected : Modals.SendError,
+        open: true,
+        txHash: '',
+      }),
+    );
     yield put(apiActions.error(type, err));
   }
 }

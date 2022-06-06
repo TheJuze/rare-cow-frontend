@@ -76,6 +76,9 @@
   }
 }
 @include large-mobile {
+  .categories{
+    margin-top: space(55) !important;
+  }
   .gradient {
     opacity: 0;
   }

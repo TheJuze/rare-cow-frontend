@@ -14,6 +14,7 @@ import { Text } from 'components';
 import { createDynamicLink, routes } from 'appConstants';
 import { useShallowSelector } from 'hooks';
 
+import { CategoryName } from 'types';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -21,7 +22,7 @@ type Props = {
 };
 
 const Categories: FC<Props> = ({ className }) => {
-  const categories = useShallowSelector(nftsSelector.getProp('categories'));
+  const categories = useShallowSelector(nftsSelector.getProp('categories')).filter((category) => category.name !== CategoryName.allCategories);
   const tags = useMemo(() => {
     let copy = [...categories];
     while (copy.length < 8) {

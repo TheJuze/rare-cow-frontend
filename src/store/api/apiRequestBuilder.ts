@@ -1,4 +1,5 @@
 import { URL } from 'appConstants';
+import { Chains } from 'types';
 import {
   GetCategoriesReq,
   RequestWithNetwork,
@@ -14,6 +15,7 @@ import ajax from './ajax';
 import createApiCalls from './createApiCalls';
 import NftApiCalls from './nftApiCalls';
 import profileApiCalls from './profileApiCalls';
+import promoteApiCalls from './promoteApiCalls';
 
 export const baseApi = {
   getTrendingNfts(params: { type: string }) {
@@ -23,15 +25,26 @@ export const baseApi = {
       params,
     });
   },
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  presearchNfts(params: any) {
+  getFeaturedNFTs() {
+    return ajax({
+      method: 'get',
+      url: URL.getFeatured,
+    });
+  },
+  getPremiumNFTs() {
+    return ajax({
+      method: 'get',
+      url: URL.premiumPromotion,
+    });
+  },
+  presearchNfts(params: { presearch: string }) {
     return ajax({
       method: 'get',
       url: URL.presearchNfts,
       params,
     });
   },
-  searchNfts({ items_per_page = 6, ...params }: SearchNftReq) {
+  searchNfts({ items_per_page = 8, ...params }: SearchNftReq) {
     return ajax({
       method: 'get',
       url: URL.searchNfts,
@@ -45,7 +58,7 @@ export const baseApi = {
       params,
     });
   },
-  searchSingleCollection(data: { id: string | number; network: string }) {
+  searchSingleCollection(data: { id: string | number; network: Chains }) {
     return ajax({
       method: 'get',
       url: URL.getSingleCollection(data.id),
@@ -85,4 +98,5 @@ export const baseApi = {
   ...NftApiCalls,
   ...activityApiCalls,
   ...accountApiCalls,
+  ...promoteApiCalls,
 };

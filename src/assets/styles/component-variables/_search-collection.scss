@@ -13,4 +13,19 @@ $searchCollectionColorsDefault:(
   'searchCollection-item-border-color': $light-middle,
 
   'searchCollection-active-collection-background': $metal-100,
+);
+
+$searchCollectionColorsDark:(
+  'searchCollection-default-background-color': $dark-2,
+  'searchCollection-default-border-color': $dark-3,
+  'searchCollection-border-width': 1px,
+  'searchCollection-border-radius': 8px,
+  'searchCollection-hover-border-color': $accent,
+  'searchCollection-active-background-color': $dark-5,
+  'searchCollection-active-border-color': $dark-5,
+  'searchCollection-body-background-color': $dark-0,
+  'searchCollection-body-border-radius': 12px,
+  'searchCollection-item-border-color': $light-middle,
+
+  'searchCollection-active-collection-background': $dark-3,
 )

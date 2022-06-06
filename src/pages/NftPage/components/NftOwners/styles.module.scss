@@ -4,6 +4,7 @@
 
 .nftOwners {
   width: 100%;
+  min-height: 250px;
   .tabs {
     padding: 0;
     border-bottom: var(--nftpage-owners-border);
@@ -25,9 +26,16 @@
         @include flex(column, flex-start, flex-start);
         margin-left: space(13);
       }
+      .right{
+        @include flex(row, center, flex-end);
+        .buy{
+          margin-left: space(8);
+        }
+      }
     }
   }
-  .property {
+  .history,
+  .properties{
     margin-top: space(16);
   }
   .historyItem {

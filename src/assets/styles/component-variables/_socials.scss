@@ -1,0 +1,13 @@
+@import 'src/styles/variables';
+
+$socialsColorsDefault:(
+  'socials-default-background-color': $light-white,
+  'socials-default-icon-background-color': $light-100,
+
+);
+
+$socialsColorsDark:(
+  'socials-default-background-color': $dark,
+  'socials-default-icon-background-color': $dark-5,
+
+)

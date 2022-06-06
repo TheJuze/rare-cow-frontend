@@ -1,5 +1,7 @@
 /* eslint-disable max-len */
-import { call, put, takeLatest } from 'redux-saga/effects';
+import {
+  all, call, put, takeLatest,
+} from 'redux-saga/effects';
 import { error, request, success } from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
 
@@ -17,7 +19,14 @@ export function* updateUserInfoSaga({
   yield put(request(type));
   try {
     const { data } = yield call(baseApi.getSelfInfo);
-    yield put(getTokenBalance({ web3Provider, address: data.address, token: currencies[0] }));
+    const tokensBalances = currencies.map((currency) => put(getTokenBalance({
+      web3Provider,
+      address: data.address,
+      token: currency,
+    })));
+
+    yield all(tokensBalances);
+
     yield put(setIsUser(+data.id));
     yield put(updateUserState(camelize(data)));
 

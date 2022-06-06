@@ -18,40 +18,41 @@ $line-height-default: $main-unit * 2.25;
 
 $border-radius: $main-unit;
 
-$iris-100: #223DFF;
+$iris-100: #223dff;
 
-$accent: #5D5FEF;
-$accent-2: #8384EA;
-$light-100: #E0E8FF;
-$accent-300: #A6B4FC;
+$accent: #5d5fef;
+$accent-2: #8384ea;
+$light-100: #e0e8ff;
+$accent-100: $light-100;
+$accent-300: #a6b4fc;
 
-$red: #FD6B6B;
-$green: #1AC057;
+$red: #fd6b6b;
+$green: #1ac057;
 
 //light
 $bg-dark: #222222;
 $text-dark: #333333;
-$light-1: #28293D;
+$light-1: #28293d;
 $light-2: #555770;
-$light-3: #8F90A6;
-$light-4: #C7C9D9;
-$light-middle: #D9D9D9;
-$light-5: #E4E4EB;
-$light-6: #EBEBF0;
-$bg-light: #F2F2F5;
-$light-8: #FAFAFC;
+$light-3: #8f90a6;
+$light-4: #c7c9d9;
+$light-middle: #d9d9d9;
+$light-5: #e4e4eb;
+$light-6: #ebebf0;
+$bg-light: #f2f2f5;
+$light-8: #fafafc;
 $light-white: #ffffff;
 
 //metal
-$metal-50: #F9FAFB;
-$metal-100: #F3F4F6;
-$metal-200: #E5E7EB;
-$metal-300: #D1D5DB;
-$metal-400: #9CA3B0;
-$metal-500: #6B7280;
-$metal-600: #4B5563;
+$metal-50: #f9fafb;
+$metal-100: #f3f4f6;
+$metal-200: #e5e7eb;
+$metal-300: #d1d5db;
+$metal-400: #9ca3b0;
+$metal-500: #6b7280;
+$metal-600: #4b5563;
 $metal-700: #384252;
-$metal-800: #1F2937;
+$metal-800: #1f2937;
 
 $black: $light-1;
 $white: $light-8;
@@ -62,30 +63,38 @@ $base-200: rgba(26, 26, 26, 0.2);
 $base-500: rgba(26, 26, 26, 0.5);
 $base-400: rgba(26, 26, 26, 0.4);
 $base-700: rgba(26, 26, 26, 0.7);
-$base-900: #1A1A1A;
+$base-900: #1a1a1a;
 
 //dark
-$dark: #151B4C;
-$dark-0: #1C1C28;
+$dark: #151b4c;
+$dark-0: #1c1c28;
 $dark-1: #344256;
+$dark-2: #323235;
+$dark-3: #52525a;
+$dark-4: #717179;
+$dark-5: #a1a1a9;
+$dark-7: #f4f4f5;
+$dark-8: #f8f8fa;
+
+$dark-base-50: rgba(255, 255, 255, 0.05);
+$dark-base-100: rgba(255, 255, 255, 0.1);
 
 //gray
-$gray-6: #F2F2F2;
-$gray-50: #FDFDFD;
-$gray: #C4C4C4;
+$gray-6: #f2f2f2;
+$gray-50: #fdfdfd;
+$gray: #c4c4c4;
 
 //yellow
-$yellow-50: #FEFCE7;
-$yellow-500: #E7B008;
-
+$yellow-50: #fefce7;
+$yellow-500: #e7b008;
 
 //shadows
 $shadow-0: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.1);
 $shadow-2: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
 
 //background
-$main-background: #F3F3F5;
-$block-background: #FCFCFC;
+$main-background: #f3f3f5;
+$block-background: #fcfcfc;
 
 //border
-$card-border: #E6E6E6;
+$card-border: #e6e6e6;

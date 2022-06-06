@@ -174,9 +174,10 @@ const UploadAvatar: VFC<IUploadAvatar> = ({
     [filesWorker],
   );
 
-  const onDelete = useCallback(() => {
+  const onDelete = useCallback((e: FormEvent) => {
     onLoadEnd?.(null, null);
-  }, [onLoadEnd]);
+    onBlur?.(e);
+  }, [onBlur, onLoadEnd]);
 
   return (
     <div className={styles['upload-avatar']}>
@@ -208,7 +209,7 @@ const UploadAvatar: VFC<IUploadAvatar> = ({
               [styles.invisible]: fileURL,
             })}
           >
-            <Text color="dark" weight="medium">
+            <Text color="darkDefault" weight="medium">
               Upload file
             </Text>
           </div>
@@ -226,7 +227,7 @@ const UploadAvatar: VFC<IUploadAvatar> = ({
           [styles['with-delete']]: fileURL,
         })}
       >
-        <Button onClick={() => onDelete()} variant="text" icon={<TrashIcon />} />
+        <Button onClick={onDelete} variant="text" icon={<TrashIcon />} />
       </div>
     </div>
   );

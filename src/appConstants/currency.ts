@@ -25,7 +25,8 @@ export const currencies: TCurrencies[] = [
 ];
 
 export const fromNameToCurrencyObj = (currency: string) => {
-  if (currency in appliedCurrencies) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  if (appliedCurrencies.includes(currency as any)) {
     return currencies.find((c) => c.name === currency);
   }
   return null;

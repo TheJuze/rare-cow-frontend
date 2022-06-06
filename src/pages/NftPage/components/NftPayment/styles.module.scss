@@ -18,6 +18,9 @@
     .send {
       margin-top: space(16);
     }
+    &Quantity{
+      margin: space(16, 0);
+    }
   }
   .listing {
     width: 100%;
@@ -61,9 +64,9 @@
     background-color: var(--nftpage-price-background-color);
     @include flex(row, center, center);
     border-radius: 8px;
-    margin-top: space(8);
+    margin-top: space(4);
     &Wrapper {
-      margin-top: space(24);
+      margin: space(24, 0);
     }
     &Image {
       width: 24px;
@@ -83,18 +86,7 @@
       @include ellipsis;
     }
   }
-  .bidder {
-    @include flex(row, center, flex-start);
-    &Name {
-      @include ellipsis;
-      max-width: 50%;
-      margin-left: space(16);
-      margin-right: space(6);
-    }
-  }
   .buy {
-    max-width: 128px;
-    width: 100%;
     margin-top: space(16);
   }
 }

@@ -1,0 +1,12 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.skeleton {
+  border-radius: 30px !important;
+
+  background-color: var(--skeleton-default-background-color) !important;
+  &::after {
+    background-image: var(--skeleton-default-after-color) !important;
+  }
+}

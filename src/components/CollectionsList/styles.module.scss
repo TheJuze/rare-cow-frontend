@@ -13,4 +13,10 @@
     @include flex(row, center, center);
     flex-direction: column;
   }
+  .collectionSkeleton {
+    max-width: 360px;
+    width: 100%;
+    max-height: 94px;
+    border-radius: 20px;
+  }
 }

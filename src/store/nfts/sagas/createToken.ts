@@ -7,10 +7,10 @@ import {
 import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
 import { setActiveModal } from 'store/modals/reducer';
+import { updateUserInfo } from 'store/user/actions';
 import userSelector from 'store/user/selectors';
 
 import { Modals } from 'types';
-import { getTokenAmount } from 'utils';
 
 import { createToken } from '../actions';
 import actionTypes from '../actionTypes';
@@ -18,7 +18,7 @@ import actionTypes from '../actionTypes';
 export function* createTokenSaga({
   type,
   payload: {
-    token, web3, listingInfo, onEnd,
+    token, web3, listingInfo, onEnd, onSuccess,
   },
 }: ReturnType<typeof createToken>) {
   yield put(
@@ -35,15 +35,15 @@ export function* createTokenSaga({
       listType, price, listNow, timestamp, currency,
     } = listingInfo;
     const now = parseInt(String(Date.now() / 1000), 10);
-    if(listNow) {
+    if (listNow) {
       token.append('selling', String(true));
       token.append('currency', currency.name);
-      if(listType === 'Price') {
-        token.append('price', getTokenAmount(price));
+      if (listType === 'Price') {
+        token.append('price', price);
       }
-      if(listType === 'Auction' || listType === 'Auction time') {
-        token.append('minimal_bid', getTokenAmount(price));
-        if(listType === 'Auction time') {
+      if (listType === 'Auction' || listType === 'Auction time') {
+        token.append('minimal_bid', price);
+        if (listType === 'Auction time') {
           token.append('start_auction', String(now));
           token.append('end_auction', String(now + timestamp));
         }
@@ -61,6 +61,10 @@ export function* createTokenSaga({
           ...initial_tx,
           from: address,
         });
+        if (transactionHash) {
+          onSuccess?.();
+          toast.success('Collection created successfully');
+        }
         yield put(
           setActiveModal({
             activeModal: Modals.SendSuccess,
@@ -70,6 +74,7 @@ export function* createTokenSaga({
         );
         yield put(apiActions.success(type));
       } catch (e) {
+        console.log('error', e);
         yield call(baseApi.mintReject, {
           id: createdToken.id,
           type: 'token',
@@ -101,6 +106,8 @@ export function* createTokenSaga({
     );
     yield put(apiActions.error(type, err));
     console.log(err);
+  } finally {
+    yield put(updateUserInfo({ web3Provider: web3 }));
   }
   onEnd?.();
 }

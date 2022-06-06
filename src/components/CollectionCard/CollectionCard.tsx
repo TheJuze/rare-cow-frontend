@@ -1,10 +1,12 @@
 /* eslint-disable arrow-body-style */
 import React, { VFC } from 'react';
+import BigNumber from 'bignumber.js';
 
 import cx from 'classnames';
 
 import { Avatar, Text } from 'components';
 
+import { formatDigits } from 'utils';
 import styles from './styles.module.scss';
 
 export interface CollectionCardProps {
@@ -31,24 +33,26 @@ export const CollectionCard: VFC<CollectionCardProps> = ({
   return (
     <li className={cx(styles.collectionCard, className)}>
       {index && (
-        <Text weight="bold" color="dark" className={styles.index}>
+        <Text weight="bold" color="darkDefault" className={styles.index}>
           {index}
         </Text>
       )}
       <Avatar avatar={avatar} id={id} isCollection size={56} className={styles.avatar} />
       <div className={styles.info}>
-        <Text variant="body-2" color="dark" className={styles.name}>
+        <Text variant="body-2" color="darkDefault" className={styles.name}>
           {name}
         </Text>
         {price ? (
-          <Text variant="medium-body" weight="bold" color="iris100" className={styles.price}>
-            Floor price:
-            <img src={currency} alt="currency" className={styles.currency} />
-            <Text size="xs" color="accent" weight="bold" className={styles.price}>
-              {' '}
-              {price}
+          <div className={styles.price}>
+            <Text tag="span" variant="medium-body" weight="bold" color="iris100">
+              Floor price:
             </Text>
-          </Text>
+            <img src={currency} alt="currency" className={styles.currency} />
+            <Text tag="span" size="xs" color="accent" weight="bold">
+              {' '}
+              {new BigNumber(price || '0').isEqualTo(0) ? '< 0.01' : formatDigits(+price)}
+            </Text>
+          </div>
         ) : null}
       </div>
       {profitIncrease && (

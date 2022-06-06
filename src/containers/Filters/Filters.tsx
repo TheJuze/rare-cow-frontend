@@ -3,11 +3,10 @@
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable object-curly-newline */
-import React, { RefObject, useCallback, useMemo, useState, VFC } from 'react';
+import React, { RefObject, useCallback, useEffect, useMemo, useState, VFC } from 'react';
 import cn from 'classnames';
 import arrowDown from 'assets/img/icons/arrowDown.svg';
 import arrowUp from 'assets/img/icons/arrowUp.svg';
-import { matic, usdt } from 'assets/img';
 import { validateOnlyNumbers } from 'utils';
 import {
   Button,
@@ -19,8 +18,14 @@ import {
   Text,
 } from 'components';
 import { CloseIcon } from 'assets/icons';
-import { collectionsMock } from 'pages/Explore/components/Body';
 import BigNumber from 'bignumber.js';
+import { Collection } from 'types/api';
+import { useShallowSelector } from 'hooks';
+import ratesSelector from 'store/rates/selectors';
+import userSelector from 'store/user/selectors';
+import { useDispatch } from 'react-redux';
+import { getRates } from 'store/rates/actions';
+import { Chains } from 'types';
 import styles from './styles.module.scss';
 
 export interface FiltersProps {
@@ -30,25 +35,17 @@ export interface FiltersProps {
   handleChangeFilter: any;
   handleClearFilters: any;
   isWithCollections?: boolean;
-  isButtonOny?: boolean;
+  isButtonOnly?: boolean;
   className?: string;
   bodyRef?: RefObject<HTMLDivElement>;
+  allCollections?: Collection[];
+  searchCollectionsDisabled?: boolean;
+  searchValue?: string;
+  setSearchValue?: (value: string) => void;
+  currentCollectionsPage?: number;
+  totalCollectionsPages?: number;
+  onLoadMore?: (page: number) => void
 }
-
-export const rates = [
-  {
-    rate: '425.000000000',
-    symbol: 'USDT',
-    name: 'Usdt',
-    image: usdt,
-  },
-  {
-    rate: '123.000000000',
-    symbol: 'MATIC',
-    name: 'Matic',
-    image: matic,
-  },
-];
 
 export const Filters: VFC<FiltersProps> = ({
   filters,
@@ -57,10 +54,20 @@ export const Filters: VFC<FiltersProps> = ({
   handleChangeFilter,
   handleClearFilters,
   isWithCollections = true,
-  isButtonOny = false,
+  isButtonOnly = false,
   className,
   bodyRef,
+  allCollections,
+  searchCollectionsDisabled = false,
+  searchValue = '',
+  setSearchValue = () => {},
+  currentCollectionsPage,
+  totalCollectionsPages,
+  onLoadMore = () => {},
 }) => {
+  const rates = useShallowSelector(ratesSelector.getProp('rates'));
+  const dispatch = useDispatch();
+  const userNetwork = useShallowSelector(userSelector.getProp('chain'));
   const [minValue, setMinValue] = useState('');
   const [maxValue, setMaxValue] = useState('');
   const { standart, isAuction, currency, collections, orderBy } = filters;
@@ -69,6 +76,13 @@ export const Filters: VFC<FiltersProps> = ({
       minValue && maxValue && !new BigNumber(minValue).isLessThanOrEqualTo(new BigNumber(maxValue)),
     [maxValue, minValue],
   );
+  const handleGetRates = useCallback(() => {
+    dispatch(getRates({ network: userNetwork || Chains.polygon }));
+  }, [dispatch, userNetwork]);
+
+  useEffect(() => {
+    handleGetRates();
+  }, [handleGetRates]);
 
   const handleChangeCurrencyValue = useCallback(
     (newCurrency) => {
@@ -150,7 +164,7 @@ export const Filters: VFC<FiltersProps> = ({
     setMinValue('');
   }, [handleClearFilters]);
 
-  const currencyOptions = [
+  const currencyOptions = useMemo(() => (rates.length ? [
     ...rates.map((rate, index) => ({
       id: String(index),
       content: (
@@ -159,7 +173,7 @@ export const Filters: VFC<FiltersProps> = ({
           onChange={() => handleChangeCurrencyValue(rate.symbol)}
           content={
             <div className={styles.currency}>
-              <img src={rate.image} alt="currency" />
+              <img src={rate.image} alt="currency" className={styles.rate} />
               <Text variant="body-2" color="light1">
                 {rate.symbol}
               </Text>
@@ -168,20 +182,20 @@ export const Filters: VFC<FiltersProps> = ({
         />
       ),
     })),
-  ];
+  ] : []), [currency, handleChangeCurrencyValue, rates]);
   const dateOptions = [
     {
       id: '0',
       content: (
         <CheckboxButton
-          isChecked={orderBy === 'created_at'}
-          onChange={() => handleChangeDirection('created_at')}
+          isChecked={orderBy === '-created_at'}
+          onChange={() => handleChangeDirection('-created_at')}
           content={
             <div className={styles.currency}>
               <Text variant="body-2" color="light1">
                 New
               </Text>
-              <img src={arrowUp} alt="arrowUp" />
+              <img src={arrowDown} alt="arrowDown" />
             </div>
           }
         />
@@ -191,14 +205,14 @@ export const Filters: VFC<FiltersProps> = ({
       id: '1',
       content: (
         <CheckboxButton
-          isChecked={orderBy === '-created_at'}
-          onChange={() => handleChangeDirection('-created_at')}
+          isChecked={orderBy === 'created_at'}
+          onChange={() => handleChangeDirection('created_at')}
           content={
             <div className={styles.currency}>
               <Text variant="body-2" color="light1">
                 Last
               </Text>
-              <img src={arrowDown} alt="arrowDown" />
+              <img src={arrowUp} alt="arrowUp" />
             </div>
           }
         />
@@ -316,16 +330,22 @@ export const Filters: VFC<FiltersProps> = ({
         styles.filters,
         className,
         { [styles.active]: isShowFilters },
-        { [styles.buttonOnly]: isButtonOny },
+        { [styles.buttonOnly]: isButtonOnly },
       )}
       ref={bodyRef}
     >
       {isWithCollections && (
         <SearchCollection
-          collections={collectionsMock}
+          collections={allCollections}
           className={styles.collections}
           activeCollections={collections}
           handleClickCollection={handleCollectionChange}
+          disabled={searchCollectionsDisabled}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          currentPage={currentCollectionsPage}
+          totalPages={totalCollectionsPages}
+          onLoadMore={onLoadMore}
         />
       )}
       <div className={styles.filtersHead}>

@@ -13,9 +13,12 @@ interface ITabsProps {
   handleDeleteChips: (key: string, value: string) => void;
   handleClearChips: () => void;
   nfts: TokenFull[];
+  totalPages: number;
   onLoadMoreClick: (page: number) => void;
   currentPage: number;
   collections: Collection[];
+  isSearchCollectionsLoading: boolean;
+  isGettingProfileLoading: boolean;
 }
 const Tabs: VFC<ITabsProps> = ({
   bio,
@@ -26,9 +29,12 @@ const Tabs: VFC<ITabsProps> = ({
   handleDeleteChips,
   handleClearChips,
   nfts,
+  totalPages,
   onLoadMoreClick,
   currentPage,
   collections,
+  isSearchCollectionsLoading,
+  isGettingProfileLoading,
 }) => (
   <Outlet
     context={{
@@ -43,6 +49,9 @@ const Tabs: VFC<ITabsProps> = ({
       onLoadMoreClick,
       currentPage,
       collections,
+      isSearchCollectionsLoading,
+      isGettingProfileLoading,
+      totalPages,
     }}
   />
 );

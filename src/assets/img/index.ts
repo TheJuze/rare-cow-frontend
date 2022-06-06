@@ -7,3 +7,5 @@ export { default as nftMock3 } from './nftMock3.png';
 export { default as nftMock4 } from './nftMock4.png';
 export { default as usdt } from './usdt.png';
 export { default as matic } from './matic.png';
+export { ReactComponent as ArrowLeft } from './icons/arrowLeft.svg';
+export { ReactComponent as ArrowRight } from './icons/arrowRight.svg';

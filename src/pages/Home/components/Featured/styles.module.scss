@@ -17,6 +17,9 @@
 
 .notableDrops {
   margin-top: 88px;
+  .loader{
+    margin: 30px auto;
+  }
 }
 
 .drops {
@@ -32,13 +35,15 @@
 }
 
 .drop {
-  max-width: 350px;
   width: 100%;
+  max-width: 264px;
 
   &Double {
     & + & {
       margin-left: 24px !important;
     }
+  }
+  .card {
   }
 }
 
@@ -56,11 +61,16 @@
 }
 .swiper-button-prev {
   left: -64px;
-  background: url('../../../../assets/img/icons/arrowLeft.svg');
+}
+.swiper-button-prev-icon, .swiper-button-next-icon{
+  width: 9px;
+  height: 14px;
+  path {
+    color: var(--swiper-arrow-color)
+  }
 }
 .swiper-button-next {
   right: -64px;
-  background: url('../../../../assets/img/icons/arrowRight.svg');
 }
 .swiper-button-prev,
 .swiper-button-next {
@@ -83,16 +93,16 @@
     bottom: 0;
   }
 }
-.bullets{
+.bullets {
   display: none;
 }
-.swiper-pagination-bullet{
+.swiper-pagination-bullet {
   width: 40px;
   height: 6px;
   border-radius: 20px;
   background-color: var(--swiper-bullet-background);
   opacity: 1;
-  &.active{
+  &.active {
     background-color: var(--swiper-bullet-background-active);
   }
 }
@@ -103,7 +113,7 @@
   .swiper-button-next {
     display: none;
   }
-  .bullets{
+  .bullets {
     position: absolute;
     bottom: -25px !important;
     @include flex(row, center, center);
@@ -113,5 +123,12 @@
 @include default-screen {
   .wrapper {
     padding-top: space(50);
+  }
+}
+@include large-mobile {
+  .wrapper {
+    .notableDrops {
+      margin-top: 0;
+    }
   }
 }

@@ -18,6 +18,9 @@
 
 .notableDrops {
   margin-top: 88px;
+  .loader{
+    margin: 30px auto;
+  }
 }
 
 .drops {
@@ -33,13 +36,15 @@
 }
 
 .drop {
-  max-width: 350px;
+  max-width: 264px;
   width: 100%;
 
   &Double {
     & + & {
       margin-left: 24px !important;
     }
+  }
+  .card{
   }
 }
 
@@ -70,11 +75,16 @@
 }
 .swiper-button-prev {
   left: -64px;
-  background: url('../../../../assets/img/icons/arrowLeft.svg');
+}
+.swiper-button-prev-icon, .swiper-button-next-icon{
+  width: 9px;
+  height: 14px;
+  path {
+    color: var(--swiper-arrow-color)
+  }
 }
 .swiper-button-next {
   right: -64px;
-  background: url('../../../../assets/img/icons/arrowRight.svg');
 }
 .swiper-button-prev,
 .swiper-button-next {
@@ -109,5 +119,12 @@
     bottom: -25px !important;
     @include flex(row, center, center);
     z-index: 10;
+  }
+}
+@include large-mobile {
+  .wrapper{
+    .notableDrops{
+      margin-top: 0;
+    }
   }
 }

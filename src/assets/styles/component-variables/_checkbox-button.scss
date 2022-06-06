@@ -8,4 +8,14 @@ $checkboxButtonColorsDefault:(
   'checkboxButton-hover-border-color': $accent,
   'checkboxButton-active-background-color': $light-100,
   'checkboxButton-active-border-color': $light-100,
+);
+
+$checkboxButtonColorsDark:(
+  'checkboxButton-default-background-color': $dark-2,
+  'checkboxButton-default-border-color': $dark-3,
+  'checkboxButton-border-width': 1px,
+  'checkboxButton-border-radius': 8px,
+  'checkboxButton-hover-border-color': $accent-300,
+  'checkboxButton-active-background-color': $accent,
+  'checkboxButton-active-border-color': $accent-100,
 )

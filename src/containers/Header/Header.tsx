@@ -1,12 +1,12 @@
 /* eslint-disable object-curly-newline */
-import React, { useCallback, useMemo, useRef, useState, VFC } from 'react';
-import logo from 'assets/icons/logo.svg';
+import React, { useCallback, useEffect, useMemo, useRef, useState, VFC } from 'react';
+import { Logo } from 'assets/icons';
 import arrow from 'assets/chevron-down.svg';
 import cn from 'classnames';
 
 import { SearchInput, Dropdown, Avatar, UserPopover, Button, Text } from 'components';
 import { useBreakpoints, useClickOutside, useShallowSelector } from 'hooks';
-import { CategoryName, TDropdownValue, Modals } from 'types';
+import { CategoryName, TDropdownValue, Modals, RequestStatus } from 'types';
 import { sliceString } from 'utils';
 import { Link } from 'react-router-dom';
 import { Breadcrumbs } from 'components/Breadcrumbs';
@@ -16,7 +16,13 @@ import wallet from 'assets/wallet.svg';
 import connect from 'assets/connect.svg';
 import { useDispatch } from 'react-redux';
 import { setActiveModal } from 'store/modals/reducer';
-import { createDynamicLink, routes } from 'appConstants';
+import { createDynamicLink, DEBOUNCE_DELAY, routes } from 'appConstants';
+import nftSelector from 'store/nfts/selectors';
+import actionTypes from 'store/nfts/actionTypes';
+import uiSelector from 'store/ui/selectors';
+import { presearchNfts } from 'store/nfts/actions';
+import { debounce } from 'lodash';
+import { clearPresearchedNfts } from 'store/nfts/reducer';
 import s from './styles.module.scss';
 
 export interface HeaderProps {
@@ -28,9 +34,11 @@ export interface HeaderProps {
   isHomePage: boolean;
   isUserInfoLoading: boolean;
   chainType: 'testnet' | 'mainnet';
+  isDark: boolean;
+  setIsDark: (value: boolean) => void;
 }
 
-export const Header: VFC<HeaderProps> = ({ address, disconnect }) => {
+export const Header: VFC<HeaderProps> = ({ address, disconnect, isDark, setIsDark }) => {
   const { breadcrumbs, dynamicValues } = useBreadcrumbs();
   const exploreValue = useMemo(
     () => (dynamicValues[0]?.categoryName
@@ -146,6 +154,15 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect }) => {
   );
 
   const user = useShallowSelector(userSelector.getUser);
+  const presearchedNfts = useShallowSelector(nftSelector.getProp('presearchedNfts'));
+  const {
+    [actionTypes.PRESEARCH_NFTS]: searchNftRequest,
+  } = useShallowSelector(uiSelector.getUI);
+
+  const isSearchResultsLoading = useMemo(
+    () => searchNftRequest === RequestStatus.REQUEST,
+    [searchNftRequest],
+  );
   const headRef = useRef<HTMLButtonElement | null>(null);
   const bodyRef = useRef<HTMLDivElement | null>(null);
   const [isMobile] = useBreakpoints([767]);
@@ -177,20 +194,49 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect }) => {
     setIsSearchActive(value);
   }, []);
 
+  const handleSearchClear = useCallback(() => {
+    dispatch(clearPresearchedNfts());
+    setSearchValue('');
+  }, [dispatch]);
+
+  const fetchSearchedNfts = useCallback((presearch: string) => {
+    dispatch(presearchNfts({ presearch }));
+  }, [dispatch]);
+
+  const debouncedFetchSearchedNfts = useRef(debounce(fetchSearchedNfts, DEBOUNCE_DELAY)).current;
+
+  const handleSearch = useCallback((event) => {
+    const newSearchValue = event.target.value;
+    if(!newSearchValue) {
+      handleSearchClear();
+      return;
+    }
+
+    setSearchValue(newSearchValue);
+    debouncedFetchSearchedNfts(newSearchValue);
+  }, [debouncedFetchSearchedNfts, handleSearchClear]);
+
   useClickOutside(bodyRef, handleHideUser, headRef);
+
+  useEffect(
+    () => () => {
+      dispatch(clearPresearchedNfts());
+    },
+    [dispatch],
+  );
 
   return (
     <header className={s.header}>
       <div className={s.headerContainer}>
         <div className={s.headerLeft}>
-          <Link to="/" className={cn(s.logo, { [s.closed]: isSearchActive })}>
-            <img src={logo} alt="logo" />
+          <Link to="/" className={cn(s.logoWrapper, { [s.closed]: isSearchActive })}>
+            <Logo className={s.logo} />
           </Link>
           <SearchInput
             searchValue={searchValue}
-            isSearchResultsLoading={false}
-            presearchedNfts={[]}
-            onSearchValueChange={(e) => setSearchValue(e.currentTarget.value)}
+            isSearchResultsLoading={isSearchResultsLoading}
+            presearchedNfts={searchValue ? presearchedNfts : []}
+            onSearchValueChange={handleSearch}
             classNameInput={s.headerInput}
             sendIsSearchActive={handleSearchActive}
             placeholder="NFT Name, ID"
@@ -226,6 +272,8 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect }) => {
               <Avatar avatar={user.avatar} id={user.id} size="40" />
               <UserPopover
                 disconnect={disconnect}
+                isDark={isDark}
+                setIsDark={setIsDark}
                 {...user}
                 visible={isUserShown}
                 bodyRef={bodyRef}

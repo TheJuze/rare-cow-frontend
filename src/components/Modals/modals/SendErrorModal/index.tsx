@@ -19,25 +19,25 @@ const SendErrorModal: VFC<ISendErrorModal> = ({
   visible,
   onClose,
   onTryAgain,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   error,
   errorCode,
   withSteps = true,
 }) => {
   const title = (
-    <Text align="center" className={styles.title} weight="bold" color="dark">
+    <Text align="center" className={styles.title} weight="bold" color="darkDefault">
       {withSteps && 'STEP 2/2 '}
       <Text tag="span" className={styles.title} color="accent" weight="bold">
         SEND
       </Text>
     </Text>
   );
-  console.log(error);
   return (
     <Modal visible={visible} onClose={onClose} title={title} maxWidth={628}>
       <div className={styles.icon}>
         <Error className={styles.error} />
       </div>
-      <Text tag="h5" weight="semiBold" color="dark" align="center" className={styles.subtitle}>
+      <Text tag="h5" weight="semiBold" color="darkDefault" align="center" className={styles.subtitle}>
         Something went wrong 😖. Please try again. If it doesn&apos;t help then try again later.
       </Text>
       {errorCode && (

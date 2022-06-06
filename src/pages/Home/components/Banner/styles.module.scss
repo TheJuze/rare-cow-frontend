@@ -78,3 +78,9 @@
     }
   }
 }
+@include large-mobile {
+  .banner{
+    margin-top: space(0) !important;
+  }
+
+}

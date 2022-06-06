@@ -4,10 +4,11 @@ import { RejectAction, SetOnAuctionReq, SetOnSaleReq } from 'types/requests';
 import ajax from './ajax';
 
 export default {
-  getTokenById(params: { id: string | number }) {
+  getTokenById(params: { id: string | number, featuredId: number | null}) {
     return ajax({
       method: 'get',
       url: URL.getTokenById(params.id),
+      params: { from_promotion: params.featuredId },
     });
   },
   like(data: { id: string | number }) {
@@ -17,7 +18,12 @@ export default {
       data,
     });
   },
-  buy(data: { id: string | number; tokenAmount?: string | number; sellerId?: string | number }) {
+  buy(data: {
+    id: string | number;
+    tokenAmount?: string | number;
+    sellerId?: string | number;
+    currency: string;
+  }) {
     return ajax({
       method: 'post',
       url: URL.buy,
@@ -52,7 +58,6 @@ export default {
       method: 'post',
       url: URL.setOnAuction(data.id),
       data: {
-        selling: true,
         ...data,
       },
     });
@@ -79,7 +84,7 @@ export default {
       url: URL.endAuction(data.id),
     });
   },
-  trendingTokens(params: { category?: string | number }) {
+  trendingTokens(params: { tags?: string | number }) {
     return ajax({
       method: 'get',
       url: URL.trendingTokens,

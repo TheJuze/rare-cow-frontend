@@ -1,0 +1,23 @@
+@import 'src/styles/variables';
+
+$promoteCardColorsDefault: (
+  'promote-card-background': $dark-8,
+  'promote-card-border': 1px solid $metal-300,
+
+  'promote-card-hr-color': $metal-300,
+
+  'selected-promote-card-background': #F0F3FF,
+  'selected-promote-card-border': 1px solid $accent-300,
+
+);
+
+$promoteCardColorsDark: (
+  'promote-card-background': $metal-800,
+  'promote-card-border': 1px solid $metal-300,
+
+  'promote-card-hr-color': $metal-300,
+
+  'selected-promote-card-background': $dark-1,
+  'selected-promote-card-border': 1px solid $accent,
+
+);

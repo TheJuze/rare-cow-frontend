@@ -4,5 +4,12 @@ $filtersColorsDefault:(
   'filters-default-background-color': $light-white,
   'filters-auction-border-radius': 20px,
   'filters-button-background-color': $metal-200,
+  'filters-button-icon-color': $metal-700,
+);
 
-)
+$filtersColorsDark:(
+  'filters-default-background-color': $dark,
+  'filters-auction-border-radius': 20px,
+  'filters-button-background-color': $dark-5,
+  'filters-button-icon-color': $accent-100,
+);

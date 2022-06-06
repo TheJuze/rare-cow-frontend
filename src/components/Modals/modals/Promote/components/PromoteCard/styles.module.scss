@@ -1,0 +1,56 @@
+@import '/src/styles/helpers';
+@import '/src/assets/styles/variables';
+
+.wrapper {
+  border-radius: 12px;
+  padding: space(32, 32, 22, 32);
+  background: var(--promote-card-background);
+  border: var(--promote-card-border);
+  @include transition;
+  &:hover {
+    &:not(.disabled){
+      transform: translateY(-10px);
+    }
+    &:not(.selected) {
+      cursor: pointer;
+    }
+  }
+  &.disabled{
+    pointer-events: none;
+  }
+  &.selected {
+    background: var(--selected-promote-card-background);
+    border: var(--selected-promote-card-border);
+  }
+  .pricing {
+    .slash {
+      margin: space(0, 0, 0, 4);
+    }
+  }
+  .hr {
+    margin: space(16, 0, 32, 0);
+    color: var(--promote-card-hr-color);
+  }
+  .currency {
+    margin: 0 -4px 32px;
+    @include flex(row, center, center);
+    &Item {
+      &Wrapper {
+        flex: 0 0 50%;
+        padding: space(4);
+      }
+      &Body{
+          @include flex(row, center, space-between);
+      }
+      &Icon{
+          margin-right: space(8);
+      }
+    }
+  }
+  .pay{
+      width: 100%;
+      &Btn{
+          width: 100%;
+      }
+  }
+}

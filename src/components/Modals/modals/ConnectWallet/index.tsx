@@ -28,7 +28,7 @@ const ConnectWalletModal:VFC<IConnectWalletModal> = ({ visible, onClose }) => {
   }, [connect, onClose]);
   return(
     <Modal visible={visible} onClose={onClose} title="">
-      <Text color="dark" align="left" className={styles.title}>Connect a Wallet</Text>
+      <Text color="darkDefault" align="left" className={styles.title}>Connect a Wallet</Text>
       <Text size="xs" align="left" className={styles.subtitle}>Please select a wallet to connect to this dapp:</Text>
       {connectors.map((connector) => (
         <button onClick={() => handleConnect(connector)} type="button" className={cn(styles.btn, styles[connector])}>

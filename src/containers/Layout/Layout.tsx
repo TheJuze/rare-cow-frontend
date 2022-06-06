@@ -20,6 +20,7 @@ import { useDispatch } from 'react-redux';
 import { updateUserState } from 'store/user/reducer';
 import clsx from 'clsx';
 import { getFeeInfo } from 'store/nfts/actions';
+import { updateTheme } from 'store/user/actions';
 import styles from './styles.module.scss';
 
 export interface LayoutProps {
@@ -27,10 +28,19 @@ export interface LayoutProps {
 }
 
 export const Layout: FC<LayoutProps> = ({ children }) => {
+  const isDark = useShallowSelector(userSelector.getProp('isDark'));
   const { pathname } = useLocation();
   const { connect, disconnect, walletService } = useWalletConnectorContext();
 
   const dispatch = useDispatch();
+
+  const handleSwitchTheme = useCallback((newValue: boolean) => {
+    dispatch(updateTheme({ isDark: newValue }));
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(updateTheme({ isDark }));
+  }, [dispatch, isDark]);
 
   const { address, chainType } = useShallowSelector<State, UserState>(userSelector.getUser);
   const { [actionTypesUser.UPDATE_USER_INFO]: userInfoRequest } = useShallowSelector(
@@ -73,7 +83,7 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
 
   const isNeedToShowHeaderFooter = useMemo(() => true, []);
   return (
-    <div className={clsx(styles.app)}>
+    <div className={clsx(styles.app, { [styles.dark]: isDark })}>
       <div className={styles.content}>
         {isNeedToShowHeaderFooter && (
           <Header
@@ -84,6 +94,8 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
             onConnectWallet={handleConnectWallet}
             disconnect={disconnectWallet}
             onToggleChainType={handleToggleChainType}
+            isDark={isDark}
+            setIsDark={handleSwitchTheme}
           />
         )}
         <main className={styles.main}>{children}</main>

@@ -7,6 +7,7 @@ import Web3 from 'web3';
 import {
   erc20Abi, erc721Abi,
   erc1155Abi, marketPlaceAbi, whitelistAbi, erc721InstanceAbi, erc1155InstanceAbi,
+  erc20freeAbi, promotionAbi,
 } from './abi';
 import { isMainnet } from './constants';
 
@@ -102,6 +103,7 @@ export enum ContractsNames {
   erc721Instance = 'erc721Instance',
   erc1155Instance = 'erc1155Instance',
   whitelist = 'whitelist',
+  promotion = 'promotion',
 }
 
 export type IContractsNames = keyof typeof ContractsNames;
@@ -130,9 +132,9 @@ export const contractsConfig: IContracts = {
       testnet: {
         address: {
           [Chains.bsc]: '0xcec38C5b1B4b869835623CFCB7F42a206589A446',
-          [Chains.polygon]: '0x3813e82e6f7098b9583FC0F33a962D02018B6803', // replace to polygon address
+          [Chains.polygon]: '0xEbED2E78Ba4Ecedc9b314a6EA21b3F085f564494',
         },
-        abi: erc20Abi,
+        abi: erc20freeAbi,
       },
       mainnet: {
         address: {
@@ -160,7 +162,7 @@ export const contractsConfig: IContracts = {
       testnet: {
         address: {
           [Chains.bsc]: '0xbA9669b82011ed728A87278CD6B9Daf6A8Bf11F9',
-          [Chains.polygon]: '0xC3ff779C932B6f75716c159318C02cF52cCB4056',
+          [Chains.polygon]: '0x15D71fC965a7dA2cF3eE953dd1944Cf2A2a8fcd2',
         },
         abi: erc721Abi,
       },
@@ -190,7 +192,7 @@ export const contractsConfig: IContracts = {
       testnet: {
         address: {
           [Chains.bsc]: '0xf58248adaDE39b1ECA2e59Ff6219642aE0Ea2Bf5',
-          [Chains.polygon]: '0x87e2F2bD5f60A8bb4eAEB24caAA280eA1d1559c0',
+          [Chains.polygon]: '0xD5176936bCe2d492262C874306612fc2f7c24FD8',
         },
         abi: erc1155Abi,
       },
@@ -214,6 +216,22 @@ export const contractsConfig: IContracts = {
           [Chains.bsc]: '',
         },
         abi: erc1155InstanceAbi,
+      },
+    },
+    [ContractsNames.promotion]: {
+      testnet: {
+        address: {
+          [Chains.bsc]: '',
+          [Chains.polygon]: '0x333862FFFc6bC1EF5698eF4A8581d322461F624f',
+        },
+        abi: promotionAbi,
+      },
+      mainnet: {
+        address: {
+          [Chains.bsc]: '',
+          [Chains.polygon]: '',
+        },
+        abi: promotionAbi,
       },
     },
   },

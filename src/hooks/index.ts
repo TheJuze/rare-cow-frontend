@@ -9,3 +9,4 @@ export { default as useModals } from './useModals';
 export * from './useFilters';
 export * from './useSearch';
 export { default as useBreakpoints } from './useBreakpoints';
+export { default as useGetUserAccessForNft } from './useUserAccessToNFT';

@@ -126,6 +126,10 @@ export type UpdateUserInfoReq = {
   web3Provider: Web3;
 };
 
+export type UpdateThemeReq = {
+  isDark: boolean;
+};
+
 export type GetDetailedNftReq = {
   id: number | string;
 };
@@ -136,11 +140,11 @@ export type RequestWithId = {
 
 export type GetSingleCollectionReq = {
   id: number | string;
-  network: string;
+  network: Chains;
 };
 
 export type GetTrendingNftsReq = {
-  category: string | number;
+  tags: string | number;
 };
 
 export type BuyReq = {
@@ -196,11 +200,14 @@ export type SearchNftReq = {
   text?: string;
   standart?: string;
   creator?: string;
+  currency?: string;
+  hide_premium?: boolean;
 };
 
 export type TransferTokenReq = {
   id: number | string;
   address: string;
+  userId: string;
   amount?: number | string;
   web3Provider: Web3;
 };
@@ -229,6 +236,10 @@ export type GetCategoriesReq = {
 export type SearchNftAction = {
   requestData: SearchNftReq;
   shouldConcat?: boolean;
+};
+
+export type GetPresearchNfts = {
+  presearch: string;
 };
 
 export type SearchAction = {
@@ -302,4 +313,12 @@ RequestWithCallbacks;
 export type SendTransactionAction = {
   web3Provider: Web3;
   data: object;
+};
+
+export type BuyPromotion = {
+  package: number;
+  currency: TCurrencies;
+  tokenId: number;
+  web3Provider: Web3;
+  priceInUsd: string;
 };

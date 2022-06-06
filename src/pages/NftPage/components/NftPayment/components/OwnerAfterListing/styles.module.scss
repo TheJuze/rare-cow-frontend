@@ -1,0 +1,23 @@
+@import '/src/styles/helpers';
+
+.wrapper{
+    .priceSection{
+        margin: -4px;
+        @include flex(row, center, center);
+        .priceField{
+            flex: 0 0 50%;
+            padding: 4px;
+        }
+        .priceUpdater{
+            margin-top: 4px;
+            button{
+                padding: 6px 32px;
+                font-weight: 400;
+            }
+        }
+    }
+    .remove{
+        margin-top: space(4);
+        font-weight: 400;
+    }
+}

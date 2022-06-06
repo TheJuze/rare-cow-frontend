@@ -1,124 +1,113 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react/jsx-wrap-multilines */
-/* eslint-disable object-curly-newline */
-/* eslint-disable arrow-body-style */
-import { ArrowGreen } from 'assets/icons/icons';
-import { matic } from 'assets/img';
+import { TStandards } from 'appConstants';
+import { Countdown } from 'components';
+import { useGetUserAccessForNft, useShallowSelector } from 'hooks';
+import React, { FC, useMemo } from 'react';
+import userSelector from 'store/user/selectors';
+import { Ownership, TokenFull } from 'types/api';
 import {
-  Text,
-  Countdown,
-  Button,
-  Selector,
-  Input,
-  Avatar,
-  Listing,
-} from 'components';
-import React, { FC, useCallback, useMemo, useState } from 'react';
+  NFTPrice, OwnerAfterListing, OwnerListing, UserBuy,
+} from './components';
+import { UserBid } from './components/UserBid';
 
 import styles from './styles.module.scss';
 
 type Props = {
-  endAuction: number;
-  price: string | number;
-  usdPrice: string | number;
-  isAucSelling: boolean;
-  isTimedAucSelling: boolean;
-  highestBid?: any;
+  detailedNFT: TokenFull;
 };
-const isOwner = true;
-const isUserCanBuy = true;
 
-const NftPayment: FC<Props> = ({
-  endAuction,
-  price,
-  usdPrice,
-  isAucSelling,
-  isTimedAucSelling,
-  highestBid,
-}) => {
-  const [isTransfer, setIsTransfer] = useState(false);
-  const isAuction = useMemo(
-    () => isAucSelling || isTimedAucSelling,
-    [isAucSelling, isTimedAucSelling],
-  );
+const NftPayment: FC<Props> = ({ detailedNFT }) => {
+  const userId = useShallowSelector(userSelector.getProp('id'));
+  const {
+    isUserCanEndAuction,
+    isUserCanBuyNft,
+    isUserCanEnterInAuction,
+    isOwner,
+    isUserCanRemoveFromSale,
+    isTimedAuction,
+  } = useGetUserAccessForNft(detailedNFT, String(userId));
 
-  const handleChaneTransfer = useCallback(() => {
-    setIsTransfer(!isTransfer);
-  }, [isTransfer]);
+  const hasBeenListed = useMemo(() => {
+    const { isSelling, isAucSelling, isTimedAucSelling } = detailedNFT;
+    return isAucSelling || isTimedAucSelling || isSelling;
+  }, [detailedNFT]);
+
+  const isAuction = useMemo(() => {
+    const { isAucSelling, isTimedAucSelling } = detailedNFT;
+    return isAucSelling || isTimedAucSelling;
+  }, [detailedNFT]);
+
+  const currentOwnerNFTInfo = useMemo(() => {
+    if (isOwner) {
+      return detailedNFT.owners.find((owner) => owner.url === String(userId)) || ({} as Ownership);
+    }
+    return {} as Ownership;
+  }, [detailedNFT.owners, isOwner, userId]);
+
+  const sellers = useMemo(() => detailedNFT?.sellers || [], [detailedNFT?.sellers]);
+
+  const currentPrice = useMemo(() => {
+    const { highestBid, price, usdPrice } = detailedNFT;
+    if (highestBid && price && usdPrice) {
+      if (detailedNFT.isAucSelling || detailedNFT.isTimedAucSelling) {
+        if (!highestBid) {
+          return { price, usdPrice, is: true };
+        }
+        const { currency } = highestBid;
+        return {
+          price: highestBid.amount,
+          usdPrice: +highestBid.amount * (+currency?.rate || 1),
+          is: true,
+        };
+      }
+    }
+    return { price: price || '0', usdPrice: usdPrice || '0', is: true };
+  }, [detailedNFT]);
 
   return (
     <div className={styles.nftPayment}>
-      {isOwner && (
-        <>
-          <Selector
-            value={isTransfer}
-            setValue={handleChaneTransfer}
-            name="transfer"
-            optionLeft="Transfer"
-            optionRight="List for sale"
-            className={styles.selector}
+      {isTimedAuction && (
+        <Countdown endAuction={+detailedNFT.endAuction} className={styles.countdown} />
+      )}
+      {+currentPrice.price > 0 && (
+        <NFTPrice
+          highestBid={detailedNFT.highestBid}
+          price={currentPrice.price}
+          usdPrice={+currentPrice.usdPrice}
+          isAuction={isAuction}
+          currency={detailedNFT.currency}
+        />
+      )}
+      {isOwner &&
+        (hasBeenListed ? (
+          <OwnerAfterListing
+            detailedNFT={detailedNFT}
+            userId={String(userId)}
+            isAuction={isAuction}
+            isUserCanEndAuction={isUserCanEndAuction}
+            isUserCanRemoveFromSale={isUserCanRemoveFromSale}
           />
-          {isTransfer ? (
-            <div className={styles.transfer}>
-              <Input name="transfer" label="Send to Address" placeholder="Input address" />
-              <Button className={styles.send}>
-                <Text variant="body-2" color="light">
-                  Send
-                </Text>
-              </Button>
-            </div>
-          ) : (
-            <Listing optionsDirection="horizontal" buttonText="Create lot" className={styles.listing} />
-          )}
-        </>
-      )}
-      {isUserCanBuy && (
-        <>
-          <Countdown endAuction={endAuction} className={styles.countdown} />
-          <div className={styles.priceWrapper}>
-            {isAuction ? (
-              <>
-                {highestBid ? (
-                  <Text size="xs" color="base900">
-                    Current bid
-                  </Text>
-                ) : (
-                  <Text size="xs" color="base900">
-                    Minimal bid
-                  </Text>
-                )}
-              </>
-            ) : (
-              <Text size="xs" color="base900">
-                Price
-              </Text>
-            )}
-
-            <div className={styles.price}>
-              <img src={matic} alt="currency" className={styles.priceImage} />
-              <Text color="accent" className={styles.priceText}>
-                {price}
-              </Text>
-            </div>
-            <Text className={styles.priceUsd}>$ {usdPrice}</Text>
-          </div>
-
-          {highestBid ? (
-            <div className={styles.bidder}>
-              <Avatar id={highestBid.user.url} avatar={highestBid.user.avatar} size={40} />
-              <Text className={styles.bidderName} color="dark" variant="body-2" weight="semiBold">
-                {highestBid.user.display_name || highestBid.user.address}
-              </Text>
-              <ArrowGreen />
-            </div>
-          ) : null}
-          <Button className={styles.buy}>
-            <Text variant="body-2" color="light">
-              Buy
-            </Text>
-          </Button>
-        </>
-      )}
+        ) : (
+          <OwnerListing
+            nftId={String(detailedNFT.id)}
+            nftType={detailedNFT.standart as TStandards}
+            nftSupply={+currentOwnerNFTInfo?.quantity}
+            collectionAddress={detailedNFT.collection?.address}
+            internalNftId={String(detailedNFT.internalId)}
+            userId={String(userId)}
+          />
+        ))}
+      <>
+        {isUserCanBuyNft && (
+          <UserBuy
+            nftId={String(detailedNFT.id)}
+            currency={detailedNFT.currency}
+            isMultiple={detailedNFT.standart === 'ERC1155'}
+            sellers={sellers}
+            normalPrice={detailedNFT.price}
+          />
+        )}
+        {isUserCanEnterInAuction && <UserBid detailedNFT={detailedNFT} />}
+      </>
     </div>
   );
 };

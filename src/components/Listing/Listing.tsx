@@ -12,6 +12,7 @@ import { currencies, currenciesIconsMap, TCurrencies } from 'appConstants';
 import { CheckboxButton } from 'components/CheckboxButton';
 import { Button, Input, Text } from 'components';
 import { validateOnlyNumbers } from 'utils';
+import { QuantityInput } from 'components/QuantityInput';
 import styles from './styles.module.scss';
 
 export const initialListingOptions = ['Price', 'Auction', 'Auction time'] as const;
@@ -22,6 +23,7 @@ export type ListingSubmit = {
   currency: TCurrencies;
   timestamp: typeof initialTimestampOptions[number];
   price: string;
+  amount?: string;
 };
 
 export interface ListingProps {
@@ -32,9 +34,14 @@ export interface ListingProps {
   onSubmit?: (values: ListingSubmit) => void;
   onError?: () => void;
   buttonText?: string;
+  withAmount?: boolean;
+  maxAmount?: number | 'infinity';
+  isMultiple?: boolean;
 }
 
 const secondToHours = (seconds: number) => seconds / (60 * 60);
+
+const excludeFromMultiple = ['Auction time', 'Auction'];
 
 export const Listing: VFC<ListingProps> = ({
   className,
@@ -44,10 +51,16 @@ export const Listing: VFC<ListingProps> = ({
   onSubmit,
   onError,
   buttonText = '',
+  withAmount,
+  maxAmount = 'infinity',
+  isMultiple = false,
 }) => {
   const listingOptions = useMemo(
-    () => initialListingOptions.map<TOption>((opt) => ({ value: opt, content: opt })),
-    [],
+    () =>
+      initialListingOptions
+        .filter((opt) => (isMultiple ? !excludeFromMultiple.includes(opt) : true))
+        .map<TOption>((opt) => ({ value: opt, content: <Text variant="body-2" weight="normal">{opt}</Text> })),
+    [isMultiple],
   );
 
   const [listType, setListType] = useState(listingOptions[0]);
@@ -68,11 +81,17 @@ export const Listing: VFC<ListingProps> = ({
     [],
   );
 
+  useEffect(() => {
+    if (listType.value) {
+      setSelectedCurrency(sortedCurrencies[0]);
+    }
+  }, [listType.value, sortedCurrencies]);
+
   const timestampOptions = useMemo(
     () =>
       initialTimestampOptions.map((timestamp) => ({
         value: timestamp,
-        content: `${secondToHours(timestamp)} h`,
+        content: <Text variant="medium-body" weight="normal">${secondToHours(timestamp)} h</Text>,
       })),
     [],
   );
@@ -103,6 +122,12 @@ export const Listing: VFC<ListingProps> = ({
     }
   }, [listType.value]);
 
+  const [amount, setAmount] = useState(String(itemsAmount));
+
+  const handleChangeAmount = useCallback((newAmount: string) => {
+    setAmount(newAmount);
+  }, []);
+
   const validateData = useCallback(() => {
     if (validateOnlyNumbers(price)) {
       return true;
@@ -118,17 +143,13 @@ export const Listing: VFC<ListingProps> = ({
         currency: selectedCurrency,
         timestamp: selectedTimestamp.value,
         price,
+        amount: amount || '1',
       });
     } else {
       onError?.();
     }
-  }, [
-    listType.value,
-    price,
-    selectedCurrency,
-    selectedTimestamp.value,
-    validateData,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listType.value, price, selectedCurrency, selectedTimestamp.value, validateData, amount]);
 
   useEffect(() => {
     if (!buttonText) {
@@ -170,7 +191,7 @@ export const Listing: VFC<ListingProps> = ({
                     src={currenciesIconsMap[currency.name]}
                     alt={currency.name}
                   />
-                  {currency.name}
+                  <Text variant="body-2" weight="normal">{currency.name}</Text>
                 </div>
               }
               isChecked={currency.name === selectedCurrency.name}
@@ -180,6 +201,18 @@ export const Listing: VFC<ListingProps> = ({
           </div>
         ))}
       </div>
+      {(withAmount || isMultiple) && (
+        <div className={styles.quantity}>
+          <QuantityInput
+            name="amount"
+            label="Quantity"
+            minAmount={1}
+            value={amount}
+            maxAmount={maxAmount}
+            setValue={handleChangeAmount}
+          />
+        </div>
+      )}
       <div className={styles.listingBottom}>
         <Input
           name="price"
@@ -192,13 +225,18 @@ export const Listing: VFC<ListingProps> = ({
             status: EInputStatus.COMMON,
             caption: (
               <Text color="light3" size="xs">
-                $ {itemsAmount * (parseFloat(price) || 0)}
+                $ {+amount * (parseFloat(price) || 0)}
               </Text>
             ),
           }}
         />
         {buttonText && (
-          <Button onClick={onSubmitButtonClick} size="sm" className={styles.listingBottomButton}>
+          <Button
+            disabled={parseFloat(price) <= 0 || Number.isNaN(parseFloat(price))}
+            onClick={onSubmitButtonClick}
+            size="sm"
+            className={styles.listingBottomButton}
+          >
             {buttonText}
           </Button>
         )}

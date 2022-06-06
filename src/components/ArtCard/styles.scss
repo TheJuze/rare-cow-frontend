@@ -4,7 +4,9 @@
 
 .artCard { 
   position: relative;
+  max-width: 350px;
   width: 100%;
+  height: 380px;
   margin: 0 auto !important;
   background-color: var(--artcard-default-background-color);
   border: var(--artcard-border-width) solid var(--artcard-default-border-color);
@@ -21,6 +23,7 @@
     border-radius: var(--artcard-auction-border-radius);
     @include flex(row, center, center);
     padding: 1px 0;
+    z-index: 0;
   }
   &-promo{
     position: absolute;
@@ -31,20 +34,24 @@
   }
   &-image{
     width: 100%;
+
   }
   &-imageWrapper{
     overflow: hidden;
     flex: 0 1 80%;
     width: 100%;
     height: 100%;
-    border-radius: 20px 20px 0 0;
-    min-height: 143px;
+    border-radius: 20px;
+    min-height: 225px;
     @include flex(row, flex-start, center);
     @include transition;
     margin: spacing(0, 0, 3, 0);
     img{
       width: 100%;
       height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: cover;
     }
   }
   &-info{

@@ -1,17 +1,19 @@
-import React, { useCallback, useRef, VFC } from 'react';
+import React, {
+  useCallback, useMemo, useRef, VFC,
+} from 'react';
 
 import cn from 'clsx';
 
 import { Text } from 'components/Typography';
 
 import './styles.scss';
-import { Link } from 'react-router-dom';
 import { Loader } from 'components/Loader';
 import { formatDigits, sliceString } from 'utils';
-import { BidedIcon, Promo } from 'assets/icons/icons';
+import { BidedIcon } from 'assets/icons/icons';
 import { useTimeLeft } from 'hooks';
 import { Avatar } from 'components/Avatar';
 import { LikeButton } from 'components/LikeButton';
+import { ENftTags, TagsWrapper, TTagsPropsMap } from 'components/Preview';
 
 export interface ArtCardProps {
   className?: string;
@@ -30,6 +32,7 @@ export interface ArtCardProps {
   standart: string | 'ERC721' | 'ERC1155';
   inStock: number;
   isPromo?: boolean;
+  fromFeatured?: boolean;
 }
 
 export const ArtCard: VFC<ArtCardProps> = ({
@@ -50,7 +53,7 @@ export const ArtCard: VFC<ArtCardProps> = ({
   inStock,
   isPromo = false,
 }) => {
-  const wrapRef = useRef<HTMLAnchorElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const offset = 2.5;
   const timeLeft = useTimeLeft(Number(endAuction) * 1000);
@@ -73,44 +76,37 @@ export const ArtCard: VFC<ArtCardProps> = ({
       };
     }
   }, [imgRef, wrapRef]);
+
+  const tagsProps = useMemo<TTagsPropsMap>(() => (id ? {
+    Auction: isAuction,
+    InStock: standart === 'ERC1155' ? inStock : 0,
+    Promote: isPromo,
+  } : {}), [id, inStock, isAuction, isPromo, standart]);
+
   return (
     <div className={cn('artCard', className)}>
-      {isAuction && (
-        <div className="artCard-auction">
-          <Text size="xs" color="gray6">
-            Auction
-          </Text>
-        </div>
-      )}
-      {standart === 'ERC1155' && (
-        <div className="artCard-auction">
-          <Text size="xs" color="gray6">
-            In stock: {inStock}
-          </Text>
-        </div>
-      )}
-      {isPromo && (
-        <div className="artCard-promo">
-          <Promo />
-        </div>
-      )}
-      <Link
-        to="/"
-        // to={isCollection ? routes.collection.link(artId) : routes.nft.link(artId)}
+      <div
         className="artCard-imageWrapper"
         onMouseOver={onMouseOver}
         onFocus={() => {}}
         ref={wrapRef}
       >
         {media ? (
-          <img ref={imgRef} className="artCard-image" src={media} alt="" />
+          <TagsWrapper
+            tags={[ENftTags.Auction, ENftTags.InStock, ENftTags.Promote]}
+            propsMap={tagsProps}
+            isCard
+          >
+            <img ref={imgRef} className="artCard-image" src={media} alt="" />
+          </TagsWrapper>
+
         ) : (
           <Loader className="artCard-loader" />
         )}
-      </Link>
+      </div>
       <div className="artCard-info__wrapper">
         <div className="artCard-info__line">
-          <Text size="s" color="dark" weight="medium">
+          <Text size="s" color="darkDefault" weight="medium">
             {sliceString(name, 20, 0)}
           </Text>
           {price ? (
@@ -138,11 +134,12 @@ export const ArtCard: VFC<ArtCardProps> = ({
         <div className="artCard-info__line">
           <div className="artCard-info__line-author">
             <Avatar id={authorId} avatar={authorAvatar} size={28} />
-            <Text size="xs" color="dark" className="artCard-info__line-author-name" weight="medium">
+            <Text size="xs" color="darkDefault" className="artCard-info__line-author-name" weight="medium">
               {sliceString(authorName, 7, 5)}
             </Text>
           </div>
           <LikeButton
+            nftId={String(id)}
             likesCount={likeCount}
             isLiked={isLiked}
             className="artCard-info__line-author-like"

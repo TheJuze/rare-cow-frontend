@@ -3,11 +3,13 @@
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { VFC } from 'react';
-import { ArtCard, Button, FilterChips, Text } from 'components';
+import React, { useMemo, VFC } from 'react';
+import { Button, FilterChips, NftList, Text } from 'components';
 
-import { Link } from 'react-router-dom';
-import { useBreakpoints } from 'hooks';
+import { useBreakpoints, useShallowSelector } from 'hooks';
+import actionTypes from 'store/nfts/actionTypes';
+import uiSelector from 'store/ui/selectors';
+import { RequestStatus } from 'types';
 import styles from './styles.module.scss';
 
 interface INftsProps {
@@ -18,6 +20,7 @@ interface INftsProps {
   handleDeleteChips: any;
   handleClearChips: any;
   nfts: any;
+  totalPages: number;
   onLoadMoreClick: (value: number) => void;
   currentPage: number;
 }
@@ -29,12 +32,17 @@ const Nfts: VFC<INftsProps> = ({
   handleDeleteChips,
   handleClearChips,
   nfts,
+  totalPages,
   onLoadMoreClick,
   currentPage,
 }) => {
-  const [isMobile] = useBreakpoints([541]);
+  const { [actionTypes.SEARCH_NFTS]: getNftsRequestStatus } = useShallowSelector(uiSelector.getUI);
 
-  const minSize = 264;
+  const isNftsLoading = useMemo(
+    () => getNftsRequestStatus === RequestStatus.REQUEST,
+    [getNftsRequestStatus],
+  );
+  const [isMobile] = useBreakpoints([541]);
 
   return (
     <div className={styles.nfts}>
@@ -52,62 +60,18 @@ const Nfts: VFC<INftsProps> = ({
           />
         </div>
       )}
-      <div
-        className={styles.nftsResults}
-        style={{
-          gridTemplateColumns:
-            nfts.length !== 0 ? `repeat(auto-fill,minmax(${minSize}px,1fr))` : '1fr',
-        }}
-      >
-        {nfts.map((nft) => {
-          const {
-            id,
-            name,
-            price,
-            highestBid,
-            minimalBid,
-            media,
-            currency,
-            creator,
-            isAucSelling,
-            standart,
-            likeCount,
-            isLiked,
-            available,
-            endAuction,
-          } = nft;
-          return (
-            <Link key={id} to="/" className={styles.card}>
-              <ArtCard
-                id={id || 0}
-                inStock={available}
-                name={name}
-                price={price || highestBid?.amount || minimalBid}
-                media={media || ''}
-                currency={currency?.image || ''}
-                authorName={creator?.name || ''}
-                authorAvatar={creator?.avatar || ''}
-                authorId={creator?.url || '0'}
-                isAuction={isAucSelling || Boolean(endAuction)}
-                likeCount={likeCount}
-                isLiked={isLiked}
-                standart={standart}
-                endAuction={endAuction}
-                className={styles.card}
-              />
-            </Link>
-          );
-        })}
-      </div>
-      <Button
-        className={styles.load}
-        onClick={() => onLoadMoreClick(currentPage + 1)}
-        variant="outlined"
-      >
-        <Text className={styles.loadText} color="accent">
-          Load more
-        </Text>
-      </Button>
+      <NftList nfts={nfts} currentPage={currentPage} />
+      {!isNftsLoading && currentPage < totalPages && (
+        <Button
+          className={styles.load}
+          onClick={() => onLoadMoreClick(currentPage + 1)}
+          variant="outlined"
+        >
+          <Text className={styles.loadText} color="accent">
+            Load more
+          </Text>
+        </Button>
+      )}
     </div>
   );
 };

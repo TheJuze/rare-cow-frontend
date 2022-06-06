@@ -1,0 +1,39 @@
+@import '/src/styles/helpers';
+
+.wrapper {
+  .body {
+    &Info {
+      @include flex(row, flex-start, center);
+      &Element {
+        flex: 0 0 50%;
+        &:nth-child(2n + 1) {
+          padding: space(0, 4, 4, 0);
+        }
+        &:nth-child(n + 1) {
+          padding: space(0, 0, 4, 4);
+        }
+        .placeBid {
+          padding-top: space(10);
+          padding-bottom: space(10);
+          button {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+.bidIcon {
+  stroke: currentColor;
+}
+
+.bidder {
+  margin-bottom: space(24);
+  @include flex(row, center, flex-start);
+  &Name {
+    @include ellipsis;
+    max-width: 50%;
+    margin: space(0, 8) !important;
+  }
+}

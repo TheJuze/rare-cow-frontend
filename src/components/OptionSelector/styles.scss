@@ -7,6 +7,7 @@ $radio-inner-size: calc($radio-size / 2);
 
 .option-selector {
   &.horizontal {
+    padding: space(4);
     @include flex(row, center, flex-start);
     & > *:not(:last-child) {
       margin: space(24, 24, 24, 4);

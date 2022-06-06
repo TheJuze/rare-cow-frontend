@@ -5,7 +5,7 @@
 .nftWrapper {
   @include container;
   margin-top: space(24) !important;
-  @include flex(row, flex-start, space-between);
+  @include flex(row, flex-start, flex-start);
   .nftImage {
     max-width: 456px;
     width: 100%;
@@ -17,7 +17,7 @@
   }
   .nftBlock {
     @include flex(column, flex-start, flex-start);
-    max-width: 456px;
+    max-width: 592px;
     width: 100%;
   }
   .nftImage + .nftBlock {
@@ -41,6 +41,7 @@
     .nftImage {
       margin: 0 auto;
       margin-top: space(24);
+      margin-bottom: space(16);
     }
   }
 }

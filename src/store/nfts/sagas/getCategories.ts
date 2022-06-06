@@ -11,13 +11,13 @@ export function* getCategoriesSaga({ type, payload }: ReturnType<typeof getCateg
   yield put(apiActions.request(type));
   try {
     const { data } = yield call(baseApi.getCategories, payload);
-    yield put(setCategories([...data, {
+    yield put(setCategories([{
       banner,
       name: 'All Categories',
       description:
-        'All Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+        'Buy NFTs that are directly sold by top creators. Monetize your own creations in NFT.We have compiled a number of popular categories in the NFT space. You can learn more about each of them.',
       image: '',
-    }]));
+    }, ...data]));
 
     yield put(apiActions.success(type));
   } catch (err) {

@@ -1,0 +1,29 @@
+@import 'src/styles/helpers';
+
+.socials {
+  background-color: var(--socials-default-background-color);
+  padding: space(24);
+  border-radius: 14px;
+  &Item {
+    @include flex(row, center, flex-start);
+  }
+  &Icon {
+    margin-right: space(11);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--socials-default-icon-background-color);
+    @include flex(row, center, center);
+  }
+  .socialsItem + .socialsItem {
+    margin-top: space(16);
+  }
+}
+
+@include middle-tablet {
+  .socials {
+    background-color: transparent;
+    padding: 0 !important;
+    margin-top: 93px !important;
+  }
+}

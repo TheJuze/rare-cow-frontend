@@ -1,4 +1,6 @@
-import React, { FC, useCallback, useEffect } from 'react';
+import React, {
+  FC, useCallback, useEffect,
+} from 'react';
 
 import { Layout, Modals, RouteManager as Router } from 'containers';
 import { ToastContainer } from 'react-toastify';
@@ -14,7 +16,6 @@ const App: FC = () => {
   const handleGetCategories = useCallback(() => {
     dispatch(getCategories({}));
   }, [dispatch]);
-
   useEffect(() => {
     handleGetCategories();
   }, [handleGetCategories]);

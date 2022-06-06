@@ -18,7 +18,7 @@ import {
 } from 'assets/icons/icons';
 import { initialFiltersState, useBreakpoints, useFilters, useShallowSelector } from 'hooks';
 import { createDynamicLink, DEBOUNCE_DELAY_100, routes } from 'appConstants';
-import { TBarOption } from 'types';
+import { RequestStatus, TBarOption } from 'types';
 import cn from 'clsx';
 import nftSelector from 'store/nfts/selectors';
 import collectionsSelector from 'store/collections/selectors';
@@ -30,6 +30,9 @@ import { searchNfts } from 'store/nfts/actions';
 import { SearchNftReq } from 'types/requests';
 import { clearCollections } from 'store/collections/reducer';
 import { searchCollections } from 'store/collections/actions';
+import actionTypes from 'store/collections/actionTypes';
+import uiSelector from 'store/ui/selectors';
+import profileActionTypes from 'store/profile/actionsTypes';
 import { FilterButton } from '../FIlterButton';
 import styles from './styles.module.scss';
 import Tabs from '../Tabs';
@@ -83,7 +86,12 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
   const nfts = useShallowSelector(nftSelector.getProp('nfts'));
+  const totalPages = useShallowSelector(nftSelector.getProp('totalPages'));
   const collections = useShallowSelector(collectionsSelector.getProp('collections'));
+  const {
+    [actionTypes.SEARCH_COLLECTIONS]: isSerchingCollections,
+    [profileActionTypes.GET_PROFILE]: isGettingProfile,
+  } = useShallowSelector(uiSelector.getUI);
   const { pathname } = useLocation();
   const [isMobile] = useBreakpoints([541]);
   const navigate = useNavigate();
@@ -94,6 +102,16 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
   );
   const [isShowFilters, setIsShowFilters] = useState(false);
   const [isShowChips, setIsShowChips] = useState(false);
+
+  const isSearchCollectionsLoading = useMemo(
+    () => isSerchingCollections === RequestStatus.REQUEST,
+    [isSerchingCollections],
+  );
+
+  const isGettingProfileLoading = useMemo(
+    () => isGettingProfile === RequestStatus.REQUEST,
+    [isGettingProfile],
+  );
 
   const [appliedFilters, setAppliedFilters] = useState(initialFiltersState);
 
@@ -147,10 +165,10 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
   );
 
   const handleSearchNfts = useCallback(
-    (filtersData: any, page: number, activeTabForSearch: string, shouldConcat?: boolean) => {
+    (filtersData: any, page: number, activeTabForSearch: string, id: string, shouldConcat?: boolean) => {
       if (!activeTabForSearch) return;
       if (activeTabForSearch === '/collections') {
-        const requestData: any = { type: 'collections', page, owner: userId };
+        const requestData: any = { type: 'collections', page, creator: id };
         dispatch(searchCollections({ requestData }));
         return;
       }
@@ -158,25 +176,26 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
         type: 'items',
         page,
         collections: filtersData?.collections?.join(','),
+        currency: filtersData?.currency?.join(','),
         standart: filtersData?.standart?.join(','),
         max_price: filtersData?.maxPrice,
         min_price: filtersData?.minPrice,
         on_auc_sale: filtersData?.isAuction || undefined,
         order_by: filtersData?.orderBy || undefined,
-        ...getFilterForActiveTab(activeTabForSearch.replaceAll('/', ''), userId),
+        ...getFilterForActiveTab(activeTabForSearch.replaceAll('/', ''), id),
       };
       dispatch(searchNfts({ requestData, shouldConcat }));
     },
-    [dispatch, userId],
+    [dispatch],
   );
 
   const debouncedHandleSearchNfts = useRef(debounce(handleSearchNfts, DEBOUNCE_DELAY_100)).current;
 
   const handleLoadMore = useCallback(
     (page: number, shouldConcat = false) => {
-      handleSearchNfts(appliedFilters, page, activeTab, shouldConcat);
+      handleSearchNfts(appliedFilters, page, activeTab, userId, shouldConcat);
     },
-    [activeTab, appliedFilters, handleSearchNfts],
+    [activeTab, appliedFilters, handleSearchNfts, userId],
   );
 
   const onLoadMoreClick = useCallback(
@@ -194,9 +213,9 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
     [dispatch],
   );
   useEffect(() => {
-    debouncedHandleSearchNfts(appliedFilters, 1, activeTab);
+    debouncedHandleSearchNfts(appliedFilters, 1, activeTab, userId);
     setCurrentPage(1);
-  }, [debouncedHandleSearchNfts, appliedFilters, activeTab]);
+  }, [debouncedHandleSearchNfts, appliedFilters, activeTab, userId]);
 
   useEffect(
     () => () => {
@@ -254,9 +273,12 @@ const Body: VFC<IBodyProps> = ({ userId, bio }) => {
             handleDeleteChips={handleDeleteChips}
             handleClearChips={handleClearChips}
             nfts={nfts}
+            totalPages={totalPages}
             onLoadMoreClick={onLoadMoreClick}
             currentPage={currentPage}
             collections={collections}
+            isSearchCollectionsLoading={isSearchCollectionsLoading}
+            isGettingProfileLoading={isGettingProfileLoading}
           />
         </div>
       </div>

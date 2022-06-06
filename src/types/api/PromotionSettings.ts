@@ -7,12 +7,13 @@
 
 import { Network } from "./Network";
 import { PromotionOptions } from "./PromotionOptions";
-import { Type } from "./enums";
+import { PromotionType } from "./enums";
 
 
 export interface PromotionSettings {
     network: Network;
     options: PromotionOptions[];
     slots: number;
-    type?: Type;
+    type?: PromotionType;
+    availableSlots: number;
 }

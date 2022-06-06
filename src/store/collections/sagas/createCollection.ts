@@ -6,6 +6,7 @@ import {
 import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
 import { setActiveModal } from 'store/modals/reducer';
+import { updateUserInfo } from 'store/user/actions';
 import userSelector from 'store/user/selectors';
 import { Modals } from 'types';
 
@@ -85,6 +86,8 @@ export function* createCollectionSaga({ type, payload }: ReturnType<typeof creat
     toast.error('Something went wrong');
     payload.onError?.();
     yield put(apiActions.error(type, err));
+  } finally {
+    yield put(updateUserInfo({ web3Provider: payload.web3Provider }));
   }
   payload.onEnd?.();
 }

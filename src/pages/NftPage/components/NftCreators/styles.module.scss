@@ -4,8 +4,8 @@
 
 .nftCreators {
   width: 100%;
-  margin-top: space(24) !important;
-  @include flex(row, center, space-between);
+  margin-top: space(24);
+  @include flex(row, center, flex-start);
   .creator,
   .collection {
     &Wrapper {
@@ -18,7 +18,10 @@
     }
   }
   .creator + .collection{
-    margin-left: space(16);
+    margin-left: space(20);
+  }
+  .creator{
+    width: 50%;
   }
 }
 

@@ -16,7 +16,7 @@ const storeURLs = {
   getTrendingNfts: 'store/trending/',
   presearchNfts: 'store/presearch/',
   searchNfts: 'store/search/',
-  getCategories: '/store/categories/',
+  getCategories: '/store/tags/',
   createNewToken: '/store/create_token/',
   createNewCollection: '/store/create_collection/',
   buy: 'store/buy/',
@@ -34,6 +34,7 @@ const storeURLs = {
   burn: (id: number | string) => `/store/token/${id}/burn/`,
   getSingleCollection: (id: number | string) => `/store/collection/${id}/`,
   getLiked: (id: number | string) => `/account/${id}/liked/`,
+  getFeatured: '/store/favorites/',
 };
 
 const activityURLs = {
@@ -44,9 +45,15 @@ const ratesURLs = {
   rates: '/rates/',
 };
 
+const promotionURLs = {
+  promotion: '/promotion/',
+  premiumPromotion: '/promotion/premium/',
+};
+
 export default {
   ...accountURLs,
   ...storeURLs,
   ...activityURLs,
   ...ratesURLs,
+  ...promotionURLs,
 };

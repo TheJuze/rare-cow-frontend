@@ -54,7 +54,7 @@ const Following: VFC<IFollowingProps> = () => {
           {followings.map((follower: any) => (
             <div className={styles.follower}>
               <Avatar avatar={follower.avatar || nullAvatar} id={follower.url} size={56} />
-              <Text variant="body-1" color="dark" className={styles.followerName}>
+              <Text variant="body-1" color="darkDefault" className={styles.followerName}>
                 {follower.name}
               </Text>
             </div>

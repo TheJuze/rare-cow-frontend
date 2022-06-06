@@ -3,7 +3,6 @@ export const getFilterForActiveTab = (activeTab: string, userId: string) => {
     case 'owned':
       return {
         owner: userId,
-        on_any_sale: false,
       };
     case 'for-sale':
       return {
@@ -18,12 +17,10 @@ export const getFilterForActiveTab = (activeTab: string, userId: string) => {
     case 'favorites':
       return {
         liked_by: userId,
-        on_any_sale: false,
       };
     case 'sold':
       return {
         sold_by: userId,
-        on_any_sale: false,
       };
     default:
       return {};

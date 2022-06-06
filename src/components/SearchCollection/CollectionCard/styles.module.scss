@@ -1,0 +1,15 @@
+@import 'assets/styles/variables';
+@import 'assets/styles/mixins';
+@import 'src/styles/helpers';
+
+.collectionCard {
+  height: 57px;
+  border-bottom: var(--searchCollection-border-width) solid var(--searchCollection-item-border-color);
+  @include flex(row, center, flex-start);
+  .avatar {
+    margin-right: space(12);
+  }
+  .name {
+    @include ellipsis;
+  }
+}

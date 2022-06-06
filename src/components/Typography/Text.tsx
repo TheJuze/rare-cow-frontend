@@ -53,12 +53,12 @@ type Props = {
  * * s - font-size = 14px, line-height = 24px
  * * m - font-size = 24px, line-height = 68px
  * * l - empty
- * @param {(default, secondary, error, gray6, dark, dark0, dark1, accent, light, light3, light4, iris100, metal50, metal400, metal600, metal700, metal800, base900, yellow500)} [color] - color of the font `initial = default`
+ * @param {(default, secondary, error, gray6, darkDefault, dark0, dark1, accent, light, light3, light4, iris100, metal50, metal400, metal600, metal700, metal800, base900, yellow500)} [color] - color of the font `initial = default`
  * * default - $metal500
  * * secondary - $metal500
  * * error - $red
  * * gray6 - $gray-6
- * * dark - $dark
+ * * darkDefault - $dark
  * * dark0 - $dark-0
  * * dark1 - $dark-1
  * * accent - $accent

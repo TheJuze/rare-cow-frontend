@@ -17,8 +17,15 @@
     gap: 20px;
   }
   .logo {
-    margin: spacing(0, 5, 0, 0);
-    max-width: 500px;
+    g {
+      path {
+        color: var(--logo-default-color);
+      }
+    }
+    &Wrapper {
+      margin: spacing(0, 5, 0, 0);
+      max-width: 500px;
+    }
   }
   .headerInput {
     height: 44px;
@@ -28,11 +35,11 @@
     height: 44px;
     width: 200px;
   }
-  .connect{
+  .connect {
     background-color: $metal-50;
     position: relative;
     width: 44px;
-    &Icon{
+    &Icon {
       position: absolute;
       top: 100%;
       right: 22px;
@@ -90,7 +97,7 @@
   }
   .headerLeft {
     flex-direction: row-reverse;
-    .logo {
+    .logoWrapper {
       margin: 0;
       position: absolute;
       left: calc(50% - 105px / 2);

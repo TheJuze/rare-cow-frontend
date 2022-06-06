@@ -11,4 +11,5 @@ export interface PromotionOptions {
     clicks?: number;
     days?: number;
     usdPrice: string;
+    package: number;
 }
