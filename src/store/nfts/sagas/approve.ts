@@ -56,7 +56,7 @@ export function* approveSaga({
           yield put(apiActions.success(type));
           yield put(
             setActiveModal({
-              activeModal: Modals.none,
+              activeModal: Modals.SendSuccess,
               open: true,
               txHash: '',
             }),

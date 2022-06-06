@@ -152,6 +152,7 @@ const Body: VFC<IBodyProps> = ({ category }) => {
         min_price: filtersData?.minPrice,
         on_auc_sale: filtersData?.isAuction || undefined,
         order_by: filtersData?.orderBy || undefined,
+        hide_premium: true,
       };
       dispatch(searchNfts({ requestData, shouldConcat }));
     },
