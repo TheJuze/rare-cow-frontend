@@ -3,7 +3,7 @@
 import React, { FC, useEffect, useMemo } from 'react';
 
 import { useBreakpoints, useGetUserAccessForNft, useShallowSelector } from 'hooks';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getDetailedNft } from 'store/nfts/actions';
 import nftSelector from 'store/nfts/selectors';
@@ -15,6 +15,8 @@ import { getPreviewer, PromoteModal, TagsWrapper, TTagsPropsMap } from 'componen
 import { clearDetailedNft } from 'store/nfts/reducer';
 import userSelector from 'store/user/selectors';
 import { PromotionStatus } from 'types/api';
+import uiSelector from 'store/ui/selectors';
+import { RequestStatus } from 'types';
 import { NftCreators, NftInfo, NftOwners, NftPayment } from './components';
 import styles from './styles.module.scss';
 
@@ -24,6 +26,7 @@ const NftPage: FC = () => {
   const dispatch = useDispatch();
   const nft = useShallowSelector(nftSelector.getProp('detailedNft'));
   const userId = useShallowSelector(userSelector.getProp('id'));
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getDetailedNft({ id }));
@@ -31,6 +34,8 @@ const NftPage: FC = () => {
       dispatch(clearDetailedNft());
     };
   }, [id, dispatch]);
+
+  const [nftInfoLoading] = useShallowSelector(uiSelector.getStatus(['GET_DETAILED_NFT']));
 
   const previewerProps = useMemo(() => {
     const audio: TAudioPreview = {
@@ -57,6 +62,12 @@ const NftPage: FC = () => {
       threeD,
     };
   }, [nft]);
+
+  useEffect(() => {
+    if(nftInfoLoading === RequestStatus.ERROR) {
+      navigate('/404');
+    }
+  }, [navigate, nftInfoLoading]);
 
   const { previewComponent } = useMemo(() => {
     return getPreviewer(previewerProps, nft?.format);

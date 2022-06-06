@@ -1,6 +1,7 @@
 import { LightningIcon } from 'assets/icons/icons';
 import React, { FC, ReactElement, VFC } from 'react';
 
+import cn from 'clsx';
 import styles from './styles.module.scss';
 
 // eslint-disable-next-line no-shadow
@@ -57,10 +58,13 @@ const NFTTagLabel: VFC<INftTagProps> = ({ styleClass, value, props }) => (
 interface ITagsWrapper {
   tags?: ENftTags[];
   propsMap?: TTagsPropsMap;
+  isCard?: boolean;
 }
 
-export const TagsWrapper: FC<ITagsWrapper> = ({ children, tags = ['Auction', 'Promote', 'Owned', 'InStock'], propsMap }) => (
-  <div className={styles.tagWrapper}>
+export const TagsWrapper: FC<ITagsWrapper> = ({
+  children, tags = ['Auction', 'Promote', 'Owned', 'InStock'], propsMap, isCard,
+}) => (
+  <div className={cn(styles.tagWrapper, { [styles.card]: isCard })}>
     <div className={styles.tagBody}>
       <div className={styles.tagContent}>
         {tags.map((tag) => Boolean(propsMap?.[tag]) && (

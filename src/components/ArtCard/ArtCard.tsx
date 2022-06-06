@@ -95,6 +95,7 @@ export const ArtCard: VFC<ArtCardProps> = ({
           <TagsWrapper
             tags={[ENftTags.Auction, ENftTags.InStock, ENftTags.Promote]}
             propsMap={tagsProps}
+            isCard
           >
             <img ref={imgRef} className="artCard-image" src={media} alt="" />
           </TagsWrapper>

@@ -90,3 +90,15 @@ model-viewer{
   right: 20px;
   @include flex(row, center, center);
 }
+
+.card{
+  &.tag{
+    &Content{
+      padding: space(4,8);
+    }
+  }
+  .promote{
+    top: 6px;
+    right: 10px;
+  }
+}

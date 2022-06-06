@@ -5,11 +5,12 @@ import React, { useMemo, VFC } from 'react';
 import cx from 'classnames';
 
 import { ArtCardSkeleton, CollectionCard, Text } from 'components';
+import { CollectionSlim } from 'types/api';
 import styles from './styles.module.scss';
 
 export interface CollectionsListProps {
   className?: string;
-  collections: any[];
+  collections: CollectionSlim[];
   columns?: number;
   isLoading?: boolean;
   skeletonsCount?: number;
