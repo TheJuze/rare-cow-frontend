@@ -3,6 +3,7 @@
 /* eslint-disable max-len */
 /* eslint-disable implicit-arrow-linebreak */
 import { CollectionsList } from 'components';
+import { isMainnet } from 'config/constants';
 import {
   Collection,
   Create,
@@ -18,9 +19,12 @@ import {
 } from 'pages';
 import { Nfts } from 'pages/Profile/components';
 import Bio from 'pages/Profile/components/Bio';
-import React, { ReactElement } from 'react';
-import { Route, Routes, useOutletContext } from 'react-router-dom';
-import { TGuards } from 'types';
+import React, { Children, FC, ReactElement } from 'react';
+import { useSelector } from 'react-redux';
+import {
+  Navigate, Route, Routes, useOutletContext,
+} from 'react-router-dom';
+import { State, TGuards, TGuardsAction } from 'types';
 
 export type TDynamicValues = { [key: string]: string | number };
 export type TNestRoute = { [key: string]: TRoutes };
@@ -146,6 +150,16 @@ const routesConfig = {
     },
   },
 };
+
+const guardsActions: TGuardsAction = {
+  auth: {
+    check: (value) => Boolean(value.user.address),
+    errorMsg: 'You should be authorize',
+  },
+  'is-me': {
+    check: (value) => value.user.id === value.profile.id,
+  },
+};
 class RouteWorker<T extends object> {
   routes: T;
   constructor(route: T) {
@@ -195,19 +209,56 @@ const OutletProvider = ({ children }) => {
   return typeof children === 'function' ? children(contextProps) : children;
 };
 
+type TGuardRoute = {
+  guards: TGuards[];
+};
+
+// @ts-ignore
+const GuardRoute: FC<TGuardRoute> = ({ children, guards }) => {
+  const store = useSelector<State, State>((state) => state);
+  const failedGuards = guards.filter((guard) => !guardsActions[guard].check(store));
+  if(failedGuards.length === 0) {
+    return children;
+  }
+  if(!isMainnet) console.warn(`guarded ${Children.toArray(children)[0]?.valueOf()}`);
+  return <Navigate to="/" />;
+};
+
 const getOutletRoute = (nest: TRoutes[]) => {
   for (let i = 0; i < nest.length; i += 1) {
     const subPath = nest[i];
+    let component = (
+      <Route
+        key={subPath.path}
+        path={subPath.path}
+        element={<OutletProvider>{subPath.content}</OutletProvider>}
+      />
+    );
+    if(subPath.guards) {
+      component = (
+        <GuardRoute guards={subPath.guards}>
+          {component}
+        </GuardRoute>
+      );
+    }
     if (subPath.nest) {
-      return (
+      let nestComponent = (
         <Route key={subPath.path} path={subPath.path} element={subPath.content}>
           {Object.entries(subPath.nest)
             .map(([, data]) => ({ ...data, path: data.path.replaceAll(subPath.path, '').slice(1) }))
             .map((child) => getOutletRoute([child]))}
         </Route>
       );
+      if(subPath.guards) {
+        nestComponent = (
+          <GuardRoute guards={subPath.guards}>
+            {nestComponent}
+          </GuardRoute>
+        );
+      }
+      return nestComponent;
     }
-    return <Route key={subPath.path} path={subPath.path} element={<OutletProvider>{subPath.content}</OutletProvider>} />;
+    return component;
   }
   return null;
 };
@@ -219,10 +270,9 @@ const recursiveRoutesCollector = (nest: TRoutes[], parentOutlet?: boolean) => {
     const subPath = nest[i];
     const newPath = subPath.path;
     resultRoute.push(
-      ...(
-        (subPath.outlet == null ? !hasOutlets : subPath.outlet !== hasOutlets)
-          ? [{ ...subPath, path: newPath }]
-          : []),
+      ...((subPath.outlet == null ? !hasOutlets : subPath.outlet !== hasOutlets)
+        ? [{ ...subPath, path: newPath }]
+        : []),
     );
     if (subPath.nest) {
       hasOutlets = subPath.outlet;
@@ -243,11 +293,20 @@ const flattenRoutes = (nest: TRoutes[]) => flatten(recursiveRoutesCollector(nest
 const getRoute = () =>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   flattenRoutes([routes as any]).map((subPath: TRoutes) => {
-    const { path, content, outlet } = subPath;
+    const {
+      path, content, outlet, guards,
+    } = subPath;
     if (outlet) {
       return getOutletRoute([{ ...subPath }]);
     }
-    return <Route key={path} path={normalizePath(path)} element={content} />;
+    let component = <Route key={path} path={normalizePath(path)} element={content} />;
+    if(guards) {
+      component = (
+        <GuardRoute guards={guards}>
+          {component}
+        </GuardRoute>);
+    }
+    return component;
   });
 
 export const getAllAvailableRoutes = () =>
