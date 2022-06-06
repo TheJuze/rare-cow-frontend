@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import { useDispatch } from 'react-redux';
 import { useWalletConnectorContext } from 'services';
+import { setModalProps } from 'store/modals/reducer';
 import { buyPromotion, getPromotions } from 'store/promotion/actions';
 import { setSelectedOption } from 'store/promotion/reducer';
 import promotionSelector from 'store/promotion/selectors';
@@ -80,6 +81,13 @@ const PromoteModal: VFC<IPromoteModal> = ({ tokenId }) => {
           priceInUsd: promoteOption.usdPrice,
         }),
       );
+      dispatch(
+        setModalProps({
+          onApprove: () => onBuyClickHandler(promoteOption),
+          onSendAgain: () => onBuyClickHandler(promoteOption),
+          onTryAgain: () => onBuyClickHandler(promoteOption),
+        }),
+      );
     },
     [dispatch, tokenId, walletService],
   );
@@ -108,7 +116,7 @@ const PromoteModal: VFC<IPromoteModal> = ({ tokenId }) => {
           className={styles.selectPromotionSelector}
         />
         <Text className={styles.selectPromotionDescription}>
-          {isLeftOption
+          {!isLeftOption
             ? 'Your NFT will be listed on the main page'
             : 'Your NFT will be at the top of category page'}
         </Text>

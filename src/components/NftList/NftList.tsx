@@ -20,6 +20,8 @@ export interface NftListProps {
   minSize?: number;
   currentPage: number;
   skeletonsCount?: number;
+  isLoading?: boolean;
+  isWithPremium?: boolean;
 }
 
 export const NftList: VFC<NftListProps> = ({
@@ -28,6 +30,7 @@ export const NftList: VFC<NftListProps> = ({
   minSize = 264,
   currentPage,
   skeletonsCount = 8,
+  isLoading = false,
 }) => {
   const { [actionTypes.SEARCH_NFTS]: getNftsRequestStatus } = useShallowSelector(uiSelector.getUI);
   const skeleton = Array.from(Array(skeletonsCount).keys()).map((element) => (
@@ -76,7 +79,7 @@ export const NftList: VFC<NftListProps> = ({
 
   const returnedElements = useMemo(() => {
     let els;
-    if (getNftsRequestStatus === RequestStatus.REQUEST) {
+    if (isLoading || getNftsRequestStatus === RequestStatus.REQUEST) {
       if (currentPage === 1) {
         els = skeleton;
       }
@@ -94,14 +97,14 @@ export const NftList: VFC<NftListProps> = ({
       );
     }
     return els;
-  }, [currentPage, elements, getNftsRequestStatus, skeleton]);
+  }, [currentPage, elements, getNftsRequestStatus, isLoading, skeleton]);
 
   return (
     <div
       className={cn(styles.nftList, className)}
       style={{
         gridTemplateColumns:
-          nfts.length !== 0 || getNftsRequestStatus === RequestStatus.REQUEST
+          nfts.length !== 0 || isLoading || getNftsRequestStatus === RequestStatus.REQUEST
             ? `repeat(auto-fill,minmax(${minSize}px,1fr))`
             : '1fr',
       }}

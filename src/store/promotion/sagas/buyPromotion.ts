@@ -24,6 +24,14 @@ export function* buyPromotesSaga({ type, payload }: ReturnType<typeof buyPromoti
     const {
       tokenId, web3Provider, currency, priceInUsd,
     } = payload;
+
+    yield put(
+      setActiveModal({
+        activeModal: Modals.SendPending,
+        open: true,
+        txHash: '',
+      }),
+    );
     if (!currency.isNative) {
       const { data } = yield call(baseApi.getRates, { network: Chains.polygon });
       const latestRates = camelize(data) as Rates[];
@@ -71,6 +79,23 @@ export function* buyPromotesSaga({ type, payload }: ReturnType<typeof buyPromoti
     }
   } catch (err) {
     console.log(err);
+    if (typeof err !== 'number') {
+      yield put(
+        setActiveModal({
+          activeModal: err.code === 4001 ? Modals.SendRejected : Modals.SendError,
+          open: true,
+          txHash: '',
+        }),
+      );
+    } else {
+      yield put(
+        setActiveModal({
+          activeModal: Modals.SendError,
+          open: true,
+          txHash: '',
+        }),
+      );
+    }
     yield put(error(type, err));
   }
 }
