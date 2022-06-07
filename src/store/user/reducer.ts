@@ -73,10 +73,11 @@ export const userReducer = createSlice({
         ...action.payload,
       };
     },
-    disconnectWalletState: () => {
+    disconnectWalletState: (state) => {
       localStorage.removeItem('rare-cow-wallet-connect');
       return {
         ...initialState,
+        isDark: state.isDark,
       };
     },
   },
