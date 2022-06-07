@@ -28,6 +28,7 @@ export const CollectionsList: VFC<CollectionsListProps> = ({
   const skeleton = Array.from(Array(skeletonsCount).keys()).map((element) => (
     <ArtCardSkeleton className={styles.collectionSkeleton} key={element} />
   ));
+
   const elements = collections.map((collection: any, index: number) => (
     <CollectionCard
       key={collection.name || collection.collection?.name}
@@ -36,7 +37,7 @@ export const CollectionsList: VFC<CollectionsListProps> = ({
       index={index + 1}
       name={collection.name || collection.collection?.name || ''}
       currency={collection.currency?.image || collection.collection?.currency?.image}
-      price={collection?.floorPrice}
+      price={collection?.price}
     />
   ));
 

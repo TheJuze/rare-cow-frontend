@@ -14,6 +14,7 @@ import { Modals } from 'types';
 
 import { createToken } from '../actions';
 import actionTypes from '../actionTypes';
+import { approveNftSaga } from './approveNft';
 
 export function* createTokenSaga({
   type,
@@ -21,6 +22,7 @@ export function* createTokenSaga({
     token, web3, listingInfo, onEnd, onSuccess,
   },
 }: ReturnType<typeof createToken>) {
+  yield put(apiActions.request(type));
   yield put(
     setActiveModal({
       activeModal: Modals.SendPending,
@@ -28,7 +30,6 @@ export function* createTokenSaga({
       txHash: '',
     }),
   );
-  yield put(apiActions.request(type));
 
   try {
     const {
@@ -55,6 +56,36 @@ export function* createTokenSaga({
 
     const address = yield select(userSelector.getProp('address'));
     const { initial_tx, token: createdToken } = data;
+    if(listNow) {
+      try{
+        yield put(
+          setActiveModal({
+            activeModal: Modals.ApprovePending,
+            open: true,
+            txHash: '',
+          }),
+        );
+        yield call(approveNftSaga, {
+          type: actionTypes.APPROVE_NFT,
+          payload: {
+            id: createdToken.id,
+            isSingle: createdToken.standart === 'ERC721',
+            web3Provider: web3,
+            currency,
+            collectionAddress: createdToken.collection?.address,
+          },
+        });
+      }catch(e) {
+        toast.error('Something went wrong');
+        yield put(
+          setActiveModal({
+            activeModal: e.code === 4001 ? Modals.SendRejected : Modals.SendError,
+            open: true,
+            txHash: '',
+          }),
+        );
+      }
+    }
     if (initial_tx) {
       try {
         const { transactionHash } = yield call(web3.eth.sendTransaction, {

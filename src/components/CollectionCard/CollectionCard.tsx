@@ -26,7 +26,6 @@ export const CollectionCard: VFC<CollectionCardProps> = ({
   id,
   name,
   price,
-  currency,
   profitIncrease,
   className,
 }) => {
@@ -47,10 +46,9 @@ export const CollectionCard: VFC<CollectionCardProps> = ({
             <Text tag="span" variant="medium-body" weight="bold" color="iris100">
               Floor price:
             </Text>
-            <img src={currency} alt="currency" className={styles.currency} />
             <Text tag="span" size="xs" color="accent" weight="bold">
               {' '}
-              {new BigNumber(price || '0').isEqualTo(0) ? '< 0.01' : formatDigits(+price)}
+              {new BigNumber(price || '0').isEqualTo(0) ? '< 0.01' : formatDigits(+price)} $
             </Text>
           </div>
         ) : null}
