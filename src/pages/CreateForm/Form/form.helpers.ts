@@ -22,7 +22,6 @@ export const validationSchema = object().shape({
   }),
   category: object().nullable().shape({
     id: string(),
-    content: string(),
   }).required(),
   collection: object().shape({
     withCollection: boolean(),

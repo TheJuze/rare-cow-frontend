@@ -92,6 +92,7 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({
           }
           return false;
         }());
+
         return (
           <Form className={styles.wrapper}>
             <div className={styles.uploader}>
