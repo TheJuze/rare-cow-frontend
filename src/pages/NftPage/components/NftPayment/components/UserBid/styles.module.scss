@@ -27,13 +27,3 @@
 .bidIcon {
   stroke: currentColor;
 }
-
-.bidder {
-  margin-bottom: space(24);
-  @include flex(row, center, flex-start);
-  &Name {
-    @include ellipsis;
-    max-width: 50%;
-    margin: space(0, 8) !important;
-  }
-}

@@ -18,10 +18,21 @@
     .send {
       margin-top: space(16);
     }
-    &Quantity{
+    &Quantity {
       margin: space(16, 0);
     }
   }
+
+  .bidder {
+    margin-bottom: space(24);
+    @include flex(row, center, flex-start);
+    &Name {
+      @include ellipsis;
+      max-width: 50%;
+      margin: space(0, 8) !important;
+    }
+  }
+
   .listing {
     width: 100%;
     margin-top: space(24);
