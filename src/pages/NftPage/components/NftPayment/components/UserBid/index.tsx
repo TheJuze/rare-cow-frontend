@@ -1,9 +1,9 @@
 /* eslint-disable max-len */
 import { fromNameToCurrencyObj } from 'appConstants';
-import { ArrowGreen, PlaceABidIcon } from 'assets/icons/icons';
+import { PlaceABidIcon } from 'assets/icons/icons';
 import BigNumber from 'bignumber.js';
 import {
-  Avatar, Button, Input, Text,
+  Button, Input,
 } from 'components';
 import { useShallowSelector } from 'hooks';
 import React, {
@@ -92,15 +92,6 @@ export const UserBid: VFC<IUserBid> = ({ detailedNFT }) => {
 
   return (
     <div className={styles.wrapper}>
-      {highestBid && highestBid.user ? (
-        <div className={styles.bidder}>
-          <Avatar id={highestBid?.user.url} avatar={highestBid?.user.avatar} size={40} />
-          <Text className={styles.bidderName} color="darkDefault" variant="body-2" weight="semiBold">
-            {highestBid?.user.displayName || highestBid?.user.address}
-          </Text>
-          <ArrowGreen />
-        </div>
-      ) : null}
       <div className={styles.body}>
         <div className={styles.bodyInfo}>
           {userAddress.length > 0 ? (

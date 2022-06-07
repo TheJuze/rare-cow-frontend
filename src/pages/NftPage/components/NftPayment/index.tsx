@@ -1,5 +1,6 @@
 import { TStandards } from 'appConstants';
-import { Countdown } from 'components';
+import { ArrowGreen } from 'assets/icons/icons';
+import { Avatar, Countdown, Text } from 'components';
 import { useGetUserAccessForNft, useShallowSelector } from 'hooks';
 import React, { FC, useMemo } from 'react';
 import userSelector from 'store/user/selectors';
@@ -77,6 +78,24 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
           currency={detailedNFT.currency}
         />
       )}
+      {detailedNFT.highestBid && detailedNFT.highestBid.user ? (
+        <div className={styles.bidder}>
+          <Avatar
+            id={detailedNFT.highestBid?.user.url}
+            avatar={detailedNFT.highestBid?.user.avatar}
+            size={40}
+          />
+          <Text
+            className={styles.bidderName}
+            color="darkDefault"
+            variant="body-2"
+            weight="semiBold"
+          >
+            {detailedNFT.highestBid?.user.displayName || detailedNFT.highestBid?.user.address}
+          </Text>
+          <ArrowGreen />
+        </div>
+      ) : null}
       {isOwner &&
         (hasBeenListed ? (
           <OwnerAfterListing
