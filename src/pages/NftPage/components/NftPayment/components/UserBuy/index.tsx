@@ -7,7 +7,7 @@ import { useWalletConnectorContext } from 'services';
 import { setModalProps } from 'store/modals/reducer';
 import { buy } from 'store/nfts/actions';
 import userSelector from 'store/user/selectors';
-import { Chains, Modals, WalletProviders } from 'types';
+import { Modals } from 'types';
 import { Currency, Ownership } from 'types/api';
 
 import styles from '../../styles.module.scss';
@@ -25,7 +25,7 @@ export const UserBuy: VFC<IUserBuy> = ({
 }) => {
   const dispatch = useDispatch();
   const { modalType, closeModals, changeModalType } = useModals();
-  const { walletService, connect } = useWalletConnectorContext();
+  const { walletService } = useWalletConnectorContext();
   const userAddress = useShallowSelector(userSelector.getProp('address'));
 
   const handleBuyAction = useCallback(
@@ -63,9 +63,9 @@ export const UserBuy: VFC<IUserBuy> = ({
         handleBuyAction(seller, '0');
       }
     } else {
-      connect(WalletProviders.metamask, Chains.polygon);
+      changeModalType(Modals.ConnectWallet);
     }
-  }, [changeModalType, connect, handleBuyAction, isMultiple, sellers, userAddress.length]);
+  }, [changeModalType, handleBuyAction, isMultiple, sellers, userAddress.length]);
 
   const handleChooseSeller = useCallback(
     (seller: Ownership, amount: string) => {

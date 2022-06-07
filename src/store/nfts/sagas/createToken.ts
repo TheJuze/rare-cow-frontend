@@ -58,13 +58,6 @@ export function* createTokenSaga({
     const { initial_tx, token: createdToken } = data;
     if(listNow) {
       try{
-        yield put(
-          setActiveModal({
-            activeModal: Modals.ApprovePending,
-            open: true,
-            txHash: '',
-          }),
-        );
         yield call(approveNftSaga, {
           type: actionTypes.APPROVE_NFT,
           payload: {
@@ -87,6 +80,13 @@ export function* createTokenSaga({
       }
     }
     if (initial_tx) {
+      yield put(
+        setActiveModal({
+          activeModal: Modals.SendPending,
+          open: true,
+          txHash: '',
+        }),
+      );
       try {
         const { transactionHash } = yield call(web3.eth.sendTransaction, {
           ...initial_tx,

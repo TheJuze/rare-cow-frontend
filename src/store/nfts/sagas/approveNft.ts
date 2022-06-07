@@ -35,6 +35,7 @@ export function* approveNftSaga({
     const isApproved = yield call(
       nftContract.methods.isApprovedForAll(myAddress, marketplaceAddress).call,
     );
+
     if (isApproved) {
       yield put(apiActions.success(type));
       return;

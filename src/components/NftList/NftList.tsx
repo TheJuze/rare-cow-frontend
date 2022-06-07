@@ -49,6 +49,7 @@ export const NftList: VFC<NftListProps> = ({
       standart,
       likeCount,
       isLiked,
+      isTimedAucSelling,
       available,
       endAuction,
       promotionInfo,
@@ -65,7 +66,7 @@ export const NftList: VFC<NftListProps> = ({
           authorName={creator?.name || ''}
           authorAvatar={creator?.avatar || ''}
           authorId={creator?.url || '0'}
-          isAuction={isAucSelling || Boolean(endAuction)}
+          isAuction={isAucSelling || isTimedAucSelling}
           likeCount={likeCount}
           isLiked={isLiked}
           standart={standart}

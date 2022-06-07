@@ -167,7 +167,7 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({
           onClick={removeClickHandler}
           className={styles.remove}
         >
-          Remove from {isAuction ? 'auction' : 'sale'}
+          {isAuction ? 'Accept bid' : 'Remove from sale'}
         </Button>
       )}
     </div>

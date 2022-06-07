@@ -155,6 +155,7 @@ const Trending: FC<Props> = ({ className }) => {
                 available,
                 endAuction,
                 promotionInfo,
+                isTimedAucSelling,
               } = nft;
               return (
                 <SwiperSlide key={id}>
@@ -172,7 +173,7 @@ const Trending: FC<Props> = ({ className }) => {
                       authorName={creator?.name || ''}
                       authorAvatar={creator?.avatar || ''}
                       authorId={creator?.url || '0'}
-                      isAuction={isAucSelling || Boolean(endAuction)}
+                      isAuction={isAucSelling || isTimedAucSelling}
                       likeCount={likeCount}
                       isLiked={isLiked}
                       standart={standart}
@@ -207,6 +208,7 @@ const Trending: FC<Props> = ({ className }) => {
               available,
               endAuction,
               promotionInfo,
+              isTimedAucSelling,
             } = nft;
             return (
               <Link
@@ -224,7 +226,7 @@ const Trending: FC<Props> = ({ className }) => {
                   authorName={creator?.name || ''}
                   authorAvatar={creator?.avatar || ''}
                   authorId={creator?.url || '0'}
-                  isAuction={isAucSelling || Boolean(endAuction)}
+                  isAuction={isAucSelling || isTimedAucSelling}
                   likeCount={likeCount}
                   isLiked={isLiked}
                   standart={standart}

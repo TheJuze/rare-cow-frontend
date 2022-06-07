@@ -250,6 +250,8 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({
                           ...values.listing,
                           ...listValues,
                         })}
+                        maxAmount={+values.quantity || 1}
+                        isMultiple={type === 'ERC1155'}
                         itemsAmount={+values.quantity}
                       />
                     </div>

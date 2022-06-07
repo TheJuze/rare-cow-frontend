@@ -2,11 +2,14 @@ import { fromNameToCurrencyObj } from 'appConstants';
 import {
   Avatar, Text, Button, NumberText, QuantityInput,
 } from 'components';
+import { useModals, useShallowSelector } from 'hooks';
 import React, { useCallback, useState, VFC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useWalletConnectorContext } from 'services';
 import { setModalProps } from 'store/modals/reducer';
 import { buy } from 'store/nfts/actions';
+import userSelector from 'store/user/selectors';
+import { Modals } from 'types';
 import { Currency, Ownership } from 'types/api';
 import styles from '../styles.module.scss';
 
@@ -25,34 +28,41 @@ export const OwnerSeller: VFC<IOwnerSeller> = ({
 }) => {
   const [quantity, setQuantity] = useState('1');
   const dispatch = useDispatch();
+  const { changeModalType } = useModals();
   const { walletService } = useWalletConnectorContext();
+  const userAddress = useShallowSelector(userSelector.getProp('address'));
 
   const handleChangeQuantity = useCallback((amount) => {
     setQuantity(amount);
   }, []);
 
   const handleBuyAction = useCallback(() => {
-    if (owner && currency) {
-      const tokenCurrency = fromNameToCurrencyObj(currency?.symbol);
-      dispatch(
-        buy({
-          id: nftId,
-          tokenAmount: isMultiple ? quantity : '0',
-          amount: owner.price || normalPrice,
-          sellerId: owner.url,
-          currency: tokenCurrency,
-          web3Provider: walletService.Web3(),
-        }),
-      );
-      dispatch(
-        setModalProps({
-          onApprove: () => handleBuyAction(),
-          onSendAgain: () => handleBuyAction(),
-          onTryAgain: () => handleBuyAction(),
-        }),
-      );
+    if(userAddress?.length > 0) {
+      if (owner && currency) {
+        const tokenCurrency = fromNameToCurrencyObj(currency?.symbol);
+        dispatch(
+          buy({
+            id: nftId,
+            tokenAmount: isMultiple ? quantity : '0',
+            amount: owner.price || normalPrice,
+            sellerId: owner.url,
+            currency: tokenCurrency,
+            web3Provider: walletService.Web3(),
+          }),
+        );
+        dispatch(
+          setModalProps({
+            onApprove: () => handleBuyAction(),
+            onSendAgain: () => handleBuyAction(),
+            onTryAgain: () => handleBuyAction(),
+          }),
+        );
+      }
+    } else {
+      changeModalType(Modals.ConnectWallet);
     }
-  }, [currency, dispatch, isMultiple, nftId, normalPrice, owner, quantity, walletService]);
+  }, [changeModalType, currency, dispatch, isMultiple, nftId,
+    normalPrice, owner, quantity, userAddress?.length, walletService]);
 
   return (
     <div className={styles.owner}>
@@ -85,7 +95,7 @@ export const OwnerSeller: VFC<IOwnerSeller> = ({
             />
           )}
           <Button className={styles.buy} onClick={handleBuyAction} size="sm">
-            Buy
+            {userAddress ? 'Buy' : 'Connect'}
           </Button>
         </div>
       )}

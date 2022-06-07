@@ -82,7 +82,7 @@ const NftPage: FC = () => {
   const tagsProps = useMemo<TTagsPropsMap>(() => (nft ? {
     Auction: nft.isAucSelling || nft.isTimedAucSelling,
     InStock: nft.standart === 'ERC1155' ? nft.available : 0,
-    Owned: isOwner ? nft.owners.find((owner) => +owner.url === +userId).sellingQuantity : false,
+    Owned: isOwner ? nft.owners.find((owner) => +owner.url === +userId).quantity : false,
     Promote: nft.promotionInfo && nft.promotionInfo.status === PromotionStatus.InProgress,
   } : {}), [isOwner, nft, userId]);
 
