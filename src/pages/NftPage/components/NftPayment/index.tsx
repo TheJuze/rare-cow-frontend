@@ -28,9 +28,16 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
   } = useGetUserAccessForNft(detailedNFT, String(userId));
 
   const hasBeenListed = useMemo(() => {
-    const { isSelling, isAucSelling, isTimedAucSelling } = detailedNFT;
-    return isAucSelling || isTimedAucSelling || isSelling;
-  }, [detailedNFT]);
+    const {
+      isSelling, isAucSelling, isTimedAucSelling, standart, owners,
+    } = detailedNFT;
+    if(standart === 'ERC721') {
+      return isAucSelling || isTimedAucSelling || isSelling;
+    }
+
+    const currentOwner = owners.find((owner) => +owner.url === +userId);
+    return currentOwner ? currentOwner.sellingQuantity || currentOwner.price : false;
+  }, [detailedNFT, userId]);
 
   const isAuction = useMemo(() => {
     const { isAucSelling, isTimedAucSelling } = detailedNFT;

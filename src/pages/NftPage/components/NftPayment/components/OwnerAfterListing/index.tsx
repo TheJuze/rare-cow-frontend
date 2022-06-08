@@ -151,7 +151,8 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({
         </div>
         <div className={cn(styles.priceField, styles.priceUpdater)}>
           <Button
-            disabled={!Number.isFinite(parseFloat(price)) || +price === +detailedNFT.price}
+            disabled={!Number.isFinite(parseFloat(price)) ||
+              +price === +detailedNFT.price || detailedNFT.bids?.length !== 0}
             variant="outlined"
             onClick={updateClickHandler}
           >

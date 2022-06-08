@@ -1,4 +1,5 @@
 import { fromNameToCurrencyObj } from 'appConstants';
+import BigNumber from 'bignumber.js';
 import { Button, SellersModal } from 'components';
 import { useModals, useShallowSelector } from 'hooks';
 import React, { useCallback, VFC } from 'react';
@@ -27,6 +28,7 @@ export const UserBuy: VFC<IUserBuy> = ({
   const { modalType, closeModals, changeModalType } = useModals();
   const { walletService } = useWalletConnectorContext();
   const userAddress = useShallowSelector(userSelector.getProp('address'));
+  const userBalance = useShallowSelector(userSelector.getProp('balance'));
 
   const handleBuyAction = useCallback(
     (seller: Ownership, amount: string) => {
@@ -76,6 +78,8 @@ export const UserBuy: VFC<IUserBuy> = ({
     [handleBuyAction, isMultiple],
   );
 
+  const canBuy = new BigNumber(userBalance[currency.symbol]).gte(normalPrice);
+
   return (
     <>
       <SellersModal
@@ -85,7 +89,7 @@ export const UserBuy: VFC<IUserBuy> = ({
         handleChooseSeller={handleChooseSeller}
         currency={currency}
       />
-      <Button onClick={onBuyClickHandler} className={styles.buy}>
+      <Button disabled={!canBuy} onClick={onBuyClickHandler} className={styles.buy}>
         {userAddress.length > 0 ? 'Buy' : 'Connect wallet'}
       </Button>
     </>
