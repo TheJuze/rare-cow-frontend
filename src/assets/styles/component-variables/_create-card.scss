@@ -19,3 +19,13 @@ $createCardColorsLight: (
   'createCard-icon-hover-shadow': $shadow-0,
   'createCard-font-color': $text-dark,
 );
+
+$createCardColorsDark: (
+  'createCard-default-background': $dark-2,
+  'createCard-hover-background': $dark-3,
+  'createCard-icon-default-background': $metal-300,
+  'createCard-icon-hover-background': $light-white,
+  'createCard-icon-default-shadow': none,
+  'createCard-icon-hover-shadow': $shadow-0,
+  'createCard-font-color': $dark-8,
+);

@@ -53,6 +53,7 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
         listType: 'Price',
         timestamp: 0,
         currency: currencies[0],
+        amount: '0',
       },
     }),
     [createType],

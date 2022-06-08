@@ -143,7 +143,7 @@ export const Listing: VFC<ListingProps> = ({
         currency: selectedCurrency,
         timestamp: selectedTimestamp.value,
         price,
-        amount: amount || '1',
+        amount: amount || '0',
       });
     } else {
       onError?.();

@@ -33,7 +33,7 @@ export function* createTokenSaga({
 
   try {
     const {
-      listType, price, listNow, timestamp, currency,
+      listType, price, listNow, timestamp, currency, amount,
     } = listingInfo;
     const now = parseInt(String(Date.now() / 1000), 10);
     if (listNow) {
@@ -41,6 +41,7 @@ export function* createTokenSaga({
       token.append('currency', currency.name);
       if (listType === 'Price') {
         token.append('price', price);
+        token.append('selling_quantity', amount);
       }
       if (listType === 'Auction' || listType === 'Auction time') {
         token.append('minimal_bid', price);
@@ -56,45 +57,34 @@ export function* createTokenSaga({
 
     const address = yield select(userSelector.getProp('address'));
     const { initial_tx, token: createdToken } = data;
-    if(listNow) {
-      try{
-        yield call(approveNftSaga, {
-          type: actionTypes.APPROVE_NFT,
-          payload: {
-            id: createdToken.id,
-            isSingle: createdToken.standart === 'ERC721',
-            web3Provider: web3,
-            currency,
-            collectionAddress: createdToken.collection?.address,
-          },
-        });
-      }catch(e) {
-        toast.error('Something went wrong');
-        yield put(
-          setActiveModal({
-            activeModal: e.code === 4001 ? Modals.SendRejected : Modals.SendError,
-            open: true,
-            txHash: '',
-          }),
-        );
-      }
-    }
     if (initial_tx) {
-      yield put(
-        setActiveModal({
-          activeModal: Modals.SendPending,
-          open: true,
-          txHash: '',
-        }),
-      );
       try {
+        if(listNow) {
+          yield call(approveNftSaga, {
+            type: actionTypes.APPROVE_NFT,
+            payload: {
+              id: createdToken.id,
+              isSingle: createdToken.standart === 'ERC721',
+              web3Provider: web3,
+              currency,
+              collectionAddress: createdToken.collection?.address,
+            },
+          });
+        }
         const { transactionHash } = yield call(web3.eth.sendTransaction, {
           ...initial_tx,
           from: address,
         });
+        yield put(
+          setActiveModal({
+            activeModal: Modals.SendPending,
+            open: true,
+            txHash: '',
+          }),
+        );
         if (transactionHash) {
           onSuccess?.();
-          toast.success('Collection created successfully');
+          toast.success('Token created successfully');
         }
         yield put(
           setActiveModal({
@@ -105,7 +95,6 @@ export function* createTokenSaga({
         );
         yield put(apiActions.success(type));
       } catch (e) {
-        console.log('error', e);
         yield call(baseApi.mintReject, {
           id: createdToken.id,
           type: 'token',

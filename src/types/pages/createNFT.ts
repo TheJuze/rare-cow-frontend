@@ -22,5 +22,6 @@ export interface ICreateForm {
     listType: string;
     timestamp: number;
     currency: TCurrencies,
+    amount: string;
   };
 }
