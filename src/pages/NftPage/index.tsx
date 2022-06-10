@@ -48,6 +48,7 @@ const NftPage: FC = () => {
     const video: TVideoPreview = {
       previewSrc: nft?.media,
       mediaSrc: nft?.animation,
+      preview: true,
     };
     const threeD: TThreePreview = {
       previewSrc: nft?.media,

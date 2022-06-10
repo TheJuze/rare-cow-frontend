@@ -20,6 +20,7 @@
 }
 
 .video {
+  width: 100%;
   margin-top: space(20);
   &Container {
     @include flex(column, center, flex-start);
