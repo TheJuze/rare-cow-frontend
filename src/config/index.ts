@@ -88,6 +88,9 @@ export const connectWallet = (newChainName: Chains): IConnectWallet => {
     network: {
       chainName: chain.name,
       chainID: chain.chainId,
+      nativeCurrency: chain.provider.nativeCurrency,
+      rpc: chain.provider.rpc,
+      blockExplorerUrl: chain.provider.blockExplorerUrl,
     },
     provider: chain.provider,
     settings: { providerType: true },
