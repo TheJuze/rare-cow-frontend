@@ -7,7 +7,7 @@ import React, {
 
 import { Footer, Header } from 'containers';
 import { useWalletConnectorContext } from 'services';
-import { useShallowSelector } from 'hooks';
+import { useShallowSelector, useThemeDetector } from 'hooks';
 import {
   RequestStatus, State, UserState, WalletProviders,
 } from 'types';
@@ -31,12 +31,17 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
   const isDark = useShallowSelector(userSelector.getProp('isDark'));
   const { pathname } = useLocation();
   const { connect, disconnect, walletService } = useWalletConnectorContext();
+  const isDarkBrowser = useThemeDetector();
 
   const dispatch = useDispatch();
 
   const handleSwitchTheme = useCallback((newValue: boolean) => {
     dispatch(updateTheme({ isDark: newValue }));
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(updateTheme({ isDark: isDarkBrowser }));
+  }, [dispatch, isDarkBrowser]);
 
   useEffect(() => {
     dispatch(updateTheme({ isDark }));
