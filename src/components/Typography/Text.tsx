@@ -15,13 +15,14 @@ import styles from './styles.module.scss';
 type Tag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'h7' | 'p' | 'span';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-type variantType = 'display-1' | 'heading-1' | 'heading-2' | 'heading-2' | 'subtitle-1' | 'body-1' | 'body-2' | 'medium-body';
+type variantType = 'display-1' | 'heading-1' | 'heading-2' | 'heading-2' | 'subtitle-1' | 'subtitle-2' | 'body-1' | 'body-2' | 'medium-body';
 
 const tagMap = {
   'display-1': 'h1',
   'heading-1': 'h2',
   'heading-2': 'h3',
   'subtitle-1': 'h4',
+  'subtitle-2': 'h5',
   'body-1': 'p',
   'body-2': 'p',
   'medium-body': 'p',

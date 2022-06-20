@@ -9,3 +9,4 @@ export { default as Profile } from './Profile';
 export { default as Following } from './Following';
 export { default as EditProfile } from './EditProfile';
 export { default as NotFound } from './NotFound';
+export { default as PrivacyPolicy } from './PrivacyPolicy';

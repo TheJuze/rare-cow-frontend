@@ -1,0 +1,40 @@
+@import '/src/styles/helpers';
+@import '/src/assets/styles/variables';
+
+.wrapper {
+  @include container;
+  max-width: 1440px;
+  .container {
+    margin: space(72, 0);
+    max-width: 910px;
+    .list {
+      &Wrapper {
+        padding-left: space(14);
+        color: var(--typography-dark-color);
+      }
+      &Item {
+        color: var(--typography-dark-color);
+      }
+    }
+    .text {
+      margin: space(20, 0);
+    }
+    .heading {
+      margin: space(28, 0);
+    }
+  }
+}
+
+@include middle-tablet {
+  .wrapper {
+    .container {
+      margin: space(0);
+      .text {
+        margin: space(16, 0);
+      }
+      .heading {
+        margin: space(20, 0);
+      }
+    }
+  }
+}

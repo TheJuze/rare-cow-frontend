@@ -15,7 +15,7 @@ export interface FooterProps {
 
 const mockedRoutes = [
   {
-    link: '/privacy',
+    link: '/privacy-policy',
     name: 'Privacy Policy',
   },
   {

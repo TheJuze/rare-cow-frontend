@@ -10,3 +10,4 @@ export * from './useFilters';
 export * from './useSearch';
 export { default as useBreakpoints } from './useBreakpoints';
 export { default as useGetUserAccessForNft } from './useUserAccessToNFT';
+export { default as useThemeDetector } from './useThemeDetector';

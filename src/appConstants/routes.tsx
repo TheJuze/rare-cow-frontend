@@ -16,6 +16,7 @@ import {
   NftPage,
   NotFound,
   Profile,
+  PrivacyPolicy,
 } from 'pages';
 import { Nfts } from 'pages/Profile/components';
 import Bio from 'pages/Profile/components/Bio';
@@ -100,6 +101,11 @@ const routesConfig = {
       path: 'followers/:userId',
       content: <Following />,
       label: 'Followers of {{userId}}',
+    },
+    privacy: {
+      path: 'privacy-policy',
+      content: <PrivacyPolicy />,
+      label: 'Privacy Policy',
     },
     following: {
       path: 'following/:userId',
