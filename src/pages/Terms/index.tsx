@@ -1029,7 +1029,7 @@ const Terms = () => (
       <Text className={styles.heading} color="darkDefault" variant="subtitle-2">
         Class Action Waiver
       </Text>
-      <Text className={styles.text} color="darkDefault" variant="body-2" weight="medium">
+      <Text className={styles.text} color="darkDefault" variant="body-2" weight="bold">
         TO THE EXTENT PERMITTED BY LAW, ALL CLAIMS MUST BE BROUGHT IN A PARTY’S INDIVIDUAL CAPACITY,
         AND NOT AS A PLAINTIFF OR CLASS MEMBER IN ANY PURPORTED CLASS, COLLECTIVE ACTION, OR
         REPRESENTATIVE PROCEEDING. UNLESS BOTH YOU AND PAYTOSAVE LIMITED AGREE, NO ARBITRATOR OR
