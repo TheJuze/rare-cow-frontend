@@ -17,6 +17,7 @@ import {
   NotFound,
   Profile,
   PrivacyPolicy,
+  Terms,
 } from 'pages';
 import { Nfts } from 'pages/Profile/components';
 import Bio from 'pages/Profile/components/Bio';
@@ -106,6 +107,11 @@ const routesConfig = {
       path: 'privacy-policy',
       content: <PrivacyPolicy />,
       label: 'Privacy Policy',
+    },
+    terms: {
+      path: 'terms',
+      content: <Terms />,
+      label: 'Terms of use',
     },
     following: {
       path: 'following/:userId',
