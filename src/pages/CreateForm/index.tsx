@@ -8,6 +8,7 @@ import {
   TAvailableExtensions,
   TStandards,
 } from 'appConstants';
+import BigNumber from 'bignumber.js';
 import { Text } from 'components';
 import { MATIC_ADDRESS } from 'config';
 import { useShallowSelector } from 'hooks';
@@ -17,11 +18,12 @@ import React, {
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useWalletConnectorContext } from 'services';
-import { createToken, getCategories } from 'store/nfts/actions';
+import { createToken, getCategories, getFeeInfo } from 'store/nfts/actions';
 import nftSelector from 'store/nfts/selectors';
 import { getSelfCollections } from 'store/user/actions';
 import userSelector from 'store/user/selectors';
 import { ICreateForm } from 'types';
+import cn from 'clsx';
 import { CreateNFTForm } from './Form';
 
 import styles from './styles.module.scss';
@@ -64,8 +66,13 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
 
   const chain = useShallowSelector(userSelector.getProp('chain'));
   const id = useShallowSelector(userSelector.getProp('id'));
+  const { MATIC: userMaticBalance } = useShallowSelector(userSelector.getProp('balance'));
   const { amount: feeAmount } = useShallowSelector(nftSelector.getProp('fees'));
   const { walletService } = useWalletConnectorContext();
+
+  useEffect(() => {
+    dispatch(getFeeInfo({ web3Provider: walletService.Web3(), standard: createType }));
+  }, [createType, dispatch, walletService]);
 
   const handleSubmit = useCallback(
     async (values: ICreateForm) => new Promise((resolve) => {
@@ -111,14 +118,15 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
         createToken({
           token: newTokenForm,
           web3: walletService.Web3(),
+          fee: +feeAmount,
           listingInfo: values.listing,
           onEnd: () => resolve(null),
-          onSuccess: () => navigate(createDynamicLink(routes.nest.profile.nest.owned.path,
-            { userId: id })),
+          onSuccess:
+          () => navigate(createDynamicLink(routes.nest.profile.nest.owned.path, { userId: id })),
         }),
       );
     }),
-    [collections, createType, dispatch, id, navigate, walletService],
+    [collections, createType, dispatch, feeAmount, id, navigate, walletService],
   );
 
   useEffect(() => {
@@ -129,6 +137,11 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
     dispatch(getSelfCollections({ network: chain }));
   }, [chain, dispatch]);
 
+  const canMint = useMemo(
+    () => new BigNumber(userMaticBalance).gte(feeAmount),
+    [feeAmount, userMaticBalance],
+  );
+
   return (
     <section className={styles.create}>
       <div className={styles.createHeader}>
@@ -137,17 +150,24 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
         </Text>
         <div className={styles.createHeaderMintingFee}>
           <Text variant="body-2" color="accent" weight="semiBold">
-            Minting fee is {feeAmount} %
+            Minting fee is {feeAmount} MATIC
           </Text>
         </div>
       </div>
-      <div>
+      <div className={cn(styles.form, { [styles.disabled]: !canMint })}>
         <CreateNFTForm
           type={createType}
           collections={collections}
           formValues={initialValues}
           handleSubmit={handleSubmit}
         />
+        {!canMint && (
+          <div className={styles.overlay}>
+            <Text variant="heading-2" color="accent">
+              You don&apos;t have enough MATIC for fee
+            </Text>
+          </div>
+        )}
       </div>
     </section>
   );

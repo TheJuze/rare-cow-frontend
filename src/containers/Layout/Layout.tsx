@@ -19,7 +19,6 @@ import { useSmoothTopScroll } from 'hooks/useSmoothTopScroll';
 import { useDispatch } from 'react-redux';
 import { updateUserState } from 'store/user/reducer';
 import clsx from 'clsx';
-import { getFeeInfo } from 'store/nfts/actions';
 import { updateTheme } from 'store/user/actions';
 import styles from './styles.module.scss';
 
@@ -30,7 +29,7 @@ export interface LayoutProps {
 export const Layout: FC<LayoutProps> = ({ children }) => {
   const isDark = useShallowSelector(userSelector.getProp('isDark'));
   const { pathname } = useLocation();
-  const { connect, disconnect, walletService } = useWalletConnectorContext();
+  const { connect, disconnect } = useWalletConnectorContext();
   const isDarkBrowser = useThemeDetector();
 
   const dispatch = useDispatch();
@@ -71,14 +70,6 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
   const handleToggleChainType = useCallback(() => {
     dispatch(updateUserState({ chainType: chainType === 'mainnet' ? 'testnet' : 'mainnet' }));
   }, [chainType, dispatch]);
-
-  const initialRequests = useCallback(() => {
-    dispatch(getFeeInfo({ web3Provider: walletService.Web3() }));
-  }, [dispatch, walletService]);
-
-  useEffect(() => {
-    initialRequests();
-  }, [initialRequests]);
 
   const firstPathAtPathname = useMemo(() => pathname.split('/')[1], [pathname]);
 

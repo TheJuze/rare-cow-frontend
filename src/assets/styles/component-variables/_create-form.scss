@@ -3,9 +3,11 @@
 $createFormColorsDefault: (
   'createForm-minting-fee-background': $base-50,
   'createForm-minting-fee-font-color': $text-dark,
+  'createForm-minting-fee-background-overlay': rgba($base-50, .01)
 );
 
 $createFormColorsLight: (
   'createForm-minting-fee-background': $base-50,
   'createForm-minting-fee-font-color': $text-dark,
+  'createForm-minting-fee-background-overlay': rgba($base-50, .01)
 );

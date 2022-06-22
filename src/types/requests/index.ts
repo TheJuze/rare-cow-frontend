@@ -3,7 +3,7 @@ import Web3 from 'web3';
 import { User } from 'types/api/User';
 import { Category } from 'types/api/Category';
 import { ContractsNames } from 'config';
-import { TCurrencies } from 'appConstants';
+import { TCurrencies, TStandards } from 'appConstants';
 import { Chains } from 'types/connect';
 import { Rewrite } from 'types';
 
@@ -258,6 +258,7 @@ export type RequestWithCallbacks = {
 export type CreateTokenRequest = {
   token: FormData;
   web3: Web3;
+  fee: number;
   listingInfo: {
     listNow: boolean;
     price: string;
@@ -298,6 +299,11 @@ export type RequestWithNetwork = {
 export type RequestWithWeb3 = {
   web3Provider: Web3;
 };
+
+export type RequestFeeInfo = {
+  standard?: TStandards,
+  type?: 'buy' | 'create',
+} & RequestWithWeb3;
 
 export type GetLikedNFTsRequest = {
   page: number | string;

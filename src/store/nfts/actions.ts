@@ -15,7 +15,7 @@ import {
   GetPresearchNfts,
   GetTrendingNftsReq,
   LikeReq,
-  RequestWithWeb3,
+  RequestFeeInfo,
   SearchAction,
   SearchNftAction,
   SetOnAuctionPreReq,
@@ -46,6 +46,6 @@ export const getTrending = createAction<GetTrendingNftsReq>(actionTypes.GET_TREN
 export const transfer = createAction<TransferTokenReq>(actionTypes.TRANSFER);
 export const burn = createAction<BurnTokenReq>(actionTypes.BURN);
 export const getLikedNFTs = createAction<GetLikedNFTsRequest>(actionTypes.GET_LIKED);
-export const getFeeInfo = createAction<RequestWithWeb3>(actionTypes.GET_FEE_INFO);
+export const getFeeInfo = createAction<RequestFeeInfo>(actionTypes.GET_FEE_INFO);
 export const getFeatured = createAction(actionTypes.GET_FEATURED);
 export const getPremium = createAction(actionTypes.GET_PREMIUM);

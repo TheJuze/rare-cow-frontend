@@ -91,7 +91,7 @@ export const Listing: VFC<ListingProps> = ({
     () =>
       initialTimestampOptions.map((timestamp) => ({
         value: timestamp,
-        content: <Text variant="medium-body" weight="normal">${secondToHours(timestamp)} h</Text>,
+        content: <Text variant="medium-body" weight="normal">{secondToHours(timestamp)} h</Text>,
       })),
     [],
   );

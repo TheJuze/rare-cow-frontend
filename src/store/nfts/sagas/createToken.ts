@@ -11,6 +11,7 @@ import { updateUserInfo } from 'store/user/actions';
 import userSelector from 'store/user/selectors';
 
 import { Modals } from 'types';
+import { getTokenAmount } from 'utils';
 
 import { createToken } from '../actions';
 import actionTypes from '../actionTypes';
@@ -19,7 +20,7 @@ import { approveNftSaga } from './approveNft';
 export function* createTokenSaga({
   type,
   payload: {
-    token, web3, listingInfo, onEnd, onSuccess,
+    token, web3, listingInfo, fee, onEnd, onSuccess,
   },
 }: ReturnType<typeof createToken>) {
   yield put(apiActions.request(type));
@@ -73,6 +74,7 @@ export function* createTokenSaga({
         }
         const { transactionHash } = yield call(web3.eth.sendTransaction, {
           ...initial_tx,
+          value: getTokenAmount(fee),
           from: address,
         });
         yield put(

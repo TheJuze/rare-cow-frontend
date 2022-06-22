@@ -12,6 +12,24 @@
       margin: space(27, 0) !important;
     }
   }
+  .form{
+    position: relative;
+    .overlay{
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      bottom: -5px;
+      right: -5px;
+      z-index: 1;
+      background: var(--createForm-minting-fee-background-overlay);
+      backdrop-filter: blur(16px) saturate(180%);
+      @include flex(row, center, center);
+    }
+  }
+}
+
+.disabled{
+  pointer-events: none;
 }
 
 @include middle-tablet{
