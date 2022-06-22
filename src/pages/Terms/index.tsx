@@ -3,7 +3,6 @@ import React, { ReactElement } from 'react';
 import { Text } from 'components';
 import styles from './styles.module.scss';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const UlListComponent = ({ list }: { list: (string | ReactElement)[] }) => (
   <ul className={styles.listWrapper}>
     {list.map((el) => (
