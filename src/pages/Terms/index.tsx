@@ -91,7 +91,7 @@ const Terms = () => (
         2. Trading Risks
       </Text>
       <Text className={styles.text} color="darkDefault" variant="body-2" weight="normal">
-        <b>2.1. Forks</b> t is possible that planned, unplanned, sudden, scheduled, expected,
+        <b>2.1. Forks</b>It is possible that planned, unplanned, sudden, scheduled, expected,
         unexpected, publicized, not well-known, consensual, and/or controversial changes to the
         underlying operating rules of certain Digital Assets may occur from time to time in such a
         way as to result in the creation of one or more related versions of an existing Digital
