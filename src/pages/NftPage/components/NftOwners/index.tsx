@@ -60,7 +60,8 @@ const NftOwners: FC<Props> = ({
     owners.forEach((owner) => {
       const isSelling = +owner.sellingQuantity > 0;
       const notUsers = userId !== String(owner.url);
-      if (isSelling && notUsers) {
+      const hasPrice = +owner.price > 0;
+      if (isSelling && notUsers && hasPrice) {
         selling.push(owner);
       } else {
         notSelling.push(owner);

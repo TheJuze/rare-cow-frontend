@@ -14,6 +14,7 @@ export enum Modals {
   none = 'none',
   ConnectWallet = 'ConnectWallet',
   Promote = 'Promote',
+  Failed = 'Failed'
 }
 
 export interface ModalState {
