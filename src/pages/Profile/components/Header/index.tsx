@@ -14,6 +14,7 @@ import styles from './styles.module.scss';
 import Socials from '../Socials';
 
 interface IHeaderProps {
+  id: number | string;
   isMobile: boolean;
   userId: string | number;
   avatar?: string;
@@ -35,6 +36,7 @@ interface IHeaderProps {
 }
 
 const Header: VFC<IHeaderProps> = ({
+  id,
   isMobile,
   userId,
   avatar,
@@ -114,7 +116,7 @@ const Header: VFC<IHeaderProps> = ({
               </Button>
             ) : (
               <FollowButton
-                disabled={isFollowingInProcess || !address}
+                disabled={isFollowingInProcess || !id}
                 onClick={() => (isFollowing ? handleUnfollowUser(userId) : handleFollowUser(userId))}
                 isFollowing={isFollowing}
                 className={styles.edit}
@@ -185,7 +187,7 @@ const Header: VFC<IHeaderProps> = ({
             </Button>
           ) : (
             <FollowButton
-              disabled={isFollowingInProcess || !address}
+              disabled={isFollowingInProcess || !id}
               onClick={() => (isFollowing ? handleUnfollowUser(userId) : handleFollowUser(userId))}
               isFollowing={isFollowing}
               className={styles.edit}

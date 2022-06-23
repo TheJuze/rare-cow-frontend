@@ -98,6 +98,7 @@ const Profile: VFC = () => {
           <ArtCardSkeleton key={userId} />
         ) : (
           <Header
+            id={id}
             isMobile={isMobile}
             userId={userId}
             avatar={avatar}
@@ -135,6 +136,7 @@ const Profile: VFC = () => {
     <div className={styles.profile}>
       {isGettingProfile ? <ArtCardSkeleton key={userId} /> : (
         <Header
+          id={id}
           isMobile={isMobile}
           userId={userId}
           avatar={avatar}
