@@ -26,17 +26,18 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
     isUserCanRemoveFromSale,
     isTimedAuction,
     isUserCanChangePrice,
+    isUserCanPutOnSale,
   } = useGetUserAccessForNft(detailedNFT, String(userId));
 
   const hasBeenListed = useMemo(() => {
     const {
       isSelling, isAucSelling, isTimedAucSelling, standart, owners,
     } = detailedNFT;
-    if(standart === 'ERC721') {
+    if (standart === 'ERC721') {
       return isAucSelling || isTimedAucSelling || isSelling;
     }
 
-    const currentOwner = owners.find((owner) => +owner.url === +userId);
+    const currentOwner = owners.find((owner) => String(owner.url) === String(userId));
     return currentOwner ? currentOwner.sellingQuantity || currentOwner.price : false;
   }, [detailedNFT, userId]);
 
@@ -113,6 +114,7 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
             isUserCanEndAuction={isUserCanEndAuction}
             isUserCanRemoveFromSale={isUserCanRemoveFromSale}
             isUserCanChangePrice={isUserCanChangePrice}
+            isUserCanPutOnSale={isUserCanPutOnSale}
           />
         ) : (
           <OwnerListing

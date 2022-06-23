@@ -52,7 +52,8 @@ export const NftList: VFC<NftListProps> = ({
       isTimedAucSelling,
       available,
       endAuction,
-      promotionInfo,
+      featuredPromotionInfo,
+      premiumPromotionInfo,
     } = nft;
     return (
       <Link key={id} to={createDynamicLink(routes.nest.nft.path, { id })} className={styles.card}>
@@ -72,7 +73,12 @@ export const NftList: VFC<NftListProps> = ({
           standart={standart}
           endAuction={endAuction}
           className={styles.card}
-          isPromo={Boolean(promotionInfo && promotionInfo.status === PromotionStatus.InProgress)}
+          isPromo={
+            (Boolean(premiumPromotionInfo) &&
+              premiumPromotionInfo.status === PromotionStatus.InProgress) ||
+            (Boolean(featuredPromotionInfo) &&
+              featuredPromotionInfo.status === PromotionStatus.InProgress)
+          }
         />
       </Link>
     );

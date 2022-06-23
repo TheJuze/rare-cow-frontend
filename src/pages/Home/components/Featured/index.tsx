@@ -155,13 +155,13 @@ const Trending: FC<Props> = ({ className }) => {
                 isLiked,
                 available,
                 endAuction,
-                promotionInfo,
+                featuredPromotionInfo,
                 isTimedAucSelling,
               } = nft;
               return (
                 <SwiperSlide key={id}>
                   <div
-                    onClick={() => onNftPageClick(id, promotionInfo?.id)}
+                    onClick={() => onNftPageClick(id, featuredPromotionInfo?.id)}
                     className={styles.drop}
                   >
                     <ArtCard
@@ -208,13 +208,13 @@ const Trending: FC<Props> = ({ className }) => {
               isLiked,
               available,
               endAuction,
-              promotionInfo,
+              featuredPromotionInfo,
               isTimedAucSelling,
             } = nft;
             return (
               <div
                 key={id}
-                onClick={() => onNftPageClick(id, promotionInfo?.id)}
+                onClick={() => onNftPageClick(id, featuredPromotionInfo?.id)}
                 className={cx(styles.drop, styles.dropDouble)}
               >
                 <ArtCard
