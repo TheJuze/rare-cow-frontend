@@ -14,6 +14,9 @@
     .collections{
       display: none;
     }
+    .filtersIcon{
+      color: var(--filters-button-icon-color);
+    }
   }
   &Content {
     display: grid;
