@@ -46,7 +46,6 @@ export interface TokenFull {
     network: Network;
     owners: Ownership[];
     price?: string;
-    promotionInfo?: Promotion;
     properties?: Property[];
     rankings: any;
     sellers?: Ownership[];
@@ -57,6 +56,6 @@ export interface TokenFull {
     totalSupply: number;
     usdPrice: number;
     viewsCount?: string;
-    featuredPromotionInfo?: any;
-    premiumPromotionInfo?: any;
+    featuredPromotionInfo?: Promotion;
+    premiumPromotionInfo?: Promotion;
 }

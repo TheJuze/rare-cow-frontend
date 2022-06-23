@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import { burn } from 'store/nfts/actions';
 import { useWalletConnectorContext } from 'services';
 import { setModalProps } from 'store/modals/reducer';
-import { Promotion } from 'types/api';
+import { Promotion, PromotionStatus } from 'types/api';
 import styles from './styles.module.scss';
 import { PromotionStatusBar } from './components';
 
@@ -26,7 +26,8 @@ type Props = {
   isMultiple: boolean;
   maxBurnAmount: number;
   canBurn: boolean;
-  promotionInfo: Promotion;
+  premiumPromotionInfo: Promotion;
+  featuredPromotionInfo: Promotion;
 };
 const NftInfo: FC<Props> = ({
   name,
@@ -38,7 +39,8 @@ const NftInfo: FC<Props> = ({
   isMultiple,
   maxBurnAmount,
   canBurn,
-  promotionInfo,
+  premiumPromotionInfo,
+  featuredPromotionInfo,
 }) => {
   const [isDescriptionOpened, setIsDescriptionOpened] = useState(false);
   const { modalType, closeModals, changeModalType } = useModals();
@@ -107,20 +109,27 @@ const NftInfo: FC<Props> = ({
           <div className={styles.actionItem}>
             <LikeButton nftId={String(id)} likesCount={likeCount} isLiked={isLiked} />
           </div>
-          {isOwner && (
-            <div className={styles.actionItem}>
-              <Button
-                className={styles.promote}
-                startAdornment={<LightningIcon />}
-                onClick={onPromoteClickHandler}
-              >
-                Promote
-              </Button>
-            </div>
+          {isOwner &&
+            (featuredPromotionInfo.status === PromotionStatus.Finished ||
+            premiumPromotionInfo.status === PromotionStatus.Finished) && (
+              <div className={styles.actionItem}>
+                <Button
+                  className={styles.promote}
+                  startAdornment={<LightningIcon />}
+                  onClick={onPromoteClickHandler}
+                >
+                  Promote
+                </Button>
+              </div>
           )}
         </div>
       </div>
-      {isOwner && <PromotionStatusBar promotionInfo={promotionInfo} />}
+      {isOwner && premiumPromotionInfo && (
+        <PromotionStatusBar promotionInfo={premiumPromotionInfo} />
+      )}
+      {isOwner && featuredPromotionInfo && (
+        <PromotionStatusBar promotionInfo={featuredPromotionInfo} />
+      )}
       {description.length > 0 && (
         <div className={styles.nftInfoDescription}>
           <Text variant="body-2" color="metal800">
