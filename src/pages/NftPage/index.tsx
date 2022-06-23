@@ -11,16 +11,25 @@ import { TAudioPreview } from 'components/Preview/AudioPreview';
 import { TImagePreview } from 'components/Preview/ImagePreview';
 import { TVideoPreview } from 'components/Preview/VideoPreview';
 import { TThreePreview } from 'components/Preview/ThreePreview';
-import { getPreviewer, PromoteModal, TagsWrapper, TTagsPropsMap } from 'components';
+import { getPreviewer, Loader, PromoteModal, TagsWrapper, TTagsPropsMap } from 'components';
 import { clearDetailedNft } from 'store/nfts/reducer';
 import userSelector from 'store/user/selectors';
 import { PromotionStatus } from 'types/api';
 import uiSelector from 'store/ui/selectors';
 import { RequestStatus } from 'types';
+import actionTypes from 'store/nfts/actionTypes';
 import { NftCreators, NftInfo, NftOwners, NftPayment } from './components';
 import styles from './styles.module.scss';
 
 const NftPage: FC = () => {
+  const [nftInfoLoading] = useShallowSelector(uiSelector.getStatus(['GET_DETAILED_NFT']));
+  const { [actionTypes.GET_DETAILED_NFT]: getNftRequestStatus } = useShallowSelector(
+    uiSelector.getUI,
+  );
+  const isNftLoading = useMemo(
+    () => getNftRequestStatus === RequestStatus.REQUEST,
+    [getNftRequestStatus],
+  );
   const [isMobile] = useBreakpoints([767]);
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -34,8 +43,6 @@ const NftPage: FC = () => {
       dispatch(clearDetailedNft());
     };
   }, [id, dispatch]);
-
-  const [nftInfoLoading] = useShallowSelector(uiSelector.getStatus(['GET_DETAILED_NFT']));
 
   const previewerProps = useMemo(() => {
     const audio: TAudioPreview = {
@@ -65,7 +72,7 @@ const NftPage: FC = () => {
   }, [nft]);
 
   useEffect(() => {
-    if(nftInfoLoading === RequestStatus.ERROR) {
+    if (nftInfoLoading === RequestStatus.ERROR) {
       navigate('/404');
     }
   }, [navigate, nftInfoLoading]);
@@ -80,100 +87,116 @@ const NftPage: FC = () => {
     [nft?.owners, userId],
   );
 
-  const tagsProps = useMemo<TTagsPropsMap>(() => (nft ? {
-    Auction: nft.isAucSelling || nft.isTimedAucSelling,
-    InStock: nft.standart === 'ERC1155' ? nft.available : 0,
-    Owned: isOwner ? nft.owners.find((owner) => +owner.url === +userId).quantity : false,
-    Promote: nft.promotionInfo && nft.promotionInfo.status === PromotionStatus.InProgress,
-  } : {}), [isOwner, nft, userId]);
+  const tagsProps = useMemo<TTagsPropsMap>(
+    () => (nft
+      ? {
+        Auction: nft.isAucSelling || nft.isTimedAucSelling,
+        InStock: nft.standart === 'ERC1155' ? nft.available : 0,
+        Owned: isOwner ? nft.owners.find((owner) => +owner.url === +userId).quantity : false,
+        Promote: nft.promotionInfo && nft.promotionInfo.status === PromotionStatus.InProgress,
+      }
+      : {}),
+    [isOwner, nft, userId],
+  );
 
   if (!nft) {
     return null;
   }
-
   if (isMobile) {
     return (
       <div className={styles.nftWrapper}>
-        <NftInfo
-          name={nft.name}
-          id={nft.id}
-          description={nft.description}
-          likeCount={nft.likeCount}
-          isLiked={nft.isLiked}
-          isOwner={isOwner}
-          isMultiple={nft.standart === 'ERC1155'}
-          maxBurnAmount={+currentOwnerData?.quantity || 0}
-          canBurn={isUserCanBurn}
-          promotionInfo={nft.promotionInfo}
-        />
-        <div className={styles.nftImage}>
-          <TagsWrapper propsMap={tagsProps}>{previewComponent}</TagsWrapper>
-        </div>
-        <NftPayment detailedNFT={nft} />
-        <NftCreators
-          creatorAvatar={nft.creator.avatar}
-          creatorId={String(nft.creator.url)}
-          creatorName={nft.creator.name}
-          collectionAvatar={nft.collection.avatar}
-          collectionId={String(nft.collection.url)}
-          collectionName={nft.collection.name}
-        />
-        <NftOwners
-          userId={String(userId)}
-          owners={nft.owners}
-          properties={nft.properties}
-          history={nft.history}
-          nftId={String(nft.id)}
-          currency={nft.currency}
-          normalPrice={nft.price}
-          isAuction={nft.isAucSelling || nft.isTimedAucSelling}
-          isMultiple={nft.standart === 'ERC1155'}
-        />
-        <PromoteModal tokenId={nft.id} />
+        {isNftLoading ? (
+          <Loader size="lg" />
+        ) : (
+          <>
+            <NftInfo
+              name={nft.name}
+              id={nft.id}
+              description={nft.description}
+              likeCount={nft.likeCount}
+              isLiked={nft.isLiked}
+              isOwner={isOwner}
+              isMultiple={nft.standart === 'ERC1155'}
+              maxBurnAmount={+currentOwnerData?.quantity || 0}
+              canBurn={isUserCanBurn}
+              promotionInfo={nft.promotionInfo}
+            />
+            <div className={styles.nftImage}>
+              <TagsWrapper propsMap={tagsProps}>{previewComponent}</TagsWrapper>
+            </div>
+            <NftPayment detailedNFT={nft} />
+            <NftCreators
+              creatorAvatar={nft.creator.avatar}
+              creatorId={String(nft.creator.url)}
+              creatorName={nft.creator.name}
+              collectionAvatar={nft.collection.avatar}
+              collectionId={String(nft.collection.url)}
+              collectionName={nft.collection.name}
+            />
+            <NftOwners
+              userId={String(userId)}
+              owners={nft.owners}
+              properties={nft.properties}
+              history={nft.history}
+              nftId={String(nft.id)}
+              currency={nft.currency}
+              normalPrice={nft.price}
+              isAuction={nft.isAucSelling || nft.isTimedAucSelling}
+              isMultiple={nft.standart === 'ERC1155'}
+            />
+            <PromoteModal tokenId={nft.id} />
+          </>
+        )}
       </div>
     );
   }
 
   return (
     <div className={styles.nftWrapper}>
-      <div className={styles.nftImage}>
-        <TagsWrapper propsMap={tagsProps}>{previewComponent}</TagsWrapper>
-      </div>
-      <div className={styles.nftBlock}>
-        <NftInfo
-          name={nft.name}
-          id={nft.id}
-          description={nft.description}
-          likeCount={nft.likeCount}
-          isLiked={nft.isLiked}
-          isOwner={isOwner}
-          isMultiple={nft.standart === 'ERC1155'}
-          maxBurnAmount={+currentOwnerData?.quantity || 0}
-          canBurn={isUserCanBurn}
-          promotionInfo={nft.promotionInfo}
-        />
-        <NftPayment detailedNFT={nft} />
-        <NftCreators
-          creatorAvatar={nft.creator.avatar}
-          creatorId={String(nft.creator.url)}
-          creatorName={nft.creator.name}
-          collectionAvatar={nft.collection.avatar}
-          collectionId={String(nft.collection.url)}
-          collectionName={nft.collection.name}
-        />
-        <NftOwners
-          userId={String(userId)}
-          owners={nft.owners}
-          properties={nft.properties}
-          history={nft.history}
-          nftId={String(nft.id)}
-          currency={nft.currency}
-          normalPrice={nft.price}
-          isAuction={nft.isAucSelling || nft.isTimedAucSelling}
-          isMultiple={nft.standart === 'ERC1155'}
-        />
-        <PromoteModal tokenId={nft.id} />
-      </div>
+      {isNftLoading ? (
+        <Loader size="lg" />
+      ) : (
+        <>
+          <div className={styles.nftImage}>
+            <TagsWrapper propsMap={tagsProps}>{previewComponent}</TagsWrapper>
+          </div>
+          <div className={styles.nftBlock}>
+            <NftInfo
+              name={nft.name}
+              id={nft.id}
+              description={nft.description}
+              likeCount={nft.likeCount}
+              isLiked={nft.isLiked}
+              isOwner={isOwner}
+              isMultiple={nft.standart === 'ERC1155'}
+              maxBurnAmount={+currentOwnerData?.quantity || 0}
+              canBurn={isUserCanBurn}
+              promotionInfo={nft.promotionInfo}
+            />
+            <NftPayment detailedNFT={nft} />
+            <NftCreators
+              creatorAvatar={nft.creator.avatar}
+              creatorId={String(nft.creator.url)}
+              creatorName={nft.creator.name}
+              collectionAvatar={nft.collection.avatar}
+              collectionId={String(nft.collection.url)}
+              collectionName={nft.collection.name}
+            />
+            <NftOwners
+              userId={String(userId)}
+              owners={nft.owners}
+              properties={nft.properties}
+              history={nft.history}
+              nftId={String(nft.id)}
+              currency={nft.currency}
+              normalPrice={nft.price}
+              isAuction={nft.isAucSelling || nft.isTimedAucSelling}
+              isMultiple={nft.standart === 'ERC1155'}
+            />
+            <PromoteModal tokenId={nft.id} />
+          </div>
+        </>
+      )}
     </div>
   );
 };

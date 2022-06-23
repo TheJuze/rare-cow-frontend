@@ -39,7 +39,7 @@ export const NFTPrice:VFC<INFTPrice> = ({
       )}
 
       <div className={styles.price}>
-        <img src={currency?.image} alt={currency?.name || 'currency'} className={styles.priceImage} />
+        {currency?.image && <img src={currency?.image} alt={currency?.name || 'currency'} className={styles.priceImage} />}
         <Text color="accent" className={styles.priceText}>
           <NumberText>{price}</NumberText>
         </Text>

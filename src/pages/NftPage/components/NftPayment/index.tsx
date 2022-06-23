@@ -25,6 +25,7 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
     isOwner,
     isUserCanRemoveFromSale,
     isTimedAuction,
+    isUserCanChangePrice,
   } = useGetUserAccessForNft(detailedNFT, String(userId));
 
   const hasBeenListed = useMemo(() => {
@@ -111,6 +112,7 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
             isAuction={isAuction}
             isUserCanEndAuction={isUserCanEndAuction}
             isUserCanRemoveFromSale={isUserCanRemoveFromSale}
+            isUserCanChangePrice={isUserCanChangePrice}
           />
         ) : (
           <OwnerListing
