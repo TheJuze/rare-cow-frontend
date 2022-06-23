@@ -165,6 +165,7 @@ export type LikeReq = {
 export type EndAucReq = {
   id: number | string;
   web3Provider: Web3;
+  onInvalidBid?: (err: unknown) => void;
 };
 
 export type BidReq = {

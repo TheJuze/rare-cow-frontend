@@ -23,9 +23,10 @@ import styles from './styles.module.scss';
 
 const NftPage: FC = () => {
   const [nftInfoLoading] = useShallowSelector(uiSelector.getStatus(['GET_DETAILED_NFT']));
-  const { [actionTypes.GET_DETAILED_NFT]: getNftRequestStatus } = useShallowSelector(
-    uiSelector.getUI,
-  );
+  const {
+    [actionTypes.GET_DETAILED_NFT]: getNftRequestStatus,
+    [actionTypes.BURN]: burnRequestStatus,
+  } = useShallowSelector(uiSelector.getUI);
   const isNftLoading = useMemo(
     () => getNftRequestStatus === RequestStatus.REQUEST,
     [getNftRequestStatus],
@@ -70,6 +71,12 @@ const NftPage: FC = () => {
       threeD,
     };
   }, [nft]);
+
+  useEffect(() => {
+    if (burnRequestStatus === RequestStatus.SUCCESS) {
+      navigate('/');
+    }
+  }, [burnRequestStatus, navigate]);
 
   useEffect(() => {
     if (nftInfoLoading === RequestStatus.ERROR) {

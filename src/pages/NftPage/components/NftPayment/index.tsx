@@ -30,6 +30,7 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
     isTimedAuction,
     isUserCanChangePrice,
     isUserCanPutOnSale,
+    isOnAnySale,
   } = useGetUserAccessForNft(detailedNFT, String(userId));
 
   const hasBeenListed = useMemo(() => {
@@ -92,7 +93,7 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
           className={styles.countdown}
         />
       )}
-      {+currentPrice.price > 0 && (
+      {+currentPrice.price > 0 && isOnAnySale && (
         <NFTPrice
           highestBid={detailedNFT.highestBid}
           price={currentPrice.price}
@@ -141,7 +142,7 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
           />
         ))}
       <>
-        {isUserCanBuyNft && (
+        {isUserCanBuyNft && isOnAnySale && (
           <UserBuy
             nftId={String(detailedNFT.id)}
             currency={detailedNFT.currency}
@@ -150,7 +151,7 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
             normalPrice={detailedNFT.price}
           />
         )}
-        {isUserCanEnterInAuction && <UserBid detailedNFT={detailedNFT} />}
+        {isUserCanEnterInAuction && isOnAnySale && <UserBid detailedNFT={detailedNFT} />}
       </>
     </div>
   );
