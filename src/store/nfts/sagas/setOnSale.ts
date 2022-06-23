@@ -47,13 +47,13 @@ export function* setOnSaleSaga({
       ...snakeize(requestData),
     });
 
-    yield put(
-      setActiveModal({
-        activeModal: Modals.SendSuccess,
-        open: true,
-        txHash: '',
-      }),
-    );
+    // yield put(
+    //   setActiveModal({
+    //     activeModal: Modals.SendSuccess,
+    //     open: true,
+    //     txHash: '',
+    //   }),
+    // );
 
     yield call(getDetailedNftSaga, {
       type: actionTypes.GET_DETAILED_NFT,
