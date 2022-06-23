@@ -9,12 +9,14 @@ import styles from './styles.module.scss';
 
 export interface CountdownProps {
   className?: string;
+  onEnd?: () => void;
   endAuction: number;
 }
 
-export const Countdown: VFC<CountdownProps> = ({ className, endAuction }) => {
+export const Countdown: VFC<CountdownProps> = ({ className, endAuction, onEnd }) => {
   const timeLeft = useTimeLeft(endAuction * 1000);
   if (!timeLeft) {
+    onEnd?.();
     return (
       <div className={styles.countdownTitle}>
         <Text size="m" weight="semiBold">

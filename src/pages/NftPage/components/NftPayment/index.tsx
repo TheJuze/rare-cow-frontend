@@ -2,7 +2,9 @@ import { TStandards } from 'appConstants';
 import { ArrowGreen } from 'assets/icons/icons';
 import { Avatar, Countdown, Text } from 'components';
 import { useGetUserAccessForNft, useShallowSelector } from 'hooks';
-import React, { FC, useMemo } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { getDetailedNft } from 'store/nfts/actions';
 import userSelector from 'store/user/selectors';
 import { Ownership, TokenFull } from 'types/api';
 import {
@@ -18,6 +20,7 @@ type Props = {
 
 const NftPayment: FC<Props> = ({ detailedNFT }) => {
   const userId = useShallowSelector(userSelector.getProp('id'));
+  const dispatch = useDispatch();
   const {
     isUserCanEndAuction,
     isUserCanBuyNft,
@@ -76,10 +79,18 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
     return { price: price || '0', usdPrice: usdPrice || '0', is: true };
   }, [detailedNFT]);
 
+  const onTimerEnd = useCallback(() => {
+    dispatch(getDetailedNft({ id: detailedNFT.id }));
+  }, [detailedNFT.id, dispatch]);
+
   return (
     <div className={styles.nftPayment}>
       {isTimedAuction && (
-        <Countdown endAuction={+detailedNFT.endAuction} className={styles.countdown} />
+        <Countdown
+          endAuction={+detailedNFT.endAuction}
+          onEnd={onTimerEnd}
+          className={styles.countdown}
+        />
       )}
       {+currentPrice.price > 0 && (
         <NFTPrice
