@@ -45,7 +45,7 @@ export function* buySaga({
         payload: {
           web3Provider,
           amount: getTokenAmount(
-            new BigNumber(amount).times(new BigNumber(+tokenAmount || 1)).toString(), decimals,
+            new BigNumber(amount).times(new BigNumber(+tokenAmount || 1)).toFixed(), decimals,
           ),
           spender: ContractsNames.marketplace,
           approveAddress: ContractsNames[currency.name],

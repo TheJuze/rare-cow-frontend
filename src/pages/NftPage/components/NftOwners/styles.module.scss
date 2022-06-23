@@ -21,10 +21,15 @@
       @include flex(row, center, space-between);
       .left {
         @include flex(row, center, flex-start);
+        max-width: 74%;
       }
       &Info {
         @include flex(column, flex-start, flex-start);
         margin-left: space(13);
+        @include ellipsis;
+        &Text{
+          @include ellipsis;
+        }
       }
       .right{
         @include flex(row, center, flex-end);

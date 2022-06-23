@@ -44,6 +44,7 @@
 @import './component-variables/socials';
 @import './component-variables/following';
 @import './component-variables/modal';
+@import './component-variables/countdown';
 
 :root {
 	$colors:(
@@ -93,6 +94,7 @@
 		$followingColorsDefault,
 		$modalColorsDefault,
 		$selectorColorsDefault,
+		$countdownColorsDefault,
 	);
 
 	@each $key_name in $colors {
@@ -143,6 +145,7 @@
 		$highlightedTextColorsDark,
 		$createCardColorsDark,
 		$iconButtonColorsDark,
+		$countdownColorsDark,
 	);
 
 	@each $key_name in $colors {
