@@ -9,6 +9,7 @@ import {
   SendPendingModal,
   SendRejectedModal,
   SendSuccessModal,
+  Failed,
 } from 'components';
 import ApproveErrorModal from 'components/Modals/modals/ApproveErrorModal';
 
@@ -68,6 +69,12 @@ const ModalsComponent: VFC = () => {
       <ConnectWalletModal
         visible={modalType === Modals.ConnectWallet}
         onClose={() => closeModals()}
+      />
+      <Failed
+        visible={modalType === Modals.Failed}
+        onClose={() => closeModals()}
+        title={'title' in modalProps ? modalProps.title : 'Failed'}
+        error={'error' in modalProps ? modalProps.error : ''}
       />
     </>
   );

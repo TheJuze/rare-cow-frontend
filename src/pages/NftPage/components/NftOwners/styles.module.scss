@@ -16,6 +16,8 @@
     margin-left: space(16);
   }
   .owners {
+    max-height: 300px;
+    overflow-y: auto;
     .owner {
       margin-top: space(16);
       @include flex(row, center, space-between);
@@ -42,6 +44,8 @@
   .history,
   .properties{
     margin-top: space(16);
+    max-height: 300px;
+    overflow-y: auto;
   }
   .historyItem {
     margin-top: space(16);
