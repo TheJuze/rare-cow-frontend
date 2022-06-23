@@ -32,7 +32,7 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
     const {
       isSelling, isAucSelling, isTimedAucSelling, standart, owners,
     } = detailedNFT;
-    if(standart === 'ERC721') {
+    if (standart === 'ERC721') {
       return isAucSelling || isTimedAucSelling || isSelling;
     }
 
@@ -52,7 +52,10 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
     return {} as Ownership;
   }, [detailedNFT.owners, isOwner, userId]);
 
-  const sellers = useMemo(() => detailedNFT?.sellers || [], [detailedNFT?.sellers]);
+  const sellers = useMemo(
+    () => detailedNFT?.sellers?.filter((seller) => +seller.url !== +userId) || [],
+    [detailedNFT?.sellers, userId],
+  );
 
   const currentPrice = useMemo(() => {
     const { highestBid, price, usdPrice } = detailedNFT;
