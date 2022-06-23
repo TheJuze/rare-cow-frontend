@@ -75,7 +75,7 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
   }, [createType, dispatch, walletService]);
 
   const handleSubmit = useCallback(
-    async (values: ICreateForm) => new Promise((resolve) => {
+    async (values: ICreateForm) => new Promise((resolve, reject) => {
       const newTokenForm = new FormData();
       newTokenForm.append('name', values.name);
       newTokenForm.append('tags', String(values.category.id));
@@ -121,6 +121,7 @@ const CreatePage: VFC<ICreatePage> = ({ createType }) => {
           fee: +feeAmount,
           listingInfo: values.listing,
           onEnd: () => resolve(null),
+          onError: () => reject(),
           onSuccess:
           () => navigate(createDynamicLink(routes.nest.profile.nest.owned.path, { userId: id })),
         }),

@@ -123,6 +123,7 @@ const NftPage: FC = () => {
         ) : (
           <>
             <NftInfo
+              isOnAnySale={nft?.isAucSelling || nft?.isTimedAucSelling || nft?.isSelling}
               name={nft.name}
               id={nft.id}
               description={nft.description}
@@ -180,6 +181,7 @@ const NftPage: FC = () => {
           </div>
           <div className={styles.nftBlock}>
             <NftInfo
+              isOnAnySale={nft?.isAucSelling || nft?.isTimedAucSelling || nft?.isSelling}
               name={nft.name}
               id={nft.id}
               description={nft.description}
