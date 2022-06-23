@@ -26,7 +26,7 @@ import { Collections, Properties, UploadMedia } from './components';
 import { validationSchema } from './form.helpers';
 
 interface ICreateNFTForm {
-  handleSubmit: (values: ICreateForm) => void;
+  handleSubmit: (values: ICreateForm) => Promise<unknown>;
   formValues: ICreateForm;
   type: TStandards;
   collections: Collection[],
@@ -58,7 +58,7 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({
 
   const onSubmitClick = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (vals: any) => {
+    (vals: any, actions: any) => {
       dispatch(
         setModalProps({
           onSendAgain: () => handleSubmit(vals),
@@ -67,7 +67,7 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({
           subtitleText: 'Please press "Send" button in Metamask extension',
         }),
       );
-      handleSubmit(vals);
+      handleSubmit(vals).then(() => actions.setSubmitting(false)).catch(() => actions.setSubmitting(false));
     },
     [dispatch, handleSubmit],
   );
@@ -75,7 +75,7 @@ export const CreateNFTForm: VFC<ICreateNFTForm> = ({
   return (
     <Formik
       initialValues={{ ...formValues }}
-      onSubmit={(values) => onSubmitClick(values)}
+      onSubmit={(values, actions) => onSubmitClick(values, actions)}
       validationSchema={validationSchema}
       enableReinitialize
       validateOnBlur
