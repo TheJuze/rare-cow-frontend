@@ -116,7 +116,12 @@ const PromoteModal: VFC<IPromoteModal> = ({ tokenId, premium, featured }) => {
       <div className={styles.selectPromotion}>
         <Selector
           value={isLeftOption}
-          setValue={setIsLeftOption}
+          setValue={
+            (premium && premium.status !== PromotionStatus.Finished) ||
+            (featured && featured.status !== PromotionStatus.Finished)
+              ? () => {}
+              : setIsLeftOption
+          }
           optionLeft={
             premium && premium.status !== PromotionStatus.Finished ? '' : 'Premium Listing'
           }

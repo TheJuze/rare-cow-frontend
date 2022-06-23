@@ -1,23 +1,31 @@
 @import '/src/styles/helpers';
 @import '/src/assets/styles/variables';
 
-.wrapper{
-    margin: space(16, 0);
-    border-radius: space(8);
-    padding: 10px 14px;
-    @include flex(row, center, flex-start);
-    display: inline-flex;
-    &.promote{
-        background: var(--promotion-status-bar-promote-background);
-        border: var(--promotion-status-bar-promote-border);
-        color: var(--promotion-status-bar-promote-color)
+.wrapper {
+  margin: space(16, 0);
+  border-radius: space(8);
+  padding: 10px 14px;
+  @include flex(row, center, flex-start);
+  display: inline-flex;
+  &.promote {
+    background: var(--promotion-status-bar-promote-background);
+    border: var(--promotion-status-bar-promote-border);
+    color: var(--promotion-status-bar-promote-color);
+  }
+  &.queued {
+    background: var(--promotion-status-bar-queued-background);
+    border: var(--promotion-status-bar-queued-border);
+    color: var(--promotion-status-bar-queued-color);
+  }
+  .icon {
+    margin-right: 10px;
+  }
+  & + & {
+    margin-left: 20px;
+    margin-top: 0;
+    @include large-tablet {
+      margin-left: 0;
+      margin-top: 20px;
     }
-    &.queued{
-        background: var(--promotion-status-bar-queued-background);
-        border: var(--promotion-status-bar-queued-border);
-        color: var(--promotion-status-bar-queued-color)
-    }
-    .icon{
-        margin-right: 10px;
-    }
+  }
 }

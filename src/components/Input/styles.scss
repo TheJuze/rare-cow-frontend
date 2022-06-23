@@ -243,6 +243,7 @@
         @include transition;
         &::placeholder {
           color: inherit;
+          opacity: 0.5;
         }
       }
       .input-startAdornment,

@@ -110,8 +110,10 @@ const NftInfo: FC<Props> = ({
             <LikeButton nftId={String(id)} likesCount={likeCount} isLiked={isLiked} />
           </div>
           {isOwner &&
-            (featuredPromotionInfo?.status === PromotionStatus.Finished ||
-            premiumPromotionInfo?.status === PromotionStatus.Finished) && (
+            (!featuredPromotionInfo ||
+              featuredPromotionInfo?.status === PromotionStatus.Finished ||
+              !premiumPromotionInfo ||
+              premiumPromotionInfo?.status === PromotionStatus.Finished) && (
               <div className={styles.actionItem}>
                 <Button
                   className={styles.promote}
@@ -124,12 +126,14 @@ const NftInfo: FC<Props> = ({
           )}
         </div>
       </div>
-      {isOwner && premiumPromotionInfo && (
-        <PromotionStatusBar promotionInfo={premiumPromotionInfo} />
-      )}
-      {isOwner && featuredPromotionInfo && (
-        <PromotionStatusBar promotionInfo={featuredPromotionInfo} />
-      )}
+      <div className={styles.promotions}>
+        {isOwner && premiumPromotionInfo && (
+          <PromotionStatusBar promotionInfo={premiumPromotionInfo} />
+        )}
+        {isOwner && featuredPromotionInfo && (
+          <PromotionStatusBar promotionInfo={featuredPromotionInfo} />
+        )}
+      </div>
       {description.length > 0 && (
         <div className={styles.nftInfoDescription}>
           <Text variant="body-2" color="metal800">

@@ -78,16 +78,10 @@ export default (nft: TNullable<TokenFull>, userId: string | number) => {
 
   const isUserCanBurn = React.useMemo(() => {
     if (userId && nft && isOwner) {
-      if (
-        nft.standart === 'ERC721' &&
-        (nft.isAucSelling || nft.isTimedAucSelling) &&
-        !nft.bids?.length
-      ) {
-        return true;
+      if (nft.standart === 'ERC721' && (nft.isAucSelling || nft.isTimedAucSelling) && nft.bids?.length) {
+        return false;
       }
-      if (nft.standart === 'ERC1155') {
-        return true;
-      }
+      return true;
     }
     return false;
   }, [userId, nft, isOwner]);
