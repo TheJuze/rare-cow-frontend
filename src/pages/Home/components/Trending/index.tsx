@@ -22,6 +22,7 @@ import { useShallowSelector, useWindowState } from 'hooks';
 import { CategoryName, RequestStatus } from 'types';
 import actionTypes from 'store/nfts/actionTypes';
 import uiSelector from 'store/ui/selectors';
+import { PromotionStatus } from 'types/api';
 import { TitleDropdown } from './components';
 
 import 'swiper/swiper.less';
@@ -154,7 +155,8 @@ const Trending: FC<Props> = ({ className }) => {
                 isLiked,
                 available,
                 endAuction,
-                promotionInfo,
+                featuredPromotionInfo,
+                premiumPromotionInfo,
                 isTimedAucSelling,
               } = nft;
               return (
@@ -179,7 +181,12 @@ const Trending: FC<Props> = ({ className }) => {
                       standart={standart}
                       endAuction={endAuction}
                       className={styles.card}
-                      isPromo={Boolean(promotionInfo)}
+                      isPromo={
+                        (Boolean(premiumPromotionInfo) &&
+                          premiumPromotionInfo.status === PromotionStatus.InProgress) ||
+                        (Boolean(featuredPromotionInfo) &&
+                          featuredPromotionInfo.status === PromotionStatus.InProgress)
+                      }
                     />
                   </Link>
                 </SwiperSlide>
@@ -207,7 +214,8 @@ const Trending: FC<Props> = ({ className }) => {
               isLiked,
               available,
               endAuction,
-              promotionInfo,
+              featuredPromotionInfo,
+              premiumPromotionInfo,
               isTimedAucSelling,
             } = nft;
             return (
@@ -231,7 +239,12 @@ const Trending: FC<Props> = ({ className }) => {
                   isLiked={isLiked}
                   standart={standart}
                   endAuction={endAuction}
-                  isPromo={Boolean(promotionInfo)}
+                  isPromo={
+                    (Boolean(premiumPromotionInfo) &&
+                      premiumPromotionInfo.status === PromotionStatus.InProgress) ||
+                    (Boolean(featuredPromotionInfo) &&
+                      featuredPromotionInfo.status === PromotionStatus.InProgress)
+                  }
                   className={styles.card}
                 />
               </Link>
