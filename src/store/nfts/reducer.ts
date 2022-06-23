@@ -21,6 +21,7 @@ const initialState: NftsState = {
   },
   fees: {
     amount: '0',
+    exchangeAmount: '0',
     receiver: '',
   },
 };

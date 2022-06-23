@@ -5,6 +5,7 @@ import { TResponseCategories } from 'types/requests';
 
 export type TFees = {
   amount: string;
+  exchangeAmount: string;
   receiver: string;
 };
 

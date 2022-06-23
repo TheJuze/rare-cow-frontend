@@ -13,6 +13,12 @@ import { CheckboxButton } from 'components/CheckboxButton';
 import { Button, Input, Text } from 'components';
 import { validateOnlyNumbers } from 'utils';
 import { QuantityInput } from 'components/QuantityInput';
+import { useShallowSelector } from 'hooks';
+import nftSelector from 'store/nfts/selectors';
+import BigNumber from 'bignumber.js';
+import { useDispatch } from 'react-redux';
+import { getFeeInfo } from 'store/nfts/actions';
+import { useWalletConnectorContext } from 'services';
 import styles from './styles.module.scss';
 
 export const initialListingOptions = ['Price', 'Auction', 'Auction time'] as const;
@@ -55,13 +61,28 @@ export const Listing: VFC<ListingProps> = ({
   maxAmount = 'infinity',
   isMultiple = false,
 }) => {
+  const { exchangeAmount } = useShallowSelector(nftSelector.getProp('fees'));
+  const { walletService } = useWalletConnectorContext();
+  const dispatch = useDispatch();
+
   const listingOptions = useMemo(
     () =>
       initialListingOptions
         .filter((opt) => (isMultiple ? !excludeFromMultiple.includes(opt) : true))
-        .map<TOption>((opt) => ({ value: opt, content: <Text variant="body-2" weight="normal">{opt}</Text> })),
+        .map<TOption>((opt) => ({
+        value: opt,
+        content: (
+          <Text variant="body-2" weight="normal">
+            {opt}
+          </Text>
+        ),
+      })),
     [isMultiple],
   );
+
+  useEffect(() => {
+    dispatch(getFeeInfo({ web3Provider: walletService.Web3() }));
+  }, [dispatch, walletService]);
 
   const [listType, setListType] = useState(listingOptions[0]);
   const sortedCurrencies = useMemo(
@@ -91,7 +112,11 @@ export const Listing: VFC<ListingProps> = ({
     () =>
       initialTimestampOptions.map((timestamp) => ({
         value: timestamp,
-        content: <Text variant="medium-body" weight="normal">{secondToHours(timestamp)} h</Text>,
+        content: (
+          <Text variant="medium-body" weight="normal">
+            {secondToHours(timestamp)} h
+          </Text>
+        ),
       })),
     [],
   );
@@ -191,7 +216,9 @@ export const Listing: VFC<ListingProps> = ({
                     src={currenciesIconsMap[currency.name]}
                     alt={currency.name}
                   />
-                  <Text variant="body-2" weight="normal">{currency.name}</Text>
+                  <Text variant="body-2" weight="normal">
+                    {currency.name}
+                  </Text>
                 </div>
               }
               isChecked={currency.name === selectedCurrency.name}
@@ -239,6 +266,13 @@ export const Listing: VFC<ListingProps> = ({
           >
             {buttonText}
           </Button>
+        )}
+        {new BigNumber(exchangeAmount).gte(0) && (
+          <div className={styles.sellingFee}>
+            <Text variant="body-2" color="accent">
+              Selling fee is {exchangeAmount} %
+            </Text>
+          </div>
         )}
       </div>
     </div>

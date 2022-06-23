@@ -69,8 +69,6 @@ const NftOwners: FC<Props> = ({
     return { sellingOwners: selling, notSellingOwners: notSelling };
   }, [owners, userId]);
 
-  console.log(sellingOwners, notSellingOwners);
-
   return (
     <div className={styles.nftOwners}>
       <TabBar
