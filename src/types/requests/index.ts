@@ -215,6 +215,7 @@ export type TransferTokenReq = {
 
 export type BurnTokenReq = {
   id: number | string;
+  userId?: number | string;
   amount?: string | number;
   web3Provider: Web3;
 };

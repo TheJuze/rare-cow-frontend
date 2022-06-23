@@ -15,7 +15,9 @@ import { getDetailedNftSaga } from './getDetailedNft';
 
 export function* burnSaga({
   type,
-  payload: { id, amount, web3Provider },
+  payload: {
+    id, amount, userId, web3Provider,
+  },
 }: ReturnType<typeof burn>) {
   yield put(apiActions.request(type));
 
@@ -53,6 +55,7 @@ export function* burnSaga({
       yield call(baseApi.trackTransaction, {
         tx_hash: String(transactionHash),
         token: id,
+        ownership: userId,
         amount,
       });
 
