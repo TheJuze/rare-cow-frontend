@@ -165,7 +165,7 @@ export const contractsConfig: IContracts = {
       testnet: {
         address: {
           [Chains.bsc]: '0xbA9669b82011ed728A87278CD6B9Daf6A8Bf11F9',
-          [Chains.polygon]: '0x15D71fC965a7dA2cF3eE953dd1944Cf2A2a8fcd2',
+          [Chains.polygon]: '0x795439b5C4029DD867f0bAc0eA0FcCF9A317bE29',
         },
         abi: erc721Abi,
       },
