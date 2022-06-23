@@ -28,6 +28,7 @@ type Props = {
   canBurn: boolean;
   premiumPromotionInfo: Promotion;
   featuredPromotionInfo: Promotion;
+  isOnAnySale: boolean,
 };
 const NftInfo: FC<Props> = ({
   name,
@@ -41,6 +42,7 @@ const NftInfo: FC<Props> = ({
   canBurn,
   premiumPromotionInfo,
   featuredPromotionInfo,
+  isOnAnySale,
 }) => {
   const [isDescriptionOpened, setIsDescriptionOpened] = useState(false);
   const { modalType, closeModals, changeModalType } = useModals();
@@ -109,7 +111,7 @@ const NftInfo: FC<Props> = ({
           <div className={styles.actionItem}>
             <LikeButton nftId={String(id)} likesCount={likeCount} isLiked={isLiked} />
           </div>
-          {isOwner &&
+          {isOwner && isOnAnySale &&
             (!featuredPromotionInfo ||
               featuredPromotionInfo?.status === PromotionStatus.Finished ||
               !premiumPromotionInfo ||
