@@ -76,7 +76,7 @@ const Body: VFC<IBodyProps> = ({
         <Button
           size="sm"
           variant="filled"
-          startAdornment={<FiltersIcon />}
+          startAdornment={<FiltersIcon className={styles.filtersIcon} />}
           className={styles.filters}
           onClick={() => setIsShowFilters(true)}
         >

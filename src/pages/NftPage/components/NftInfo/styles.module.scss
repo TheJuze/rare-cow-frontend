@@ -47,7 +47,7 @@
       }
       .actionButtons{
         flex: 0 0 40%;
-        @include flex(row-reverse, center, flex-start);
+        @include flex(row-reverse, center, flex-start, wrap);
         .actionItem{
           margin-bottom: space(4);
         }
