@@ -93,7 +93,11 @@ const NftPage: FC = () => {
         Auction: nft.isAucSelling || nft.isTimedAucSelling,
         InStock: nft.standart === 'ERC1155' ? nft.available : 0,
         Owned: isOwner ? nft.owners.find((owner) => +owner.url === +userId).quantity : false,
-        Promote: nft.promotionInfo && nft.promotionInfo.status === PromotionStatus.InProgress,
+        Promote:
+              (nft.premiumPromotionInfo &&
+                nft.premiumPromotionInfo.status === PromotionStatus.InProgress) ||
+              (nft.featuredPromotionInfo &&
+                nft.featuredPromotionInfo.status === PromotionStatus.InProgress),
       }
       : {}),
     [isOwner, nft, userId],
@@ -119,7 +123,8 @@ const NftPage: FC = () => {
               isMultiple={nft.standart === 'ERC1155'}
               maxBurnAmount={+currentOwnerData?.quantity || 0}
               canBurn={isUserCanBurn}
-              promotionInfo={nft.promotionInfo}
+              premiumPromotionInfo={nft.premiumPromotionInfo}
+              featuredPromotionInfo={nft.featuredPromotionInfo}
             />
             <div className={styles.nftImage}>
               <TagsWrapper propsMap={tagsProps}>{previewComponent}</TagsWrapper>
@@ -144,7 +149,11 @@ const NftPage: FC = () => {
               isAuction={nft.isAucSelling || nft.isTimedAucSelling}
               isMultiple={nft.standart === 'ERC1155'}
             />
-            <PromoteModal tokenId={nft.id} />
+            <PromoteModal
+              tokenId={nft.id}
+              premium={nft.premiumPromotionInfo}
+              featured={nft.featuredPromotionInfo}
+            />
           </>
         )}
       </div>
@@ -171,7 +180,8 @@ const NftPage: FC = () => {
               isMultiple={nft.standart === 'ERC1155'}
               maxBurnAmount={+currentOwnerData?.quantity || 0}
               canBurn={isUserCanBurn}
-              promotionInfo={nft.promotionInfo}
+              premiumPromotionInfo={nft.premiumPromotionInfo}
+              featuredPromotionInfo={nft.featuredPromotionInfo}
             />
             <NftPayment detailedNFT={nft} />
             <NftCreators
@@ -193,7 +203,11 @@ const NftPage: FC = () => {
               isAuction={nft.isAucSelling || nft.isTimedAucSelling}
               isMultiple={nft.standart === 'ERC1155'}
             />
-            <PromoteModal tokenId={nft.id} />
+            <PromoteModal
+              tokenId={nft.id}
+              premium={nft.premiumPromotionInfo}
+              featured={nft.featuredPromotionInfo}
+            />
           </div>
         </>
       )}
