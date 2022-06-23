@@ -53,7 +53,10 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
     return {} as Ownership;
   }, [detailedNFT.owners, isOwner, userId]);
 
-  const sellers = useMemo(() => detailedNFT?.sellers || [], [detailedNFT?.sellers]);
+  const sellers = useMemo(
+    () => detailedNFT?.sellers?.filter((seller) => +seller.url !== +userId) || [],
+    [detailedNFT?.sellers, userId],
+  );
 
   const currentPrice = useMemo(() => {
     const { highestBid, price, usdPrice } = detailedNFT;
