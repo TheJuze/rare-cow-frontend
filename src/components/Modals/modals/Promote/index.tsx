@@ -20,18 +20,22 @@ import userSelector from 'store/user/selectors';
 import {
   Chains, ExtendedPromotionOption, Modals, RequestStatus,
 } from 'types';
-import { PromotionType } from 'types/api';
+import { Promotion, PromotionStatus, PromotionType } from 'types/api';
 import { PromoteCard } from './components/PromoteCard';
 
 import styles from './styles.module.scss';
 
 interface IPromoteModal {
   tokenId: number;
+  premium: Promotion;
+  featured: Promotion;
 }
 
-const PromoteModal: VFC<IPromoteModal> = ({ tokenId }) => {
+const PromoteModal: VFC<IPromoteModal> = ({ tokenId, premium, featured }) => {
   const { closeModals, modalType } = useModals();
-  const [isLeftOption, setIsLeftOption] = useState(false);
+  const [isLeftOption, setIsLeftOption] = useState(
+    featured && featured.status !== PromotionStatus.Finished,
+  );
   const [isFetching, setIsFetching] = useState(true);
   const dispatch = useDispatch();
 
@@ -49,9 +53,11 @@ const PromoteModal: VFC<IPromoteModal> = ({ tokenId }) => {
 
   useEffect(() => {
     dispatch(getPromotions());
-    dispatch(getRates({
-      network: network || Chains.polygon,
-    }));
+    dispatch(
+      getRates({
+        network: network || Chains.polygon,
+      }),
+    );
   }, [dispatch, network]);
 
   useEffect(() => {
@@ -111,8 +117,12 @@ const PromoteModal: VFC<IPromoteModal> = ({ tokenId }) => {
         <Selector
           value={isLeftOption}
           setValue={setIsLeftOption}
-          optionLeft="Premium Listing"
-          optionRight="Featured listing"
+          optionLeft={
+            premium && premium.status !== PromotionStatus.Finished ? '' : 'Premium Listing'
+          }
+          optionRight={
+            featured && featured.status !== PromotionStatus.Finished ? '' : 'Featured listing'
+          }
           className={styles.selectPromotionSelector}
         />
         <Text className={styles.selectPromotionDescription}>
