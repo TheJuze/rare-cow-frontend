@@ -50,6 +50,12 @@ export function* burnSaga({
         }),
       );
 
+      yield call(baseApi.trackTransaction, {
+        tx_hash: String(transactionHash),
+        token: id,
+        amount,
+      });
+
       yield put(apiActions.success(type));
     } else {
       yield put(apiActions.error(type));
