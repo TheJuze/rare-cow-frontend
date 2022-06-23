@@ -36,6 +36,7 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({
   isUserCanEndAuction,
   isUserCanRemoveFromSale,
   isUserCanChangePrice,
+  isUserCanPutOnSale,
 }) => {
   const { currency, totalSupply: itemsAmount } = detailedNFT;
   const [price, setPrice] = useState('');
@@ -128,46 +129,47 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({
 
   return (
     <div className={styles.wrapper}>
-      {isUserCanChangePrice && (
-      <div className={styles.priceSection}>
-        <div className={styles.priceField}>
-          <Input
-            label="Price"
-            caption={{
-              status: EInputStatus.COMMON,
-              caption: (
-                <Text color="light3" size="xs">
-                  ${' '}
-                  {new BigNumber(itemsAmount * (parseFloat(price) || 0) * currentPaymentPrice)
-                    .decimalPlaces(5)
-                    .toString()}
-                </Text>
-              ),
-            }}
-            name="price"
-            value={price}
-            endAdornment={<img src={currenciesIconsMap[currency?.symbol]} alt={currency?.name} />}
-            onChange={onPriceChangeHandler}
-            placeholder={detailedNFT.price}
-          />
+      {(isUserCanChangePrice || isUserCanPutOnSale) && (
+        <div className={styles.priceSection}>
+          <div className={styles.priceField}>
+            <Input
+              label="Price"
+              caption={{
+                status: EInputStatus.COMMON,
+                caption: (
+                  <Text color="light3" size="xs">
+                    ${' '}
+                    {price ? new BigNumber(price).times(itemsAmount * currentPaymentPrice)
+                      .decimalPlaces(5)
+                      .toString() : '0'}
+                  </Text>
+                ),
+              }}
+              name="price"
+              value={price}
+              endAdornment={<img src={currenciesIconsMap[currency?.symbol]} alt={currency?.name} />}
+              onChange={onPriceChangeHandler}
+              placeholder={detailedNFT.price}
+            />
+          </div>
+          <div className={cn(styles.priceField, styles.priceUpdater)}>
+            <Button
+              disabled={
+                !Number.isFinite(parseFloat(price)) ||
+                +price === +detailedNFT.price ||
+                detailedNFT.bids?.length !== 0
+              }
+              variant="outlined"
+              onClick={updateClickHandler}
+            >
+              Update
+            </Button>
+          </div>
         </div>
-        <div className={cn(styles.priceField, styles.priceUpdater)}>
-          <Button
-            disabled={!Number.isFinite(parseFloat(price)) ||
-              +price === +detailedNFT.price || detailedNFT.bids?.length !== 0}
-            variant="outlined"
-            onClick={updateClickHandler}
-          >
-            Update
-          </Button>
-        </div>
-      </div>
       )}
       {isUserCanRemoveFromSale && (
         <Button
-          disabled={
-            isAuction ? !isUserCanEndAuction : !isUserCanRemoveFromSale
-          }
+          disabled={isAuction ? !isUserCanEndAuction : !isUserCanRemoveFromSale}
           onClick={removeClickHandler}
           className={styles.remove}
         >
