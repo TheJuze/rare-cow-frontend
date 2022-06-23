@@ -18,6 +18,7 @@ import { PromotionStatus } from 'types/api';
 import uiSelector from 'store/ui/selectors';
 import { RequestStatus } from 'types';
 import actionTypes from 'store/nfts/actionTypes';
+import apiActions from 'store/api/actions';
 import { NftCreators, NftInfo, NftOwners, NftPayment } from './components';
 import styles from './styles.module.scss';
 
@@ -75,8 +76,9 @@ const NftPage: FC = () => {
   useEffect(() => {
     if (burnRequestStatus === RequestStatus.SUCCESS) {
       navigate('/');
+      dispatch(apiActions.reset(actionTypes.BURN));
     }
-  }, [burnRequestStatus, navigate]);
+  }, [burnRequestStatus, dispatch, navigate]);
 
   useEffect(() => {
     if (nftInfoLoading === RequestStatus.ERROR) {
