@@ -110,8 +110,8 @@ const NftInfo: FC<Props> = ({
             <LikeButton nftId={String(id)} likesCount={likeCount} isLiked={isLiked} />
           </div>
           {isOwner &&
-            (featuredPromotionInfo.status === PromotionStatus.Finished ||
-            premiumPromotionInfo.status === PromotionStatus.Finished) && (
+            (featuredPromotionInfo?.status === PromotionStatus.Finished ||
+            premiumPromotionInfo?.status === PromotionStatus.Finished) && (
               <div className={styles.actionItem}>
                 <Button
                   className={styles.promote}

@@ -12,11 +12,14 @@ import { validateOnlyNumbers } from 'utils';
 
 import cn from 'clsx';
 import { useDispatch } from 'react-redux';
-import { endAuction, removeFromSale, setOnSale } from 'store/nfts/actions';
+import {
+  endAuction, getFeeInfo, removeFromSale, setOnSale,
+} from 'store/nfts/actions';
 import { useWalletConnectorContext } from 'services';
 import BigNumber from 'bignumber.js';
 import userSelector from 'store/user/selectors';
 import { getRates } from 'store/rates/actions';
+import nftSelector from 'store/nfts/selectors';
 import styles from './styles.module.scss';
 
 interface IOwnerAfterListing {
@@ -43,6 +46,7 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({
   const dispatch = useDispatch();
   const userNetwork = useShallowSelector(userSelector.getProp('chain'));
   const rates = useShallowSelector(ratesSelector.getProp('rates'));
+  const { exchangeAmount } = useShallowSelector(nftSelector.getProp('fees'));
   const { walletService } = useWalletConnectorContext();
 
   const isSingle = useMemo(() => detailedNFT.standart === 'ERC721', [detailedNFT.standart]);
@@ -54,6 +58,10 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({
   useEffect(() => {
     handleGetRates();
   }, [handleGetRates]);
+
+  useEffect(() => {
+    dispatch(getFeeInfo({ web3Provider: walletService.Web3() }));
+  }, [dispatch, walletService]);
 
   const onPriceChangeHandler = useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -175,6 +183,13 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({
         >
           {isAuction ? 'Accept bid' : 'Remove from sale'}
         </Button>
+      )}
+      {new BigNumber(exchangeAmount).gte(0) && (
+      <div>
+        <Text variant="body-2" color="accent">
+          Selling fee is {exchangeAmount} %
+        </Text>
+      </div>
       )}
     </div>
   );
