@@ -68,8 +68,8 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({
     if (requiredToken) {
       return parseFloat(requiredToken.rate);
     }
-    return parseFloat(currency.rate);
-  }, [currency?.rate, currency.symbol, rates]);
+    return parseFloat(currency?.rate);
+  }, [currency?.rate, currency?.symbol, rates]);
 
   const currentOwnerAmountTokens = useMemo(() => {
     const { owners } = detailedNFT;
@@ -144,7 +144,7 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({
             }}
             name="price"
             value={price}
-            endAdornment={<img src={currenciesIconsMap[currency.symbol]} alt={currency.name} />}
+            endAdornment={<img src={currenciesIconsMap[currency?.symbol]} alt={currency?.name} />}
             onChange={onPriceChangeHandler}
             placeholder={detailedNFT.price}
           />
