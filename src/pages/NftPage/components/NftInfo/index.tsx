@@ -58,18 +58,19 @@ const NftInfo: FC<Props> = ({
   }, [isDescriptionOpened]);
 
   const onBurnHandler = useCallback(
-    (amount: number | string) => {
+    (amount: number | string, userId: number | string) => {
       dispatch(
         burn({
           id,
           amount,
+          userId,
           web3Provider: walletService.Web3(),
         }),
       );
       dispatch(
         setModalProps({
-          onSendAgain: () => onBurnHandler(amount),
-          onTryAgain: () => onBurnHandler(amount),
+          onSendAgain: () => onBurnHandler(amount, userId),
+          onTryAgain: () => onBurnHandler(amount, userId),
         }),
       );
     },

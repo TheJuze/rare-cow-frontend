@@ -5,19 +5,22 @@ import {
 } from 'components';
 
 import { BurnActionIcon } from 'assets/icons/icons';
+import { useShallowSelector } from 'hooks';
+import userSelector from 'store/user/selectors';
 import styles from './styles.module.scss';
 
 type IBurnModal = {
   visible: boolean;
   onClose: () => void;
   isMultiple?: boolean;
-  onBurn: (amount: number | string) => void;
+  onBurn: (amount: number | string, userId: number | string) => void;
   maxBurnAmount?: number;
 };
 
 const BurnModal: VFC<IBurnModal> = ({
   visible, onClose, isMultiple, onBurn, maxBurnAmount,
 }) => {
+  const id = useShallowSelector(userSelector.getProp('id'));
   const [inputValue, setInputValue] = useState('1');
 
   const handleInputChange = useCallback((value: string) => {
@@ -47,7 +50,7 @@ const BurnModal: VFC<IBurnModal> = ({
         </>
       ) : null}
       <div className={styles.btnGroup}>
-        <Button onClick={() => onBurn(inputValue)} className={styles.btnGroupElement}>
+        <Button onClick={() => onBurn(inputValue, id)} className={styles.btnGroupElement}>
           Continue <BurnActionIcon className={styles.burnIcon} />
         </Button>
         <Button variant="outlined" onClick={onClose} className={styles.btnGroupElement}>
