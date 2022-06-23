@@ -245,7 +245,7 @@ const Trending: FC<Props> = ({ className }) => {
       result = (
         <div className={styles.noItems}>
           <Text size="l" align="center">
-            There is no featured tokens in this category
+            There is no featured tokens
           </Text>
         </div>
       );
