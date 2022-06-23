@@ -8,7 +8,7 @@
     margin-bottom: space(21);
   }
   .time{
-    background-color: $metal-200;
+    background-color: var(--countdown-default-background-color);
     border-radius: 8px;
     padding: space(10, 17);
     @include flex(row, center, flex-start);

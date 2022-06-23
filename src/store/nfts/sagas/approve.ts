@@ -35,17 +35,17 @@ export function* approveSaga({
   });
 
   if (!currency.isNative) {
-    yield put(
-      setActiveModal({
-        activeModal: Modals.ApprovePending,
-        open: true,
-        txHash: '',
-      }),
-    );
     try {
       const allowance = yield call(tokenContract.methods.allowance(myAddress, spenderAddress).call);
       if (+allowance < +amount) {
         // allowance
+        yield put(
+          setActiveModal({
+            activeModal: Modals.ApprovePending,
+            open: true,
+            txHash: '',
+          }),
+        );
         try {
           yield call(
             tokenContract.methods.approve(spenderAddress, new BigNumber(amount).toString()).send,

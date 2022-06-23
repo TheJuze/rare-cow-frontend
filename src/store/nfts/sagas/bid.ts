@@ -5,7 +5,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
 
-import { ContractsNames } from 'config';
+import { ContractsNames, generateContract } from 'config';
 import { getTokenAmount } from 'utils';
 
 import { setActiveModal } from 'store/modals/reducer';
@@ -24,11 +24,17 @@ export function* bidNftSaga({
   yield put(apiActions.request(type));
 
   try {
+    const tokenContract = yield generateContract({
+      web3Provider,
+      // TODO: change if there will be more currencies
+      contractName: ContractsNames.USDT,
+    });
+    const decimals = yield call(tokenContract.methods.decimals().call);
     yield call(approveSaga, {
       type: actionTypes.APPROVE,
       payload: {
         web3Provider,
-        amount: getTokenAmount(amount),
+        amount: getTokenAmount(amount, decimals),
         spender: ContractsNames.marketplace,
         approveAddress: currency.isNative ? '' : ContractsNames[currency.name],
         currency,

@@ -1,0 +1,11 @@
+@import 'src/styles/variables';
+
+$countdownColorsDefault:(
+  'countdown-default-background-color': $metal-200,
+
+);
+
+$countdownColorsDark:(
+  'countdown-default-background-color': $dark-5,
+
+)
