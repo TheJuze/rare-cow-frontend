@@ -18,7 +18,7 @@
   .owners {
     .owner {
       margin-top: space(16);
-      @include flex(row, center, space-between);
+      @include flex(row, center, space-between, wrap);
       .left {
         @include flex(row, center, flex-start);
         max-width: 74%;
