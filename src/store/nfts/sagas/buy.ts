@@ -11,7 +11,7 @@ import userSelector from 'store/user/selectors';
 
 import BigNumber from 'bignumber.js';
 
-import { ContractsNames } from 'config';
+import { ContractsNames, generateContract } from 'config';
 import { getTokenAmount } from 'utils';
 
 import { Modals } from 'types';
@@ -34,12 +34,18 @@ export function* buySaga({
   const address = yield select(userSelector.getProp('address'));
   try {
     if (!currency.isNative) {
+      const tokenContract = yield generateContract({
+        web3Provider,
+        // TODO: change if there will be more currencies
+        contractName: ContractsNames.USDT,
+      });
+      const decimals = yield call(tokenContract.methods.decimals().call);
       yield call(approveSaga, {
         type: actionTypes.APPROVE,
         payload: {
           web3Provider,
           amount: getTokenAmount(
-            new BigNumber(amount).times(new BigNumber(tokenAmount || 1)).toFixed(),
+            new BigNumber(amount).times(new BigNumber(+tokenAmount || 1)).toString(), decimals,
           ),
           spender: ContractsNames.marketplace,
           approveAddress: ContractsNames[currency.name],

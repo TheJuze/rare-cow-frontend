@@ -35,6 +35,7 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({
   isAuction,
   isUserCanEndAuction,
   isUserCanRemoveFromSale,
+  isUserCanChangePrice,
 }) => {
   const { currency, totalSupply: itemsAmount } = detailedNFT;
   const [price, setPrice] = useState('');
@@ -127,6 +128,7 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({
 
   return (
     <div className={styles.wrapper}>
+      {isUserCanChangePrice && (
       <div className={styles.priceSection}>
         <div className={styles.priceField}>
           <Input
@@ -160,6 +162,7 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({
           </Button>
         </div>
       </div>
+      )}
       {isUserCanRemoveFromSale && (
         <Button
           disabled={
