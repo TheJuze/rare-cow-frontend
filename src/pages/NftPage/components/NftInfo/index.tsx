@@ -126,12 +126,14 @@ const NftInfo: FC<Props> = ({
           )}
         </div>
       </div>
-      {isOwner && premiumPromotionInfo && (
-        <PromotionStatusBar promotionInfo={premiumPromotionInfo} />
-      )}
-      {isOwner && featuredPromotionInfo && (
-        <PromotionStatusBar promotionInfo={featuredPromotionInfo} />
-      )}
+      <div className={styles.promotions}>
+        {isOwner && premiumPromotionInfo && (
+          <PromotionStatusBar promotionInfo={premiumPromotionInfo} />
+        )}
+        {isOwner && featuredPromotionInfo && (
+          <PromotionStatusBar promotionInfo={featuredPromotionInfo} />
+        )}
+      </div>
       {description.length > 0 && (
         <div className={styles.nftInfoDescription}>
           <Text variant="body-2" color="metal800">
