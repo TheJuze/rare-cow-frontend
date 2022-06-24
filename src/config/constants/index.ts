@@ -1,1 +1,1 @@
-export const isMainnet = false;
+export const isMainnet = true;
