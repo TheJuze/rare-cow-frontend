@@ -90,7 +90,7 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({
     if (owners) {
       const currentOwner = owners.find((owner) => owner.url === userId);
       if (currentOwner) {
-        return currentOwner.quantity;
+        return currentOwner.sellingQuantity || currentOwner.quantity;
       }
     }
     return 0;

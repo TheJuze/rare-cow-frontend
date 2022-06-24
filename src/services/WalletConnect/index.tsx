@@ -92,11 +92,25 @@ const WalletConnectContext: FC = ({ children }) => {
             // metamask doesn't installed,
             // redirect to download MM or open MM on mobile
             if (error.code === 4) {
-              window.open(
-                `https://metamask.app.link/dapp/${
-                  window.location.hostname + window.location.pathname
-                }/?utm_source=mm`,
-              );
+              switch (error.type) {
+                case 'MetaMask':
+                  if (!window.ethereum) {
+                    window.open(
+                      `https://metamask.app.link/dapp/${
+                        window.location.hostname + window.location.pathname
+                      }/?utm_source=mm`,
+                    );
+                  }
+                  break;
+                case 'WalletConnect':
+                  if (error.message.subtitle === 'Chain error') {
+                    toast.error(error.message.text);
+                  }
+                  break;
+
+                default:
+                  break;
+              }
             }
           } else {
             const { network } = connectWalletConfig(Chains.polygon);
