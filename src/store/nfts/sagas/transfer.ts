@@ -41,7 +41,7 @@ export function* transferSaga({
       tx_hash: String(transactionHash),
       token: id,
       ownership: userId,
-      amount,
+      amount: +amount,
     });
 
     yield call(getDetailedNftSaga, {

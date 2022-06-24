@@ -78,7 +78,7 @@ export function* buySaga({
         tx_hash: String(transactionHash),
         token: id,
         ownership: sellerId,
-        amount,
+        amount: +tokenAmount,
       });
 
       yield call(getDetailedNftSaga, {

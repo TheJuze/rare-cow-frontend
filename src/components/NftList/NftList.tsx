@@ -2,7 +2,7 @@ import React, { useMemo, VFC } from 'react';
 
 import cn from 'clsx';
 
-import { PromotionStatus, TokenFull } from 'types/api';
+import { TokenFull } from 'types/api';
 import { Link } from 'react-router-dom';
 import { ArtCard } from 'components/ArtCard';
 import { Text } from 'components';
@@ -52,8 +52,7 @@ export const NftList: VFC<NftListProps> = ({
       isTimedAucSelling,
       available,
       endAuction,
-      featuredPromotionInfo,
-      premiumPromotionInfo,
+      onPromotion,
     } = nft;
     return (
       <Link key={id} to={createDynamicLink(routes.nest.nft.path, { id })} className={styles.card}>
@@ -73,12 +72,7 @@ export const NftList: VFC<NftListProps> = ({
           standart={standart}
           endAuction={endAuction}
           className={styles.card}
-          isPromo={
-            (Boolean(premiumPromotionInfo) &&
-              premiumPromotionInfo.status === PromotionStatus.InProgress) ||
-            (Boolean(featuredPromotionInfo) &&
-              featuredPromotionInfo.status === PromotionStatus.InProgress)
-          }
+          isPromo={onPromotion}
         />
       </Link>
     );

@@ -47,7 +47,11 @@ export const UserBid: VFC<IUserBid> = ({ detailedNFT }) => {
 
   const onBidInputChangeHandler = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const newBid = e.currentTarget.value;
+      let newBid = e.currentTarget.value;
+      const splittedBid = newBid.split('.');
+      if (splittedBid[1] && splittedBid[1].length > 6) {
+        newBid = [splittedBid[0], splittedBid[1].slice(0, 6)].join('.');
+      }
       const validationList = isValid(newBid, { userBalance: USDTUserBalance });
       setErrorsList(validationList);
       setBidValue(newBid);

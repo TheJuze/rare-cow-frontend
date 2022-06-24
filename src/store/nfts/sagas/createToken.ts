@@ -114,7 +114,7 @@ export function* createTokenSaga({
 
       yield put(apiActions.error(type));
     } else {
-      toast.error('Something went wrong');
+      toast.error('Something went wrong, maybe you should try another name');
       yield put(apiActions.error(type));
     }
   } catch (err) {
