@@ -6,7 +6,7 @@ import cn from 'classnames';
 
 import { SearchInput, Dropdown, Avatar, UserPopover, Button, Text } from 'components';
 import { useBreakpoints, useClickOutside, useShallowSelector } from 'hooks';
-import { CategoryName, TDropdownValue, Modals, RequestStatus } from 'types';
+import { TDropdownValue, Modals, RequestStatus } from 'types';
 import { sliceString } from 'utils';
 import { Link } from 'react-router-dom';
 import { Breadcrumbs } from 'components/Breadcrumbs';
@@ -49,115 +49,28 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect, isDark, setIsDar
   const [isUserShown, setIsUserShown] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const categories = useShallowSelector(nftSelector.getProp('categories'));
   const dropdownOptions: TDropdownValue[] = useMemo(
-    () => [
-      {
-        id: 'all_categories',
-        content: (
-          <Link
-            to={createDynamicLink(routes.nest.explore.path, {
-              categoryName: CategoryName.allCategories,
-            })}
-          >
-            <Text variant="body-2" color="metal800">
-              All categories
-            </Text>
-          </Link>
-        ),
-      },
-      {
-        id: 'anime',
-        content: (
-          <Link
-            to={createDynamicLink(routes.nest.explore.path, {
-              categoryName: CategoryName.anime,
-            })}
-          >
-            <Text variant="body-2" color="metal800">
-              Anime illustration
-            </Text>
-          </Link>
-        ),
-      },
-      {
-        id: 'photo',
-        content: (
-          <Link
-            to={createDynamicLink(routes.nest.explore.path, {
-              categoryName: CategoryName.photo,
-            })}
-          >
-            <Text variant="body-2" color="metal800">
-              Photo
-            </Text>
-          </Link>
-        ),
-      },
-      {
-        id: 'art',
-        content: (
-          <Link
-            to={createDynamicLink(routes.nest.explore.path, {
-              categoryName: CategoryName.art,
-            })}
-          >
-            <Text variant="body-2" color="metal800">
-              Art
-            </Text>
-          </Link>
-        ),
-      },
-      {
-        id: 'music',
-        content: (
-          <Link
-            to={createDynamicLink(routes.nest.explore.path, {
-              categoryName: CategoryName.music,
-            })}
-          >
-            <Text variant="body-2" color="metal800">
-              Music
-            </Text>
-          </Link>
-        ),
-      },
-      {
-        id: 'picture',
-        content: (
-          <Link
-            to={createDynamicLink(routes.nest.explore.path, {
-              categoryName: CategoryName.picture,
-            })}
-          >
-            <Text variant="body-2" color="metal800">
-              Picture
-            </Text>
-          </Link>
-        ),
-      },
-      {
-        id: 'movie',
-        content: (
-          <Link
-            to={createDynamicLink(routes.nest.explore.path, {
-              categoryName: CategoryName.movie,
-            })}
-          >
-            <Text variant="body-2" color="metal800">
-              Movie
-            </Text>
-          </Link>
-        ),
-      },
-    ],
-    [],
+    () => categories.map((category) => ({
+      id: category.name,
+      content: (
+        <Link
+          to={createDynamicLink(routes.nest.explore.path, {
+            categoryName: category.name,
+          })}
+        >
+          <Text variant="body-2" color="metal800">
+            {category.name}
+          </Text>
+        </Link>
+      ),
+    })),
+    [categories],
   );
 
   const user = useShallowSelector(userSelector.getUser);
   const presearchedNfts = useShallowSelector(nftSelector.getProp('presearchedNfts'));
-  const {
-    [actionTypes.PRESEARCH_NFTS]: searchNftRequest,
-  } = useShallowSelector(uiSelector.getUI);
+  const { [actionTypes.PRESEARCH_NFTS]: searchNftRequest } = useShallowSelector(uiSelector.getUI);
 
   const isSearchResultsLoading = useMemo(
     () => searchNftRequest === RequestStatus.REQUEST,
@@ -199,22 +112,28 @@ export const Header: VFC<HeaderProps> = ({ address, disconnect, isDark, setIsDar
     setSearchValue('');
   }, [dispatch]);
 
-  const fetchSearchedNfts = useCallback((presearch: string) => {
-    dispatch(presearchNfts({ presearch }));
-  }, [dispatch]);
+  const fetchSearchedNfts = useCallback(
+    (presearch: string) => {
+      dispatch(presearchNfts({ presearch }));
+    },
+    [dispatch],
+  );
 
   const debouncedFetchSearchedNfts = useRef(debounce(fetchSearchedNfts, DEBOUNCE_DELAY)).current;
 
-  const handleSearch = useCallback((event) => {
-    const newSearchValue = event.target.value;
-    if(!newSearchValue) {
-      handleSearchClear();
-      return;
-    }
+  const handleSearch = useCallback(
+    (event) => {
+      const newSearchValue = event.target.value;
+      if (!newSearchValue) {
+        handleSearchClear();
+        return;
+      }
 
-    setSearchValue(newSearchValue);
-    debouncedFetchSearchedNfts(newSearchValue);
-  }, [debouncedFetchSearchedNfts, handleSearchClear]);
+      setSearchValue(newSearchValue);
+      debouncedFetchSearchedNfts(newSearchValue);
+    },
+    [debouncedFetchSearchedNfts, handleSearchClear],
+  );
 
   useClickOutside(bodyRef, handleHideUser, headRef);
 

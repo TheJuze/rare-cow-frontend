@@ -3,13 +3,14 @@ import {
 } from 'redux-saga/effects';
 
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { isMainnet } from 'config/constants';
 import { disconnectWalletState } from '../user/reducer';
 
 import { validateStatus } from '../../utils/validateStatus';
 import userSelector from '../user/selectors';
 
 const client: AxiosInstance = axios.create({
-  baseURL: 'https://rarecow.rocknblock.io/api/v1/',
+  baseURL: isMainnet ? 'https://rarecow.com/api/v1/' : 'https://rarecow.rocknblock.io/api/v1/',
   validateStatus,
 });
 
