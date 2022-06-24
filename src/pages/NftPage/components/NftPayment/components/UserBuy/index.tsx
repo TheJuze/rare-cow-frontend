@@ -78,7 +78,7 @@ export const UserBuy: VFC<IUserBuy> = ({
     [handleBuyAction, isMultiple],
   );
 
-  const canBuy = new BigNumber(userBalance[currency.symbol]).gte(normalPrice);
+  const canBuy = new BigNumber(userBalance[currency?.symbol]).gte(normalPrice);
 
   return (
     <>

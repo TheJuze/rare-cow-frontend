@@ -141,7 +141,7 @@ export const contractsConfig: IContracts = {
       },
       mainnet: {
         address: {
-          [Chains.bsc]: '',
+          [Chains.polygon]: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
         },
         abi: erc20Abi,
       },
@@ -156,7 +156,7 @@ export const contractsConfig: IContracts = {
       },
       mainnet: {
         address: {
-          [Chains.bsc]: '',
+          [Chains.polygon]: '0xF75bf77bB46809a480BeC00508f8F3DfFD9C2A82',
         },
         abi: marketPlaceAbi,
       },
@@ -171,7 +171,7 @@ export const contractsConfig: IContracts = {
       },
       mainnet: {
         address: {
-          [Chains.bsc]: '',
+          [Chains.polygon]: '0x622e3A83A954af64E31D406a01Fbb21E041a55dA',
         },
         abi: erc721Abi,
       },
@@ -201,7 +201,7 @@ export const contractsConfig: IContracts = {
       },
       mainnet: {
         address: {
-          [Chains.bsc]: '',
+          [Chains.polygon]: '0xfc305DC69Be72e588551a3D114DFB2e5D68a1669',
         },
         abi: erc1155Abi,
       },
@@ -232,7 +232,7 @@ export const contractsConfig: IContracts = {
       mainnet: {
         address: {
           [Chains.bsc]: '',
-          [Chains.polygon]: '',
+          [Chains.polygon]: '0x43803EE11179445b428F4F509053cd6DcBf1e40A',
         },
         abi: promotionAbi,
       },
