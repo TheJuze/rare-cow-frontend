@@ -3,6 +3,7 @@
 
 .item {
   @include flex(row, center, space-between);
+  width: 100%;
   & + & {
     margin-top: 24px;
   }
@@ -14,13 +15,13 @@
     @include middle-tablet {
       justify-content: flex-start;
     }
-    .currency{
+    .currency {
       margin-right: space(8);
     }
-    .quantity{
+    .quantity {
       margin-right: space(8);
     }
-    .quantityInput{
+    .quantityInput {
       margin: 0 -4px;
     }
   }
@@ -48,5 +49,14 @@
     line-height: 14px;
     font-size: 12px;
     color: var(--modals-sub-color);
+  }
+}
+
+@include small-tablet {
+  .item {
+    flex-direction: column;
+    &Name {
+      max-width: 254px;
+    }
   }
 }

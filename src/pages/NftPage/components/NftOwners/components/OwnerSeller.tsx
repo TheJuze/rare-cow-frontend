@@ -66,7 +66,7 @@ export const OwnerSeller: VFC<IOwnerSeller> = ({
   }, [changeModalType, currency, dispatch, isMultiple, nftId,
     normalPrice, owner, quantity, userAddress?.length, walletService]);
 
-  const canBuy = new BigNumber(userBalance[currency.symbol]).gte(normalPrice);
+  const canBuy = new BigNumber(userBalance[currency?.symbol]).gte(normalPrice);
   return (
     <div className={styles.owner}>
       <div className={styles.left}>
