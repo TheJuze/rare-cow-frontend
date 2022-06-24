@@ -1,4 +1,5 @@
 import { fromNameToCurrencyObj } from 'appConstants';
+import BigNumber from 'bignumber.js';
 import {
   Avatar, Text, Button, NumberText, QuantityInput,
 } from 'components';
@@ -31,6 +32,7 @@ export const OwnerSeller: VFC<IOwnerSeller> = ({
   const { changeModalType } = useModals();
   const { walletService } = useWalletConnectorContext();
   const userAddress = useShallowSelector(userSelector.getProp('address'));
+  const userBalance = useShallowSelector(userSelector.getProp('balance'));
 
   const handleChangeQuantity = useCallback((amount) => {
     setQuantity(amount);
@@ -64,6 +66,7 @@ export const OwnerSeller: VFC<IOwnerSeller> = ({
   }, [changeModalType, currency, dispatch, isMultiple, nftId,
     normalPrice, owner, quantity, userAddress?.length, walletService]);
 
+  const canBuy = new BigNumber(userBalance[currency.symbol]).gte(normalPrice);
   return (
     <div className={styles.owner}>
       <div className={styles.left}>
@@ -94,7 +97,7 @@ export const OwnerSeller: VFC<IOwnerSeller> = ({
               maxAmount={+owner.sellingQuantity}
             />
           )}
-          <Button className={styles.buy} onClick={handleBuyAction} size="sm">
+          <Button className={styles.buy} onClick={handleBuyAction} size="sm" disabled={!canBuy}>
             {userAddress.length > 0 ? 'Buy' : 'Connect'}
           </Button>
         </div>
