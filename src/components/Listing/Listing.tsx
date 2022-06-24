@@ -130,7 +130,11 @@ export const Listing: VFC<ListingProps> = ({
   const [price, setPrice] = useState('');
   const onPriceChangeHandler = useCallback(
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const currentValue = event.currentTarget.value;
+      let currentValue = event.currentTarget.value;
+      const splittedValue = currentValue.split('.');
+      if (splittedValue[1] && splittedValue[1].length > 6) {
+        currentValue = [splittedValue[0], splittedValue[1].slice(0, 6)].join('.');
+      }
       if (validateOnlyNumbers(currentValue)) setPrice(currentValue);
     },
     [],

@@ -130,10 +130,10 @@ const NftInfo: FC<Props> = ({
         </div>
       </div>
       <div className={styles.promotions}>
-        {isOwner && premiumPromotionInfo && (
+        {isOwner && premiumPromotionInfo && Object.keys(premiumPromotionInfo).length > 1 && (
           <PromotionStatusBar promotionInfo={premiumPromotionInfo} />
         )}
-        {isOwner && featuredPromotionInfo && (
+        {isOwner && featuredPromotionInfo && Object.keys(featuredPromotionInfo).length > 1 && (
           <PromotionStatusBar promotionInfo={featuredPromotionInfo} />
         )}
       </div>

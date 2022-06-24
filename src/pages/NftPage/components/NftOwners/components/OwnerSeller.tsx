@@ -95,7 +95,7 @@ export const OwnerSeller: VFC<IOwnerSeller> = ({
             />
           )}
           <Button className={styles.buy} onClick={handleBuyAction} size="sm">
-            {userAddress ? 'Buy' : 'Connect'}
+            {userAddress.length > 0 ? 'Buy' : 'Connect'}
           </Button>
         </div>
       )}
