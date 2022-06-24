@@ -23,7 +23,7 @@
       @include flex(row, center, space-between, wrap);
       .left {
         @include flex(row, center, flex-start);
-        max-width: 74%;
+        max-width: 80%;
       }
       &Info {
         @include flex(column, flex-start, flex-start);

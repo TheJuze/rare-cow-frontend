@@ -56,6 +56,7 @@ export interface TokenFull {
     totalSupply: number;
     usdPrice: number;
     viewsCount?: string;
+    onPromotion?: boolean;
     featuredPromotionInfo?: Promotion;
     premiumPromotionInfo?: Promotion;
 }

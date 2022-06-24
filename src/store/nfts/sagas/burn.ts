@@ -56,7 +56,7 @@ export function* burnSaga({
         tx_hash: String(transactionHash),
         token: id,
         ownership: userId,
-        amount,
+        amount: +amount,
       });
 
       yield put(apiActions.success(type));
