@@ -120,6 +120,15 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
           <ArrowGreen />
         </div>
       ) : null}
+      {isUserCanBuyNft && isOnAnySale && (
+      <UserBuy
+        nftId={String(detailedNFT.id)}
+        currency={detailedNFT.currency}
+        isMultiple={detailedNFT.standart === 'ERC1155'}
+        sellers={sellers}
+        normalPrice={detailedNFT.price}
+      />
+      )}
       {isOwner &&
         (hasBeenListed ? (
           <OwnerAfterListing
@@ -142,15 +151,6 @@ const NftPayment: FC<Props> = ({ detailedNFT }) => {
           />
         ))}
       <>
-        {isUserCanBuyNft && isOnAnySale && (
-          <UserBuy
-            nftId={String(detailedNFT.id)}
-            currency={detailedNFT.currency}
-            isMultiple={detailedNFT.standart === 'ERC1155'}
-            sellers={sellers}
-            normalPrice={detailedNFT.price}
-          />
-        )}
         {isUserCanEnterInAuction && isOnAnySale && <UserBid detailedNFT={detailedNFT} />}
       </>
     </div>

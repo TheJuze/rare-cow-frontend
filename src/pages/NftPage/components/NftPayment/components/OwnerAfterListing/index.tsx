@@ -65,7 +65,11 @@ export const OwnerAfterListing: VFC<IOwnerAfterListing> = ({
 
   const onPriceChangeHandler = useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const { value } = event.currentTarget;
+      let { value } = event.currentTarget;
+      const splittedValue = value.split('.');
+      if (splittedValue[1] && splittedValue[1].length > 6) {
+        value = [splittedValue[0], splittedValue[1].slice(0, 6)].join('.');
+      }
       if (validateOnlyNumbers(value)) {
         setPrice(value);
       }

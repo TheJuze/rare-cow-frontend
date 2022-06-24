@@ -47,6 +47,7 @@
       width: 100%;
     }
     .filterButton{
+      margin-top: space(20);
       margin-bottom: space(20);
     }
     .desktopTabs{
@@ -133,6 +134,7 @@
   .total {
     @include flex(row, center, flex-start);
     margin-top: space(16);
+    margin-bottom: space(16);
     width: 100%;
     &Text {
       font-size: 20px;

@@ -14,7 +14,6 @@ import { TThreePreview } from 'components/Preview/ThreePreview';
 import { getPreviewer, Loader, PromoteModal, TagsWrapper, TTagsPropsMap } from 'components';
 import { clearDetailedNft } from 'store/nfts/reducer';
 import userSelector from 'store/user/selectors';
-import { PromotionStatus } from 'types/api';
 import uiSelector from 'store/ui/selectors';
 import { RequestStatus } from 'types';
 import actionTypes from 'store/nfts/actionTypes';
@@ -102,11 +101,7 @@ const NftPage: FC = () => {
         Auction: nft.isAucSelling || nft.isTimedAucSelling,
         InStock: nft.standart === 'ERC1155' ? nft.available : 0,
         Owned: isOwner ? nft.owners.find((owner) => +owner.url === +userId).quantity : false,
-        Promote:
-              (nft.premiumPromotionInfo &&
-                nft.premiumPromotionInfo.status === PromotionStatus.InProgress) ||
-              (nft.featuredPromotionInfo &&
-                nft.featuredPromotionInfo.status === PromotionStatus.InProgress),
+        Promote: nft.onPromotion,
       }
       : {}),
     [isOwner, nft, userId],
