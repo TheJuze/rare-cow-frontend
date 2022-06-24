@@ -12,6 +12,7 @@ import React, {
   useState,
 } from 'react';
 import { toast } from 'react-toastify';
+import { connectWallet as connectWalletConfig } from 'config';
 
 import { useDispatch } from 'react-redux';
 import { disconnectWalletState, updateProvider } from 'store/user/reducer';
@@ -87,15 +88,30 @@ const WalletConnectContext: FC = ({ children }) => {
             dispatch(updateProvider({ provider: accountInfo.type }));
           }
         } catch (error: any) {
-          console.log(error);
-          // metamask doesn't installed,
-          // redirect to download MM or open MM on mobile
-          if (error.code === 4) {
-            window.open(
-              `https://metamask.app.link/dapp/${
-                window.location.hostname + window.location.pathname
-              }/?utm_source=mm`,
-            );
+          if (!window.ethereum) {
+            // metamask doesn't installed,
+            // redirect to download MM or open MM on mobile
+            if (error.code === 4) {
+              window.open(
+                `https://metamask.app.link/dapp/${
+                  window.location.hostname + window.location.pathname
+                }/?utm_source=mm`,
+              );
+            }
+          } else {
+            const { network } = connectWalletConfig(Chains.polygon);
+            window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  chainId: `0x${network.chainID.toString(16)}`,
+                  chainName: network.chainName,
+                  nativeCurrency: network.nativeCurrency,
+                  rpcUrls: [network.rpc],
+                  blockExplorerUrls: [network.blockExplorerUrl],
+                },
+              ],
+            });
           }
         }
       }
